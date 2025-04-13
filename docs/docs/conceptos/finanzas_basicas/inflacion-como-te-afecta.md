@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Inflación: cómo te afecta de verdad
+title: Inflación, cómo te afecta de verdad
 nav_order: 7
 parent: Finanzas Básicas
 ---
