@@ -20,10 +20,6 @@ Acá no te prometemos libertad financiera en 30 días, pero sí herramientas par
 - [FOMO y promesas falsas](conceptos/fomo/index.md)
 - [Trading mágico y pseudociencia](conceptos/trading_magico/index.md)
 
-### 🧮 Herramientas prácticas
-- [Simuladores y calculadoras](conceptos/simuladores/index.md)
-- [Herramientas recomendadas](conceptos/herramientas/index.md)
-
 ---
 
 ¿Quieres contribuir?  
