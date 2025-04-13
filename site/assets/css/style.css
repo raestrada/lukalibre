@@ -54,10 +54,11 @@ nav {
 }
 
 .brand-text {
-  font-size: 1.6rem;
-  font-weight: 600;
-  color: white;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--verde-nube); /* antes: white */
 }
+  
 
 nav ul {
   list-style: none;
@@ -66,9 +67,9 @@ nav ul {
 }
 
 nav ul li a {
-  color: white;
-  text-decoration: none;
-  font-weight: 500;
+    color: var(--verde-nube); /* antes: white */
+    text-decoration: none;
+    font-weight: 500;
 }
 
 /* MAIN CONTENT */
@@ -140,3 +141,92 @@ footer {
     margin-bottom: 1rem;
   }
 }
+
+.hero {
+    background-color: var(--verde-nube);
+    text-align: center;
+    padding: 3rem 1rem;
+  }
+  
+  .hero-content {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  
+  .hero h1 {
+    font-size: 2rem;
+    margin: 1.5rem 0 0.5rem;
+    color: var(--verde-luka);
+  }
+  
+  .hero p {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .cta.large {
+    font-size: 1.1rem;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
+  
+  /* Logo en barra de navegación */
+/* Logo en barra de navegación (navbar) */
+.logo-crop {
+    width: 80px;   /* 72px + 10.25% */
+    height: 50px;  /* 36px + 10.25% */
+    overflow: hidden;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-crop img {
+    height: 120px;
+    object-fit: cover;
+    object-position: center 35%;
+}
+  
+  /* Logo en hero principal */
+  .logo-crop.large {
+    width: 132px;   /* 120px + 10.25% */
+    height: 75px;  /* 60px + 10.25% */
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: 6px;
+  }
+  
+  .logo-crop.large img {
+    height: 200px;
+    object-fit: cover;
+    object-position: center 35%;
+  }
+  
+  
+  
+  .features {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 3rem auto;
+    padding: 0 1rem;
+    max-width: 960px;
+  }
+  
+  .feature {
+    flex: 1 1 250px;
+    background-color: var(--blanco-panraza);
+    border-left: 6px solid var(--verde-luka);
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  }
+  
+  .feature h3 {
+    margin-bottom: 0.5rem;
+    color: var(--verde-luka);
+  }
+  
