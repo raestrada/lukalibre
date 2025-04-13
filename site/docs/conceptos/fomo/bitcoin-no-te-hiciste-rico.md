@@ -1,3 +1,10 @@
+---
+layout: default
+title: Bitcoin no te hiciste rico
+nav_order: 6
+parent: FOMO
+---
+
 # 🪙 Bitcoin no te hizo rico — y eso está bien
 
 “Si hubieras comprado Bitcoin en 2013…”  

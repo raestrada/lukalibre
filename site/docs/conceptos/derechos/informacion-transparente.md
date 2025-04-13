@@ -1,7 +1,14 @@
+---
+layout: default
+title: Información transparente
+nav_order: 7
+parent: Tus derechos
+---
+
 # 🧐 Tienes derecho a información clara (y sin letra chica)
 
 ¿Firmaste un contrato que no entendiste?  
-¿Te ofrecieron “cuotas sin interés” y luego pagaste el doble?  
+¿Te ofrecieron "cuotas sin interés" y luego pagaste el doble?  
 ¿Te hablaron de tasas, CAE, comisiones y no te explicaron nada?
 
 📢 Eso no debería pasar.  
@@ -72,15 +79,15 @@ Puedes reclamar ante el **SERNAC o la CMF**.
 
 ## 💬 LukaEjemplo
 
-> “Saqué un avance en efectivo. Me dijeron ‘cuotas sin interés’.  
+> "Saqué un avance en efectivo. Me dijeron 'cuotas sin interés'.  
 > Pero luego vi que me cobraban un seguro obligatorio de $12.000 y una comisión del 6%.  
-> Al final, el avance me costó el doble. No me lo explicaron nunca.”
+> Al final, el avance me costó el doble. No me lo explicaron nunca."
 
 ---
 
 ## 🧠 LukaTip
 
-> *“Si no te lo pueden explicar sin tecnicismos, probablemente no te conviene.”*
+> *"Si no te lo pueden explicar sin tecnicismos, probablemente no te conviene."*
 
 📌 Este documento está en desarrollo.  
 ¿Firmaste algo sin entender o lograste exigir que te explicaran? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).

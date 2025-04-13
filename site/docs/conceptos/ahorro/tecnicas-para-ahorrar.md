@@ -1,3 +1,10 @@
+---
+layout: default
+title: Técnicas para ahorrar
+nav_order: 7
+parent: Ahorro
+---
+
 # 🛠️ Técnicas para ahorrar aunque ganes poco
 
 Ahorrar no es fácil. Y ahorrar con un sueldo bajo o ingresos variables puede parecer imposible.  

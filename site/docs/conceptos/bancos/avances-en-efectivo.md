@@ -1,7 +1,14 @@
+---
+layout: default
+title: Avances en efectivo
+nav_order: 5
+parent: Bancos
+---
+
 # 💸 Avances en efectivo: el crédito disfrazado que te puede hundir
 
 Vas a la app del banco y aparece:  
-💰 “¡Tienes disponible un avance de $500.000 en 12 cuotas!”
+💰 "¡Tienes disponible un avance de $500.000 en 12 cuotas!"
 
 Suena fácil, rápido, sin trámites…  
 Pero cuidado: **los avances en efectivo son uno de los productos más caros del sistema financiero.**
@@ -10,7 +17,7 @@ Pero cuidado: **los avances en efectivo son uno de los productos más caros del 
 
 ## 🧾 ¿Qué es un avance en efectivo?
 
-Es cuando el banco o la tarjeta de crédito **te ofrece sacar plata “al tiro”**, que luego pagas en cuotas.
+Es cuando el banco o la tarjeta de crédito **te ofrece sacar plata "al tiro"**, que luego pagas en cuotas.
 
 👉 La plata sale del **cupo de tu tarjeta de crédito**, no de tu cuenta corriente.  
 Es un crédito, aunque no lo llamen así.
@@ -20,7 +27,7 @@ Es un crédito, aunque no lo llamen así.
 ## 💡 ¿Por qué parecen convenientes?
 
 - No piden papeleo
-- Están “preaprobados”
+- Están "preaprobados"
 - El dinero llega rápido
 - Puedes elegir el número de cuotas
 
@@ -32,7 +39,7 @@ Pero…
 
 | Riesgo                             | Detalle                                                       |
 |-----------------------------------|----------------------------------------------------------------|
-| **Intereses altísimos**           | A veces más del 30% anual, aunque digan “cuotas fijas”        |
+| **Intereses altísimos**           | A veces más del 30% anual, aunque digan "cuotas fijas"        |
 | **Comisiones escondidas**         | Por usar el avance, por prepago, por administración           |
 | **Cuotas interminables**          | Pagas $30.000 al mes, pero el capital casi no baja            |
 | **Se mezclan con tu cupo de crédito** | Te confundes entre lo que debes y lo que puedes gastar     |
@@ -52,7 +59,7 @@ Pero…
 
 - Para gastos del día a día (supermercado, transporte, etc.)
 - Para tapar otras deudas (efecto bola de nieve)
-- Por FOMO o impulso (“quiero aprovechar la oferta ya”)
+- Por FOMO o impulso ("quiero aprovechar la oferta ya")
 - Si ya estás usando la tarjeta al límite
 
 ---
@@ -78,14 +85,14 @@ Solo si:
 
 ## 💬 LukaEjemplo
 
-> “Usé un avance en efectivo de $400.000 para pagar el arriendo.  
-> Terminé pagando casi $600.000 en total. Pensé que era plata mía. Nunca más.”
+> "Usé un avance en efectivo de $400.000 para pagar el arriendo.  
+> Terminé pagando casi $600.000 en total. Pensé que era plata mía. Nunca más."
 
 ---
 
 ## 🧠 LukaTip
 
-> *“Si te ofrecen plata sin pedirte nada, probablemente es porque te la van a cobrar con creces.”*
+> *"Si te ofrecen plata sin pedirte nada, probablemente es porque te la van a cobrar con creces."*
 
 📌 Este documento está en desarrollo.  
 ¿Usaste un avance en efectivo y aprendiste a la mala? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).

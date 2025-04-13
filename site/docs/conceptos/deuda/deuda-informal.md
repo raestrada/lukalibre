@@ -1,3 +1,10 @@
+---
+layout: default
+title: Deuda informal
+nav_order: 8
+parent: Deuda
+---
+
 # 🤝 Deuda informal: cuando le debes plata a alguien cercano
 
 No todas las deudas están en un banco.  
@@ -12,10 +19,10 @@ Cualquier deuda que no firmaste con una institución financiera.
 Es un acuerdo entre personas, donde **no siempre hay reglas claras**, pero sí una carga emocional fuerte.
 
 Ejemplos comunes:
-- “Mi hermana me prestó $100.000 para llegar a fin de mes”
-- “Un amigo me prestó para pagar la luz”
-- “El jefe me adelantó sueldo, pero no quedó por escrito”
-- “Mi ex me ayudó con el CAE, y ahora me lo recuerda todo el tiempo”
+- "Mi hermana me prestó $100.000 para llegar a fin de mes"
+- "Un amigo me prestó para pagar la luz"
+- "El jefe me adelantó sueldo, pero no quedó por escrito"
+- "Mi ex me ayudó con el CAE, y ahora me lo recuerda todo el tiempo"
 
 ---
 
@@ -75,14 +82,14 @@ El respeto y la transparencia también son formas de retribuir.
 
 ## 💬 LukaEjemplo
 
-> “Mi mamá me prestó plata para una urgencia. Nunca me lo cobró, pero cada vez que discutimos, lo saca.  
-> Le propuse un plan de pago mensual chico, y eso ayudó a calmar la tensión. Hoy ya se lo devolví todo.”
+> "Mi mamá me prestó plata para una urgencia. Nunca me lo cobró, pero cada vez que discutimos, lo saca.  
+> Le propuse un plan de pago mensual chico, y eso ayudó a calmar la tensión. Hoy ya se lo devolví todo."
 
 ---
 
 ## 🧠 LukaTip
 
-> *“La deuda informal no tiene intereses… pero puede cobrarte en relaciones rotas.”*
+> *"La deuda informal no tiene intereses… pero puede cobrarte en relaciones rotas."*
 
 📌 Este documento está en desarrollo.  
 ¿Tuviste una experiencia difícil (o positiva) con una deuda informal? Compártela en el [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).

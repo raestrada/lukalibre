@@ -1,3 +1,10 @@
+---
+layout: default
+title: Cotización independiente
+nav_order: 5
+parent: AFP y APV
+---
+
 # 🧾 ¿Cómo funciona la cotización independiente en Chile?
 
 Si trabajas como freelance, por boleta o por cuenta propia, probablemente te has preguntado:
@@ -58,7 +65,7 @@ Si cotizas como independiente:
 - Podrías no acceder a beneficios estatales futuros
 - Puedes perder continuidad previsional si luego vuelves al empleo formal
 
-🧠 A corto plazo puede parecer un “ahorro”, pero **a largo plazo te puede salir carísimo**.
+🧠 A corto plazo puede parecer un "ahorro", pero **a largo plazo te puede salir carísimo**.
 
 ---
 
@@ -83,15 +90,15 @@ Si trabajas informalmente, igual puedes cotizar por tu cuenta con:
 
 ## 💬 LukaEjemplo
 
-> “Soy diseñadora freelance. Por años no cotizaba.  
+> "Soy diseñadora freelance. Por años no cotizaba.  
 > Ahora, en la Operación Renta, marco la opción para cotizar parcialmente, y me retienen un porcentaje para AFP y Fonasa.  
-> Al menos sé que algo estoy construyendo para más adelante.”
+> Al menos sé que algo estoy construyendo para más adelante."
 
 ---
 
-## 🧠 LukaTip
+## �� LukaTip
 
-> *“Si no tienes jefe, tú eres tu propio empleador. Y eso incluye preocuparte por tu pensión también.”*
+> *"Si no tienes jefe, tú eres tu propio empleador. Y eso incluye preocuparte por tu pensión también."*
 
 📌 Este documento está en desarrollo.  
 ¿Trabajas por tu cuenta y encontraste una forma realista de cotizar? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).

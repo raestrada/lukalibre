@@ -1,3 +1,10 @@
+---
+layout: default
+title: ¿Qué son las finanzas personales?
+nav_order: 1
+parent: Finanzas Básicas
+---
+
 # 🧠 ¿Qué son las finanzas personales?
 
 Las finanzas personales son la forma en que administras tu plata en el día a día.  

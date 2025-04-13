@@ -1,3 +1,10 @@
+---
+layout: default
+title: Centro de Conocimiento
+nav_order: 1
+has_children: true
+---
+
 # 📚 Centro de Conocimiento LukaLibre
 
 Bienvenido al centro de información financiera realista, en lenguaje chileno y sin chamullo.  

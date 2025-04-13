@@ -1,3 +1,11 @@
+---
+layout: default
+title: Bancos
+nav_order: 7
+parent: Centro de Conocimiento
+has_children: true
+---
+
 # 🏦 Bancos en Chile: cómo entenderlos (y usarlos sin que te pasen a llevar)
 
 Tener una cuenta en un banco es casi obligatorio hoy:  

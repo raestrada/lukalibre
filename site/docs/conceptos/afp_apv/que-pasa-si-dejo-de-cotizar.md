@@ -1,3 +1,10 @@
+---
+layout: default
+title: ¿Qué pasa si dejo de cotizar?
+nav_order: 4
+parent: AFP y APV
+---
+
 # ⏸️ ¿Qué pasa si dejo de cotizar en mi AFP?
 
 En Chile, cotizar es obligatorio si estás empleado formalmente.  

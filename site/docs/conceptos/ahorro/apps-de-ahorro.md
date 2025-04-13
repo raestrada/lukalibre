@@ -1,3 +1,10 @@
+---
+layout: default
+title: Apps de ahorro
+nav_order: 2
+parent: Ahorro
+---
+
 # 📱 Apps para ahorrar: ¿cuáles sirven y cuáles son puro humo?
 
 Hay un montón de apps que prometen ayudarte a ahorrar.  
@@ -12,7 +19,7 @@ Acá te mostramos lo bueno, lo no tan bueno y lo que deberías evitar.
 
 ### 💸 Tenpo
 - Billetera digital sin costo
-- Puedes crear “bolsillos” para separar tu plata
+- Puedes crear "bolsillos" para separar tu plata
 - Permite automatizar transferencias
 - Gana algo de interés si usas sus fondos (opcional)
 
@@ -25,7 +32,7 @@ Acá te mostramos lo bueno, lo no tan bueno y lo que deberías evitar.
 - Gana un pequeño interés diario (dependiendo del fondo)
 - Accesible desde la app de Mercado Libre
 
-🧠 Sirve para tener plata algo “oculta” de tu cuenta principal, pero no es ahorro formal ni garantizado.
+🧠 Sirve para tener plata algo "oculta" de tu cuenta principal, pero no es ahorro formal ni garantizado.
 
 ---
 
@@ -34,7 +41,7 @@ Acá te mostramos lo bueno, lo no tan bueno y lo que deberías evitar.
 - No tiene bolsillos de ahorro, pero **sirve para separar plata**
 - Ideal si quieres evitar tentaciones y guardar montos chicos
 
-🧠 Puedes cargar la cuenta solo con lo que planeas gastar y dejar lo demás “guardado” en otro lado.
+🧠 Puedes cargar la cuenta solo con lo que planeas gastar y dejar lo demás "guardado" en otro lado.
 
 ---
 
@@ -71,9 +78,9 @@ No pongas tu fondo de emergencia si no entiendes cómo funciona.
 
 ## ❌ No caigas en esto
 
-- Apps que te cobran por “enseñarte a ahorrar”
-- Servicios que piden acceso total a tu banco “para ayudarte”
-- Gurús financieros con apps o planillas pagadas que te venden el “secreto del ahorro”
+- Apps que te cobran por "enseñarte a ahorrar"
+- Servicios que piden acceso total a tu banco "para ayudarte"
+- Gurús financieros con apps o planillas pagadas que te venden el "secreto del ahorro"
 - Apps que te cobran comisión por usar tu propia plata (¡sí, eso pasa!)
 
 ---
@@ -90,7 +97,7 @@ No pongas tu fondo de emergencia si no entiendes cómo funciona.
 
 ## 💬 LukaTip
 
-> *“Una buena app no te hace millonario. Solo te ayuda a no gastar sin querer.”*
+> *"Una buena app no te hace millonario. Solo te ayuda a no gastar sin querer."*
 
 📌 Este documento está en desarrollo.  
 ¿Tienes una app que te ha funcionado o alguna que te metió el dedo en la boca? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).

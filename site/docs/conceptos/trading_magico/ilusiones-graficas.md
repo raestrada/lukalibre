@@ -1,3 +1,10 @@
+---
+layout: default
+title: Ilusiones gráficas
+nav_order: 3
+parent: Trading Mágico
+---
+
 # 🌀 Ilusiones gráficas en el trading: líneas que no predicen nada
 
 “Este canal de precio es clarísimo”  

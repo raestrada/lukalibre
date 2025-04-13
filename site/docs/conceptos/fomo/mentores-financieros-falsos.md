@@ -1,3 +1,10 @@
+---
+layout: default
+title: Mentores financieros falsos
+nav_order: 5
+parent: FOMO
+---
+
 # 🎤 Mentores financieros falsos: motivación o manipulación
 
 “Si yo pude, tú también puedes”  
@@ -60,37 +67,37 @@ O cuando su negocio real no es la educación, sino **tu urgencia**.
 
 ---
 
-## 🎭 Tipos de “mentor” que debes conocer
+## 🎭 Tipos de "mentor" que debes conocer
 
 - **El influencer de éxito falso:** alquila autos, muestra pantallas editadas, y te vende lifestyle como estrategia financiera  
-- **El coach de frases vacías:** nunca habla de tasas, intereses o herramientas reales — solo “cree en ti”  
-- **El vendedor de cursos mágicos:** no tiene experiencia profesional ni estudios, pero te cobra por “enseñarte a ser libre”  
+- **El coach de frases vacías:** nunca habla de tasas, intereses o herramientas reales — solo "cree en ti"  
+- **El vendedor de cursos mágicos:** no tiene experiencia profesional ni estudios, pero te cobra por "enseñarte a ser libre"  
 - **El gurú de WhatsApp o Telegram:** te mete a grupos VIP con señales de inversión, sin regulación ni respaldo
 
 ---
 
 ## ✅ ¿Qué buscar en un mentor de verdad?
 
-- Que sepa decir **“no sé”** o hablar de sus errores
+- Que sepa decir **"no sé"** o hablar de sus errores
 - Que adapte sus consejos a tu realidad
 - Que **no te presione para comprar algo de inmediato**
 - Que enseñe con contenido real, no solo motivación
-- Que no gane dinero solo si tú “entras” o “inviertes”
+- Que no gane dinero solo si tú "entras" o "inviertes"
 
 ---
 
 ## 💬 LukaEjemplo
 
-> “Entré a un curso de finanzas por un influencer.  
-> Era puro power point y frases como ‘tú puedes’.  
+> "Entré a un curso de finanzas por un influencer.  
+> Era puro power point y frases como 'tú puedes'.  
 > Me cobró $70.000. No aprendí nada.  
-> Hoy sigo a personas que explican gratis y en simple, sin venderme nada.”
+> Hoy sigo a personas que explican gratis y en simple, sin venderme nada."
 
 ---
 
 ## 🧠 LukaTip
 
-> *“Un mentor de verdad no te apura, no te vende ansiedad, y no necesita que te endeudes para escucharlo.”*
+> *"Un mentor de verdad no te apura, no te vende ansiedad, y no necesita que te endeudes para escucharlo."*
 
 📌 Este documento está en desarrollo.  
 ¿Tuviste una mala experiencia con un falso mentor o encontraste a alguien que sí valía la pena? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre) y cuéntalo.

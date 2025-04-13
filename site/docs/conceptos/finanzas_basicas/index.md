@@ -1,3 +1,11 @@
+---
+layout: default
+title: Finanzas Básicas
+nav_order: 2
+parent: Centro de Conocimiento
+has_children: true
+---
+
 # 🧠 Finanzas Básicas
 
 Acá partimos desde cero. Si alguna vez sentiste que "todos entienden de plata menos tú", esta sección es para ti.

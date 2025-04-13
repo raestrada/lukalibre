@@ -1,3 +1,10 @@
+---
+layout: default
+title: Historial crediticio
+nav_order: 9
+parent: Deuda
+---
+
 # 📋 Tu historial crediticio: qué es y cómo te afecta (de verdad)
 
 “Vas a quedar en DICOM”, “Esa deuda te va a seguir toda la vida”, “No te van a dar nada después”…  

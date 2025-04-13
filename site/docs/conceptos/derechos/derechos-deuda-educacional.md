@@ -1,3 +1,10 @@
+---
+layout: default
+title: Derechos deuda educacional
+nav_order: 4
+parent: Tus derechos
+---
+
 # 🎓 Tus derechos si tienes deuda educacional (CAE, crédito solidario y más)
 
 Estudiaste (o intentaste).  

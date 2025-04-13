@@ -1,3 +1,10 @@
+---
+layout: default
+title: Limpiar historial
+nav_order: 8
+parent: Tus derechos
+---
+
 # 🧹 Cómo revisar y limpiar tu historial financiero
 
 Pagaste una deuda, pero sigues apareciendo en DICOM.  

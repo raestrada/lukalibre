@@ -1,3 +1,10 @@
+---
+layout: default
+title: Frecuencia de ahorro
+nav_order: 4
+parent: Ahorro
+---
+
 # 📆 Ahorro diario, semanal o mensual: ¿cuál sirve más?
 
 No hay una única forma correcta de ahorrar. Lo importante no es *cuándo*, sino que sea **constante y que no te deje sin vivir**.
@@ -20,7 +27,7 @@ Ideal para quienes manejan efectivo o reciben ingresos chicos pero frecuentes (e
 
 ❌ Contras:
 - Requiere disciplina todos los días
-- Puede parecer “poco” y desmotivarte
+- Puede parecer "poco" y desmotivarte
 
 ---
 
@@ -56,7 +63,7 @@ Ideal si tienes sueldo fijo o ingreso estable.
 
 ❌ Contras:
 - Si no lo haces apenas te pagan, probablemente no lo harás
-- Se siente más “duro” que ahorrar de a poco
+- Se siente más "duro" que ahorrar de a poco
 
 ---
 
@@ -85,7 +92,7 @@ Así, sin darse cuenta, junta más de $20.000 al mes.
 
 ## 🧠 LukaTip
 
-> *“No se trata de cuánto ni cuándo. Se trata de empezar, adaptarte y no rendirte si un mes no se puede.”*
+> *"No se trata de cuánto ni cuándo. Se trata de empezar, adaptarte y no rendirte si un mes no se puede."*
 
 📌 Este documento está en desarrollo.  
 ¿Tienes una rutina que te ha funcionado? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).

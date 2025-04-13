@@ -1,6 +1,13 @@
+---
+layout: default
+title: Embargos
+nav_order: 5
+parent: Tus derechos
+---
+
 # 🏚️ ¿Pueden embargarme? ¿Cómo funciona un embargo en Chile?
 
-La palabra “embargo” da miedo.  
+La palabra "embargo" da miedo.  
 Y algunos cobradores la usan para **asustarte sin tener derecho legal a hacerlo**.  
 Pero no todo lo que te dicen es verdad. Acá te explicamos **cómo funciona realmente un embargo**, qué pueden hacer… y qué no.
 
@@ -18,7 +25,7 @@ Solo puede ser dictada por un juez en un **juicio legal**, con notificación for
 ## 🚫 ¿Qué no es un embargo?
 
 - Que te manden un mensaje de WhatsApp diciendo que van a embargarte mañana
-- Que te llamen diciendo “ya estamos en camino”
+- Que te llamen diciendo "ya estamos en camino"
 - Que te amenacen con que irán a tu casa si no pagas
 
 ❌ Todo eso es **cobranza abusiva e ilegal**.
@@ -71,14 +78,14 @@ Si no ha llegado una orden judicial, y solo recibes llamadas o correos:
 
 ## 💬 LukaEjemplo
 
-> “Me dijeron que estaban camino a mi casa a embargar. Me angustié horrible.  
-> Pero no había juicio, ni papel, ni nada. Solo presión. Hice un reclamo en el SERNAC y dejaron de llamar.”
+> "Me dijeron que estaban camino a mi casa a embargar. Me angustié horrible.  
+> Pero no había juicio, ni papel, ni nada. Solo presión. Hice un reclamo en el SERNAC y dejaron de llamar."
 
 ---
 
 ## 🧠 LukaTip
 
-> *“Si no hay juez, no hay embargo. Si hay amenazas sin juicio, hay abuso.”*
+> *"Si no hay juez, no hay embargo. Si hay amenazas sin juicio, hay abuso."*
 
 📌 Este documento está en desarrollo.  
 ¿Has recibido amenazas de embargo o pasaste por un proceso real? Compártelo en [GitHub](https://github.com/tuusuario/lukalibre) para que otros sepan qué es verdad y qué no.

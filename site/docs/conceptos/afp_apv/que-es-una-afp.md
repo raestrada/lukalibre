@@ -1,3 +1,10 @@
+---
+layout: default
+title: ¿Qué es una AFP?
+nav_order: 1
+parent: AFP y APV
+---
+
 # 🏦 ¿Qué es una AFP y cómo funciona?
 
 Una AFP (Administradora de Fondos de Pensiones) es una empresa privada que **administra tu ahorro previsional obligatorio**.  
@@ -15,7 +22,7 @@ Pero antes de tomar partido, lo importante es **entender cómo funcionan y qué 
 3. Cobra una comisión mensual por hacerlo
 4. Cuando te jubilas, te devuelve la plata como pensión (o renta vitalicia si eliges)
 
-👉 No es un “seguro”. Es tu plata, pero **no puedes retirarla libremente** antes de jubilarte (salvo excepciones legales).
+👉 No es un "seguro". Es tu plata, pero **no puedes retirarla libremente** antes de jubilarte (salvo excepciones legales).
 
 ---
 
@@ -66,14 +73,14 @@ Se invierte en los llamados **Fondos A, B, C, D o E**, dependiendo del riesgo:
 
 ## 💬 LukaEjemplo
 
-> “Trabajo con boleta y nunca me preocupé de cotizar. Cuando empecé a revisar, tenía solo $400.000 acumulados después de 6 años.  
-> Me cambié a una AFP con menos comisión y empecé a revisar mi fondo cada 6 meses.”
+> "Trabajo con boleta y nunca me preocupé de cotizar. Cuando empecé a revisar, tenía solo $400.000 acumulados después de 6 años.  
+> Me cambié a una AFP con menos comisión y empecé a revisar mi fondo cada 6 meses."
 
 ---
 
 ## 🧠 LukaTip
 
-> *“No es tu culpa no entender las AFP. Pero si es tu futuro, vale la pena conocer cómo funciona el juego.”*
+> *"No es tu culpa no entender las AFP. Pero si es tu futuro, vale la pena conocer cómo funciona el juego."*
 
 📌 Este documento está en desarrollo.  
 ¿Tuviste un problema con tu AFP o lograste tomar mejores decisiones con tu fondo? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).

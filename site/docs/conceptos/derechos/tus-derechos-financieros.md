@@ -1,3 +1,10 @@
+---
+layout: default
+title: Tus derechos financieros
+nav_order: 1
+parent: Tus derechos
+---
+
 # 🏦 Tus derechos frente a bancos, cajas, retail y financieras
 
 Aunque no lo creas, **tienes derechos incluso si debes plata**.  
@@ -57,7 +64,7 @@ Nadie puede:
 Un banco puede negarte crédito si tienes mal historial, pero:
 
 - **No pueden negarte una cuenta vista básica**
-- **No pueden cobrarte más solo “por si acaso”**
+- **No pueden cobrarte más solo "por si acaso"**
 - **Tienen que explicarte por qué te rechazan**
 
 👉 Puedes exigir una respuesta formal si te niegan algo sin razones claras.
@@ -82,7 +89,7 @@ Si puedes pagar tu deuda antes, **tienes derecho a hacerlo sin penalización**, 
 
 ## 🧠 LukaTip
 
-> *“Firmar un contrato no te quita tus derechos. Y deber plata no te convierte en menos persona.”*
+> *"Firmar un contrato no te quita tus derechos. Y deber plata no te convierte en menos persona."*
 
 📌 Este documento está en desarrollo.  
 ¿Tienes dudas o casos reales donde crees que te pasaron a llevar? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre) y ayudemos a que nadie más caiga por desinformación.

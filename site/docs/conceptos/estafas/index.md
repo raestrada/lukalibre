@@ -1,3 +1,11 @@
+---
+layout: default
+title: Estafas financieras
+nav_order: 8
+parent: Centro de Conocimiento
+has_children: true
+---
+
 # ⚠️ Estafas financieras: cómo identificarlas y protegerte
 
 En momentos difíciles, es cuando más aparecen las promesas mágicas:  
@@ -30,7 +38,7 @@ Sin miedo, sin tecnicismos, y con ejemplos reales.
 ## 🧠 Enfoque LukaLibre
 
 - Sin juzgar. Cualquiera puede caer.
-- No te diremos “debiste saberlo”, te diremos cómo evitarlo la próxima vez.
+- No te diremos "debiste saberlo", te diremos cómo evitarlo la próxima vez.
 - Queremos que **te protejas sin miedo ni vergüenza**.
 
 ---

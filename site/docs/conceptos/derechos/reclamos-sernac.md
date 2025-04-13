@@ -1,7 +1,14 @@
+---
+layout: default
+title: Reclamos SERNAC
+nav_order: 3
+parent: Tus derechos
+---
+
 # 📢 Cómo hacer un reclamo en el SERNAC (y por qué deberías)
 
 ¿Te cobraron de más?  
-¿Te ofrecieron “cuotas sin interés” que sí tenían interés?  
+¿Te ofrecieron "cuotas sin interés" que sí tenían interés?  
 ¿Te acosaron por una deuda?  
 ¿Te aplicaron una comisión que no entendiste?
 
@@ -44,7 +51,7 @@ Puedes reclamar contra bancos, retail, cajas, aseguradoras, servicios básicos y
 
 ### Paso 1: Entra a [https://www.sernac.cl](https://www.sernac.cl)
 
-Haz clic en “Reclamar”.
+Haz clic en "Reclamar".
 
 ### Paso 2: Inicia sesión
 
@@ -72,7 +79,7 @@ Si no quedas conforme, puedes **llevar el caso a mediación, arbitraje o incluso
 
 ## 🛠️ ¿Y si la empresa no responde o se burla?
 
-- Puedes **marcar la respuesta como “no satisfactoria”**
+- Puedes **marcar la respuesta como "no satisfactoria"**
 - Puedes **insistir**
 - Puedes pedir **intervención directa del SERNAC** si hay abuso claro
 
@@ -80,15 +87,15 @@ Si no quedas conforme, puedes **llevar el caso a mediación, arbitraje o incluso
 
 ## 💬 LukaEjemplo
 
-> “Me cobraron una cuota extra en una repactación que no autoricé.  
+> "Me cobraron una cuota extra en una repactación que no autoricé.  
 > Reclamo por SERNAC, adjunté el contrato original.  
-> En 15 días la empresa respondió y **me devolvieron la plata.**”
+> En 15 días la empresa respondió y **me devolvieron la plata."
 
 ---
 
 ## 🧠 LukaTip
 
-> *“El SERNAC no es una bala mágica. Pero es una herramienta gratuita, legal y útil. Úsala.”*
+> *"El SERNAC no es una bala mágica. Pero es una herramienta gratuita, legal y útil. Úsala."*
 
 📌 Este documento está en desarrollo.  
 ¿Tienes una experiencia buena o mala reclamando por SERNAC? Súmala al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).

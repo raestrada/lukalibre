@@ -1,7 +1,14 @@
+---
+layout: default
+title: No hacer nada
+nav_order: 8
+parent: FOMO
+---
+
 # 🧘 No hacer nada también es una decisión válida
 
 En redes, en la tele, en los cursos de "libertad financiera"...  
-Todo el mundo dice que **“si no estás invirtiendo, te estás perdiendo algo”**.
+Todo el mundo dice que **"si no estás invirtiendo, te estás perdiendo algo"**.
 
 Pero ¿y si **esperar, observar, respirar o no hacer nada por ahora**  
 fuera exactamente lo que necesitas?
@@ -14,10 +21,10 @@ Este documento es un recordatorio de que **no actuar también puede ser una buen
 
 Porque nos meten presión por todos lados:
 
-- “La inflación se está comiendo tu plata”
-- “Hay una oportunidad que no se va a repetir”
-- “El que no invierte, pierde”
-- “El dinero guardado no sirve para nada”
+- "La inflación se está comiendo tu plata"
+- "Hay una oportunidad que no se va a repetir"
+- "El que no invierte, pierde"
+- "El dinero guardado no sirve para nada"
 
 👉 Todo eso genera ansiedad.  
 Y esa ansiedad **hace que tomemos malas decisiones**.
@@ -50,25 +57,25 @@ Y esa ansiedad **hace que tomemos malas decisiones**.
 
 ## 🤯 Ejemplo típico
 
-> “Tenía $100.000 que me sobraron y me urgí por invertirlos.  
-> En vez de investigar, los metí en una plataforma de ‘trading social’ por una story de Instagram.  
+> "Tenía $100.000 que me sobraron y me urgí por invertirlos.  
+> En vez de investigar, los metí en una plataforma de 'trading social' por una story de Instagram.  
 > Al mes la app desapareció.  
-> Hoy, si me pasa de nuevo, prefiero esperar o meter esa plata en una cuenta simple.”
+> Hoy, si me pasa de nuevo, prefiero esperar o meter esa plata en una cuenta simple."
 
 ---
 
 ## 💬 Frases para recordar cuando te sientas presionado
 
-- “Nadie se hizo rico en 24 horas sin riesgo.”
-- “No entender algo y no actuar todavía es mejor que actuar por miedo.”
-- “Respirar también es parte del plan financiero.”
-- “Si alguien me apura, es porque probablemente gana si yo pierdo.”
+- "Nadie se hizo rico en 24 horas sin riesgo."
+- "No entender algo y no actuar todavía es mejor que actuar por miedo."
+- "Respirar también es parte del plan financiero."
+- "Si alguien me apura, es porque probablemente gana si yo pierdo."
 
 ---
 
 ## 🧠 LukaTip
 
-> *“Si estás confundido, no tomes decisiones. El apuro no es tuyo: te lo están metiendo.”*
+> *"Si estás confundido, no tomes decisiones. El apuro no es tuyo: te lo están metiendo."*
 
 📌 Este documento está en desarrollo.  
 ¿Tomaste una buena decisión al esperar o evitar actuar por presión? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre) y cuéntalo.

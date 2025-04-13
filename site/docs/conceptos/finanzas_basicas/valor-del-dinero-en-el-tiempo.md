@@ -1,3 +1,10 @@
+---
+layout: default
+title: El valor del dinero en el tiempo
+nav_order: 5
+parent: Finanzas Básicas
+---
+
 # 🕰️ El valor del dinero en el tiempo (en chileno)
 
 “Un peso hoy vale más que un peso mañana” suena como frase de ingeniero comercial.  
@@ -50,13 +57,13 @@ Cuando evalúas:
 ## 💬 LukaEjemplo
 
 > Un bono de $100.000 hoy puede ayudarte a pagar deudas que te generan intereses de $10.000 al mes.  
-> Si lo guardas sin usarlo, podrías perder más en intereses que lo que ganas “ahorrando”.
+> Si lo guardas sin usarlo, podrías perder más en intereses que lo que ganas "ahorrando".
 
 ---
 
 ## 🧠 LukaTip
 
-> *“La inflación es como el moho del dinero. Si lo dejas quieto sin cuidado, se te pudre.”*
+> *"La inflación es como el moho del dinero. Si lo dejas quieto sin cuidado, se te pudre."*
 
 📌 Documento en desarrollo.  
 ¿Quieres contribuir con ejemplos cotidianos de cómo cambia el valor de la plata en el tiempo? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).

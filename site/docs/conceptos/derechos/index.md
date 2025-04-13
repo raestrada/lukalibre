@@ -1,3 +1,11 @@
+---
+layout: default
+title: Tus derechos
+nav_order: 5
+parent: Centro de Conocimiento
+has_children: true
+---
+
 # ⚖️ Tus derechos como persona endeudada o usuaria del sistema financiero
 
 No importa si tienes una deuda, un reclamo, una cuenta en el banco o solo una tarjeta prepago.  
@@ -24,7 +32,7 @@ Esta sección es para que sepas qué puedes exigir, qué abusos no debes permiti
 
 ## 💡 Enfoque LukaLibre
 
-- No te vamos a decir “anda a la CMF” sin explicarte qué es.
+- No te vamos a decir "anda a la CMF" sin explicarte qué es.
 - No te vamos a hablar como abogado, sino como alguien que ya pasó por eso.
 - Queremos que sepas lo que **sí puedes exigir**, y cómo hacerlo **sin miedo**.
 

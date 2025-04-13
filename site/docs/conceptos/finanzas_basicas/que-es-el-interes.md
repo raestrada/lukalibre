@@ -1,3 +1,10 @@
+---
+layout: default
+title: Qué es el interés y cómo te lo cobran
+nav_order: 8
+parent: Finanzas Básicas
+---
+
 # 📊 ¿Qué es el interés y cómo te lo cobran?
 
 El interés es **el costo de usar plata que no es tuya** o **la recompensa por prestar o guardar tu plata**.  
@@ -40,7 +47,7 @@ Y si no pagas, ese interés **se sigue acumulando**.
 
 ## 📉 ¿Cómo se abusa del interés?
 
-- Cuando te ofrecen “cuotas sin interés” pero **te suben el precio base**
+- Cuando te ofrecen "cuotas sin interés" pero **te suben el precio base**
 - Cuando firmas sin entender que el interés real puede superar el 30% anual
 - Cuando no pagas el mínimo de la tarjeta y **te cobran interés sobre interés**
 
@@ -51,7 +58,7 @@ Y si no pagas, ese interés **se sigue acumulando**.
 - Siempre pregunta: **¿cuánto pagaré en total al final?**
 - Lee la CAE (Carga Anual Equivalente) antes de firmar
 - Evita usar tarjetas para financiar cosas básicas a cuotas
-- No te dejes llevar por el “paga en 12 sin interés” si el precio ya está inflado
+- No te dejes llevar por el "paga en 12 sin interés" si el precio ya está inflado
 
 ---
 
@@ -60,13 +67,13 @@ Y si no pagas, ese interés **se sigue acumulando**.
 > Compras una tele en 12 cuotas de $29.990. Total: $359.880  
 > ¿Sabías que esa misma tele costaba $299.990 al contado?
 
-👉 Ahí el “interés” está escondido en el precio.
+👉 Ahí el "interés" está escondido en el precio.
 
 ---
 
 ## 🧠 LukaTip
 
-> *“El interés puede ser tu amigo si inviertes, o tu enemigo si no entiendes cómo te lo cobran.”*
+> *"El interés puede ser tu amigo si inviertes, o tu enemigo si no entiendes cómo te lo cobran."*
 
 📌 Este documento está en desarrollo.  
 ¿Tienes ejemplos de cobros abusivos de interés o buenas prácticas que quieras compartir? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).

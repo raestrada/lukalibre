@@ -1,3 +1,11 @@
+---
+layout: default
+title: Deuda
+nav_order: 4
+parent: Centro de Conocimiento
+has_children: true
+---
+
 # 💣 Deuda: lo que nadie te explica hasta que ya estás metido
 
 Estar endeudado **no te hace flojo ni irresponsable**.  
@@ -25,7 +33,7 @@ Esta sección está pensada para ayudarte a **entender, ordenar y enfrentar tus 
 ## 🧠 Enfoque LukaLibre
 
 - No promovemos pagar a ciegas lo que te están cobrando sin explicarte por qué
-- No vamos a decirte “vende todo y paga primero”
+- No vamos a decirte "vende todo y paga primero"
 - No te vamos a juzgar por pedir créditos para vivir
 
 Acá estamos para **explicarte el sistema, ayudarte a navegarlo y que nadie te pase por encima con letra chica**.

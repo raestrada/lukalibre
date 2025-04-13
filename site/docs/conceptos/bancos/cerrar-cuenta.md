@@ -1,3 +1,10 @@
+---
+layout: default
+title: Cerrar cuenta
+nav_order: 6
+parent: Bancos
+---
+
 # 🔒 Cómo cerrar una cuenta bancaria (sin que te mareen)
 
 Dejar de usar una cuenta bancaria **no la cierra automáticamente**.  
@@ -58,7 +65,7 @@ Este documento te explica cómo cerrar una cuenta de forma correcta y sin letra 
 
 ## ❌ Errores comunes
 
-- Solo “dejar de usarla” → error: te pueden seguir cobrando
+- Solo "dejar de usarla" → error: te pueden seguir cobrando
 - Pensar que la cuenta se cierra sola si no la mueves → falso
 - Cancelar la tarjeta y creer que eso basta → no es lo mismo
 - No cancelar el PAC de tu plan de celular/gym/streaming → puede causar deudas involuntarias
@@ -67,15 +74,15 @@ Este documento te explica cómo cerrar una cuenta de forma correcta y sin letra 
 
 ## 💬 LukaEjemplo
 
-> “Cambié de banco y nunca cerré la cuenta vieja.  
+> "Cambié de banco y nunca cerré la cuenta vieja.  
 > Un año después me llegó una cobranza por $42.000 de comisiones acumuladas.  
-> Tuve que pagar solo por no cerrarla a tiempo.”
+> Tuve que pagar solo por no cerrarla a tiempo."
 
 ---
 
 ## 🧠 LukaTip
 
-> *“Cerrar una cuenta es gratis. No cerrarla puede salir carísimo.”*
+> *"Cerrar una cuenta es gratis. No cerrarla puede salir carísimo."*
 
 📌 Este documento está en desarrollo.  
 ¿Tuviste problemas cerrando una cuenta o el banco te hizo el trámite difícil? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).

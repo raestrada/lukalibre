@@ -1,6 +1,13 @@
+---
+layout: default
+title: Renegociar vs repactar
+nav_order: 7
+parent: Deuda
+---
+
 # 🔄 ¿Renegociar, repactar o refinanciar? ¿Cuál me sirve?
 
-Cuando no puedes pagar una deuda, muchas veces te ofrecen opciones como “repactar” o “refinanciar”.  
+Cuando no puedes pagar una deuda, muchas veces te ofrecen opciones como "repactar" o "refinanciar".  
 Suena bien, pero si no sabes lo que estás aceptando, **podrías terminar pagando más, por más tiempo, y con más estrés**.
 
 Acá te explicamos qué significa cada una y en qué casos podría servirte.
@@ -18,7 +25,7 @@ Es cuando la institución te ofrece **un nuevo plan de pago para una deuda exist
 ### ⚠️ Ojo con:
 - Te pueden **cobrar más intereses acumulados**
 - Puede parecer un alivio hoy, pero terminarás **pagando mucho más**
-- A veces te cobran seguros nuevos o “gastos de repactación”
+- A veces te cobran seguros nuevos o "gastos de repactación"
 
 ---
 
@@ -49,7 +56,7 @@ Es cuando **pides un nuevo crédito para pagar el anterior** (a veces en otra in
 
 ### ⚠️ Ojo con:
 - Si no cancelas efectivamente la deuda anterior, solo estás sumando más
-- A veces, el banco nuevo te “vende” un refinanciamiento con comisiones escondidas
+- A veces, el banco nuevo te "vende" un refinanciamiento con comisiones escondidas
 
 ---
 
@@ -73,7 +80,7 @@ Es cuando **pides un nuevo crédito para pagar el anterior** (a veces en otra in
 
 ## 🧠 LukaTip
 
-> *“Si no entiendes lo que estás firmando, probablemente no te conviene.”*
+> *"Si no entiendes lo que estás firmando, probablemente no te conviene."*
 
 📌 Este documento está en desarrollo.  
 ¿Has vivido una experiencia buena o mala con una repactación? Súmala al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).

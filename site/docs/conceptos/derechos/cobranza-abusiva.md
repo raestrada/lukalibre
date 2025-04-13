@@ -1,9 +1,16 @@
+---
+layout: default
+title: Cobranza abusiva
+nav_order: 9
+parent: Tus derechos
+---
+
 # 📞 ¿Qué es la cobranza abusiva y cómo defenderte?
 
 Estás atrasado con una deuda.  
 Te llaman 10 veces al día.  
 Llaman a tu mamá, a tu pega, a tu ex.  
-Te mandan mensajes como “Te vamos a embargar mañana” o “Paga o serás demandado”.
+Te mandan mensajes como "Te vamos a embargar mañana" o "Paga o serás demandado".
 
 ❌ Eso **no es normal**.  
 ❌ Eso **no es legal**.  
@@ -40,13 +47,13 @@ Si no las cumplen, puedes denunciar.
 
 ## 💬 Ejemplos reales de abuso
 
-> “Me llamaron a la pega y le contaron a mi jefe que tengo una deuda”  
+> "Me llamaron a la pega y le contaron a mi jefe que tengo una deuda"  
 > → **Eso es ilegal**. Puedes denunciar al SERNAC o a la CMF.
 
-> “Me mandaron un correo diciendo que irían a embargarme mañana”  
+> "Me mandaron un correo diciendo que irían a embargarme mañana"  
 > → **Mentira**. Solo un juez puede ordenar un embargo y debe haber una demanda formal antes.
 
-> “Me llaman todos los días de diferentes números y me insultan”  
+> "Me llaman todos los días de diferentes números y me insultan"  
 > → **Eso es acoso**. Junta evidencia y denuncia.
 
 ---
@@ -65,7 +72,7 @@ Si no las cumplen, puedes denunciar.
 
 ## 🧠 LukaTip
 
-> *“Tener una deuda no le da permiso a nadie para pasarte a llevar.”*
+> *"Tener una deuda no le da permiso a nadie para pasarte a llevar."*
 
 📌 Este documento está en desarrollo.  
 ¿Has vivido cobranza abusiva o necesitas ayuda para responder? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre) y comparte tu experiencia para ayudar a otros.

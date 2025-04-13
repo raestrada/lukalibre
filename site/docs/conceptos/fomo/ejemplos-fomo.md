@@ -1,8 +1,15 @@
+---
+layout: default
+title: Ejemplos de FOMO
+nav_order: 2
+parent: FOMO
+---
+
 # 🎢 Ejemplos reales de decisiones impulsivas por FOMO financiero
 
-El FOMO financiero no siempre se ve como “invierto mal”.  
-A veces se ve como “no quiero quedarme atrás”, “todos están haciendo plata menos yo” o  
-“quizás esta es mi única oportunidad”.
+El FOMO financiero no siempre se ve como "invierto mal".  
+A veces se ve como "no quiero quedarme atrás", "todos están haciendo plata menos yo" o  
+"quizás esta es mi única oportunidad".
 
 Acá te mostramos ejemplos reales y cotidianos de cómo el FOMO te puede hacer tomar **malas decisiones con buena intención.**
 
@@ -10,14 +17,14 @@ Acá te mostramos ejemplos reales y cotidianos de cómo el FOMO te puede hacer t
 
 ## 💸 1. Invertir toda tu plata en algo que no entiendes
 
-> “Mi amigo ganó con una criptomoneda. Yo metí $200.000 en una que ni conocía, solo porque subía.  
-> Al mes bajó a la mitad. Vendí con pérdida por miedo. Nunca más lo hice, pero me quedé con el susto.”
+> "Mi amigo ganó con una criptomoneda. Yo metí $200.000 en una que ni conocía, solo porque subía.  
+> Al mes bajó a la mitad. Vendí con pérdida por miedo. Nunca más lo hice, pero me quedé con el susto."
 
 🔍 Decisión por FOMO: **copiar sin entender por miedo a perder la oportunidad.**
 
 ---
 
-## 💳 2. Pedir un crédito solo para “aprovechar” una oferta
+## 💳 2. Pedir un crédito solo para "aprovechar" una oferta
 
 > “Vi un curso online de trading que estaba al 70% por solo 24 horas. No tenía plata, así que pedí un avance en efectivo.  
 > El curso era básico, no entendí nada y ahora estoy pagando $38.000 mensuales por algo que no uso.”

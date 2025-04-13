@@ -1,3 +1,10 @@
+---
+layout: default
+title: ¿Qué es el trading mágico?
+nav_order: 1
+parent: Trading Mágico
+---
+
 # 🧙‍♂️ ¿Qué es el trading mágico?
 
 El “trading mágico” es una mezcla de:
@@ -29,9 +36,9 @@ Porque mezcla:
 | Elemento                        | Función en la estafa                                  |
 |----------------------------------|--------------------------------------------------------|
 | Palabras técnicas (velas, RSI) | Da sensación de seriedad o profesionalismo            |
-| Gráficos con líneas de colores  | Refuerza visualmente la idea de control o “patrón”    |
-| Testimonios emocionales         | Gente que “lo logró” sin experiencia previa            |
-| Urgencia y escasez              | “Cupos limitados”, “última oportunidad”                |
+| Gráficos con líneas de colores  | Refuerza visualmente la idea de control o "patrón"    |
+| Testimonios emocionales         | Gente que "lo logró" sin experiencia previa            |
+| Urgencia y escasez              | "Cupos limitados", "última oportunidad"                |
 
 🧠 El objetivo es hacerte sentir que **si no aprovechas ahora, te quedarás fuera**.
 
@@ -41,8 +48,8 @@ Porque mezcla:
 
 - Se basa en **patrones que no tienen respaldo estadístico sólido**
 - Ignora factores reales que mueven el mercado (geopolítica, macroeconomía, noticias)
-- Se enseña como “regla mágica” sin reconocer sus límites
-- Muchas veces **ni siquiera los “mentores” aplican lo que enseñan**
+- Se enseña como "regla mágica" sin reconocer sus límites
+- Muchas veces **ni siquiera los "mentores" aplican lo que enseñan**
 
 📌 No es análisis técnico real.  
 Es un show visual para convencerte de que el mercado es predecible si compras su curso, señal o app.
@@ -53,24 +60,24 @@ Es un show visual para convencerte de que el mercado es predecible si compras su
 
 - Inviertes plata sin entender los riesgos
 - Sigues señales sin saber por qué
-- Pierdes dinero y te culpas a ti mismo por “no haber seguido bien el método”
+- Pierdes dinero y te culpas a ti mismo por "no haber seguido bien el método"
 - Terminas pagando más cursos… o abandonando frustrado y endeudado
 
 ---
 
-## 💬 LukaEjemplo
+## �� LukaEjemplo
 
-> “Un tipo me mostró cómo con un par de líneas sabía cuándo comprar o vender.  
+> "Un tipo me mostró cómo con un par de líneas sabía cuándo comprar o vender.  
 > Entré a su grupo y compré su curso.  
 > Después de aplicar todo, perdí $200.000.  
-> Cuando pregunté, me dijo que ‘no seguí bien la estrategia’.  
-> Ahí entendí que era todo humo.”
+> Cuando pregunté, me dijo que 'no seguí bien la estrategia'.  
+> Ahí entendí que era todo humo."
 
 ---
 
 ## 🧠 LukaTip
 
-> *“Si alguien dice que puede predecir el mercado con figuras, lo más probable es que lo único que quiere es tu plata.”*
+> *"Si alguien dice que puede predecir el mercado con figuras, lo más probable es que lo único que quiere es tu plata."*
 
 📌 Este documento está en desarrollo.  
-¿Te ofrecieron un curso, señal o comunidad de trading “milagrosa”? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre) y cuéntanos tu experiencia.
+¿Te ofrecieron un curso, señal o comunidad de trading "milagrosa"? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre) y cuéntanos tu experiencia.

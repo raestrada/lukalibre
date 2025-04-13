@@ -1,3 +1,10 @@
+---
+layout: default
+title: Dónde denunciar
+nav_order: 4
+parent: Estafas financieras
+---
+
 # 📣 ¿Dónde denunciar una estafa en Chile? (aunque no estés seguro)
 
 Si fuiste víctima de una estafa, o viste una que está rondando en redes o WhatsApp, **puedes y deberías denunciar**.
@@ -7,7 +14,7 @@ No importa si:
 - No tienes todos los datos
 - Solo perdiste un poco
 - Te da vergüenza
-- No sabes si es delito o “solo publicidad engañosa”
+- No sabes si es delito o "solo publicidad engañosa"
 
 Denunciar **sirve para alertar a otros, presionar a las plataformas, y dejar registro legal.**
 
@@ -18,7 +25,7 @@ Denunciar **sirve para alertar a otros, presionar a las plataformas, y dejar reg
 - Sirve para estafas relacionadas con **empresas, plataformas que venden productos/servicios, cobros abusivos o publicidad engañosa**
 - Puedes reclamar aunque no hayas pagado todavía
 
-👉 [https://www.sernac.cl](https://www.sernac.cl) → Sección “Reclama aquí”
+👉 [https://www.sernac.cl](https://www.sernac.cl) → Sección "Reclama aquí"
 
 ---
 
@@ -28,7 +35,7 @@ Denunciar **sirve para alertar a otros, presionar a las plataformas, y dejar reg
 - Puedes hacerlo online o presencial
 
 👉 [https://denuncias.policia.cl](https://denuncias.policia.cl)  
-(Selecciona “Delitos Informáticos”)
+(Selecciona "Delitos Informáticos")
 
 También puedes ir directamente a una comisaría o brigada de investigación criminal.
 
@@ -39,7 +46,7 @@ También puedes ir directamente a una comisaría o brigada de investigación cri
 - Si la estafa involucra **una supuesta financiera, banco, criptoempresa o inversión falsa**
 - También puedes consultar si una empresa está regulada en Chile
 
-👉 [https://www.cmfchile.cl](https://www.cmfchile.cl) → “Atención de público” o “Consulta de entidades”
+👉 [https://www.cmfchile.cl](https://www.cmfchile.cl) → "Atención de público" o "Consulta de entidades"
 
 ---
 
@@ -73,15 +80,15 @@ Muchos esquemas se frenan porque **alguien reportó a tiempo**, aunque no haya c
 
 ## 💬 LukaEjemplo
 
-> “Me pidieron pagar $50.000 por un curso de cripto y luego desaparecieron.  
+> "Me pidieron pagar $50.000 por un curso de cripto y luego desaparecieron.  
 > Lo denuncié en la PDI y también en SERNAC.  
-> A las semanas, el mismo nombre apareció en las noticias. Yo ayudé a que no siguieran estafando.”
+> A las semanas, el mismo nombre apareció en las noticias. Yo ayudé a que no siguieran estafando."
 
 ---
 
 ## 🧠 LukaTip
 
-> *“Denunciar es gratis, útil y no es perder el tiempo. No estás solo. Cada denuncia suma.”*
+> *"Denunciar es gratis, útil y no es perder el tiempo. No estás solo. Cada denuncia suma."*
 
 📌 Este documento está en desarrollo.  
 ¿Pudiste denunciar una estafa y se resolvió? ¿O al menos te dio paz? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre) y cuéntanos tu historia.

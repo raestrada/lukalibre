@@ -1,3 +1,10 @@
+---
+layout: default
+title: Cursos falsos
+nav_order: 2
+parent: Trading Mágico
+---
+
 # 🎓 Cursos falsos de trading: el negocio no es que aprendas, es que sigas pagando
 
 “Con este curso vivirás del trading”  
@@ -70,7 +77,7 @@ Porque:
 > “Pagué $60.000 por un curso que prometía enseñarme a hacer scalping.  
 > Al final era un PowerPoint con líneas dibujadas.  
 > Las clases eran en vivo y no se podían repetir.  
-> Me quedé con más preguntas que respuestas, y me ofrecieron un curso ‘pro’ por $90.000 más.”
+> Me quedé con más preguntas que respuestas, y me ofrecieron un curso 'pro' por $90.000 más.”
 
 ---
 

@@ -1,3 +1,10 @@
+---
+layout: default
+title: Mentor de trading
+nav_order: 7
+parent: Trading Mágico
+---
+
 # 👨‍🏫 Mentores de trading: gurús que venden humo envuelto en motivación
 
 “Yo salí de la pobreza con esta estrategia”  
@@ -42,7 +49,7 @@ Es alguien que:
 - Luego te venden uno “avanzado”  
 - Después accedes a su grupo de señales  
 - Eventualmente pierdes plata  
-- Te dicen que **“no seguiste bien el sistema”**
+- Te dicen que **"no seguiste bien el sistema"**
 
 Y el ciclo se repite… con nuevos clientes.
 
@@ -55,7 +62,7 @@ Lo común es ver:
 
 - Capturas de MetaTrader (fáciles de editar o simular)
 - Resultados sin contexto ni riesgo explicado
-- Testimonios “copiados y pegados” que no puedes verificar
+- Testimonios "copiados y pegados" que no puedes verificar
 
 📌 En finanzas reales, los resultados se auditan. En el trading mágico, **se editan**.
 
@@ -75,14 +82,14 @@ Lo común es ver:
 
 > “Compré un curso a un mentor de Instagram que mostraba cómo ganaba $200.000 diarios.  
 > Al final, todo era repetir entradas y salidas sin contexto.  
-> Cuando perdí plata, me dijo que debía ‘creer más en el sistema’.  
+> Cuando perdí plata, me dijo que debía 'creer más en el sistema'.  
 > Me di cuenta que el único que ganaba siempre… era él.”
 
 ---
 
 ## 🧠 LukaTip
 
-> *“Un buen mentor te da herramientas para ser libre. Uno falso te da frases para que dependas de él.”*
+> *"Un buen mentor te da herramientas para ser libre. Uno falso te da frases para que dependas de él."*
 
 📌 Este documento está en desarrollo.  
 ¿Tuviste una mala experiencia con un supuesto mentor? ¿Pudiste salir de ahí? Súmate al [GitHub de LukaLibre](https://github.com/

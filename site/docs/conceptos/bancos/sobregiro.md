@@ -1,3 +1,10 @@
+---
+layout: default
+title: Sobregiro
+nav_order: 4
+parent: Bancos
+---
+
 # 🧨 ¿Qué es el sobregiro y por qué puede ser una trampa?
 
 Un día vas al cajero, no tienes plata, y aún así te deja sacar $20.000.  
@@ -10,7 +17,7 @@ Acabas de usar el **sobregiro**: una deuda automática, rápida y silenciosa.
 
 ## 💳 ¿Qué es el sobregiro?
 
-Es cuando el banco **te “presta” plata automáticamente desde tu cuenta corriente**, permitiéndote usar más dinero del que tienes.
+Es cuando el banco **te "presta" plata automáticamente desde tu cuenta corriente**, permitiéndote usar más dinero del que tienes.
 
 🧠 Es como un mini-crédito instantáneo, pero:
 
@@ -26,7 +33,7 @@ Ejemplo:
 
 - Tienes $5.000 en la cuenta
 - Compras algo por $20.000
-- El banco te permite usar $15.000 de “sobregiro”
+- El banco te permite usar $15.000 de "sobregiro"
 - Ahora le debes $15.000 + intereses (desde el día siguiente)
 
 ---
@@ -46,7 +53,7 @@ Ejemplo:
 ## ✅ ¿Cómo saber si tienes sobregiro activo?
 
 1. Revisa el **contrato de tu cuenta corriente**
-2. Entra a tu app bancaria: si ves “línea disponible” mayor a tu saldo, lo más probable es que tengas sobregiro
+2. Entra a tu app bancaria: si ves "línea disponible" mayor a tu saldo, lo más probable es que tengas sobregiro
 3. Llama al banco y **pregunta explícitamente si tienes sobregiro activado**
 
 ---
@@ -75,14 +82,14 @@ Ejemplo:
 
 ## 💬 LukaEjemplo
 
-> “Usé sobregiro sin saberlo. Estuve 3 meses debiendo $70.000 y pensaba que era saldo normal.  
-> Me cobraron $9.000 en intereses y no entendía por qué. Ahora lo tengo desactivado.”
+> "Usé sobregiro sin saberlo. Estuve 3 meses debiendo $70.000 y pensaba que era saldo normal.  
+> Me cobraron $9.000 en intereses y no entendía por qué. Ahora lo tengo desactivado."
 
 ---
 
 ## 🧠 LukaTip
 
-> *“El sobregiro no es un salvavidas. Es una cuerda que se aprieta si no sabes usarla.”*
+> *"El sobregiro no es un salvavidas. Es una cuerda que se aprieta si no sabes usarla."*
 
 📌 Este documento está en desarrollo.  
 ¿Te pasó algo con el sobregiro y aprendiste a la mala? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).

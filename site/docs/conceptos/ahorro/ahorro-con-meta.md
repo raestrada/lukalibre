@@ -1,6 +1,13 @@
+---
+layout: default
+title: Ahorro con meta
+nav_order: 3
+parent: Ahorro
+---
+
 # 🎯 Ahorro con meta vs ahorro sin nombre
 
-Ahorrar “porque hay que ahorrar” suena bien… pero no siempre resulta.  
+Ahorrar "porque hay que ahorrar" suena bien… pero no siempre resulta.  
 Ahorrar con una meta clara, en cambio, **le da sentido a cada peso que guardas**.
 
 ---
@@ -10,9 +17,9 @@ Ahorrar con una meta clara, en cambio, **le da sentido a cada peso que guardas**
 Es cuando defines desde el principio **para qué estás ahorrando**, cuánto necesitas y en cuánto tiempo quieres lograrlo.
 
 💬 Ejemplos:
-- “Quiero juntar $100.000 para una reparación urgente”
-- “Necesito $350.000 para la matrícula de mi hijo en marzo”
-- “Quiero ahorrar $200.000 para un fondo de emergencia”
+- "Quiero juntar $100.000 para una reparación urgente"
+- "Necesito $350.000 para la matrícula de mi hijo en marzo"
+- "Quiero ahorrar $200.000 para un fondo de emergencia"
 
 ---
 
@@ -20,7 +27,7 @@ Es cuando defines desde el principio **para qué estás ahorrando**, cuánto nec
 
 - Te motiva ver el avance
 - Puedes calcular cuánto necesitas guardar por semana o mes
-- Te ayuda a no tocar la plata “por si acaso”
+- Te ayuda a no tocar la plata "por si acaso"
 - Sentís que **el esfuerzo tiene una recompensa real**
 
 ---
@@ -28,7 +35,7 @@ Es cuando defines desde el principio **para qué estás ahorrando**, cuánto nec
 ## 📈 Cómo crear una meta de ahorro
 
 1. **Define el objetivo**  
-   Ej: “Fondo de salud”, “Pasaje a la casa de mi abuela”, “Pagar deuda”
+   Ej: "Fondo de salud", "Pasaje a la casa de mi abuela", "Pagar deuda"
 
 2. **Ponle monto**  
    Ej: $100.000
@@ -45,7 +52,7 @@ Es cuando defines desde el principio **para qué estás ahorrando**, cuánto nec
 
 ## 🛑 Ahorro sin meta: por qué cuesta
 
-Cuando ahorras “por si acaso”, sin objetivo claro:
+Cuando ahorras "por si acaso", sin objetivo claro:
 
 - Te dan más ganas de usar esa plata en cualquier momento
 - Se siente lejano o sin sentido
@@ -57,7 +64,7 @@ Cuando ahorras “por si acaso”, sin objetivo claro:
 
 ## 🧠 LukaTip
 
-> *“Dale nombre a tu ahorro, como si fuera una misión. Te va a costar menos cumplirla.”*
+> *"Dale nombre a tu ahorro, como si fuera una misión. Te va a costar menos cumplirla."*
 
 📌 Este documento está en desarrollo.  
 ¿Tienes una meta que lograste cumplir (o estás intentando)? Súmala al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).

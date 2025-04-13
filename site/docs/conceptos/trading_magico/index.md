@@ -1,3 +1,11 @@
+---
+layout: default
+title: Trading Mágico
+nav_order: 8
+parent: Centro de Conocimiento
+has_children: true
+---
+
 # 📉 Trading mágico: promesas de riqueza rápida que no resisten análisis
 
 “Solo tienes que trazar una línea de tendencia”  
@@ -8,7 +16,7 @@ El mundo del trading mágico está lleno de frases que suenan profesionales, per
 
 En esta sección de LukaLibre te explicamos:
 
-- Cómo funciona la estafa detrás del “trading fácil”
+- Cómo funciona la estafa detrás del "trading fácil"
 - Qué es análisis técnico… y qué no es
 - Por qué las figuras geométricas no predicen el mercado
 - Cómo detectar a los gurús que venden humo con velas japonesas
@@ -31,7 +39,7 @@ En esta sección de LukaLibre te explicamos:
 
 ### 👨‍🏫 Los gurús del humo
 
-- [Cómo reconocen a un “mentor” de trading falso](mentor-de-trading.md)
+- [Cómo reconocen a un "mentor" de trading falso](mentor-de-trading.md)
 - [Testimonios y capturas truchas: marketing emocional](testimonios-falsos.md)
 
 ### 📉 Riesgos reales
@@ -48,4 +56,4 @@ Estamos en contra de **vender milagros a gente vulnerable**, usando gráficos bo
 
 ---
 
-📌 ¿Te prometieron riqueza rápida con “líneas mágicas”? ¿Te metiste a una comunidad y viste cómo funciona desde dentro? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre) y cuéntanos lo que viste.
+📌 ¿Te prometieron riqueza rápida con "líneas mágicas"? ¿Te metiste a una comunidad y viste cómo funciona desde dentro? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre) y cuéntanos lo que viste.

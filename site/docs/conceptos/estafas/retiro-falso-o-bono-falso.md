@@ -1,3 +1,10 @@
+---
+layout: default
+title: Retiro falso o bono falso
+nav_order: 2
+parent: Estafas financieras
+---
+
 # 🎣 Estafas con falsos retiros del 10% o bonos del Estado
 
 “Consulta si tienes un bono pendiente”  

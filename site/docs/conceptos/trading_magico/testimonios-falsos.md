@@ -1,3 +1,10 @@
+---
+layout: default
+title: Testimonios falsos
+nav_order: 8
+parent: Trading Mágico
+---
+
 # 🎭 Testimonios falsos en trading: el marketing emocional detrás del humo
 
 “Gracias a este curso, pagué mis deudas”  

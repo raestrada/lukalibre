@@ -1,3 +1,11 @@
+---
+layout: default
+title: FOMO
+nav_order: 9
+parent: Centro de Conocimiento
+has_children: true
+---
+
 # 😰 FOMO financiero: cómo dejar de correr detrás del humo
 
 “Si no inviertes ahora, pierdes”  
@@ -40,7 +48,7 @@ En esta sección de LukaLibre te ayudamos a entender:
 ## 🧠 Enfoque LukaLibre
 
 - No queremos venderte nada.
-- No te vamos a decir que “inviertas hoy” o que “te apures”.
+- No te vamos a decir que "inviertas hoy" o que "te apures".
 - Al contrario: queremos **bajar el ritmo, pensar y respirar** antes de decidir.
 
 Porque la urgencia que te imponen... **no es tuya.**

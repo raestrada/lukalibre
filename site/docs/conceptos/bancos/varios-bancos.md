@@ -1,7 +1,14 @@
+---
+layout: default
+title: Varios bancos
+nav_order: 7
+parent: Bancos
+---
+
 # 🏦 ¿Conviene tener más de un banco?
 
 ¿Te pagan el sueldo en un banco, pero usas otro para tus gastos?  
-¿Te ofrecieron abrir una nueva cuenta “gratis” y no sabes si aceptarla?
+¿Te ofrecieron abrir una nueva cuenta "gratis" y no sabes si aceptarla?
 
 Tener más de un banco puede ser una estrategia útil…  
 o una complicación innecesaria si no sabes para qué lo haces.
@@ -32,10 +39,10 @@ o una complicación innecesaria si no sabes para qué lo haces.
 
 | Riesgo                        | Detalle                                               |
 |-------------------------------|--------------------------------------------------------|
-| Te puedes desordenar          | Más cuentas = más lugares donde puede “perderse” plata |
+| Te puedes desordenar          | Más cuentas = más lugares donde puede "perderse" plata |
 | Pagas comisiones sin darte cuenta | Si dejas cuentas olvidadas sin cerrar o con saldo bajo |
 | Te complicas con claves, apps | Si no las gestionas bien, es más fácil equivocarse     |
-| Te ofrecen productos no deseados | Más bancos = más marketing, más “preaprobados”         |
+| Te ofrecen productos no deseados | Más bancos = más marketing, más "preaprobados"         |
 
 ---
 
@@ -60,15 +67,15 @@ o una complicación innecesaria si no sabes para qué lo haces.
 
 ## 💬 LukaEjemplo
 
-> “Antes tenía 4 cuentas y no sabía bien para qué.  
+> "Antes tenía 4 cuentas y no sabía bien para qué.  
 > Cerré dos y ahora uso solo una para sueldo y otra para gastos.  
-> Me ayudó a ordenarme y dejar de pagar comisiones tontas.”
+> Me ayudó a ordenarme y dejar de pagar comisiones tontas."
 
 ---
 
 ## 🧠 LukaTip
 
-> *“Más cuentas no significa más control. Solo funciona si cada cuenta tiene un propósito claro.”*
+> *"Más cuentas no significa más control. Solo funciona si cada cuenta tiene un propósito claro."*
 
 📌 Este documento está en desarrollo.  
 ¿Tienes una estrategia con múltiples bancos o una historia de desorden que pudiste resolver? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).

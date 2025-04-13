@@ -1,3 +1,10 @@
+---
+layout: default
+title: Prescripción deuda
+nav_order: 6
+parent: Tus derechos
+---
+
 # ⏳ ¿Las deudas prescriben? ¿Qué significa eso?
 
 Sí: **las deudas prescriben**.  
@@ -36,14 +43,14 @@ Depende del tipo:
 
 ## ⚠️ ¿Cómo se corta la prescripción?
 
-La prescripción **se “reinicia” si haces alguna de estas cosas**:
+La prescripción **se "reinicia" si haces alguna de estas cosas**:
 
 - Pagas una parte de la deuda
 - Firmas una repactación o nuevo acuerdo
 - Declaras que la reconoces (incluso por teléfono)
 - El acreedor te **demanda judicialmente**
 
-🛑 **Por eso muchos cobradores intentan que digas “sí, sé que debo” o que pagues “aunque sea $1.000”**: para reiniciar el reloj legal.
+🛑 **Por eso muchos cobradores intentan que digas "sí, sé que debo" o que pagues "aunque sea $1.000"**: para reiniciar el reloj legal.
 
 ---
 
@@ -67,15 +74,15 @@ La prescripción **se “reinicia” si haces alguna de estas cosas**:
 
 ## 💬 LukaEjemplo
 
-> “Tenía una deuda del 2015 con una tienda. No me demandaron nunca.  
+> "Tenía una deuda del 2015 con una tienda. No me demandaron nunca.  
 > En 2023 me llamaron para pagarla. Me asusté… pero ya estaba prescrita.  
-> No pagué, no hablé más, y exigí que la eliminaran del registro.”
+> No pagué, no hablé más, y exigí que la eliminaran del registro."
 
 ---
 
 ## 🧠 LukaTip
 
-> *“Si una deuda es vieja, no la toques antes de consultar. Pagarla puede revivirla.”*
+> *"Si una deuda es vieja, no la toques antes de consultar. Pagarla puede revivirla."*
 
 📌 Este documento está en desarrollo.  
 ¿Tuviste una experiencia con deuda prescrita o cobros abusivos pasados de fecha? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).

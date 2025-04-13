@@ -1,3 +1,11 @@
+---
+layout: default
+title: AFP y APV
+nav_order: 6
+parent: Centro de Conocimiento
+has_children: true
+---
+
 # 🧓 AFP, APV y ahorro previsional: lo que deberías saber (sin letra chica)
 
 En Chile, el sistema de pensiones es **complejo, impopular y lleno de dudas**.  

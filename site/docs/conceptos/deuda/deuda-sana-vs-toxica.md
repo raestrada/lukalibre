@@ -1,3 +1,10 @@
+---
+layout: default
+title: Deuda sana vs tóxica
+nav_order: 3
+parent: Deuda
+---
+
 # ⚖️ ¿Qué es una deuda sana y qué es una deuda tóxica?
 
 Endeudarse no siempre es malo. A veces es necesario para avanzar o simplemente sobrevivir.  
@@ -9,7 +16,7 @@ Acá te explicamos cómo saber si estás frente a una deuda **sana o tóxica**, 
 
 ## ✅ ¿Qué es una deuda sana?
 
-Una deuda es “sana” cuando:
+Una deuda es "sana" cuando:
 
 - Tiene un objetivo claro (educación, salud, vivienda, consolidación)
 - Tiene **cuotas que puedes pagar sin dejar de comer**
@@ -31,7 +38,7 @@ Una deuda es tóxica cuando:
 - Solo pagas el mínimo y el saldo nunca baja
 - Pides un préstamo para pagar otro préstamo
 - Te genera ansiedad, insomnio o te deja sin plata para lo básico
-- La tomaste por impulso o FOMO (comprar por no “quedarte atrás”)
+- La tomaste por impulso o FOMO (comprar por no "quedarte atrás")
 
 💬 Ejemplo:
 > Estás pagando $25.000 mensuales de una tarjeta por una tele que ya ni usas, y la deuda original era de $180.000 hace un año. Hoy debes más de lo que costaba.
@@ -49,14 +56,14 @@ Una deuda es tóxica cuando:
 ## 🧠 ¿Y si ya estoy en deuda tóxica?
 
 No estás solo. Muchas personas están atrapadas en ese ciclo.  
-Acá no te vamos a decir que “pagues todo altiro” o que “vendas tu celular”.  
+Acá no te vamos a decir que "pagues todo altiro" o que "vendas tu celular".  
 Vamos a ayudarte a **ordenarte, negociar y salir paso a paso** (revisa los próximos documentos).
 
 ---
 
 ## 🧠 LukaTip
 
-> *“La deuda no es mala. El problema es cuando la usas sin entenderla o sin saber cómo te va a pegar después.”*
+> *"La deuda no es mala. El problema es cuando la usas sin entenderla o sin saber cómo te va a pegar después."*
 
 📌 Este documento está en desarrollo.  
 ¿Tienes una historia con una deuda que resultó peor de lo que parecía? Súmala al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).

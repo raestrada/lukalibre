@@ -1,8 +1,15 @@
+---
+layout: default
+title: Salir de una estafa
+nav_order: 10
+parent: Trading Mágico
+---
+
 # 🆘 ¿Caí en una estafa de trading? Qué hacer ahora (sin culpa y con pasos concretos)
 
 Te apuraron.  
 Te prometieron que era fácil.  
-Mostraron capturas, testimonios, resultados “reales”.
+Mostraron capturas, testimonios, resultados "reales".
 
 Y tú confiaste.
 
@@ -23,7 +30,7 @@ Las estafas están diseñadas para ser creíbles.
 - Prometen justo lo que necesitas o deseas
 - Se mueven por WhatsApp, Instagram o grupos cerrados
 
-👉 No caíste por “ser tonto”.  
+👉 No caíste por "ser tonto".  
 Caíste porque **te atraparon con algo hecho para que confíes**.
 
 ---
@@ -52,7 +59,7 @@ Si diste acceso a apps, documentos, claves o datos bancarios:
 ## 🗂️ Paso 3: Denuncia (aunque no recuperes plata)
 
 - **PDI (Cibercrimen):** [https://denuncias.policia.cl](https://denuncias.policia.cl)  
-- **SERNAC:** Si ofrecieron un “servicio financiero” no regulado  
+- **SERNAC:** Si ofrecieron un "servicio financiero" no regulado  
 - **CMF:** Si se hacían pasar por empresa, banco o corredor autorizado  
 - **Tu banco o medio de pago:** A veces pueden rastrear o bloquear pagos recientes
 
@@ -62,9 +69,9 @@ Si diste acceso a apps, documentos, claves o datos bancarios:
 
 ## ❌ Paso 4: Sal del grupo, silencia al mentor
 
-- El “mentor” no te va a devolver la plata
-- Muchos seguirán vendiendo nuevas promesas o cursos “más avanzados”
-- Otros intentarán culparte por no haber seguido “bien la estrategia”
+- El "mentor" no te va a devolver la plata
+- Muchos seguirán vendiendo nuevas promesas o cursos "más avanzados"
+- Otros intentarán culparte por no haber seguido "bien la estrategia"
 
 💬 Cortar contacto **es parte de salir emocionalmente de la estafa**.
 
@@ -93,16 +100,16 @@ Puedes usar lo que viviste para:
 
 ## 💬 LukaEjemplo
 
-> “Perdí $120.000 en un curso que me ofrecieron por Instagram.  
+> "Perdí $120.000 en un curso que me ofrecieron por Instagram.  
 > Me prometieron señales, comunidad y libertad financiera.  
 > Cuando pregunté por qué perdía plata, me bloquearon.  
-> Lo denuncié, borré todo y me prometí nunca más decidir con ansiedad.”
+> Lo denuncié, borré todo y me prometí nunca más decidir con ansiedad."
 
 ---
 
 ## 🧠 LukaTip
 
-> *“Salir de una estafa no es solo dejar de pagar: es recuperar tu tranquilidad.”*
+> *"Salir de una estafa no es solo dejar de pagar: es recuperar tu tranquilidad."*
 
 📌 Este documento está en desarrollo.  
 ¿Saliste de una comunidad, mentor o app de trading dudosa? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre) y cuéntalo de forma anónima.

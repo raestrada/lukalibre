@@ -1,3 +1,10 @@
+---
+layout: default
+title: Cargos y comisiones
+nav_order: 3
+parent: Bancos
+---
+
 # 💸 Cargos y comisiones bancarias: lo que te cobran (y a veces no te dicen)
 
 Puede que nunca hayas pedido un crédito ni usado tu tarjeta…  
@@ -19,7 +26,7 @@ Este documento te muestra **los cobros más comunes**, cómo identificarlos y c�
 | Transferencias a terceros    | Algunas cuentas cobran por transferir a otros bancos          |
 | Consulta de saldo en cajero  | ¡Sí, esto también puede costarte!                            |
 | Reposición de tarjeta        | Si se pierde o bloqueas tu tarjeta, a veces te la cobran     |
-| Sobregiro automático         | Te “prestan” plata sin avisarte y te cobran intereses altos  |
+| Sobregiro automático         | Te "prestan" plata sin avisarte y te cobran intereses altos  |
 | Comisiones por avance en efectivo | Cobro adicional por usar parte de tu cupo en efectivo    |
 
 🧠 Muchos de estos cargos están **escondidos en el contrato**, y solo los ves **cuando ya te descontaron**.
@@ -49,9 +56,9 @@ Sí. Algunas estrategias:
 
 ---
 
-## 🚨 Ojo con estos “paquetes” o trampas
+## 🚨 Ojo con estos "paquetes" o trampas
 
-- **“Cuota de manejo” mensual disfrazada de “servicio”**
+- **"Cuota de manejo" mensual disfrazada de "servicio"**
 - **Seguro que te cobran sin que lo hayas pedido**
 - **Cobros por no uso** (si no haces movimientos en cierto tiempo)
 
@@ -73,14 +80,14 @@ Más info en el documento: [Cómo hacer un reclamo al SERNAC](../derechos/reclam
 
 ## 💬 LukaEjemplo
 
-> “Mi cuenta era gratis. Después del segundo mes me cobraron $3.000 de mantención.  
-> No lo decía en ninguna parte clara. Hice un reclamo y me lo reembolsaron.”
+> "Mi cuenta era gratis. Después del segundo mes me cobraron $3.000 de mantención.  
+> No lo decía en ninguna parte clara. Hice un reclamo y me lo reembolsaron."
 
 ---
 
 ## 🧠 LukaTip
 
-> *“El banco no es tu enemigo, pero tampoco es tu amigo. Revísalo como revisarías el vuelto en la feria.”*
+> *"El banco no es tu enemigo, pero tampoco es tu amigo. Revísalo como revisarías el vuelto en la feria."*
 
 📌 Este documento está en desarrollo.  
 ¿Descubriste un cobro que no sabías que existía? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre) y comparte tu experiencia.

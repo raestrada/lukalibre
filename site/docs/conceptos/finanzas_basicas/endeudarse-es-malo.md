@@ -1,3 +1,10 @@
+---
+layout: default
+title: ¿Endeudarse es malo? No siempre
+nav_order: 9
+parent: Finanzas Básicas
+---
+
 # 🤔 ¿Endeudarse es malo? No siempre.
 
 “Si estás endeudado, es porque hiciste algo mal”.  

@@ -1,3 +1,10 @@
+---
+layout: default
+title: ¿Qué es una deuda?
+nav_order: 1
+parent: Deuda
+---
+
 # 💸 ¿Qué es una deuda?
 
 Una deuda es **plata que tienes que devolver**, porque alguien (persona, banco, empresa o institución) **te la prestó ahora con la promesa de que la vas a pagar después**.
@@ -51,7 +58,7 @@ Depende del tipo de deuda, pero podrías:
 
 ## 🧠 LukaTip
 
-> *“Deber plata no te hace menos persona. Pero no entender tu deuda te deja en desventaja.”*
+> *"Deber plata no te hace menos persona. Pero no entender tu deuda te deja en desventaja."*
 
 📌 Este documento está en desarrollo.  
 ¿Quieres compartir tu experiencia enfrentando una deuda? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).

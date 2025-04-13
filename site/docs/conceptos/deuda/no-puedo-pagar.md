@@ -1,3 +1,10 @@
+---
+layout: default
+title: No puedo pagar
+nav_order: 6
+parent: Deuda
+---
+
 # 🚫 No puedo pagar mis deudas: ¿qué hago?
 
 Estás al día hasta el cuello.  
@@ -42,9 +49,9 @@ Haz una lista:
 ## 🧠 Paso 2: Detén el sangrado
 
 - Congela tus tarjetas de crédito (literalmente si quieres).
-- Evita cualquier nuevo crédito “parche”.
+- Evita cualquier nuevo crédito "parche".
 - No firmes nada sin entenderlo.
-- No te metas en nuevas cuotas “sin interés” (spoiler: sí tienen).
+- No te metas en nuevas cuotas "sin interés" (spoiler: sí tienen).
 
 ---
 
@@ -83,15 +90,15 @@ Endeudarse por orgullo solo te atrapa más.
 
 ## 💬 LukaEjemplo
 
-> “Pasé 3 meses sin poder pagar mi tarjeta. Me llamaban todo el día.  
+> "Pasé 3 meses sin poder pagar mi tarjeta. Me llamaban todo el día.  
 > Cuando llamé yo, negocié una cuota menor y logré congelar el interés por 6 meses.  
-> Pero fue después de llorar una noche entera.”
+> Pero fue después de llorar una noche entera."
 
 ---
 
 ## 🧠 LukaTip
 
-> *“Antes de salvar tu puntaje, sálvate a ti mismo.”*
+> *"Antes de salvar tu puntaje, sálvate a ti mismo."*
 
 📌 Este documento está en desarrollo.  
 ¿Sobreviviste una etapa donde no podías pagar? Tu historia puede ser faro para otros. Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).

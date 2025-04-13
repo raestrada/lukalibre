@@ -1,3 +1,10 @@
+---
+layout: default
+title: FOMO en criptomonedas
+nav_order: 3
+parent: FOMO
+---
+
 # 🌐 FOMO en criptomonedas: tecnología real, hype peligroso
 
 “¿Y tú todavía no inviertes en cripto?”  

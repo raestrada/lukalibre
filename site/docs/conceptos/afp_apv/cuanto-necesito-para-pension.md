@@ -1,3 +1,10 @@
+---
+layout: default
+title: ¿Cuánto necesito para pension?
+nav_order: 6
+parent: AFP y APV
+---
+
 # 📊 ¿Cuánto necesito ahorrar para tener una pensión digna?
 
 ¿Quieres saber cuánta plata necesitas ahorrar para jubilarte tranquilo?  

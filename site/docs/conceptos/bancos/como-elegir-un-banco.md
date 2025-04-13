@@ -1,7 +1,14 @@
+---
+layout: default
+title: Cómo elegir un banco
+nav_order: 2
+parent: Bancos
+---
+
 # 🏦 ¿Cómo elegir un banco en Chile (sin que te vendan humo)?
 
 Elegir un banco no es como elegir la camiseta de un equipo.  
-No se trata de cuál “te gusta más”, sino de **cuál te cobra menos, te sirve más y se ajusta a tu vida real.**
+No se trata de cuál "te gusta más", sino de **cuál te cobra menos, te sirve más y se ajusta a tu vida real.**
 
 En este documento te damos **criterios simples y realistas** para elegir un banco que funcione para ti.
 
@@ -52,7 +59,7 @@ En este documento te damos **criterios simples y realistas** para elegir un banc
 
 ## 🚨 Cuidado con:
 
-- “Cuentas gratis” que luego tienen cobros escondidos
+- "Cuentas gratis" que luego tienen cobros escondidos
 - Ofertas que te amarran con productos que no necesitas
 - Bancos que te ofrecen crédito apenas abres una cuenta
 - Comisiones por sobregiro automático (puede parecer ayuda, pero es deuda cara)
@@ -70,15 +77,15 @@ En este documento te damos **criterios simples y realistas** para elegir un banc
 
 ## 💬 LukaEjemplo
 
-> “Elegí mi primer banco porque me regalaron una mochila.  
+> "Elegí mi primer banco porque me regalaron una mochila.  
 > A los tres meses, me cobraban $3.500 por mantención, aunque no la usaba.  
-> Cerré esa cuenta y abrí una digital sin costo. Ahora sí la uso.”
+> Cerré esa cuenta y abrí una digital sin costo. Ahora sí la uso."
 
 ---
 
 ## 🧠 LukaTip
 
-> *“Un banco es un proveedor más. No te cases con el primero. Compara, cuestiona y cámbiate si no te sirve.”*
+> *"Un banco es un proveedor más. No te cases con el primero. Compara, cuestiona y cámbiate si no te sirve."*
 
 📌 Este documento está en desarrollo.  
 ¿Cambiaste de banco y te fue mejor? ¿Te arrepientes de haber abierto una cuenta sin entender? Cuéntanos en [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).

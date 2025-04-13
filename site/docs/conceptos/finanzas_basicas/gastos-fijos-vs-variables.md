@@ -1,3 +1,10 @@
+---
+layout: default
+title: Gastos fijos vs variables
+nav_order: 3
+parent: Finanzas Básicas
+---
+
 # 🧮 Gastos fijos vs variables
 
 Saber la diferencia entre **gastos fijos** y **gastos variables** es clave para hacer un presupuesto que no sea una tortura.
@@ -60,7 +67,7 @@ Esto no es para que vivas castigado, sino para que **decidas con conciencia y no
 
 ## 🧠 LukaTip
 
-> *“No todo gasto variable es malo. Pero saber dónde está el botón de pausa te da poder.”*
+> *"No todo gasto variable es malo. Pero saber dónde está el botón de pausa te da poder."*
 
 📌 Este documento está en desarrollo.  
 ¿Quieres sumar ejemplos o contar cómo armaste tu lista fija/variable? Súmate al [repositorio LukaLibre en GitHub](https://github.com/tuusuario/lukalibre).

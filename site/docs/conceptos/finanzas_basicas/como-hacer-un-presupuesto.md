@@ -1,7 +1,14 @@
+---
+layout: default
+title: Cómo hacer un presupuesto básico
+nav_order: 2
+parent: Finanzas Básicas
+---
+
 # 🧾 Cómo hacer un presupuesto básico (y no morir en el intento)
 
 Hacer un presupuesto no es una solución mágica, pero es **la linterna cuando estás en la oscuridad financiera**.  
-No se trata de dejar de tomar café o eliminar “gustitos”, sino de **ver con claridad en qué se va tu plata y decidir con intención**.
+No se trata de dejar de tomar café o eliminar "gustitos", sino de **ver con claridad en qué se va tu plata y decidir con intención**.
 
 ---
 
@@ -72,7 +79,7 @@ Lo importante es usarlo como brújula, **no como una cárcel**.
 
 ## 🧠 LukaTip
 
-> *“No necesitas una app. Con papel, lápiz y conciencia ya partes ganando.”*
+> *"No necesitas una app. Con papel, lápiz y conciencia ya partes ganando."*
 
 📌 Este documento está en desarrollo.  
 Si tienes un ejemplo de presupuesto real que te gustaría compartir (anónimo o adaptado), contribuye en GitHub.

@@ -1,3 +1,10 @@
+---
+layout: default
+title: Tipos de cuenta
+nav_order: 1
+parent: Bancos
+---
+
 # 💳 Tipos de cuenta en Chile: ¿cuál me sirve?
 
 En Chile, hay varios tipos de cuenta bancaria, pero la mayoría de las personas **no sabe cuál tiene ni qué implica**.
@@ -44,7 +51,7 @@ Acá te explicamos cada una en chileno simple, con sus pros, contras y para qué
 
 ## 💼 3. Cuenta Corriente
 
-- Es la cuenta “clásica” para sueldos altos o clientes bancarizados
+- Es la cuenta "clásica" para sueldos altos o clientes bancarizados
 - Permite cheques, sobregiro, crédito, productos asociados
 
 ### ✅ Pros:
@@ -88,7 +95,7 @@ Acá te explicamos cada una en chileno simple, con sus pros, contras y para qué
 
 ## 🧠 LukaTip
 
-> *“No todas las cuentas son malas ni buenas. Lo importante es que sepas para qué la necesitas y cuánto te cuesta usarla.”*
+> *"No todas las cuentas son malas ni buenas. Lo importante es que sepas para qué la necesitas y cuánto te cuesta usarla."*
 
 📌 Este documento está en desarrollo.  
 ¿Te sirvió una cuenta digital para ordenar tus gastos? ¿Caíste en una trampa con una cuenta corriente?  

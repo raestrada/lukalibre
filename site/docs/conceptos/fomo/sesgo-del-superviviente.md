@@ -1,3 +1,10 @@
+---
+layout: default
+title: Sesgo del sobreviviente
+nav_order: 10
+parent: FOMO
+---
+
 # 🎯 El sesgo del superviviente: por qué solo ves ganadores (y eso te puede arruinar)
 
 “Si hubieras comprado Bitcoin en 2013…”  

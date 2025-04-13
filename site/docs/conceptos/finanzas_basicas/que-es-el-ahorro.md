@@ -1,6 +1,13 @@
+---
+layout: default
+title: Qué es el ahorro y por qué cuesta tanto
+nav_order: 4
+parent: Finanzas Básicas
+---
+
 # 💰 ¿Qué es el ahorro y por qué cuesta tanto?
 
-El ahorro no es guardar “lo que sobra”. Es **una decisión difícil, especialmente cuando no alcanza**.  
+El ahorro no es guardar "lo que sobra". Es **una decisión difícil, especialmente cuando no alcanza**.  
 No es para hacerse rico, sino para estar menos vulnerable cuando algo se rompe, se atrasa o simplemente *pasa la vida*.
 
 ---
@@ -55,7 +62,7 @@ Porque vivimos en un contexto donde:
 
 ## 🧠 LukaTip
 
-> *“El ahorro no es un lujo. Es una forma de resistencia en un sistema que te quiere siempre al límite.”*
+> *"El ahorro no es un lujo. Es una forma de resistencia en un sistema que te quiere siempre al límite."*
 
 📌 Este documento está en desarrollo.  
 Si tienes una técnica para ahorrar que te ha funcionado (aunque sea poco), compártela en nuestro [GitHub](https://github.com/tuusuario/lukalibre).

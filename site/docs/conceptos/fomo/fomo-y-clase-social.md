@@ -1,3 +1,10 @@
+---
+layout: default
+title: FOMO y clase social
+nav_order: 4
+parent: FOMO
+---
+
 # 🧨 Cómo el FOMO financiero afecta más a quienes tienen menos
 
 El FOMO —ese miedo a “quedarse afuera”— **no golpea igual a todos**.  

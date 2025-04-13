@@ -1,3 +1,10 @@
+---
+layout: default
+title: ¿Crédito, deuda o préstamo?
+nav_order: 6
+parent: Finanzas Básicas
+---
+
 # 🏦 ¿Crédito, deuda o préstamo? ¿Es lo mismo?
 
 No es lo mismo, aunque muchas veces se usan como si fueran sinónimos.  
@@ -55,9 +62,9 @@ Una deuda **no siempre es mala**, pero **no tener claridad sobre tus deudas sí 
 
 ---
 
-## 🧠 LukaTip
+## �� LukaTip
 
-> *“Tener deuda no te hace irresponsable. No entenderla, sí puede hacerte vulnerable.”*
+> *"Tener deuda no te hace irresponsable. No entenderla, sí puede hacerte vulnerable."*
 
 📌 Este documento está en desarrollo.  
 ¿Te gustaría compartir tu experiencia usando crédito o enfrentando una deuda? Contribuye en [GitHub](https://github.com/tuusuario/lukalibre).

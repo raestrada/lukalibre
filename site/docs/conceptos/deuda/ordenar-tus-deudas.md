@@ -1,3 +1,10 @@
+---
+layout: default
+title: Ordenar tus deudas
+nav_order: 5
+parent: Deuda
+---
+
 # 🗂️ Cómo ordenar tus deudas paso a paso
 
 Si tienes varias deudas y no sabes por dónde partir, no estás solo.  
@@ -52,11 +59,11 @@ No todas las deudas tienen el mismo riesgo ni urgencia.
 
 Existen dos métodos que puedes usar según tu estilo:
 
-### 🧠 Método “bola de nieve” (emocional)
+### 🧠 Método "bola de nieve" (emocional)
 Paga primero la deuda más chica (aunque no tenga más interés).  
 Te motiva ver avances rápidos.
 
-### 💰 Método “avalancha” (matemático)
+### 💰 Método "avalancha" (matemático)
 Paga primero la deuda con más interés.  
 Ahorras más a largo plazo.
 
@@ -68,7 +75,7 @@ Ahorras más a largo plazo.
 
 - Congela tus tarjetas si puedes (de verdad)
 - No pidas más créditos para pagar créditos
-- Evita compras innecesarias “en cuotas”
+- Evita compras innecesarias "en cuotas"
 - Borra apps de retail o bancarias si te tientan
 
 ---
@@ -83,7 +90,7 @@ Pero **no aceptes la primera oferta**. Primero ordena todo y lee el próximo doc
 
 ## 🧠 LukaTip
 
-> *“No hay vergüenza en deber. Pero sí hay poder en saber a quién, cuánto y por qué.”*
+> *"No hay vergüenza en deber. Pero sí hay poder en saber a quién, cuánto y por qué."*
 
-📌 Este documento está en desarrollo.  
+�� Este documento está en desarrollo.  
 ¿Tienes un sistema que te ayudó a ordenar tus deudas o sobreviviste a una avalancha financiera? Compártelo en [GitHub](https://github.com/tuusuario/lukalibre).

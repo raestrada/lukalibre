@@ -1,3 +1,10 @@
+---
+layout: default
+title: Pirámides y multinivel
+nav_order: 3
+parent: Estafas financieras
+---
+
 # 🔺 Estafas piramidales y sistemas multinivel disfrazados
 
 "Solo necesitas invitar a 3 personas"  
@@ -39,20 +46,20 @@ Entonces puede ser una **pirámide disfrazada**.
 
 | Señal                                    | ¿Por qué es preocupante?                                |
 |------------------------------------------|----------------------------------------------------------|
-| “No tienes que vender nada”              | Probablemente te pagan solo por meter gente              |
-| “Ganas más si sumas invitados”           | Se basa en reclutamiento, no en valor real               |
-| “Productos opcionales, lo importante es la red” | El producto es fachada                          |
-| “Solo invierte y luego invitas”          | Es un flujo de plata, no un negocio                      |
-| “Apúrate o pierdes tu lugar”             | Urgencia falsa para evitar que pienses con calma         |
+| "No tienes que vender nada"              | Probablemente te pagan solo por meter gente              |
+| "Ganas más si sumas invitados"           | Se basa en reclutamiento, no en valor real               |
+| "Productos opcionales, lo importante es la red" | El producto es fachada                          |
+| "Solo invierte y luego invitas"          | Es un flujo de plata, no un negocio                      |
+| "Apúrate o pierdes tu lugar"             | Urgencia falsa para evitar que pienses con calma         |
 
 ---
 
 ## 🧾 Ejemplos típicos en Chile
 
-- “Células de inversión” que funcionan en círculos
+- "Células de inversión" que funcionan en círculos
 - Supuestas redes de cripto con ganancias automáticas
 - Compañías de suplementos o cursos donde **nadie compra el producto**, pero todos reclutan
-- Sistemas que exigen un “aporte mínimo” y prometen duplicarlo si traes más personas
+- Sistemas que exigen un "aporte mínimo" y prometen duplicarlo si traes más personas
 
 ---
 
@@ -70,15 +77,15 @@ Son ilegales si no hay producto o inversión real.
 
 ## 💬 LukaEjemplo
 
-> “Una amiga me invitó a una ‘célula’ donde ponías $100.000 y al llegar a la cima te daban $800.000.  
+> "Una amiga me invitó a una 'célula' donde ponías $100.000 y al llegar a la cima te daban $800.000.  
 > Todos juraban que funcionaba. A las 3 semanas, se cortó la cadena.  
-> Nadie más entró. Yo perdí mi plata, y mi amiga también.”
+> Nadie más entró. Yo perdí mi plata, y mi amiga también."
 
 ---
 
 ## 🧠 LukaTip
 
-> *“Si ganas solo por meter más gente, y no por lo que vendes o haces… no es un negocio. Es una trampa en forma de pirámide.”*
+> *"Si ganas solo por meter más gente, y no por lo que vendes o haces… no es un negocio. Es una trampa en forma de pirámide."*
 
 📌 Este documento está en desarrollo.  
 ¿Fuiste parte de un sistema así o lograste evitarlo a tiempo? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre) y comparte tu experiencia.

@@ -1,3 +1,10 @@
+---
+layout: default
+title: FOMO trading
+nav_order: 9
+parent: Trading Mágico
+---
+
 # ⚠️ FOMO y trading: cómo te apuran para que inviertas sin pensar
 
 “Todos están ganando menos tú”  

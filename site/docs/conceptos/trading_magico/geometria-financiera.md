@@ -1,3 +1,10 @@
+---
+layout: default
+title: Geometría financiera
+nav_order: 6
+parent: Trading Mágico
+---
+
 # 📐 Geometría financiera: triángulos, canales y otras fantasías predictivas
 
 “Si el precio rompe este triángulo, se dispara”  

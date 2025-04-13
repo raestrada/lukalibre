@@ -1,7 +1,14 @@
+---
+layout: default
+title: Mentalidad financiera sana
+nav_order: 7
+parent: FOMO
+---
+
 # 🧠 Cómo construir una mentalidad financiera más sana
 
-Después de tanto bombardeo de “haz esto”, “invierte ya”,  
-“aprovecha la oportunidad” y “sal de pobre en 30 días”…  
+Después de tanto bombardeo de "haz esto", "invierte ya",  
+"aprovecha la oportunidad" y "sal de pobre en 30 días"...  
 uno queda agotado, confundido y frustrado.
 
 Este documento es una invitación a **empezar de nuevo desde otro lugar**:  
@@ -20,7 +27,7 @@ Una mentalidad financiera sana es cuando:
 - Tomas decisiones con **información, no con ansiedad**
 - Sabes **por qué haces lo que haces con tu plata**
 - No te comparas con los demás como regla
-- Puedes decir **“no estoy listo”** sin sentirte menos
+- Puedes decir **"no estoy listo"** sin sentirte menos
 
 ---
 
@@ -28,11 +35,11 @@ Una mentalidad financiera sana es cuando:
 
 | En vez de esto...                            | Prueba esto...                                           |
 |---------------------------------------------|----------------------------------------------------------|
-| “Estoy perdiendo el tiempo”                 | “Estoy entendiendo mis opciones antes de actuar”         |
-| “Todos están ganando menos yo”              | “Solo veo los casos que quieren que vea”                 |
-| “Tengo que invertir en algo YA”             | “No voy a mover mi plata si no entiendo el riesgo”       |
-| “Me da vergüenza no saber”                  | “Preguntar me ayuda a tomar mejores decisiones”          |
-| “No tengo plata, así que da lo mismo”       | “Lo poco que tengo, vale cuidarlo bien”                  |
+| "Estoy perdiendo el tiempo"                 | "Estoy entendiendo mis opciones antes de actuar"         |
+| "Todos están ganando menos yo"              | "Solo veo los casos que quieren que vea"                 |
+| "Tengo que invertir en algo YA"             | "No voy a mover mi plata si no entiendo el riesgo"       |
+| "Me da vergüenza no saber"                  | "Preguntar me ayuda a tomar mejores decisiones"          |
+| "No tengo plata, así que da lo mismo"       | "Lo poco que tengo, vale cuidarlo bien"                  |
 
 ---
 
@@ -57,15 +64,15 @@ Tomar acción **cuando entiendes**, no cuando te da miedo quedarte atrás.
 
 ## 💬 LukaEjemplo
 
-> “Antes me sentía mal por no estar invirtiendo.  
+> "Antes me sentía mal por no estar invirtiendo.  
 > Empecé a revisar mi plata, ver en qué gastaba, y aprendí que mi problema no era la inversión,  
-> sino el desorden. Ahora estoy tranquilo con ahorrar $10.000 al mes. Es poco, pero es mío.”
+> sino el desorden. Ahora estoy tranquilo con ahorrar $10.000 al mes. Es poco, pero es mío."
 
 ---
 
-## 🧠 LukaTip
+## �� LukaTip
 
-> *“Estar bien con tu plata no es hacer lo mismo que todos. Es hacer lo que a ti te funciona, con calma y con sentido.”*
+> *"Estar bien con tu plata no es hacer lo mismo que todos. Es hacer lo que a ti te funciona, con calma y con sentido."*
 
 📌 Este documento está en desarrollo.  
 ¿Estás construyendo tu propia relación con la plata fuera del ruido? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).

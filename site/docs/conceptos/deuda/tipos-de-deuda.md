@@ -1,3 +1,10 @@
+---
+layout: default
+title: Tipos de deuda
+nav_order: 2
+parent: Deuda
+---
+
 # 📚 Tipos de deuda (en chileno y sin letra chica)
 
 No toda deuda es igual. Algunas son planificadas, otras improvisadas.  
@@ -10,7 +17,7 @@ Acá te explicamos los tipos de deuda más comunes en Chile, con ejemplos y adve
 
 ## 💳 1. Tarjetas de crédito (rotativa)
 
-- El banco o casa comercial te da un “crédito” para gastar
+- El banco o casa comercial te da un "crédito" para gastar
 - Si no pagas el total del mes, lo que queda **genera interés altísimo**
 - Lo más peligroso es la deuda **rotativa**, que crece sola
 
@@ -53,14 +60,14 @@ Acá te explicamos los tipos de deuda más comunes en Chile, con ejemplos y adve
 - Plata que le debes a personas: familiares, amigos, conocidos
 - A veces sin contrato, sin intereses, pero con consecuencias sociales reales
 
-🧠 Este tipo de deuda puede parecer “blanda”, pero **puede dañar relaciones personales si no se maneja con claridad y compromiso**.
+🧠 Este tipo de deuda puede parecer "blanda", pero **puede dañar relaciones personales si no se maneja con claridad y compromiso**.
 
 ---
 
 ## 🏬 6. Cuotas en casas comerciales
 
 - Compras a crédito en tiendas (Falabella, Ripley, ABCDIN, etc.)
-- Te dan la opción de pagar en varias cuotas, a veces “sin interés” (que no siempre es cierto)
+- Te dan la opción de pagar en varias cuotas, a veces "sin interés" (que no siempre es cierto)
 - Hay muchas comisiones escondidas
 
 🧠 Evita usarlas para productos que no necesitas o que pierden valor rápido. Y **compara el precio real contado vs en cuotas**.
@@ -69,7 +76,7 @@ Acá te explicamos los tipos de deuda más comunes en Chile, con ejemplos y adve
 
 ## 🧠 LukaTip
 
-> *“Saber qué tipo de deuda tienes es el primer paso para ordenarte. No es lo mismo deber una tele que deber una operación médica.”*
+> *"Saber qué tipo de deuda tienes es el primer paso para ordenarte. No es lo mismo deber una tele que deber una operación médica."*
 
 📌 Este documento está en desarrollo.  
 ¿Tienes ejemplos o dudas sobre tu tipo de deuda? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).

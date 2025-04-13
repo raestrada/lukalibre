@@ -1,3 +1,10 @@
+---
+layout: default
+title: Inflación: cómo te afecta de verdad
+nav_order: 7
+parent: Finanzas Básicas
+---
+
 # 📈 ¿Qué es la inflación y cómo te afecta de verdad?
 
 La inflación no es solo una palabra que sale en la tele cuando sube el tomate.  

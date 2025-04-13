@@ -1,3 +1,10 @@
+---
+layout: default
+title: Cómo revisar mi AFP
+nav_order: 3
+parent: AFP y APV
+---
+
 # 🔍 ¿Cómo revisar lo que tengo en mi AFP?
 
 ¿No sabes cuánta plata tienes ahorrada para tu pensión?  

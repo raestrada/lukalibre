@@ -1,7 +1,14 @@
+---
+layout: default
+title: Alternativas a las AFP
+nav_order: 7
+parent: AFP y APV
+---
+
 # 🔄 ¿Existen alternativas a las AFP? ¿Qué otras opciones tengo?
 
 Mucha gente en Chile está cansada del sistema de AFP.  
-Y con razón: pensiones bajas, poca transparencia y una sensación constante de que **“la plata no alcanza”**.
+Y con razón: pensiones bajas, poca transparencia y una sensación constante de que **"la plata no alcanza"**.
 
 Pero, ¿hay otras formas de ahorrar para la vejez?  
 ¿Puedo salirme del sistema? ¿Qué otras opciones existen?
@@ -10,7 +17,7 @@ Acá te explicamos las alternativas actuales y las que se han discutido, **sin h
 
 ---
 
-## 📌 Spoiler: no puedes “salirte” de las AFP (por ahora)
+## �� Spoiler: no puedes "salirte" de las AFP (por ahora)
 
 Si trabajas con contrato y recibes sueldo mensual, **debes cotizar en una AFP por ley**.  
 No puedes redirigir esa cotización obligatoria a una cuenta personal, banco o colchón.
@@ -51,7 +58,7 @@ Pero sí puedes **complementar, cambiar de AFP o explorar otras herramientas** p
 
 ### 4. 🏘️ Inversión en bienes raíces
 
-- Algunas personas prefieren comprar una propiedad y arrendarla como “pensión futura”
+- Algunas personas prefieren comprar una propiedad y arrendarla como "pensión futura"
 - Puede funcionar si tienes capital y buen manejo financiero
 
 ⚠️ Ojo con:
@@ -73,7 +80,7 @@ Más info: [https://www.chileatiende.gob.cl](https://www.chileatiende.gob.cl)
 
 ## ❌ Opciones que no existen (aunque circulan rumores)
 
-- Retirar toda tu plata y “guardarla tú mismo”
+- Retirar toda tu plata y "guardarla tú mismo"
 - Cambiar tu 10% obligatorio a una cuenta bancaria
 - Dejar de cotizar legalmente si estás con contrato
 
@@ -83,15 +90,15 @@ Más info: [https://www.chileatiende.gob.cl](https://www.chileatiende.gob.cl)
 
 ## 💬 LukaEjemplo
 
-> “Empecé a ahorrar $10.000 en una Cuenta 2 mientras trabajaba a honorarios.  
+> "Empecé a ahorrar $10.000 en una Cuenta 2 mientras trabajaba a honorarios.  
 > Luego lo combiné con un APV simple.  
-> No voy a hacerme rico, pero al menos sé que tendré algo más que la pensión base.”
+> No voy a hacerme rico, pero al menos sé que tendré algo más que la pensión base."
 
 ---
 
 ## 🧠 LukaTip
 
-> *“Si no puedes cambiar el sistema, cambia tu estrategia. Ahorra donde puedas, como puedas, pero hazlo sabiendo en qué estás metido.”*
+> *"Si no puedes cambiar el sistema, cambia tu estrategia. Ahorra donde puedas, como puedas, pero hazlo sabiendo en qué estás metido."*
 
 📌 Este documento está en desarrollo.  
 ¿Tienes una estrategia alternativa o experiencia fuera del sistema AFP? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).
