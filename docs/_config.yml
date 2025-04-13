@@ -2,7 +2,7 @@
 title: "LukaLibre Docs"
 description: LukaLibre Docs
 baseurl: "" # Para GitHub Pages, si tu sitio está en la raíz del repositorio
-#url: "https://lukalibre.cl" # Tu dominio
+url: "https://raestrada.github.io/lukalibre/" # Tu dominio
 remote_theme: just-the-docs/just-the-docs # Tema remoto Just the Docs
 
 # Configuración de Markdown y conversión
