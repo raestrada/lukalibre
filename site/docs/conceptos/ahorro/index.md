@@ -35,4 +35,4 @@ Solo ideas y herramientas para **sobrevivir mejor**, desde donde estés.
 
 ---
 
-📌 ¿Quieres contribuir a esta sección? Puedes crear o mejorar cualquier tema directamente en [GitHub](https://github.com/tuusuario/lukalibre).
+📌 ¿Quieres contribuir a esta sección? Puedes crear o mejorar cualquier tema directamente en [GitHub](https://github.com/raestrada/lukalibre).

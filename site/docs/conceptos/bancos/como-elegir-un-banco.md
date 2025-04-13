@@ -88,4 +88,4 @@ En este documento te damos **criterios simples y realistas** para elegir un banc
 > *"Un banco es un proveedor más. No te cases con el primero. Compara, cuestiona y cámbiate si no te sirve."*
 
 📌 Este documento está en desarrollo.  
-¿Cambiaste de banco y te fue mejor? ¿Te arrepientes de haber abierto una cuenta sin entender? Cuéntanos en [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).
+¿Cambiaste de banco y te fue mejor? ¿Te arrepientes de haber abierto una cuenta sin entender? Cuéntanos en [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

@@ -85,4 +85,4 @@ Este documento te explica cómo cerrar una cuenta de forma correcta y sin letra 
 > *"Cerrar una cuenta es gratis. No cerrarla puede salir carísimo."*
 
 📌 Este documento está en desarrollo.  
-¿Tuviste problemas cerrando una cuenta o el banco te hizo el trámite difícil? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).
+¿Tuviste problemas cerrando una cuenta o el banco te hizo el trámite difícil? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

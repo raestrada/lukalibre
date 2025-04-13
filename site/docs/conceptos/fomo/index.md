@@ -56,4 +56,4 @@ Porque la urgencia que te imponen... **no es tuya.**
 ---
 
 📌 ¿Superaste una decisión por presión social o aprendiste a desconfiar del hype?  
-Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre) y compártelo con otros.
+Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre) y compártelo con otros.

@@ -83,4 +83,4 @@ Pero **sí hay tiempo. Y sí puedes construir algo real, aunque sea lento.**
 > *“El sistema te dice que corras para escapar de la pobreza. LukaLibre te dice que pares, mires, y decidas con calma. No te estás quedando atrás: te están apurando a propósito.”*
 
 📌 Este documento está en desarrollo.  
-¿Viviste una presión parecida o escapaste del FOMO a tiempo? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).
+¿Viviste una presión parecida o escapaste del FOMO a tiempo? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

@@ -88,4 +88,4 @@ Aplica a personas que:
 > *"No es justo que no puedas usar tu propia plata cuando más la necesitas. Pero hoy, eso es lo que permite la ley."*
 
 �� Este documento está en desarrollo.  
-¿Pudiste acceder a un retiro bajo alguna excepción o fuiste mal informado por tu AFP? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).
+¿Pudiste acceder a un retiro bajo alguna excepción o fuiste mal informado por tu AFP? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

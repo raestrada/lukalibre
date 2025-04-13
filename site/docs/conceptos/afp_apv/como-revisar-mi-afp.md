@@ -84,4 +84,4 @@ Muchas AFP permiten que te llegue un aviso por correo o app **cada vez que entra
 > *“Tu AFP es tu plata. No es opcional saber cuánto tienes ni esperar a los 60 para mirar.”*
 
 📌 Este documento está en desarrollo.  
-¿Descubriste algo importante revisando tu AFP? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre) y ayúdanos a que nadie más se quede a ciegas.
+¿Descubriste algo importante revisando tu AFP? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre) y ayúdanos a que nadie más se quede a ciegas.

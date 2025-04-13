@@ -68,4 +68,4 @@ Por eso en LukaLibre no te vamos a juzgar: **vamos a ayudarte a tomar el control
 > *"Sobreendeudarse no pasa de un día para otro. Pero salir tampoco. La clave es enfrentar, no esconder."*
 
 📌 Este documento está en desarrollo.  
-¿Pasaste por una etapa de sobreendeudamiento y lograste salir o sobrevivir? Comparte tu experiencia en [GitHub](https://github.com/tuusuario/lukalibre).
+¿Pasaste por una etapa de sobreendeudamiento y lograste salir o sobrevivir? Comparte tu experiencia en [GitHub](https://github.com/raestrada/lukalibre).

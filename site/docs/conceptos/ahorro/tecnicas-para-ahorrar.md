@@ -83,4 +83,4 @@ En un año, casi $180.000.
 > *“El mejor ahorro es el que no ves. El segundo mejor es el que haces aunque sea con $500.”*
 
 📌 Este documento está en desarrollo.  
-¿Tienes alguna técnica que te ha servido? Súmala al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).
+¿Tienes alguna técnica que te ha servido? Súmala al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

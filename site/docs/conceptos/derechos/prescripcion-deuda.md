@@ -85,4 +85,4 @@ La prescripción **se "reinicia" si haces alguna de estas cosas**:
 > *"Si una deuda es vieja, no la toques antes de consultar. Pagarla puede revivirla."*
 
 📌 Este documento está en desarrollo.  
-¿Tuviste una experiencia con deuda prescrita o cobros abusivos pasados de fecha? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).
+¿Tuviste una experiencia con deuda prescrita o cobros abusivos pasados de fecha? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

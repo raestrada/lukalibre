@@ -90,4 +90,4 @@ Más info en el documento: [Cómo hacer un reclamo al SERNAC](../derechos/reclam
 > *"El banco no es tu enemigo, pero tampoco es tu amigo. Revísalo como revisarías el vuelto en la feria."*
 
 📌 Este documento está en desarrollo.  
-¿Descubriste un cobro que no sabías que existía? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre) y comparte tu experiencia.
+¿Descubriste un cobro que no sabías que existía? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre) y comparte tu experiencia.

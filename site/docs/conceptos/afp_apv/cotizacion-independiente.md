@@ -101,4 +101,4 @@ Si trabajas informalmente, igual puedes cotizar por tu cuenta con:
 > *"Si no tienes jefe, tú eres tu propio empleador. Y eso incluye preocuparte por tu pensión también."*
 
 📌 Este documento está en desarrollo.  
-¿Trabajas por tu cuenta y encontraste una forma realista de cotizar? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).
+¿Trabajas por tu cuenta y encontraste una forma realista de cotizar? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

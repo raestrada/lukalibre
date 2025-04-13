@@ -67,4 +67,4 @@ Cuando ahorras "por si acaso", sin objetivo claro:
 > *"Dale nombre a tu ahorro, como si fuera una misión. Te va a costar menos cumplirla."*
 
 📌 Este documento está en desarrollo.  
-¿Tienes una meta que lograste cumplir (o estás intentando)? Súmala al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).
+¿Tienes una meta que lograste cumplir (o estás intentando)? Súmala al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

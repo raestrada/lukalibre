@@ -92,4 +92,4 @@ El respeto y la transparencia también son formas de retribuir.
 > *"La deuda informal no tiene intereses… pero puede cobrarte en relaciones rotas."*
 
 📌 Este documento está en desarrollo.  
-¿Tuviste una experiencia difícil (o positiva) con una deuda informal? Compártela en el [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).
+¿Tuviste una experiencia difícil (o positiva) con una deuda informal? Compártela en el [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

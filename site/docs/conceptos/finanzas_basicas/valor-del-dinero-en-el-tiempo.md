@@ -66,4 +66,4 @@ Cuando evalúas:
 > *"La inflación es como el moho del dinero. Si lo dejas quieto sin cuidado, se te pudre."*
 
 📌 Documento en desarrollo.  
-¿Quieres contribuir con ejemplos cotidianos de cómo cambia el valor de la plata en el tiempo? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).
+¿Quieres contribuir con ejemplos cotidianos de cómo cambia el valor de la plata en el tiempo? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

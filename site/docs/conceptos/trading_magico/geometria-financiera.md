@@ -85,4 +85,4 @@ Pero el **análisis técnico serio**:
 > *“Si una figura solo funciona después de dibujarla… no es una herramienta, es un espejismo.”*
 
 📌 Este documento está en desarrollo.  
-¿Te enseñaron que los triángulos y canales eran infalibles? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre) y cuéntalo.
+¿Te enseñaron que los triángulos y canales eran infalibles? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre) y cuéntalo.

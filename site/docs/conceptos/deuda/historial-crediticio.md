@@ -88,4 +88,4 @@ No es el fin.
 > *“Tu historial no te define, pero sí te condiciona. Entenderlo es el primer paso para tomarle el control.”*
 
 📌 Este documento está en desarrollo.  
-¿Tienes dudas o experiencias con tu historial financiero? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).
+¿Tienes dudas o experiencias con tu historial financiero? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

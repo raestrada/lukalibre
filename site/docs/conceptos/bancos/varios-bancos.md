@@ -78,4 +78,4 @@ o una complicación innecesaria si no sabes para qué lo haces.
 > *"Más cuentas no significa más control. Solo funciona si cada cuenta tiene un propósito claro."*
 
 📌 Este documento está en desarrollo.  
-¿Tienes una estrategia con múltiples bancos o una historia de desorden que pudiste resolver? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).
+¿Tienes una estrategia con múltiples bancos o una historia de desorden que pudiste resolver? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

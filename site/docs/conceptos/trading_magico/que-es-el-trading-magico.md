@@ -80,4 +80,4 @@ Es un show visual para convencerte de que el mercado es predecible si compras su
 > *"Si alguien dice que puede predecir el mercado con figuras, lo más probable es que lo único que quiere es tu plata."*
 
 📌 Este documento está en desarrollo.  
-¿Te ofrecieron un curso, señal o comunidad de trading "milagrosa"? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre) y cuéntanos tu experiencia.
+¿Te ofrecieron un curso, señal o comunidad de trading "milagrosa"? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre) y cuéntanos tu experiencia.

@@ -77,4 +77,4 @@ Estas estafas **se hacen pasar por el gobierno, las AFP o bancos**, usando sitio
 > *“El Estado nunca te va a pedir tu clave por WhatsApp. Y ningún bono se pierde por no hacer clic rápido.”*
 
 📌 Este documento está en desarrollo.  
-¿Te intentaron estafar con un bono o retiro falso? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre) para ayudar a otros a no caer.
+¿Te intentaron estafar con un bono o retiro falso? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre) para ayudar a otros a no caer.

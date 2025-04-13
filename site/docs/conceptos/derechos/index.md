@@ -38,4 +38,4 @@ Esta sección es para que sepas qué puedes exigir, qué abusos no debes permiti
 
 ---
 
-📌 ¿Tienes un caso real o una experiencia útil? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre) y ayúdanos a fortalecer esta sección.
+📌 ¿Tienes un caso real o una experiencia útil? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre) y ayúdanos a fortalecer esta sección.

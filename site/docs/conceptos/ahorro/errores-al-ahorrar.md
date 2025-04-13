@@ -87,4 +87,4 @@ No toques tu ahorro salvo para **emergencias o metas reales**.
 > *"Ahorrar no es fácil. Pero equivocarse no significa que fallaste. Significa que estás aprendiendo."*
 
 📌 Este documento está en desarrollo.  
-¿Has pasado por alguno de estos errores? ¿Tienes una lección que aprendiste con los porrazos? Súmala al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).
+¿Has pasado por alguno de estos errores? ¿Tienes una lección que aprendiste con los porrazos? Súmala al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

@@ -66,4 +66,4 @@ Vamos a ayudarte a **ordenarte, negociar y salir paso a paso** (revisa los próx
 > *"La deuda no es mala. El problema es cuando la usas sin entenderla o sin saber cómo te va a pegar después."*
 
 📌 Este documento está en desarrollo.  
-¿Tienes una historia con una deuda que resultó peor de lo que parecía? Súmala al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).
+¿Tienes una historia con una deuda que resultó peor de lo que parecía? Súmala al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

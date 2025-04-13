@@ -98,4 +98,4 @@ Si no quedas conforme, puedes **llevar el caso a mediación, arbitraje o incluso
 > *"El SERNAC no es una bala mágica. Pero es una herramienta gratuita, legal y útil. Úsala."*
 
 📌 Este documento está en desarrollo.  
-¿Tienes una experiencia buena o mala reclamando por SERNAC? Súmala al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).
+¿Tienes una experiencia buena o mala reclamando por SERNAC? Súmala al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

@@ -92,4 +92,4 @@ Todo eso junto te lleva a pensar:
 
 📌 Este documento está en desarrollo.  
 ¿Tuviste una experiencia con cripto y FOMO? ¿Lograste evitar una mala decisión?  
-Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre) y compártelo.
+Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre) y compártelo.

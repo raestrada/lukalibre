@@ -90,4 +90,4 @@ Pero **inspirarse sin contexto puede ser autodestructivo.**
 > *“Si solo escuchas a los que ganaron, estás viendo el 1%. El otro 99% no aparece en redes, pero también existe.”*
 
 📌 Este documento está en desarrollo.  
-¿Te diste cuenta de este sesgo a tiempo o aprendiste por las malas? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).
+¿Te diste cuenta de este sesgo a tiempo o aprendiste por las malas? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

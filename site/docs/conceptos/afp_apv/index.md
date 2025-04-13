@@ -47,4 +47,4 @@ Especialmente si ganas poco, cotizas irregularmente o estás pensando en tu futu
 
 ---
 
-📌 ¿Quieres compartir tu experiencia o ayudar a mejorar esta sección? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).
+📌 ¿Quieres compartir tu experiencia o ayudar a mejorar esta sección? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

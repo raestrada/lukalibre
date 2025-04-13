@@ -116,4 +116,4 @@ Sí, pero…
 > pregúntale si realmente lo hizo. O si solo está repitiendo una historia para vender algo.”*
 
 📌 Este documento está en desarrollo.  
-¿Te sentiste presionado por historias de Bitcoin o cripto y aprendiste algo importante? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).
+¿Te sentiste presionado por historias de Bitcoin o cripto y aprendiste algo importante? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

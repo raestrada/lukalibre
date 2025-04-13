@@ -90,4 +90,4 @@ Pero muchos usan las criptomonedas para **armar estafas piramidales, plataformas
 
 📌 Este documento está en desarrollo.  
 ¿Caíste en una estafa de cripto o trading? ¿Te intentaron reclutar con promesas falsas?  
-Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre) y ayuda a que nadie más caiga.
+Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre) y ayuda a que nadie más caiga.

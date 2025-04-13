@@ -88,4 +88,4 @@ Son ilegales si no hay producto o inversión real.
 > *"Si ganas solo por meter más gente, y no por lo que vendes o haces… no es un negocio. Es una trampa en forma de pirámide."*
 
 📌 Este documento está en desarrollo.  
-¿Fuiste parte de un sistema así o lograste evitarlo a tiempo? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre) y comparte tu experiencia.
+¿Fuiste parte de un sistema así o lograste evitarlo a tiempo? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre) y comparte tu experiencia.

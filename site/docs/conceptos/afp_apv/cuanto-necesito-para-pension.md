@@ -95,4 +95,4 @@ Pero por eso **es clave entenderlo y empezar lo antes posible, aunque sea con po
 > *“No necesitas ser millonario para tener una pensión mejor. Pero sí necesitas empezar ahora, aunque sea con $5.000.”*
 
 📌 Este documento está en desarrollo.  
-¿Usaste el simulador de pensiones o descubriste cuánto necesitarías ahorrar? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).
+¿Usaste el simulador de pensiones o descubriste cuánto necesitarías ahorrar? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

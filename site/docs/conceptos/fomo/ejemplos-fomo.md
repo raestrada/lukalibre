@@ -85,4 +85,4 @@ Acá te mostramos ejemplos reales y cotidianos de cómo el FOMO te puede hacer t
 > *“Lo que hoy parece oportunidad, mañana puede ser deuda o arrepentimiento. Esperar un día nunca mató una buena decisión.”*
 
 📌 Este documento está en desarrollo.  
-¿Tomaste una decisión por FOMO y aprendiste algo? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre) y compártelo.
+¿Tomaste una decisión por FOMO y aprendiste algo? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre) y compártelo.

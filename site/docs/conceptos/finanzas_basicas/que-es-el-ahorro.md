@@ -65,4 +65,4 @@ Porque vivimos en un contexto donde:
 > *"El ahorro no es un lujo. Es una forma de resistencia en un sistema que te quiere siempre al límite."*
 
 📌 Este documento está en desarrollo.  
-Si tienes una técnica para ahorrar que te ha funcionado (aunque sea poco), compártela en nuestro [GitHub](https://github.com/tuusuario/lukalibre).
+Si tienes una técnica para ahorrar que te ha funcionado (aunque sea poco), compártela en nuestro [GitHub](https://github.com/raestrada/lukalibre).

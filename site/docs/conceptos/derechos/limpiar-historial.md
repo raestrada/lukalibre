@@ -93,4 +93,4 @@ Revisa si:
 > *“Tu historial financiero te acompaña, pero no tiene por qué perseguirte para siempre. Si ya pagaste o te equivocaron, exige que lo arreglen.”*
 
 📌 Este documento está en desarrollo.  
-¿Lograste limpiar tu historial o enfrentaste problemas con Equifax? Compártelo en [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).
+¿Lograste limpiar tu historial o enfrentaste problemas con Equifax? Compártelo en [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

@@ -75,4 +75,4 @@ Si no las cumplen, puedes denunciar.
 > *"Tener una deuda no le da permiso a nadie para pasarte a llevar."*
 
 📌 Este documento está en desarrollo.  
-¿Has vivido cobranza abusiva o necesitas ayuda para responder? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre) y comparte tu experiencia para ayudar a otros.
+¿Has vivido cobranza abusiva o necesitas ayuda para responder? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre) y comparte tu experiencia para ayudar a otros.

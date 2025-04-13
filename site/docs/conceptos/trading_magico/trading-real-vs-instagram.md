@@ -71,4 +71,4 @@ En cambio, **el trading real está lleno de controles**, validaciones y responsa
 > *"Si alguien en redes sociales te promete resultados rápidos y usa palabras como 'libertad' o 'garantizado', no está haciendo trading: está haciendo marketing."*
 
 📌 Este documento está en desarrollo.  
-¿Trabajas en finanzas o viste cómo funciona el mundo real desde dentro? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre) y comparte tu experiencia.
+¿Trabajas en finanzas o viste cómo funciona el mundo real desde dentro? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre) y comparte tu experiencia.

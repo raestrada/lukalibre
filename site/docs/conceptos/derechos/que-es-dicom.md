@@ -83,4 +83,4 @@ Eso puede seguir apareciendo un tiempo como "regularizada".
 > *"DICOM no es una maldición eterna. Es un registro. Y puedes enfrentarlo sin miedo si sabes cómo funciona."*
 
 📌 Este documento está en desarrollo.  
-¿Tienes experiencia revisando tu historial o recuperando tu reputación financiera? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).
+¿Tienes experiencia revisando tu historial o recuperando tu reputación financiera? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

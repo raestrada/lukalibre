@@ -79,4 +79,4 @@ En el mundo del trading, se traduce en:
 > *“El FOMO es un grito emocional. Si alguien lo usa para venderte algo, no quiere ayudarte: quiere que pagues sin pensar.”*
 
 📌 Este documento está en desarrollo.  
-¿Tomaste decisiones en trading por FOMO y aprendiste algo importante? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre) y compártelo.
+¿Tomaste decisiones en trading por FOMO y aprendiste algo importante? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre) y compártelo.

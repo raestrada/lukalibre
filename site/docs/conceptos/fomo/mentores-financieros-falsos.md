@@ -100,4 +100,4 @@ O cuando su negocio real no es la educación, sino **tu urgencia**.
 > *"Un mentor de verdad no te apura, no te vende ansiedad, y no necesita que te endeudes para escucharlo."*
 
 📌 Este documento está en desarrollo.  
-¿Tuviste una mala experiencia con un falso mentor o encontraste a alguien que sí valía la pena? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre) y cuéntalo.
+¿Tuviste una mala experiencia con un falso mentor o encontraste a alguien que sí valía la pena? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre) y cuéntalo.

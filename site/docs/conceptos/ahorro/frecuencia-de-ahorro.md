@@ -95,4 +95,4 @@ Así, sin darse cuenta, junta más de $20.000 al mes.
 > *"No se trata de cuánto ni cuándo. Se trata de empezar, adaptarte y no rendirte si un mes no se puede."*
 
 📌 Este documento está en desarrollo.  
-¿Tienes una rutina que te ha funcionado? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).
+¿Tienes una rutina que te ha funcionado? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

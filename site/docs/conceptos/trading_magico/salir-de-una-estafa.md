@@ -112,4 +112,4 @@ Puedes usar lo que viviste para:
 > *"Salir de una estafa no es solo dejar de pagar: es recuperar tu tranquilidad."*
 
 📌 Este documento está en desarrollo.  
-¿Saliste de una comunidad, mentor o app de trading dudosa? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre) y cuéntalo de forma anónima.
+¿Saliste de una comunidad, mentor o app de trading dudosa? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre) y cuéntalo de forma anónima.

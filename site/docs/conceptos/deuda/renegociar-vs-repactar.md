@@ -83,4 +83,4 @@ Es cuando **pides un nuevo crédito para pagar el anterior** (a veces en otra in
 > *"Si no entiendes lo que estás firmando, probablemente no te conviene."*
 
 📌 Este documento está en desarrollo.  
-¿Has vivido una experiencia buena o mala con una repactación? Súmala al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).
+¿Has vivido una experiencia buena o mala con una repactación? Súmala al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

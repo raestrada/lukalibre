@@ -75,4 +75,4 @@ Ejemplo:
 ---
 
 📌 Este documento está en desarrollo.  
-¿Has tenido que endeudarte para salir adelante? ¿Te arrepientes de una deuda impulsiva? Tu historia puede ayudar a otros. Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).
+¿Has tenido que endeudarte para salir adelante? ¿Te arrepientes de una deuda impulsiva? Tu historia puede ayudar a otros. Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

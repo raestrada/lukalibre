@@ -100,4 +100,4 @@ No pongas tu fondo de emergencia si no entiendes cómo funciona.
 > *"Una buena app no te hace millonario. Solo te ayuda a no gastar sin querer."*
 
 📌 Este documento está en desarrollo.  
-¿Tienes una app que te ha funcionado o alguna que te metió el dedo en la boca? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).
+¿Tienes una app que te ha funcionado o alguna que te metió el dedo en la boca? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

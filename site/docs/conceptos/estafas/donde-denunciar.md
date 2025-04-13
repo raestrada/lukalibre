@@ -91,4 +91,4 @@ Muchos esquemas se frenan porque **alguien reportó a tiempo**, aunque no haya c
 > *"Denunciar es gratis, útil y no es perder el tiempo. No estás solo. Cada denuncia suma."*
 
 📌 Este documento está en desarrollo.  
-¿Pudiste denunciar una estafa y se resolvió? ¿O al menos te dio paz? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre) y cuéntanos tu historia.
+¿Pudiste denunciar una estafa y se resolvió? ¿O al menos te dio paz? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre) y cuéntanos tu historia.

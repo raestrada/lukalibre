@@ -56,4 +56,4 @@ Estamos en contra de **vender milagros a gente vulnerable**, usando gráficos bo
 
 ---
 
-📌 ¿Te prometieron riqueza rápida con "líneas mágicas"? ¿Te metiste a una comunidad y viste cómo funciona desde dentro? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre) y cuéntanos lo que viste.
+📌 ¿Te prometieron riqueza rápida con "líneas mágicas"? ¿Te metiste a una comunidad y viste cómo funciona desde dentro? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre) y cuéntanos lo que viste.

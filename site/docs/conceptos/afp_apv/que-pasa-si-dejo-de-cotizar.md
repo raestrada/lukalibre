@@ -91,4 +91,4 @@ Pero entre más tiempo pases fuera, **más difícil será alcanzar una pensión 
 > *“Si no puedes cotizar hoy, que no sea excusa para no saber dónde estás parado. Revisa, planifica y vuelve cuando puedas.”*
 
 📌 Este documento está en desarrollo.  
-¿Viviste un periodo sin cotizar y lograste recuperarte o entender mejor tu situación? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).
+¿Viviste un periodo sin cotizar y lograste recuperarte o entender mejor tu situación? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

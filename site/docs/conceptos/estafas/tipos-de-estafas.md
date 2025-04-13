@@ -104,4 +104,4 @@ En esta guía te mostramos **las estafas más comunes en Chile**, cómo operan, 
 No estás solo.  
 Revisa el documento [¿Qué hacer si caí en una estafa?](que-hacer-si-caigo.md)
 
-Y si quieres ayudar a que otras personas no caigan, **súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre)** y comparte tu historia.
+Y si quieres ayudar a que otras personas no caigan, **súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre)** y comparte tu historia.

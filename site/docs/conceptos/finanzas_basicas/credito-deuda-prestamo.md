@@ -67,4 +67,4 @@ Una deuda **no siempre es mala**, pero **no tener claridad sobre tus deudas sí 
 > *"Tener deuda no te hace irresponsable. No entenderla, sí puede hacerte vulnerable."*
 
 📌 Este documento está en desarrollo.  
-¿Te gustaría compartir tu experiencia usando crédito o enfrentando una deuda? Contribuye en [GitHub](https://github.com/tuusuario/lukalibre).
+¿Te gustaría compartir tu experiencia usando crédito o enfrentando una deuda? Contribuye en [GitHub](https://github.com/raestrada/lukalibre).

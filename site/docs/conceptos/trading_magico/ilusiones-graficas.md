@@ -90,4 +90,4 @@ Sí, pero:
 > *“Si tienes que forzar una línea para que calce con el gráfico… no estás analizando: estás imaginando.”*
 
 📌 Este documento está en desarrollo.  
-¿Te enseñaron a dibujar figuras que “nunca fallaban”? ¿Viste cómo cambiaban las reglas después? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre) y cuéntanos tu historia.
+¿Te enseñaron a dibujar figuras que “nunca fallaban”? ¿Viste cómo cambiaban las reglas después? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre) y cuéntanos tu historia.

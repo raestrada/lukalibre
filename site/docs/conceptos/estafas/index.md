@@ -44,4 +44,4 @@ Sin miedo, sin tecnicismos, y con ejemplos reales.
 ---
 
 📌 ¿Tuviste una experiencia con una estafa y quieres ayudar a otros a no caer?  
-Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre) y contribuye con tu historia.
+Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre) y contribuye con tu historia.

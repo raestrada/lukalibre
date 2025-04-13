@@ -78,4 +78,4 @@ Ayudarás a evitar que otros caigan.
 > *“Caer no te hace tonto. Callar sí ayuda a que sigan estafando.”*
 
 📌 Este documento está en desarrollo.  
-¿Te pasó algo similar y aprendiste algo que podría ayudar a otros? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).
+¿Te pasó algo similar y aprendiste algo que podría ayudar a otros? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

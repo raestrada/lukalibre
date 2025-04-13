@@ -76,4 +76,4 @@ Y si no pagas, ese interés **se sigue acumulando**.
 > *"El interés puede ser tu amigo si inviertes, o tu enemigo si no entiendes cómo te lo cobran."*
 
 📌 Este documento está en desarrollo.  
-¿Tienes ejemplos de cobros abusivos de interés o buenas prácticas que quieras compartir? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).
+¿Tienes ejemplos de cobros abusivos de interés o buenas prácticas que quieras compartir? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

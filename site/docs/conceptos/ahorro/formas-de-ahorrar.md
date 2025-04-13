@@ -103,4 +103,4 @@ Puede ser:
 > *"No importa si ahorras en un banco, una alcancía o en una libreta con lápiz. Lo importante es que esa plata esté protegida de ti mismo... y de tus impulsos."*
 
 📌 Este documento está en desarrollo.  
-¿Tienes una forma creativa o realista de ahorrar? Súmala al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).
+¿Tienes una forma creativa o realista de ahorrar? Súmala al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

@@ -104,4 +104,4 @@ Este documento es para ti.
 > *“Estudiar no debería dejarte endeudado de por vida. Infórmate, revisa, reclama. No estás solo.”*
 
 📌 Este documento está en desarrollo.  
-¿Tienes CAE, deuda educativa, o viviste un caso injusto en tu proceso de estudio? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).
+¿Tienes CAE, deuda educativa, o viviste un caso injusto en tu proceso de estudio? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

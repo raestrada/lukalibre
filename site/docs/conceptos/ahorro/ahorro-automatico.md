@@ -79,4 +79,4 @@ Además:
 > *"Si tienes que decidir cada mes si ahorras... probablemente no vas a ahorrar. Que lo decida el sistema por ti."*
 
 📌 Este documento está en desarrollo.  
-¿Tienes una estrategia automática que te ha funcionado? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).
+¿Tienes una estrategia automática que te ha funcionado? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

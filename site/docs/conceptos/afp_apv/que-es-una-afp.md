@@ -83,4 +83,4 @@ Se invierte en los llamados **Fondos A, B, C, D o E**, dependiendo del riesgo:
 > *"No es tu culpa no entender las AFP. Pero si es tu futuro, vale la pena conocer cómo funciona el juego."*
 
 📌 Este documento está en desarrollo.  
-¿Tuviste un problema con tu AFP o lograste tomar mejores decisiones con tu fondo? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).
+¿Tuviste un problema con tu AFP o lograste tomar mejores decisiones con tu fondo? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

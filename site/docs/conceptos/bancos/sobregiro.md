@@ -92,4 +92,4 @@ Ejemplo:
 > *"El sobregiro no es un salvavidas. Es una cuerda que se aprieta si no sabes usarla."*
 
 📌 Este documento está en desarrollo.  
-¿Te pasó algo con el sobregiro y aprendiste a la mala? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).
+¿Te pasó algo con el sobregiro y aprendiste a la mala? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

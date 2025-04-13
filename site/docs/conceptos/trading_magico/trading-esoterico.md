@@ -88,4 +88,4 @@ por promesas cósmicas sin evidencia ni responsabilidad.
 > *"Si alguien mezcla mercado financiero con chakras o eclipses, no quiere ayudarte a invertir: quiere venderte fe con forma de curso."*
 
 📌 Este documento está en desarrollo.  
-¿Te ofrecieron señales astrológicas o te hablaron de "trading cuántico"? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre) y cuéntalo.
+¿Te ofrecieron señales astrológicas o te hablaron de "trading cuántico"? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre) y cuéntalo.

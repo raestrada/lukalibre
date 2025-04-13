@@ -101,4 +101,4 @@ Endeudarse por orgullo solo te atrapa más.
 > *"Antes de salvar tu puntaje, sálvate a ti mismo."*
 
 📌 Este documento está en desarrollo.  
-¿Sobreviviste una etapa donde no podías pagar? Tu historia puede ser faro para otros. Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).
+¿Sobreviviste una etapa donde no podías pagar? Tu historia puede ser faro para otros. Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

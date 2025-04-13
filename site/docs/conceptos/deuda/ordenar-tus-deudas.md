@@ -93,4 +93,4 @@ Pero **no aceptes la primera oferta**. Primero ordena todo y lee el próximo doc
 > *"No hay vergüenza en deber. Pero sí hay poder en saber a quién, cuánto y por qué."*
 
 �� Este documento está en desarrollo.  
-¿Tienes un sistema que te ayudó a ordenar tus deudas o sobreviviste a una avalancha financiera? Compártelo en [GitHub](https://github.com/tuusuario/lukalibre).
+¿Tienes un sistema que te ayudó a ordenar tus deudas o sobreviviste a una avalancha financiera? Compártelo en [GitHub](https://github.com/raestrada/lukalibre).

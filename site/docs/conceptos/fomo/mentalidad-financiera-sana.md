@@ -75,4 +75,4 @@ Tomar acción **cuando entiendes**, no cuando te da miedo quedarte atrás.
 > *"Estar bien con tu plata no es hacer lo mismo que todos. Es hacer lo que a ti te funciona, con calma y con sentido."*
 
 📌 Este documento está en desarrollo.  
-¿Estás construyendo tu propia relación con la plata fuera del ruido? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).
+¿Estás construyendo tu propia relación con la plata fuera del ruido? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

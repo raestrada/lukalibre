@@ -40,4 +40,4 @@ Acá estamos para **explicarte el sistema, ayudarte a navegarlo y que nadie te p
 
 ---
 
-📌 ¿Quieres contribuir a esta sección? Puedes crear o mejorar cualquier tema directamente en [GitHub](https://github.com/tuusuario/lukalibre).
+📌 ¿Quieres contribuir a esta sección? Puedes crear o mejorar cualquier tema directamente en [GitHub](https://github.com/raestrada/lukalibre).

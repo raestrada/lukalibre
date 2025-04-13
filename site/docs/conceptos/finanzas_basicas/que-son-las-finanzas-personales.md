@@ -45,4 +45,4 @@ Entender tus finanzas personales te ayuda a:
 
 ---
 
-📌 Este documento está en desarrollo. Si quieres ayudar a completarlo, súmate al [repositorio en GitHub](https://github.com/tuusuario/lukalibre).
+📌 Este documento está en desarrollo. Si quieres ayudar a completarlo, súmate al [repositorio en GitHub](https://github.com/raestrada/lukalibre).

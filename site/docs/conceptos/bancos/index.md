@@ -44,4 +44,4 @@ En esta sección te damos **información clara para que tú mandes, no el banco*
 ---
 
 📌 ¿Tienes una mala experiencia con un banco o aprendiste algo que te ayudó a no caer?  
-Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre) y ayúdanos a compartirlo.
+Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre) y ayúdanos a compartirlo.

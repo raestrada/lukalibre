@@ -92,4 +92,4 @@ Si puedes pagar tu deuda antes, **tienes derecho a hacerlo sin penalización**, 
 > *"Firmar un contrato no te quita tus derechos. Y deber plata no te convierte en menos persona."*
 
 📌 Este documento está en desarrollo.  
-¿Tienes dudas o casos reales donde crees que te pasaron a llevar? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre) y ayudemos a que nadie más caiga por desinformación.
+¿Tienes dudas o casos reales donde crees que te pasaron a llevar? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre) y ayudemos a que nadie más caiga por desinformación.

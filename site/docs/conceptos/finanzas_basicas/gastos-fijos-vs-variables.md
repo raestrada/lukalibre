@@ -70,4 +70,4 @@ Esto no es para que vivas castigado, sino para que **decidas con conciencia y no
 > *"No todo gasto variable es malo. Pero saber dónde está el botón de pausa te da poder."*
 
 📌 Este documento está en desarrollo.  
-¿Quieres sumar ejemplos o contar cómo armaste tu lista fija/variable? Súmate al [repositorio LukaLibre en GitHub](https://github.com/tuusuario/lukalibre).
+¿Quieres sumar ejemplos o contar cómo armaste tu lista fija/variable? Súmate al [repositorio LukaLibre en GitHub](https://github.com/raestrada/lukalibre).

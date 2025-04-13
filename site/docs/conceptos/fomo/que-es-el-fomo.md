@@ -89,4 +89,4 @@ Todo está lleno de "historias de éxito":
 
 📌 Este documento está en desarrollo.  
 ¿Superaste una decisión apurada por FOMO o te arrepentiste de actuar por presión?  
-Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre) y cuéntanos tu historia.
+Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre) y cuéntanos tu historia.

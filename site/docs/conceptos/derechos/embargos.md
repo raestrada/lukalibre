@@ -88,4 +88,4 @@ Si no ha llegado una orden judicial, y solo recibes llamadas o correos:
 > *"Si no hay juez, no hay embargo. Si hay amenazas sin juicio, hay abuso."*
 
 📌 Este documento está en desarrollo.  
-¿Has recibido amenazas de embargo o pasaste por un proceso real? Compártelo en [GitHub](https://github.com/tuusuario/lukalibre) para que otros sepan qué es verdad y qué no.
+¿Has recibido amenazas de embargo o pasaste por un proceso real? Compártelo en [GitHub](https://github.com/raestrada/lukalibre) para que otros sepan qué es verdad y qué no.

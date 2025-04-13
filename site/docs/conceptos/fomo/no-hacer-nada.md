@@ -78,4 +78,4 @@ Y esa ansiedad **hace que tomemos malas decisiones**.
 > *"Si estás confundido, no tomes decisiones. El apuro no es tuyo: te lo están metiendo."*
 
 📌 Este documento está en desarrollo.  
-¿Tomaste una buena decisión al esperar o evitar actuar por presión? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre) y cuéntalo.
+¿Tomaste una buena decisión al esperar o evitar actuar por presión? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre) y cuéntalo.

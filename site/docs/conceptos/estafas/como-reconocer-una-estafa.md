@@ -103,4 +103,4 @@ Pregúntate: **¿de dónde sale la plata que me están prometiendo?**
 > *“Si algo te genera ansiedad, urgencia o demasiada emoción… detente. Las decisiones financieras se toman con la cabeza, no con miedo.”*
 
 📌 Este documento está en desarrollo.  
-¿Detectaste una estafa a tiempo o te ayudaron a evitarla? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre) y comparte tu experiencia.
+¿Detectaste una estafa a tiempo o te ayudaron a evitarla? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre) y comparte tu experiencia.

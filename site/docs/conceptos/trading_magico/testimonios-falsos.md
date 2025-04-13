@@ -78,4 +78,4 @@ Porque atacan directo al corazón:
 > *“Un testimonio sin contexto no es una prueba: es una vitrina emocional diseñada para venderte algo.”*
 
 📌 Este documento está en desarrollo.  
-¿Viste testimonios sospechosos o descubriste que eran falsos? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre) y cuéntanos tu historia.
+¿Viste testimonios sospechosos o descubriste que eran falsos? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre) y cuéntanos tu historia.

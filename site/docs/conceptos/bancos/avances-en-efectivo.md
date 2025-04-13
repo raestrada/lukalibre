@@ -95,4 +95,4 @@ Solo si:
 > *"Si te ofrecen plata sin pedirte nada, probablemente es porque te la van a cobrar con creces."*
 
 📌 Este documento está en desarrollo.  
-¿Usaste un avance en efectivo y aprendiste a la mala? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).
+¿Usaste un avance en efectivo y aprendiste a la mala? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

@@ -30,6 +30,6 @@ Acá no te prometemos libertad financiera en 30 días, pero sí herramientas par
 ---
 
 ¿Quieres contribuir?  
-Revisa la [página de colaboración](../contribuir.html) o visita el [repositorio en GitHub](https://github.com/tuusuario/lukalibre).
+Revisa la [página de colaboración](../contribuir.html) o visita el [repositorio en GitHub](https://github.com/raestrada/lukalibre).
 
 ---

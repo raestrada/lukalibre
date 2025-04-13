@@ -65,4 +65,4 @@ Ejemplo:
 > *“La inflación es el impuesto silencioso. No te lo cobran... pero igual te lo quitan.”*
 
 📌 Documento en desarrollo.  
-¿Tienes ejemplos o formas creativas de sobrevivir a la inflación? ¡Súmalos al proyecto en [GitHub](https://github.com/tuusuario/lukalibre)! 🙌
+¿Tienes ejemplos o formas creativas de sobrevivir a la inflación? ¡Súmalos al proyecto en [GitHub](https://github.com/raestrada/lukalibre)! 🙌

@@ -90,4 +90,4 @@ Puedes reclamar ante el **SERNAC o la CMF**.
 > *"Si no te lo pueden explicar sin tecnicismos, probablemente no te conviene."*
 
 📌 Este documento está en desarrollo.  
-¿Firmaste algo sin entender o lograste exigir que te explicaran? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).
+¿Firmaste algo sin entender o lograste exigir que te explicaran? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

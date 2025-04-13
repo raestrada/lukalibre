@@ -99,4 +99,4 @@ Acá te explicamos cada una en chileno simple, con sus pros, contras y para qué
 
 📌 Este documento está en desarrollo.  
 ¿Te sirvió una cuenta digital para ordenar tus gastos? ¿Caíste en una trampa con una cuenta corriente?  
-Cuéntanos en el [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).
+Cuéntanos en el [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

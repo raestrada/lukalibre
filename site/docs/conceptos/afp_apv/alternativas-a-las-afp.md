@@ -101,4 +101,4 @@ Más info: [https://www.chileatiende.gob.cl](https://www.chileatiende.gob.cl)
 > *"Si no puedes cambiar el sistema, cambia tu estrategia. Ahorra donde puedas, como puedas, pero hazlo sabiendo en qué estás metido."*
 
 📌 Este documento está en desarrollo.  
-¿Tienes una estrategia alternativa o experiencia fuera del sistema AFP? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).
+¿Tienes una estrategia alternativa o experiencia fuera del sistema AFP? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

@@ -79,4 +79,4 @@ Acá te explicamos los tipos de deuda más comunes en Chile, con ejemplos y adve
 > *"Saber qué tipo de deuda tienes es el primer paso para ordenarte. No es lo mismo deber una tele que deber una operación médica."*
 
 📌 Este documento está en desarrollo.  
-¿Tienes ejemplos o dudas sobre tu tipo de deuda? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).
+¿Tienes ejemplos o dudas sobre tu tipo de deuda? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

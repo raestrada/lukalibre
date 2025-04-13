@@ -86,4 +86,4 @@ Porque:
 > *“Si un curso de finanzas suena como una oferta de CyberDay, es probable que el único que gane sea el que lo vende.”*
 
 📌 Este documento está en desarrollo.  
-¿Pagaste un curso que no cumplió lo que prometía? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre) y cuéntalo.
+¿Pagaste un curso que no cumplió lo que prometía? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre) y cuéntalo.

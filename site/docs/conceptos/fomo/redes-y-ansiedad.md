@@ -75,4 +75,4 @@ Solo el highlight de sus finanzas… o lo que quieren que creas.
 > *"Si una cuenta te genera ansiedad, no es educación financiera. Es presión disfrazada de éxito."*
 
 📌 Este documento está en desarrollo.  
-¿Tuviste que tomar distancia de redes para pensar con claridad sobre tu plata? Súmate al [GitHub de LukaLibre](https://github.com/tuusuario/lukalibre).
+¿Tuviste que tomar distancia de redes para pensar con claridad sobre tu plata? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).
