@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+:root {
+  --verde-luka: #3A6351;
+  --verde-nube: #D5E5D9;
+  --negro-callado: #222222;
+  --amarillo-caleta: #FFC857;
+  --blanco-panraza: #F9F9F9;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--blanco-panraza);
+  color: var(--negro-callado);
+  line-height: 1.6;
+}
+
+/* NAV BAR */
+nav {
+  background-color: var(--verde-luka);
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.logo-crop {
+  width: 72px;
+  height: 36px;
+  overflow: hidden;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-crop img {
+  height: 120px;
+  object-fit: cover;
+  object-position: center 45%;
+}
+
+.brand-text {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: white;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* MAIN CONTENT */
+main {
+  max-width: 960px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+main section {
+  margin-bottom: 3rem;
+}
+
+main section h2 {
+  color: var(--verde-luka);
+  margin-bottom: 0.5rem;
+  font-size: 1.8rem;
+}
+
+main p {
+  font-size: 1.1rem;
+}
+
+/* CALL TO ACTION BUTTON */
+.cta {
+  display: inline-block;
+  background-color: var(--amarillo-caleta);
+  color: var(--negro-callado);
+  font-weight: bold;
+  padding: 0.75rem 1.5rem;
+  margin-top: 1rem;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.cta:hover {
+  background-color: #e6b84e;
+}
+
+/* FOOTER */
+footer {
+  background-color: var(--verde-nube);
+  color: var(--negro-callado);
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
+  margin-top: 3rem;
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  nav {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  nav ul {
+    flex-direction: column;
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  nav ul li {
+    padding: 0.5rem 0;
+  }
+
+  .brand {
+    margin-bottom: 1rem;
+  }
+}

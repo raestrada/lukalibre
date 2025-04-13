@@ -1,0 +1,31 @@
+// 🎨 LukaLibre Color Variables
+
+$verde-luka: #3A6351;
+$verde-nube: #D5E5D9;
+$negro-callado: #222222;
+$amarillo-caleta: #FFC857;
+$blanco-panraza: #F9F9F9;
+
+// Uso general
+body {
+  background-color: $blanco-panraza;
+  color: $negro-callado;
+}
+
+.button-primary {
+  background-color: $verde-luka;
+  color: $blanco-panraza;
+
+  &:hover {
+    background-color: darken($verde-luka, 5%);
+  }
+}
+
+.button-cta {
+  background-color: $amarillo-caleta;
+  color: $negro-callado;
+
+  &:hover {
+    background-color: darken($amarillo-caleta, 5%);
+  }
+}
