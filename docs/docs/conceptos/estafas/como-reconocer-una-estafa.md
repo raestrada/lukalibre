@@ -1,3 +1,10 @@
+---
+layout: default
+title: Cómo reconocer una estafa
+nav_order: 6
+parent: Estafas financieras
+---
+
 # 🔍 Cómo reconocer una estafa (antes de caer)
 
 Las estafas ya no se ven como antes.  

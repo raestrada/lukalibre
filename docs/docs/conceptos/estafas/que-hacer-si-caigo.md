@@ -1,3 +1,10 @@
+---
+layout: default
+title: Qué hacer si caíste
+nav_order: 8
+parent: Estafas financieras
+---
+
 # 🆘 ¿Qué hacer si caí en una estafa? (Guía paso a paso)
 
 ¿Diste tus datos?  
@@ -58,7 +65,7 @@ Aunque no recuperes la plata, **es importante dejar constancia**:
 
 - **No borres los mensajes**: pueden servir como evidencia
 - **No sigas hablando con los estafadores**: no caigas en nuevas trampas
-- **No reenvíes la “oportunidad” a otros**: puedes involucrarte sin querer
+- **No reenvíes la "oportunidad" a otros**: puedes involucrarte sin querer
 
 💬 Comparte la experiencia con personas de confianza.  
 Ayudarás a evitar que otros caigan.
@@ -67,15 +74,15 @@ Ayudarás a evitar que otros caigan.
 
 ## 💬 LukaEjemplo
 
-> “Caí en una estafa por Instagram. Mandé $80.000 a una cuenta para un supuesto curso.  
+> "Caí en una estafa por Instagram. Mandé $80.000 a una cuenta para un supuesto curso.  
 > Me bloquearon. Llamé al banco, bloqueé mis tarjetas y denuncié en la PDI.  
-> No recuperé la plata, pero me ayudó a proteger mis datos y evitar algo peor.”
+> No recuperé la plata, pero me ayudó a proteger mis datos y evitar algo peor."
 
 ---
 
 ## 🧠 LukaTip
 
-> *“Caer no te hace tonto. Callar sí ayuda a que sigan estafando.”*
+> *"Caer no te hace tonto. Callar sí ayuda a que sigan estafando."*
 
 📌 Este documento está en desarrollo.  
 ¿Te pasó algo similar y aprendiste algo que podría ayudar a otros? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).
