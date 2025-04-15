@@ -43,19 +43,6 @@ favicon_ico: "/assets/images/lukalibre-notext.png"
 
 # Colores de LukaLibre
 color_scheme: "lukalibre"
-colors:
-  primary:
-    base: "#3A6351" # verde-luka
-    text: "#F9F9F9" # blanco-panraza
-  accent:
-    base: "#FFC857" # amarillo-caleta
-    text: "#222222" # negro-callado
-  background:
-    base: "#F9F9F9" # blanco-panraza
-    text: "#222222" # negro-callado
-  sidebar:
-    base: "#D5E5D9" # verde-nube
-    text: "#222222" # negro-callado
 
 # Configuración de búsqueda
 search_enabled: true
