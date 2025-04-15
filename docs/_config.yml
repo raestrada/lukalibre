@@ -25,6 +25,11 @@ defaults:
     values:
       layout: "default"
 
+# Configuración de Just the Docs
+aux_links:
+  "LukaLibre en GitHub":
+    - "//github.com/raestrada/lukalibre"
+
 # Configuración de colores y logo
 logo: "/assets/images/lukalibre_logo.svg"
 favicon_ico: "/assets/images/lukalibre-notext.png"
@@ -44,3 +49,16 @@ colors:
   sidebar:
     base: "#D5E5D9" # verde-nube
     text: "#222222" # negro-callado
+
+# Configuración de búsqueda
+search_enabled: true
+search:
+  placeholder: "Buscar en LukaLibre Docs..."
+  button:
+    label: "Buscar"
+    icon: "search"
+
+# Configuración de navegación
+nav_external_links: true
+nav_fold: true
+nav_exclude: []

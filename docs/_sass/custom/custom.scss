@@ -1,0 +1,49 @@
+// Variables de color de LukaLibre
+$verde-luka: #3A6351;
+$verde-nube: #D5E5D9;
+$negro-callado: #222222;
+$amarillo-caleta: #FFC857;
+$blanco-panraza: #F9F9F9;
+
+// Sobrescribir variables de Just the Docs
+$body-background-color: $blanco-panraza;
+$body-text-color: $negro-callado;
+$link-color: $verde-luka;
+$btn-primary-color: $verde-luka;
+$btn-primary-color-dark: darken($verde-luka, 10%);
+$sidebar-color: $verde-nube;
+$search-background-color: $verde-nube;
+$search-result-preview-color: $negro-callado;
+$base-button-color: $verde-luka;
+$feedback-color: $amarillo-caleta;
+
+// Estilos personalizados
+.site-title {
+  color: $verde-luka;
+}
+
+.site-button {
+  background-color: $verde-luka;
+  color: $blanco-panraza;
+  
+  &:hover {
+    background-color: darken($verde-luka, 5%);
+  }
+}
+
+.nav-list .nav-list-item .nav-list-link {
+  &:hover {
+    background-color: darken($verde-nube, 5%);
+  }
+}
+
+.search-input {
+  border-color: $verde-luka;
+  
+  &:focus {
+    border-color: $amarillo-caleta;
+  }
+}
+
+// Importar estilos de Just the Docs
+@import "just-the-docs"; 
