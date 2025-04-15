@@ -38,7 +38,7 @@ aux_links:
     - "//github.com/raestrada/lukalibre"
 
 # Configuración de colores y logo
-logo: "https://lukalibre.org/assets/images/lukalibre-notext.png"
+logo: "https://lukalibre.org/assets/images/lukalibre.png"
 favicon_ico: "https://lukalibre.org/assets/images/lukalibre-notext.png"
 
 # Colores de LukaLibre
