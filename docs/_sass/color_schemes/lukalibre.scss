@@ -1,3 +1,5 @@
+@import "./color_schemes/light";
+
 // Variables de color de LukaLibre
 $verde-luka: #3A6351;
 $verde-nube: #D5E5D9;
@@ -6,6 +8,18 @@ $amarillo-caleta: #FFC857;
 $blanco-panraza: #F9F9F9;
 
 // Sobrescribir variables del tema
+$white: $blanco-panraza;
+$grey-dk-000: $negro-callado;
+$grey-dk-100: $negro-callado;
+$grey-dk-200: $negro-callado;
+$grey-dk-250: $negro-callado;
+$grey-dk-300: $negro-callado;
+$grey-lt-000: $blanco-panraza;
+$grey-lt-100: $verde-nube;
+$grey-lt-200: $verde-nube;
+$grey-lt-300: $verde-nube;
+
+// Colores principales
 $body-background-color: $blanco-panraza;
 $sidebar-color: $verde-nube;
 $text-color: $negro-callado;
@@ -17,4 +31,20 @@ $btn-primary-color: $verde-luka;
 $base-button-color: $verde-luka;
 $search-background-color: $blanco-panraza;
 $search-result-preview-color: $negro-callado;
-$border-color: $verde-nube; 
+$border-color: $verde-nube;
+
+// Colores de estado
+$feedback-color: $amarillo-caleta;
+$feedback-hover-color: darken($amarillo-caleta, 10%);
+$feedback-active-color: darken($amarillo-caleta, 20%);
+
+// Colores de código
+$code-background-color: $blanco-panraza;
+$code-text-color: $negro-callado;
+$code-border-color: $verde-nube;
+
+// Colores de tabla
+$table-background-color: $blanco-panraza;
+$table-header-background-color: $verde-nube;
+$table-header-text-color: $negro-callado;
+$table-border-color: $verde-nube; 
