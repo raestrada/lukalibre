@@ -3,20 +3,28 @@ title: "LukaLibre Docs"
 description: LukaLibre Docs
 baseurl: "" # Para GitHub Pages, si tu sitio está en la raíz del repositorio
 url: "https://lukalibre.org/" # Tu dominio
-remote_theme: just-the-docs/just-the-docs # Tema remoto Just the Docs
+
+# Configuración del tema
+theme: just-the-docs
+remote_theme: just-the-docs/just-the-docs
 
 # Configuración de Markdown y conversión
 markdown: kramdown
 highlighter: rouge
 
+# Plugins
 plugins:
   - jekyll-feed
   - jekyll-sitemap
+  - jekyll-seo-tag
+  - jekyll-remote-theme
 
 # Archivos y carpetas a excluir
 exclude:
   - Gemfile
   - Gemfile.lock
+  - node_modules
+  - vendor
 
 # Configuración del layout por defecto
 defaults:
