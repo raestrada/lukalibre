@@ -1,0 +1,52 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Gasto: Personal",
+    "type": "object",
+    "required": ["tipo_gasto", "monto_pagado", "categoria_personal", "fecha"],
+    "properties": {
+      "tipo_gasto": {
+        "type": "string",
+        "const": "personal"
+      },
+      "categoria_personal": {
+        "type": "string",
+        "enum": [
+          "ropa",
+          "calzado",
+          "cuidado_personal",
+          "peluqueria",
+          "cosmeticos",
+          "perfumeria",
+          "otros"
+        ],
+        "description": "Subcategoría del gasto personal"
+      },
+      "establecimiento": {
+        "type": "string",
+        "description": "Nombre del local, tienda o marca donde se hizo la compra"
+      },
+      "monto_pagado": {
+        "type": "number",
+        "description": "Monto total pagado"
+      },
+      "moneda": {
+        "type": "string",
+        "enum": ["CLP", "USD", "EUR", "UF"],
+        "description": "Moneda del pago"
+      },
+      "medio_pago": {
+        "type": "string",
+        "description": "Medio utilizado: efectivo, tarjeta débito/crédito, prepago, app, etc."
+      },
+      "fecha": {
+        "type": "string",
+        "format": "date",
+        "description": "Fecha del gasto"
+      },
+      "comentario": {
+        "type": "string",
+        "description": "Comentario libre generado por el usuario o LLM"
+      }
+    }
+  }
+  

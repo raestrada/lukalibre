@@ -1,0 +1,61 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Gasto: Salud",
+    "type": "object",
+    "required": ["tipo_gasto", "monto_pagado", "tipo_servicio", "fecha_pago"],
+    "properties": {
+      "tipo_gasto": {
+        "type": "string",
+        "const": "salud"
+      },
+      "tipo_servicio": {
+        "type": "string",
+        "enum": [
+          "consulta_medica",
+          "examen",
+          "hospitalizacion",
+          "urgencia",
+          "medicamento",
+          "bono_fonasa",
+          "isapre",
+          "terapia",
+          "otros"
+        ],
+        "description": "Tipo de atención o producto de salud"
+      },
+      "profesional_o_institucion": {
+        "type": "string",
+        "description": "Nombre del médico, centro médico, farmacia o ISAPRE"
+      },
+      "especialidad": {
+        "type": "string",
+        "description": "Especialidad médica si aplica (ej: pediatría, oftalmología)"
+      },
+      "monto_pagado": {
+        "type": "number",
+        "description": "Monto pagado directamente"
+      },
+      "reembolso_esperado": {
+        "type": "number",
+        "description": "Monto esperado de reembolso (si aplica)"
+      },
+      "monto_reembolsado": {
+        "type": "number",
+        "description": "Monto efectivamente reembolsado"
+      },
+      "medio_pago": {
+        "type": "string",
+        "description": "Medio utilizado (efectivo, tarjeta, bono, etc.)"
+      },
+      "fecha_pago": {
+        "type": "string",
+        "format": "date",
+        "description": "Fecha en que se realizó el pago"
+      },
+      "comentario": {
+        "type": "string",
+        "description": "Comentario libre generado por el usuario o LLM"
+      }
+    }
+  }
+  

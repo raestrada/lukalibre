@@ -1,0 +1,59 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Gasto: Educación",
+    "type": "object",
+    "required": ["tipo_gasto", "monto_pagado", "nivel_educativo", "institucion", "fecha"],
+    "properties": {
+      "tipo_gasto": {
+        "type": "string",
+        "const": "educacion"
+      },
+      "nivel_educativo": {
+        "type": "string",
+        "enum": [
+          "preescolar",
+          "escolar",
+          "media",
+          "universitaria",
+          "tecnica",
+          "postgrado",
+          "cursos",
+          "certificaciones",
+          "otros"
+        ],
+        "description": "Nivel o tipo de educación al que corresponde el gasto"
+      },
+      "institucion": {
+        "type": "string",
+        "description": "Nombre del establecimiento o plataforma (ej: U. de Chile, Duoc, Coursera)"
+      },
+      "tipo_pago": {
+        "type": "string",
+        "enum": ["matricula", "colegiatura", "mensualidad", "inscripcion", "materiales", "otros"],
+        "description": "Tipo de gasto educacional realizado"
+      },
+      "monto_pagado": {
+        "type": "number",
+        "description": "Monto total pagado"
+      },
+      "moneda": {
+        "type": "string",
+        "enum": ["CLP", "USD", "EUR", "UF"],
+        "description": "Moneda utilizada"
+      },
+      "medio_pago": {
+        "type": "string",
+        "description": "Medio de pago utilizado"
+      },
+      "fecha": {
+        "type": "string",
+        "format": "date",
+        "description": "Fecha de la transacción"
+      },
+      "comentario": {
+        "type": "string",
+        "description": "Comentario libre generado por el usuario o LLM"
+      }
+    }
+  }
+  

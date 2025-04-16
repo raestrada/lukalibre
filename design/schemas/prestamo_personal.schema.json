@@ -1,0 +1,59 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Ingreso: Préstamo Personal",
+    "type": "object",
+    "required": ["tipo_ingreso", "monto_recibido", "prestamista", "fecha_desembolso"],
+    "properties": {
+      "tipo_ingreso": {
+        "type": "string",
+        "const": "prestamo_personal"
+      },
+      "monto_recibido": {
+        "type": "number",
+        "description": "Monto total recibido como préstamo"
+      },
+      "moneda": {
+        "type": "string",
+        "enum": ["CLP", "USD", "EUR", "UF", "OTRA"],
+        "description": "Moneda del préstamo"
+      },
+      "prestamista": {
+        "type": "string",
+        "description": "Nombre del prestamista (persona o institución)"
+      },
+      "rut_prestamista": {
+        "type": "string",
+        "description": "RUT si aplica (ej: banco o persona chilena)"
+      },
+      "interes_total": {
+        "type": "number",
+        "description": "Monto total de intereses pactado"
+      },
+      "tasa_interes_anual": {
+        "type": "number",
+        "description": "Tasa de interés anual en porcentaje (opcional)"
+      },
+      "numero_cuotas": {
+        "type": "integer",
+        "description": "Cantidad total de cuotas pactadas"
+      },
+      "fecha_desembolso": {
+        "type": "string",
+        "format": "date",
+        "description": "Fecha en que se recibió el dinero"
+      },
+      "garantia": {
+        "type": "string",
+        "description": "Descripción de garantía si aplica (ej: aval, prenda, hipoteca)"
+      },
+      "uso_declarado": {
+        "type": "string",
+        "description": "Motivo del préstamo (salud, consolidación, consumo, etc.)"
+      },
+      "comentario": {
+        "type": "string",
+        "description": "Comentario libre generado por el usuario o LLM"
+      }
+    }
+  }
+  

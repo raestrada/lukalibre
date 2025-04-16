@@ -1,0 +1,59 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Gasto: Entretenimiento y Ocio",
+    "type": "object",
+    "required": ["tipo_gasto", "monto_pagado", "categoria_ocio", "fecha"],
+    "properties": {
+      "tipo_gasto": {
+        "type": "string",
+        "const": "entretenimiento"
+      },
+      "categoria_ocio": {
+        "type": "string",
+        "enum": [
+          "cine",
+          "streaming",
+          "videojuegos",
+          "conciertos",
+          "bares_y_restaurantes",
+          "eventos",
+          "juegos_de_mesa",
+          "libros",
+          "otros"
+        ],
+        "description": "Subcategoría del gasto de ocio"
+      },
+      "proveedor": {
+        "type": "string",
+        "description": "Nombre del servicio, local o aplicación"
+      },
+      "monto_pagado": {
+        "type": "number",
+        "description": "Monto total pagado"
+      },
+      "moneda": {
+        "type": "string",
+        "enum": ["CLP", "USD", "EUR", "UF"],
+        "description": "Moneda en la que se realizó el pago"
+      },
+      "medio_pago": {
+        "type": "string",
+        "description": "Método de pago usado"
+      },
+      "frecuencia": {
+        "type": "string",
+        "enum": ["único", "mensual", "anual", "variable"],
+        "description": "Frecuencia si es un gasto recurrente"
+      },
+      "fecha": {
+        "type": "string",
+        "format": "date",
+        "description": "Fecha en que ocurrió el gasto"
+      },
+      "comentario": {
+        "type": "string",
+        "description": "Comentario libre generado por el usuario o LLM"
+      }
+    }
+  }
+  

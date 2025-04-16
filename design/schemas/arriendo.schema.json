@@ -1,0 +1,59 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Ingreso: Arriendo",
+    "type": "object",
+    "required": ["tipo_ingreso", "monto_recibido", "tipo_inmueble", "direccion"],
+    "properties": {
+      "tipo_ingreso": {
+        "type": "string",
+        "const": "arriendo"
+      },
+      "monto_recibido": {
+        "type": "number",
+        "description": "Monto líquido recibido por el arriendo"
+      },
+      "monto_bruto": {
+        "type": "number",
+        "description": "Monto bruto antes de descuentos o comisiones"
+      },
+      "retencion": {
+        "type": "number",
+        "description": "Retención de impuestos si aplica"
+      },
+      "tipo_inmueble": {
+        "type": "string",
+        "enum": ["departamento", "casa", "local", "bodega", "terreno", "otro"],
+        "description": "Tipo de propiedad arrendada"
+      },
+      "direccion": {
+        "type": "string",
+        "description": "Dirección del inmueble arrendado"
+      },
+      "comuna": {
+        "type": "string",
+        "description": "Comuna donde se encuentra la propiedad"
+      },
+      "region": {
+        "type": "string",
+        "description": "Región de Chile"
+      },
+      "arrendatario": {
+        "type": "string",
+        "description": "Nombre o razón social del arrendatario"
+      },
+      "rut_arrendatario": {
+        "type": "string",
+        "description": "RUT del arrendatario"
+      },
+      "fecha_pago": {
+        "type": "string",
+        "format": "date",
+        "description": "Fecha de recepción del pago"
+      },
+      "comentario": {
+        "type": "string",
+        "description": "Comentario libre generado por el usuario o LLM"
+      }
+    }
+  }
+  

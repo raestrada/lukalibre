@@ -1,0 +1,50 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Ingreso: Honorarios",
+    "type": "object",
+    "required": ["tipo_ingreso", "bruto", "retencion", "emisor"],
+    "properties": {
+      "tipo_ingreso": {
+        "type": "string",
+        "const": "honorarios"
+      },
+      "bruto": {
+        "type": "number",
+        "description": "Monto bruto de la boleta"
+      },
+      "retencion": {
+        "type": "number",
+        "description": "Monto retenido (actualmente 13%, puede cambiar)"
+      },
+      "neto": {
+        "type": "number",
+        "description": "Monto líquido recibido luego de retención"
+      },
+      "folio": {
+        "type": "string",
+        "description": "Número de folio de la boleta"
+      },
+      "emisor": {
+        "type": "string",
+        "description": "Persona o empresa que emite la boleta"
+      },
+      "receptor": {
+        "type": "string",
+        "description": "Entidad o persona a quien se presta el servicio"
+      },
+      "descripcion_servicio": {
+        "type": "string",
+        "description": "Descripción del trabajo realizado"
+      },
+      "fecha_emision": {
+        "type": "string",
+        "format": "date",
+        "description": "Fecha de emisión de la boleta"
+      },
+      "comentario": {
+        "type": "string",
+        "description": "Comentario libre generado por el usuario o LLM"
+      }
+    }
+  }
+  

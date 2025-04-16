@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Ingreso: Sueldo",
+  "type": "object",
+  "required": ["tipo_ingreso", "bruto", "descuentos", "afp", "salud"],
+  "properties": {
+    "tipo_ingreso": {
+      "type": "string",
+      "const": "sueldo"
+    },
+    "bruto": {
+      "type": "number",
+      "description": "Monto bruto antes de descuentos"
+    },
+    "descuentos": {
+      "type": "number",
+      "description": "Total descuentos legales"
+    },
+    "afp": {
+      "type": "string",
+      "description": "Nombre de la AFP"
+    },
+    "salud": {
+      "type": "string",
+      "description": "Nombre de la institución de salud (Fonasa, Isapre, etc.)"
+    },
+    "isapre_plan": {
+      "type": "string",
+      "description": "Nombre del plan si aplica a Isapre"
+    },
+    "imponible": {
+      "type": "number",
+      "description": "Base imponible para cotización"
+    },
+    "liquido": {
+      "type": "number",
+      "description": "Sueldo líquido percibido"
+    },
+    "periodo": {
+      "type": "string",
+      "format": "date",
+      "description": "Fecha o mes del sueldo"
+    },
+    "fuente": {
+      "type": "string",
+      "description": "Nombre del empleador o fuente de ingreso"
+    },
+    "comentario": {
+      "type": "string",
+      "description": "Comentario libre generado por el usuario o LLM"
+    }
+  }
+}
