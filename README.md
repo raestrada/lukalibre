@@ -14,6 +14,16 @@ Solo compartimos herramientas, información clara y conocimiento real para que p
 
 ---
 
+## 🔐 Zero-Knowledge by Design
+
+![Zero-Knowledge by design](./branding/zk_badge.png)
+
+LukaLibre está construido con privacidad total desde el diseño.  
+Los datos se almacenan cifrados localmente en tu navegador y ni siquiera el servidor puede verlos.  
+Este enfoque tipo Zero-Knowledge garantiza que tú seas el único que controla tu información financiera.
+
+---
+
 ## 🌐 Sitio web
 
 - 🔗 Página principal: [https://lukalibre.org/](https://lukalibre.org/)
