@@ -16,7 +16,7 @@ Solo compartimos herramientas, información clara y conocimiento real para que p
 
 ## 🔐 Zero-Knowledge by Design
 
-<img src="https://lukalibre.org/assets/images/zk_badge.png" alt="Zero-Knowledge by design" style="width: 50%; height: 50%;">
+<img src="https://lukalibre.org/assets/images/zk_badge.png" alt="Zero-Knowledge by design" style="width: 25%; height: 25%;">
 
 LukaLibre está construido con privacidad total desde el diseño.  
 Los datos se almacenan cifrados localmente en tu navegador y ni siquiera el servidor puede verlos.  
