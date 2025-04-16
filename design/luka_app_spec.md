@@ -16,6 +16,7 @@ El servidor solo cumple funciones de autenticación, configuración, distribuci�
 - **Web Crypto API** (solo para clave de apertura de la base)
 - **Groq API** (invocada a través de un proxy seguro)
 - **PWA** (Progressive Web App)
+- **Google Drive API** (para sincronizar backup en segundo plano del archivo `.wallet` de forma segura desde el navegador)
 
 ### Backend (Go + PostgreSQL)
 - Framework: **Go HTTP / Fiber / Chi**
@@ -34,7 +35,7 @@ El servidor solo cumple funciones de autenticación, configuración, distribuci�
 
 ## 🔁 Flujo general
 
-1. Usuario inicia sesión con OAuth → backend devuelve `sub`
+1. Usuario inicia sesión con OAuth (Google obligatorio para sincronización Drive) → backend devuelve `sub`
 2. Usuario ingresa `userSecret` (clave secundaria)
 3. En el navegador se deriva `clave_maestra = PBKDF2(sub + userSecret)`
 4. Esta clave se usa para abrir la base de datos SEE SQLite cifrada
@@ -44,6 +45,8 @@ El servidor solo cumple funciones de autenticación, configuración, distribuci�
 8. Se envía el prompt al backend via `POST /llm-proxy` → backend lo reenvía a **Groq** (no guarda nada)
 9. El resultado se guarda directamente en **SQLite cifrada (SEE)**
 10. Se actualizan las tablas **pre-agregadas** para mantener vistas eficientes
+11. El archivo `.wallet` cifrado se sincroniza automáticamente con **Google Drive** (desde el navegador), en segundo plano y de forma opcional
+12. Al abrir la app en otro dispositivo con la misma cuenta de Google y `userSecret`, la base se restaura automáticamente
 
 ---
 
@@ -128,7 +131,8 @@ CREATE TABLE metadata (
 
 ### Backup / Portabilidad
 - Exportable como `.lukalibre.wallet` (base SQLite SEE cifrada)
-- Restauración desde cualquier dispositivo autenticado con el mismo `sub + userSecret`
+- Restauración automática desde Google Drive si el usuario está autenticado con Google
+- Alternativamente, puede cargarse manualmente
 
 ---
 
@@ -141,6 +145,7 @@ CREATE TABLE metadata (
 | Robo del archivo `.wallet`       | Está cifrado con SEE y clave derivada                        |
 | XSS / claves en memoria          | CSP, uso de `CryptoKey`, claves no expuestas en DOM          |
 | Fugas vía LLM                    | Backend actúa como proxy efímero, sin logs ni persistencia   |
+| Acceso a Google Drive            | Limitado solo al archivo `.lukalibre.wallet`, y cifrado end-to-end |
 
 ---
 
@@ -153,6 +158,7 @@ CREATE TABLE metadata (
 │   ├── db/                # Conexión, modelos y agregaciones SQLite
 │   ├── llm/               # Armar prompts, interactuar con proxy
 │   ├── views/             # Interfaz gráfica PWA
+│   ├── backup/            # Módulo de integración con Google Drive
 │   └── utils/
 ├── backend/               # Go HTTP API + PostgreSQL
 │   ├── main.go
@@ -174,7 +180,8 @@ CREATE TABLE metadata (
 - Recomendaciones generadas por LLM
 - Agregación y resumen en tiempo real dentro del cliente
 - Gestión de metas de ahorro y seguimiento de avances
-- Backup/restauración simple y segura
+- Backup automático en Google Drive desde el navegador
+- Restauración sin fricción desde cualquier dispositivo Google
 - Interacción vía WebAssembly para máximo rendimiento
 
 ---
@@ -183,7 +190,7 @@ CREATE TABLE metadata (
 1. Migrar backend a Go (auth, proxy LLM, templates, config)
 2. Generar estructura del frontend en Go para WebAssembly
 3. Integrar SQLite SEE + clave derivada del usuario
-4. Implementar módulo de backup/restore de la base SEE
+4. Implementar módulo de backup/restore local + Google Drive
 5. Implementar proxy seguro para Groq (sin logs, sin BD)
 6. Conectar PostgreSQL para configuración y administración
 7. Diseñar flujos UI/UX con foco en privacidad y eficiencia
@@ -194,3 +201,4 @@ CREATE TABLE metadata (
 
 ## Repositorio: https://github.com/raestrada/lukalibre  
 ## Sitio Web: https://lukalibre.org
+
