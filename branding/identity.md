@@ -1,5 +1,10 @@
 # 🪙 LukaLibre — Identidad, Propósito y Estrategia
 
+_LukaLibre incluye dos componentes principales:_
+
+- 🧠 Un **Centro de Conocimiento Financiero Abierto** para aprender sin FOMO ni chamullo.
+- 🔐 Una **ZK App basada en LLM** que analiza tus finanzas de forma privada y automática desde el navegador.
+
 ## 🎯 Elevator Pitch
 
 **LukaLibre** es una plataforma chilena abierta y educativa que busca despertar a las personas del FOMO financiero y ayudarlas a tomar decisiones de dinero más realistas, conscientes y sostenibles. Sin humo, sin falsas promesas, sin elitismo.
@@ -13,7 +18,7 @@
 Construir una comunidad digital que:
 - Entiende el sistema financiero sin dejarse manipular.
 - Aprende a sobrevivir y mejorar, no a perseguir sueños imposibles.
-- Accede a herramientas claras y transparentes para el día a día financiero.
+- Accede a herramientas claras, automáticas y transparentes para el día a día financiero.
 
 ---
 
@@ -28,10 +33,12 @@ Construir una comunidad digital que:
 
 ## 💡 Solución
 
-Una plataforma que:
-- **Educa sin chamullo**: una base de conocimiento realista, sin FOMO ni fórmulas mágicas.
-- **Guía financieramente a personas reales**: consejos adaptados a contextos donde la plata alcanza justo o no alcanza.
-- **Acompaña con herramientas prácticas**: desde simuladores hasta calculadoras diseñadas para sobrevivir primero.
+Una **aplicación web confidencial** basada en inteligencia artificial que:
+
+- **Captura automáticamente información financiera** a partir de archivos, capturas, textos o boletas enviadas por el usuario.
+- **Analiza los datos localmente y de forma segura** mediante un modelo de lenguaje (LLM) sin comprometer la privacidad.
+- **Genera recomendaciones personalizadas** de ahorro, organización y salud financiera.
+- **Ofrece herramientas clásicas** como calculadoras, simuladores y metas de ahorro, pero integradas a tu historia financiera.
 
 ---
 
@@ -41,20 +48,24 @@ Una plataforma que:
 |-------|----------|--------|
 | 1     | Landing educativa para romper el FOMO | ✅ En desarrollo |
 | 2     | Centro de conocimiento en Markdown (Just the Docs) | ✅ En desarrollo |
-| 3     | Calculadora de supervivencia mensual | 🟡 Planificado |
-| 4     | Integración con bancos chilenos (sandbox) | 🔲 Futuro |
-| 5     | Registro de gastos básicos vía app | 🔲 Futuro |
-| 6     | Comunidades y testimonios reales | 🔲 Futuro |
+| 3     | Integración con Google para login y respaldo cifrado | ✅ En diseño |
+| 4     | Cliente WebAssembly con SQLite + SEE | ✅ En diseño |
+| 5     | Captura de artefactos (archivos, capturas, textos) | 🟡 Planificado |
+| 6     | Generación de informes con LLM vía proxy seguro | 🟡 Planificado |
+| 7     | Calculadora de supervivencia mensual | 🔲 Futuro |
+| 8     | Integración con bancos chilenos (sandbox) | 🔲 Futuro |
+| 9     | Comunidades y testimonios reales | 🔲 Futuro |
 
 ---
 
 ## 💚 Valor que entregamos
 
 - Empoderamiento desde la **conciencia y la realidad**, no desde la ilusión.
-- Herramientas gratuitas y open source para personas vulnerables.
+- Herramientas gratuitas, cifradas y open source para personas vulnerables.
 - Contenido en **lenguaje chileno, directo y empático**.
 - Prevención de estafas y sobreendeudamiento.
 - Reducción de la ansiedad financiera.
+- LLMs al servicio de la gente, no del mercado.
 
 ---
 
@@ -65,6 +76,7 @@ LukaLibre no es solo una herramienta. Es un proyecto:
 - **Educativo**: aporta contenido accesible donde el sistema no llega.
 - **Preventivo**: ayuda a evitar errores que arruinan vidas financieras.
 - **Transformador**: busca cambiar la narrativa de “si no inviertes eres un tonto” por “si entiendes cómo funciona el sistema, puedes sobrevivirlo y hackearlo”.
+- **ZK por diseño**: la información vive solo contigo. Sin servidores ni vigilancia.
 
 ---
 
@@ -73,6 +85,13 @@ LukaLibre no es solo una herramienta. Es un proyecto:
 LukaLibre puede monetizar de forma transparente y alineada con su propósito:
 
 1. **Donaciones libres y membresías solidarias**
+2. **Servicios financieros éticos asociados (por ejemplo, cooperativas o fondos de ahorro comunitarios)**
+3. **Talleres o cursos pagados para empresas, municipios u ONG**
+4. **Versiones “white label” para fundaciones o proyectos sociales**
+5. **Funcionalidades premium opcionales**, sin afectar las funciones gratuitas esenciales
+6. **Marketplace de datos anónimos y voluntarios**: si una institución quiere acceder a información financiera (por ejemplo, para investigación, desarrollo de productos justos o políticas públicas), cada persona podrá recibir una **oferta personalizada**, con condiciones claras. Solo si el usuario lo autoriza explícitamente con su **clave secundaria**, se enviará la información de forma cifrada y anónima. 
+7. **Auditorías comunitarias de políticas públicas**: por ejemplo, permitiendo que los usuarios donen su información para evaluar el impacto de subsidios, educación financiera o programas sociales.
+ y membresías solidarias**
 2. **Servicios financieros éticos asociados (por ejemplo, cooperativas o fondos de ahorro comunitarios)**
 3. **Talleres o cursos pagados para empresas, municipios u ONG**
 4. **Versiones “white label” para fundaciones o proyectos sociales**
