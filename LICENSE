@@ -4,33 +4,17 @@ Este proyecto está compuesto por **dos tipos de contenido**, cada uno con su pr
 
 ---
 
-## 1. 📄 Código fuente (HTML, CSS, JS, etc.)
+## 1. 📄 Código fuente (Go, HTML, JS, WebAssembly, etc.)
 
-Todo el código de esta plataforma está bajo licencia **MIT**:
+Todo el código de esta plataforma está licenciado bajo **GNU Affero General Public License v3.0 (AGPL-3.0)**:
 
-```
-MIT License
+Esto garantiza que:
+- Puedes usar, modificar y redistribuir el código de forma libre.
+- Si haces un fork y lo ofreces como servicio (SaaS, API o app web), **también debes publicar tus modificaciones** bajo la misma licencia.
+- No se permite privatizar derivados sin contribuir de vuelta.
 
-Copyright (c) 2024 Rodrigo Estrada
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-```
+Licencia completa:
+https://www.gnu.org/licenses/agpl-3.0.html
 
 ---
 
@@ -45,7 +29,6 @@ Puedes:
 **Siempre que cumplas con las siguientes condiciones:**
 
 - **Atribución:** Debes dar crédito adecuado, proporcionar un enlace a la licencia e indicar si se hicieron cambios. Puedes hacerlo de manera razonable, pero no de forma que sugiera que tienes el respaldo del autor.
-
 - **No Comercial:** No puedes utilizar el material con fines comerciales.
 
 Licencia completa:
@@ -55,10 +38,9 @@ https://creativecommons.org/licenses/by-nc/4.0/
 
 ## 🚀 En resumen
 
-- El código es libre, reutilizable y abierto: **MIT**
-- El contenido es libre y reutilizable con crédito, pero **no comercial**: **CC BY-NC 4.0**
+- El código es libre, reutilizable y protegido contra apropiación cerrada: **AGPL-3.0**
+- El contenido educativo es libre y reutilizable con atribución, pero **no comercial**: **CC BY-NC 4.0**
 
 Si quieres usar parte del contenido con fines comerciales o adaptarlo para otra organización, **escríbenos primero a través de GitHub** o en [https://lukalibre.org/contribuir](https://lukalibre.org/contribuir)
 
 Gracias por respetar el esfuerzo colaborativo y comunitario ✨
-

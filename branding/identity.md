@@ -114,4 +114,4 @@ Cualquiera puede aportar. Desde redactar artículos, corregir errores, diseñar 
 
 ## 🧾 Licencia
 
-LukaLibre es un proyecto de código abierto bajo la licencia MIT. El contenido educativo puede estar bajo CC-BY-NC-SA.
+LukaLibre es un proyecto de código abierto bajo la licencia AGPL-3.0. El contenido educativo puede estar bajo CC-BY-NC-SA.
