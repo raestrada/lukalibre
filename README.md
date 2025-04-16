@@ -16,7 +16,7 @@ Solo compartimos herramientas, información clara y conocimiento real para que p
 
 ## 🔐 Zero-Knowledge by Design
 
-![Zero-Knowledge by design](./branding/zk_badge.png)
+<img src="https://lukalibre.org/assets/images/zk_badge.png" alt="Zero-Knowledge by design" style="width: 50%; height: 50%;">
 
 LukaLibre está construido con privacidad total desde el diseño.  
 Los datos se almacenan cifrados localmente en tu navegador y ni siquiera el servidor puede verlos.  
@@ -92,11 +92,11 @@ pero **no puedes revender, monetizar ni usar con fines comerciales** sin permiso
 
 ## 💬 ¿Por qué "LukaLibre"?
 
-Porque en Chile una “luka” es una forma cotidiana de decir “mil pesos”.  
+Porque en Chile una "luka" es una forma cotidiana de decir "mil pesos".  
 Y porque creemos que **entender tu plata debería ser gratis, libre y sin humo**.
 
 ---
 
-📬 Si quieres colaborar, traducir, compartir tu historia o simplemente decir “hola”:  
+📬 Si quieres colaborar, traducir, compartir tu historia o simplemente decir "hola":  
 escríbenos en [https://github.com/raestrada/lukalibre](https://github.com/raestrada/lukalibre)
 
