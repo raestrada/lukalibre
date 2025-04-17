@@ -38,6 +38,11 @@ tasks:
     desc: Eliminar binarios compilados
     cmds:
       - rm -f frontend/main.wasm
+    
+  migrate:up:
+    desc: Ejecutar migraciones a la última versión
+    cmds:
+      - go run backend/main.go  # ya las aplica en el arranque
       
   build:sqlite-wasm:
     desc: Compilar SQLite SEE para WebAssembly
