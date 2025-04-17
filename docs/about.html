@@ -1,65 +1,84 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es-CL">
 <head>
-  <!-- Google tag (gtag.js) -->
+  <!-- ----- ANALYTICS ----- -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-JXXDLEY2TC"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
     gtag('config', 'G-JXXDLEY2TC');
   </script>
+
+  <!-- ----- HEAD META ----- -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sobre LukaLibre - Proyecto de Finanzas Sin Humo</title>
+  <title>Sobre LukaLibre - Proyecto de Finanzas sin Humo</title>
 
+  <!-- SEO -->
   <meta name="description" content="Descubre qué es LukaLibre, su propósito, visión social y cómo busca mejorar la educación financiera en Chile sin promesas falsas.">
-  <meta name="keywords" content="lukalibre, sobre el proyecto, educación financiera, chile, open source">
-  <meta name="author" content="Proyecto LukaLibre">
+  <meta name="keywords"    content="lukalibre, sobre el proyecto, educación financiera, chile, open source">
+  <meta name="author"      content="Proyecto LukaLibre">
+  <meta name="robots"      content="index,follow">
+  <meta name="geo.region"  content="CL">
+  <meta name="geo.placename" content="Chile">
+  <meta name="theme-color" content="#3A6351">
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Sobre LukaLibre" />
+  <meta property="og:title"       content="Sobre LukaLibre" />
   <meta property="og:description" content="Proyecto chileno que busca ayudar a la gente a entender la plata sin chamullo." />
-  <meta property="og:image" content="https://res.cloudinary.com/dyknhuvxt/image/upload/v1744509074/lukalibre-notext_cn8w1u.png" />
-  <meta property="og:url" content="https://tusitio.github.io/sobre.html" />
-  <meta property="og:type" content="article" />
+  <meta property="og:image"       content="https://res.cloudinary.com/dyknhuvxt/image/upload/v1744509074/lukalibre-notext_cn8w1u.png" />
+  <meta property="og:url"         content="https://lukalibre.org/about.html" />
+  <meta property="og:type"        content="article" />
+  <meta property="og:locale"      content="es_CL" />
+  <meta property="og:site_name"   content="LukaLibre" />
 
   <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Sobre LukaLibre" />
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="Sobre LukaLibre" />
   <meta name="twitter:description" content="Un proyecto sin fines de lucro para educación financiera realista en Chile." />
-  <meta name="twitter:image" content="https://res.cloudinary.com/dyknhuvxt/image/upload/v1744509074/lukalibre-notext_cn8w1u.png" />
+  <meta name="twitter:image"       content="https://res.cloudinary.com/dyknhuvxt/image/upload/v1744509074/lukalibre-notext_cn8w1u.png" />
 
   <!-- Favicon -->
-  <link rel="icon" href="https://res.cloudinary.com/dyknhuvxt/image/upload/c_thumb,w_32/v1744509074/lukalibre-notext_cn8w1u.png" type="image/png" />
+  <link rel="icon" href="https://res.cloudinary.com/dyknhuvxt/image/upload/c_thumb,w_32/v1744509074/lukalibre-notext_cn8w1u.png" type="image/png">
+  <link rel="apple-touch-icon" href="https://res.cloudinary.com/dyknhuvxt/image/upload/c_thumb,w_180/v1744509074/lukalibre-notext_cn8w1u.png">
 
-  <!-- Fuente -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
-  <!-- Estilos -->
-  <link rel="stylesheet" href="assets/css/style.css" />
+  <!-- Styles -->
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://lukalibre.org/about.html" />
 </head>
-<body>
 
-  <nav>
-    <div class="brand">
+<body>
+  <!-- ===== HEADER / NAV ===== -->
+  <header class="navbar shadow">
+    <a class="brand" href="/" aria-label="Inicio LukaLibre">
       <div class="logo-crop">
-        <img src="https://res.cloudinary.com/dyknhuvxt/image/upload/v1744509074/lukalibre-notext_cn8w1u.png" alt="Logo LukaLibre" />
+        <img src="https://res.cloudinary.com/dyknhuvxt/image/upload/v1744931115/lukalibre-crop_iu8a5x.png" alt="Logo LukaLibre">
       </div>
       <span class="brand-text">LukaLibre</span>
-    </div>
-    <ul>
-      <li><a href="index.html">Inicio</a></li>
-      <li><a href="docs/">Centro de Conocimiento</a></li>
-      <li><a href="sobre.html">Sobre el Proyecto</a></li>
-      <li><a href="contribuir.html">Contribuir</a></li>
-    </ul>
-  </nav>
+    </a>
 
+    <nav>
+      <ul class="nav-links">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="docs/">Centro de Conocimiento</a></li>
+        <li><a href="about.html">Sobre el Proyecto</a></li>
+        <li><a href="contribuir.html">Contribuir</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ===== MAIN ===== -->
   <main>
-    <section>
-      <h1>Sobre LukaLibre</h1>
+    <section class="fade-up" style="max-width:880px;margin:3rem auto;padding:0 1rem;">
+      <h1 style="color:#3A6351;margin-bottom:1rem;">Sobre LukaLibre</h1>
+
       <p><strong>LukaLibre</strong> es un proyecto de código abierto y sin fines de lucro que busca ayudar a personas en Chile a mejorar su relación con el dinero, sin caer en falsas promesas ni fórmulas mágicas para "hacerse rico".</p>
 
       <h2>🎯 ¿Qué queremos lograr?</h2>
@@ -78,13 +97,14 @@
       <h2>🚀 ¿Cómo se financia?</h2>
       <p>El proyecto se financia con aportes voluntarios, contribuciones open source y alianzas con iniciativas éticas. Jamás se monetizarán datos ni se venderán productos financieros ocultos.</p>
 
-      <p>Si quieres colaborar, revisa nuestro <a href="https://github.com/raestrada/lukalibre" target="_blank">repositorio en GitHub</a> o escríbenos a rodrigo.estrada@gmail.com</p>
+      <p>Si quieres colaborar, revisa nuestro <a href="https://github.com/raestrada/lukalibre" target="_blank" rel="noopener">repositorio en GitHub</a> o escríbenos a rodrigo.estrada@gmail.com</p>
     </section>
   </main>
 
+  <!-- ===== FOOTER ===== -->
   <footer>
-    <p>&copy; 2025 LukaLibre. Proyecto de educación financiera sin fines de lucro.</p>
+    <p>&copy; 2025 LukaLibre — Proyecto sin fines de lucro.</p>
+    <p>Educación Financiera Gratuita para Chile</p>
   </footer>
-
 </body>
 </html>
