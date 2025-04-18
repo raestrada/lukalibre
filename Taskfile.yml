@@ -1,34 +1,65 @@
 version: '3'
 
 tasks:
-  default:
-    cmds:
-      - task --list
-    silent: true
-
-  backend:install:
-    desc: Instala dependencias backend con Poetry
+  # Backend tasks
+  install-backend:
+    desc: Install backend (Python) dependencies
     dir: backend
     cmds:
-      - poetry install
+      - pip install -r requirements.txt
 
-  backend:run:
-    desc: Ejecuta FastAPI con autoreload
+  run-backend:
+    desc: Run backend in development mode
     dir: backend
-    deps: [backend:install]
     cmds:
-      - poetry run uvicorn app.main:app --reload
+      - uvicorn main:app --reload
 
-  frontend:dev:
-    desc: Ejecuta Vite dev server
+  test-backend:
+    desc: Run backend tests
+    dir: backend
+    cmds:
+      - pytest
+
+  # Frontend tasks
+  install-frontend:
+    desc: Install frontend (Svelte) dependencies
     dir: frontend
     cmds:
-      - npm run dev -- --host
+      - npm install
 
-  fmt:
-    desc: Formatea Python con black y JS/TS con prettier (si los tienes instalados)
+  run-frontend:
+    desc: Run frontend in development mode
+    dir: frontend
     cmds:
-      - echo "🔧 Formatting backend..."
-      - black backend || true
-      - echo "🔧 Formatting frontend..."
-      - prettier -w frontend || true
+      - npm run dev
+
+  build-frontend:
+    desc: Build production frontend
+    dir: frontend
+    cmds:
+      - npm run build
+
+  test-frontend:
+    desc: Run frontend tests
+    dir: frontend
+    cmds:
+      - npm run test
+
+  # Full project
+  install:
+    desc: Install both backend and frontend dependencies
+    cmds:
+      - task: install-backend
+      - task: install-frontend
+
+  dev:
+    desc: Run backend and frontend in development mode (parallel)
+    cmds:
+      - task: run-backend &
+      - task: run-frontend
+
+  test:
+    desc: Run backend and frontend tests
+    cmds:
+      - task: test-backend
+      - task: test-frontend
