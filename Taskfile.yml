@@ -6,68 +6,29 @@ tasks:
       - task --list
     silent: true
 
-  run:frontend:
-    desc: Compilar y servir la app PWA (Go + WebAssembly)
-    dir: frontend
-    cmds:
-      - echo "Compilando frontend en modo WASM..."
-      - go build -o main.wasm .
-      - echo "Sirviendo frontend en http://localhost:3000"
-      - python3 -m http.server 3000
-
-  run:backend:
-    desc: Ejecutar servidor backend con Fiber
+  backend:install:
+    desc: Instala dependencias backend con Poetry
     dir: backend
     cmds:
-      - echo "Iniciando backend en http://localhost:8080"
-      - go run main.go
+      - poetry install
+
+  backend:run:
+    desc: Ejecuta FastAPI con autoreload
+    dir: backend
+    deps: [backend:install]
+    cmds:
+      - poetry run uvicorn app.main:app --reload
+
+  frontend:dev:
+    desc: Ejecuta Vite dev server
+    dir: frontend
+    cmds:
+      - npm run dev -- --host
 
   fmt:
-    desc: Formatear código en frontend y backend
+    desc: Formatea Python con black y JS/TS con prettier (si los tienes instalados)
     cmds:
-      - go fmt ./frontend/...
-      - go fmt ./backend/...
-
-  tidy:
-    desc: Ejecutar go mod tidy en frontend y backend
-    cmds:
-      - go mod tidy -C frontend
-      - go mod tidy -C backend
-
-  clean:
-    desc: Eliminar binarios compilados
-    cmds:
-      - rm -f frontend/main.wasm
-    
-  migrate:up:
-    desc: Ejecutar migraciones a la última versión
-    cmds:
-      - go run backend/main.go  # ya las aplica en el arranque
-      
-  build:sqlite-wasm:
-    desc: Compilar SQLite SEE para WebAssembly
-    dir: frontend/db
-    cmds:
-      - echo "🔐 Descargando wa-sqlite con soporte para SEE..."
-      - |
-        git clone https://github.com/rhashimoto/wa-sqlite.git temp-wa-sqlite || true
-        cd temp-wa-sqlite
-        git checkout see
-      - echo "🔧 Compilando wa-sqlite con SEE y AES-256..."
-      - |
-        cd temp-wa-sqlite && \
-        emcc \
-          -sWASM=1 \
-          -O2 \
-          -sENVIRONMENT=web \
-          -sMODULARIZE=1 \
-          -sEXPORT_NAME=waSqlite \
-          -I. \
-          sqlite3-see.c shell.c \
-          -o ../sqlite-see.js \
-          -DSQLITE_HAS_CODEC \
-          -DSQLITE_ENABLE_JSON1 \
-          -DSQLITE_ENABLE_FTS5 \
-          -DSQLITE_ENABLE_COLUMN_METADATA \
-          -DSQLITE_THREADSAFE=0
-      - echo "✅ SQLite SEE WebAssembly compilado: sqlite-see.js + sqlite-see.wasm"
+      - echo "🔧 Formatting backend..."
+      - black backend || true
+      - echo "🔧 Formatting frontend..."
+      - prettier -w frontend || true

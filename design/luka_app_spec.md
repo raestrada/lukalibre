@@ -11,20 +11,22 @@ El servidor solo cumple funciones de autenticación, configuración, distribuci�
 ## 🌐 Tecnologías clave
 
 ### Frontend (en el navegador)
-- **Go (WebAssembly) + Vite**
+### Frontend (en el navegador)
+- **Svelte + Vite (PWA)**
 - **SQLite en el navegador** (wa-sqlite con **SQLite Encryption Extension - SEE**)
-- **Web Crypto API** (solo para clave de apertura de la base)
+- **Web Crypto API** (clave de apertura de la base cifrada)
 - **Groq API** (invocada a través de un proxy seguro)
-- **PWA** (Progressive Web App)
-- **Google Drive API** (para sincronizar backup en segundo plano del archivo `.wallet` de forma segura desde el navegador)
+- **Google Drive API** (para respaldos automáticos desde el navegador)
 
-### Backend (Go + PostgreSQL)
-- Framework: **Go HTTP / Fiber / Chi**
+### Backend (FastAPI + PostgreSQL)
+- Framework: **FastAPI** (con estructura de 3 capas: repositorios, servicios, rutas)
 - Base de datos: **PostgreSQL** para:
   - Configuraciones globales
   - Plantillas de prompts
   - Perfiles de usuario (OAuth)
   - Auditoría y control de versiones
+- Logging enriquecido con **Rich**
+- Dependencias gestionadas con **Poetry**
 - Endpoints:
   - `GET /prompts`
   - `GET /config`

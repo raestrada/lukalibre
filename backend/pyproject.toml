@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "lukalibre-backend"
+version = "0.1.0"
+description = "Backend FastAPI for LukaLibre ZK App"
+authors = ["Rodrigo Estrada <you@example.com>"]
+license = "AGPL-3.0"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.110"
+uvicorn = "^0.27"
+sqlalchemy = "^2.0"
+rich = "^13.7"
+python-dotenv = "^1.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
