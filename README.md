@@ -24,6 +24,33 @@ Este enfoque tipo Zero-Knowledge garantiza que tú seas el único que controla t
 
 ---
 
+## 🗺️ Roadmaps del Proyecto
+
+<div align="center">
+  <table>
+    <tr>
+      <td align="center">
+        <a href="design/technical_roadmap.md">
+          <img src="https://res.cloudinary.com/dyknhuvxt/image/upload/v1744931115/technical-roadmap-icon_abcd3x.png" alt="Technical Roadmap" width="64" height="64"><br>
+          <strong>Roadmap Técnico</strong>
+        </a><br>
+        Plan detallado de implementación<br>con arquitectura y fases de desarrollo
+      </td>
+      <td align="center">
+        <a href="branding/roadmap.md">
+          <img src="https://res.cloudinary.com/dyknhuvxt/image/upload/v1744931115/branding-roadmap-icon_wxyz3x.png" alt="Branding Roadmap" width="64" height="64"><br>
+          <strong>Roadmap de Impacto Social</strong>
+        </a><br>
+        Visión, metas y estrategia<br>para el impacto social del proyecto
+      </td>
+    </tr>
+  </table>
+</div>
+
+Conoce a dónde vamos y cómo planeamos llegar. Nuestros roadmaps detallan tanto los aspectos técnicos como el impacto social que buscamos generar con LukaLibre.
+
+---
+
 ## 🌐 Sitio web
 
 - 🔗 Página principal: [https://lukalibre.org/](https://lukalibre.org/)
@@ -50,6 +77,11 @@ lukalibre/
 │   │   ├── estafas/
 │   │   ├── fomo/
 │   │   └── trading-magico/
+├── /design/                    # Documentación técnica y de diseño
+│   ├── technical_roadmap.md    # Plan técnico de implementación
+│   └── luka_app_spec.md        # Especificaciones de la aplicación
+├── /branding/                  # Materiales de marca e identidad
+│   └── roadmap.md              # Roadmap de impacto social
 └── /assets/                    # Imágenes, logos, íconos y estilos
 ```
 
