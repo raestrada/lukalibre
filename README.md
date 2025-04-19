@@ -31,14 +31,14 @@ Este enfoque tipo Zero-Knowledge garantiza que tú seas el único que controla t
     <tr>
       <td align="center">
         <a href="design/technical_roadmap.md">
-          <img src="https://res.cloudinary.com/dyknhuvxt/image/upload/v1744931115/technical-roadmap-icon_abcd3x.png" alt="Technical Roadmap" width="64" height="64"><br>
+          <img src="https://res.cloudinary.com/dyknhuvxt/image/upload/v1745078634/technical-roadmap_vjuiby.png" alt="Technical Roadmap" width="64" height="64"><br>
           <strong>Roadmap Técnico</strong>
         </a><br>
         Plan detallado de implementación<br>con arquitectura y fases de desarrollo
       </td>
       <td align="center">
         <a href="branding/roadmap.md">
-          <img src="https://res.cloudinary.com/dyknhuvxt/image/upload/v1744931115/branding-roadmap-icon_wxyz3x.png" alt="Branding Roadmap" width="64" height="64"><br>
+          <img src="https://res.cloudinary.com/dyknhuvxt/image/upload/v1745078655/branding-roadmap_w79iio.png" alt="Branding Roadmap" width="64" height="64"><br>
           <strong>Roadmap de Impacto Social</strong>
         </a><br>
         Visión, metas y estrategia<br>para el impacto social del proyecto
