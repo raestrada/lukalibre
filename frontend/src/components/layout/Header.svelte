@@ -18,7 +18,7 @@
     <div class="header-content">
       <a href="/" use:link class="brand">
         <div class="logo">
-          <img src="/icons/logo.svg" alt="LukaLibre Logo" />
+          <img src="/icons/logo.png" alt="LukaLibre Logo" />
         </div>
         <span class="brand-text">LukaLibre</span>
       </a>
@@ -69,7 +69,7 @@
 
 <style>
   .header {
-    background-color: white;
+    background-color: #d3e0d3;
     box-shadow: 0 2px 10px var(--shadow);
     position: sticky;
     top: 0;
@@ -88,26 +88,29 @@
     align-items: center;
     text-decoration: none;
     color: var(--text-primary);
+    background-color: #d3e0d3;
+    padding: 8px 16px;
+    border-radius: var(--radius-md);
   }
   
   .logo {
-    width: 40px;
+    width: 80px;
     height: 40px;
     margin-right: 0.5rem;
     overflow: hidden;
-    border-radius: 8px;
   }
   
   .logo img {
     width: 100%;
     height: 100%;
     object-fit: contain;
+    background-color: transparent;
   }
   
   .brand-text {
     font-size: 1.25rem;
     font-weight: 600;
-    color: var(--primary);
+    color: #3A6351;
   }
   
   .nav-list {
@@ -132,7 +135,8 @@
     align-items: center;
   }
   
-  .nav-list a:hover {
+  .nav-list a:hover, 
+  .nav-list button:hover {
     color: var(--primary);
   }
   
@@ -141,13 +145,8 @@
     border: none;
     padding: 0;
     font-size: inherit;
-    font-weight: 500;
     cursor: pointer;
     transition: color 0.2s;
-  }
-  
-  .nav-list button:hover {
-    color: var(--primary);
   }
   
   .menu-toggle {
@@ -186,6 +185,13 @@
     bottom: -8px;
   }
   
+  .icon {
+    width: 18px;
+    height: 18px;
+    margin-right: 5px;
+    vertical-align: middle;
+  }
+  
   @media (max-width: 768px) {
     .menu-toggle {
       display: block;
@@ -198,7 +204,7 @@
       width: 80%;
       max-width: 300px;
       height: 100vh;
-      background-color: white;
+      background-color: #d3e0d3;
       box-shadow: -2px 0 10px var(--shadow);
       transform: translateX(100%);
       transition: transform 0.3s;
@@ -241,12 +247,5 @@
       transform: rotate(-45deg);
       bottom: 0;
     }
-  }
-  
-  .icon {
-    width: 18px;
-    height: 18px;
-    margin-right: 5px;
-    vertical-align: middle;
   }
 </style> 

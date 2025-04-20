@@ -13,13 +13,13 @@
   -moz-osx-font-smoothing: grayscale;
 
   /* Colores */
-  --primary: #28a745;
+  --primary: #3A6351;
   --secondary: #6c757d;
-  --success: #28a745;
+  --success: #3A6351;
   --error: #dc3545;
   --warning: #ffc107;
   --info: #17a2b8;
-  --verde-luka: #28a745;
+  --verde-luka: #3A6351;
   
   /* Textos */
   --text-primary: #212529;
@@ -132,7 +132,7 @@ button:focus-visible {
 }
 
 .btn-primary:hover {
-  background-color: #218838;
+  background-color: #2a4c3c;
 }
 
 .btn-secondary {
