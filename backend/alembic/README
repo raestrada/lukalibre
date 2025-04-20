@@ -1,0 +1,54 @@
+# Alembic Migrations
+
+## Descripción
+
+Este directorio contiene las migraciones de base de datos para la aplicación LukaLibre.
+Utilizamos Alembic para gestionar los cambios incrementales en el esquema de la base de datos.
+
+## Uso Básico
+
+### Crear una nueva migración
+
+```bash
+# Generar una migración automáticamente detectando cambios en los modelos
+alembic revision --autogenerate -m "descripción del cambio"
+```
+
+### Aplicar migraciones
+
+```bash
+# Aplicar todas las migraciones pendientes
+alembic upgrade head
+
+# Aplicar hasta una revisión específica
+alembic upgrade <revision_id>
+
+# Aplicar un número específico de migraciones desde la actual
+alembic upgrade +2
+```
+
+### Revertir migraciones
+
+```bash
+# Revertir a la revisión anterior
+alembic downgrade -1
+
+# Revertir hasta una revisión específica
+alembic downgrade <revision_id>
+
+# Revertir todas las migraciones
+alembic downgrade base
+```
+
+### Ver información
+
+```bash
+# Ver las migraciones pendientes
+alembic history --verbose
+```
+
+## Estructura de Archivos
+
+- `versions/` - Contiene los scripts de migración generados
+- `env.py` - Configuración del entorno de Alembic
+- `script.py.mako` - Plantilla para generar nuevas migraciones 

@@ -132,3 +132,70 @@ Y porque creemos que **entender tu plata debería ser gratis, libre y sin humo**
 📬 Si quieres colaborar, traducir, compartir tu historia o simplemente decir "hola":  
 escríbenos en [https://github.com/raestrada/lukalibre](https://github.com/raestrada/lukalibre)
 
+## Configuración del Entorno de Desarrollo
+
+### Base de Datos PostgreSQL con Docker
+
+El proyecto utiliza PostgreSQL como base de datos. Puedes levantarla fácilmente usando Docker Compose:
+
+1. Asegúrate de tener [Docker](https://www.docker.com/get-started) instalado en tu sistema.
+
+2. Desde la raíz del proyecto, ejecuta:
+
+```bash
+docker-compose up -d
+```
+
+Esto iniciará un contenedor PostgreSQL con la configuración necesaria:
+- **Host**: localhost
+- **Puerto**: 5432
+- **Usuario**: postgres
+- **Contraseña**: postgres
+- **Base de datos**: lukalibre
+
+### Backend (FastAPI)
+
+1. Navega al directorio backend:
+
+```bash
+cd backend
+```
+
+2. Copia el archivo de variables de entorno:
+
+```bash
+cp .env.example .env
+```
+
+3. Instala las dependencias usando Poetry:
+
+```bash
+poetry install
+```
+
+4. Aplica las migraciones:
+
+```bash
+poetry run alembic upgrade head
+```
+
+5. Inicializa los datos (crea un superusuario inicial):
+
+```bash
+poetry run python -m app.initial_data
+```
+
+6. Inicia el servidor de desarrollo:
+
+```bash
+poetry run uvicorn app.main:app --reload
+```
+
+El backend estará disponible en: http://localhost:8000
+
+La documentación de la API estará en: http://localhost:8000/docs
+
+## Licencia
+
+Este proyecto está bajo la licencia GNU Affero General Public License v3.0 (AGPL-3.0)
+
