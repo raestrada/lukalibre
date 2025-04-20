@@ -58,6 +58,15 @@ class Settings(BaseSettings):
     
     # Debug mode
     DEBUG: bool = False
+    
+    # JWT Configuration
+    JWT_ALGORITHM: str = "HS256"
+    REFRESH_TOKEN_EXPIRE_DAYS: int = 30
+    
+    # Google OAuth
+    GOOGLE_CLIENT_ID: str = ""
+    GOOGLE_CLIENT_SECRET: str = ""
+    GOOGLE_REDIRECT_URI: str = "http://localhost:8000/api/v1/auth/google/callback"
 
     model_config = {
         "case_sensitive": True,

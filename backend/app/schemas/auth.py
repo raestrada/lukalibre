@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Dict, Any
 
 from pydantic import BaseModel
 
@@ -11,6 +11,11 @@ class Token(BaseModel):
 
 
 class TokenPayload(BaseModel):
-    sub: Optional[int] = None
+    sub: Optional[str] = None
     email: Optional[str] = None
-    exp: Optional[int] = None 
+    exp: Optional[int] = None
+
+
+class GoogleAuthRequest(BaseModel):
+    code: str
+    redirect_uri: str 
