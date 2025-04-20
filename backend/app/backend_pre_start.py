@@ -2,10 +2,12 @@ import logging
 
 from tenacity import after_log, before_log, retry, stop_after_attempt, wait_fixed
 
+from app.core.logging import setup_logging, get_logger
 from app.db.session import SessionLocal
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+# Configurar logs
+setup_logging()
+logger = get_logger("app.startup")
 
 max_tries = 60 * 5  # 5 minutes
 wait_seconds = 1
@@ -22,15 +24,16 @@ def init() -> None:
         db = SessionLocal()
         # Try to create session to check if DB is awake
         db.execute("SELECT 1")
+        logger.debug("Conexión a base de datos establecida")
     except Exception as e:
-        logger.error(e)
+        logger.error(f"[bold red]Error al conectar con la base de datos: {str(e)}[/]")
         raise e
 
 
 def main() -> None:
-    logger.info("Inicializando servicio")
+    logger.info("[bold blue]Inicializando verificación previa del servicio[/]")
     init()
-    logger.info("Servicio inicializado")
+    logger.info("[bold green]Verificación previa completada con éxito[/]")
 
 
 if __name__ == "__main__":

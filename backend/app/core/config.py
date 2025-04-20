@@ -52,6 +52,12 @@ class Settings(BaseSettings):
     # First Superuser
     FIRST_SUPERUSER: EmailStr = "admin@lukalibre.org"
     FIRST_SUPERUSER_PASSWORD: str = "admin123"
+    
+    # Logs
+    LOG_LEVEL: str = "INFO"  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+    
+    # Debug mode
+    DEBUG: bool = False
 
     class Config:
         case_sensitive = True

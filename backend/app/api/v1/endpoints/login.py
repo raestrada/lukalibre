@@ -9,8 +9,10 @@ from app import crud, models, schemas
 from app.api import deps
 from app.core import security
 from app.core.config import settings
+from app.core.logging import get_logger
 from app.core.security import get_password_hash
 
+logger = get_logger("app.api.login")
 router = APIRouter()
 
 
@@ -21,20 +23,31 @@ def login_access_token(
     """
     OAuth2 compatible token login, get an access token for future requests
     """
+    logger.info(f"Intento de login para usuario: {form_data.username}")
+    
     user = crud.user.authenticate(
         db, email=form_data.username, password=form_data.password
     )
+    
     if not user:
+        logger.warning(f"Intento de login fallido para: {form_data.username} (credenciales incorrectas)")
         raise HTTPException(status_code=400, detail="Incorrect email or password")
+    
     elif not crud.user.is_active(user):
+        logger.warning(f"Intento de login con usuario inactivo: {form_data.username}")
         raise HTTPException(status_code=400, detail="Inactive user")
+    
     access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
-    return {
+    
+    token = {
         "access_token": security.create_access_token(
             user.id, expires_delta=access_token_expires
         ),
         "token_type": "bearer",
     }
+    
+    logger.info(f"[bold green]Login exitoso para usuario: {form_data.username}[/]")
+    return token
 
 
 @router.post("/login/test-token", response_model=schemas.User)
@@ -42,4 +55,5 @@ def test_token(current_user: models.User = Depends(deps.get_current_user)) -> An
     """
     Test access token
     """
+    logger.info(f"Verificación de token solicitada por usuario: {current_user.email}")
     return current_user 
