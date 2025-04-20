@@ -18,7 +18,7 @@
     <div class="header-content">
       <a href="/" use:link class="brand">
         <div class="logo">
-          <img src="/icons/logo.png" alt="LukaLibre Logo" />
+          <img src="/icons/logo.svg" alt="LukaLibre Logo" />
         </div>
         <span class="brand-text">LukaLibre</span>
       </a>
@@ -36,19 +36,29 @@
         <ul class="nav-list">
           {#if $authStore.isAuthenticated}
             <li>
-              <a href="/dashboard" use:link on:click={closeMenu}>Dashboard</a>
+              <a href="/dashboard" use:link on:click={closeMenu}>
+                <img src="/icons/dashboard.svg" alt="Dashboard" class="icon" />
+                Dashboard
+              </a>
             </li>
             <li>
               <button on:click={() => { authStore.logout(); closeMenu(); }}>
+                <img src="/icons/logout.svg" alt="Cerrar Sesión" class="icon" />
                 Cerrar Sesión
               </button>
             </li>
           {:else}
             <li>
-              <a href="/login" use:link on:click={closeMenu}>Iniciar Sesión</a>
+              <a href="/login" use:link on:click={closeMenu}>
+                <img src="/icons/login.svg" alt="Iniciar Sesión" class="icon" />
+                Iniciar Sesión
+              </a>
             </li>
             <li>
-              <a href="/register" use:link on:click={closeMenu}>Registrarse</a>
+              <a href="/register" use:link on:click={closeMenu}>
+                <img src="/icons/register.svg" alt="Registrarse" class="icon" />
+                Registrarse
+              </a>
             </li>
           {/if}
         </ul>
@@ -112,11 +122,14 @@
     margin-left: 1.5rem;
   }
   
-  .nav-list a {
+  .nav-list a, 
+  .nav-list button {
     text-decoration: none;
     color: var(--text-primary);
     font-weight: 500;
     transition: color 0.2s;
+    display: flex;
+    align-items: center;
   }
   
   .nav-list a:hover {
@@ -129,7 +142,6 @@
     padding: 0;
     font-size: inherit;
     font-weight: 500;
-    color: var(--text-primary);
     cursor: pointer;
     transition: color 0.2s;
   }
@@ -229,5 +241,12 @@
       transform: rotate(-45deg);
       bottom: 0;
     }
+  }
+  
+  .icon {
+    width: 18px;
+    height: 18px;
+    margin-right: 5px;
+    vertical-align: middle;
   }
 </style> 
