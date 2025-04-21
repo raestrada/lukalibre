@@ -5,6 +5,7 @@ from typing import Any
 from fastapi import APIRouter, Depends, HTTPException, status, Request, Response
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
+from fastapi.responses import RedirectResponse
 
 from app import crud, models, schemas
 from app.api import deps
@@ -95,7 +96,7 @@ async def authorize_google(request: Request):
     return await oauth.google.authorize_redirect(request, settings.GOOGLE_REDIRECT_URI)
 
 
-@router.get("/google/callback", response_model=schemas.Token)
+@router.get("/google/callback")
 async def google_callback(
     request: Request,
     response: Response,
@@ -109,9 +110,10 @@ async def google_callback(
         token = await oauth.google.authorize_access_token(request)
     except Exception as e:
         logger.error(f"Error al obtener token de acceso de Google: {str(e)}")
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Error al procesar la autenticación con Google",
+        # Redireccionar a frontend con error
+        frontend_url = settings.CLIENT_FRONTEND_URL or "http://localhost:5173"
+        return RedirectResponse(
+            url=f"{frontend_url}/auth/callback?error=Error+al+procesar+la+autenticación"
         )
     
     # Obtener información del usuario de Google
@@ -119,9 +121,10 @@ async def google_callback(
         user_info = await security.get_google_user_info(token["access_token"])
     except Exception as e:
         logger.error(f"Error al obtener información de usuario de Google: {str(e)}")
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="No se pudo obtener la información del usuario de Google",
+        # Redireccionar a frontend con error
+        frontend_url = settings.CLIENT_FRONTEND_URL or "http://localhost:5173"
+        return RedirectResponse(
+            url=f"{frontend_url}/auth/callback?error=No+se+pudo+obtener+la+información+del+usuario"
         )
     
     # Verificar si el usuario ya existe
@@ -175,13 +178,12 @@ async def google_callback(
         max_age=settings.REFRESH_TOKEN_EXPIRE_DAYS * 24 * 60 * 60,
     )
     
+    # Redireccionar al frontend con el token
+    frontend_url = settings.CLIENT_FRONTEND_URL or "http://localhost:5173"
     logger.info(f"Inicio de sesión con Google exitoso para usuario: {user.email}")
-    return {
-        "access_token": access_token,
-        "token_type": "bearer",
-        "user_id": str(user.id),
-        "email": user.email
-    }
+    return RedirectResponse(
+        url=f"{frontend_url}/auth/callback?token={access_token}&user_id={user.id}&email={user.email}"
+    )
 
 
 @router.post("/refresh", response_model=schemas.Token)
