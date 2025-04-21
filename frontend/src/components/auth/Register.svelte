@@ -11,7 +11,8 @@
   let loading = false;
   let error = '';
   
-  const API_URL = '/api/v1';
+  // Obtenemos la URL de la API desde las variables de entorno
+  const API_URL = import.meta.env.VITE_API_URL || '/api/v1';
   
   async function handleRegister(event: Event) {
     event.preventDefault();

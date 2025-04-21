@@ -6,7 +6,8 @@
   import axios from 'axios';
   import type { User } from '../../services/authService';
   
-  const API_URL = '/api/v1';
+  // Obtenemos la URL de la API desde las variables de entorno
+  const API_URL = import.meta.env.VITE_API_URL || '/api/v1';
   
   let user = get(authStore).user;
   let loading = false;

@@ -1,6 +1,9 @@
 import axios from 'axios';
 
-const API_URL = '/api/v1';
+// Obtenemos la URL de la API desde las variables de entorno
+const API_URL = import.meta.env.VITE_API_URL || '/api/v1';
+// Obtenemos la URL base para el proxy en desarrollo o directo en producción
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export interface AuthResponse {
   access_token: string;
