@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from starlette.middleware.sessions import SessionMiddleware
 
 from app.api.v1.api import api_router
 from app.core.config import settings
@@ -13,6 +14,14 @@ app = FastAPI(
     title=settings.PROJECT_NAME,
     openapi_url=f"{settings.API_V1_STR}/openapi.json"
 )
+
+# Add SessionMiddleware for OAuth authentication
+app.add_middleware(
+    SessionMiddleware,
+    secret_key=settings.SECRET_KEY,
+    max_age=settings.ACCESS_TOKEN_EXPIRE_MINUTES * 60,
+)
+logger.info("SessionMiddleware configurado para autenticación OAuth")
 
 # Set all CORS enabled origins
 if settings.BACKEND_CORS_ORIGINS:

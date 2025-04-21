@@ -2,123 +2,127 @@
   import { onMount } from 'svelte';
   import { push } from 'svelte-spa-router';
   import axios from 'axios';
+  import { authStore } from '../../stores/authStore';
   import authService from '../../services/authService';
   
   let loading = true;
-  let error = '';
+  let error: string | null = null;
   
-  // Obtenemos la URL de la API desde las variables de entorno
-  const API_URL = import.meta.env.VITE_API_URL || '/api/v1';
+  const API_URL = '/api/v1';
   
   onMount(async () => {
     try {
-      const url = new URL(window.location.href);
-      const errorParam = url.searchParams.get('error');
-      
-      if (errorParam) {
-        error = `Error de autenticación con Google: ${errorParam}`;
+      // Check if there's an error parameter in the URL
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.has('error')) {
+        error = urlParams.get('error');
         loading = false;
         return;
       }
-      
-      // Intentar obtener el token de la sesión (endpoint personalizado)
-      try {
-        const response = await axios.get(`${API_URL}/auth/session`, {
-          withCredentials: true
-        });
+
+      // The backend handles the OAuth exchange
+      // GET request to the callback endpoint
+      const response = await axios.get(`${API_URL}/auth/google/callback${window.location.search}`, {
+        withCredentials: true
+      });
+
+      if (response.data && response.data.access_token) {
+        // Store the token
+        authService.setToken(response.data.access_token);
         
-        if (response.data && response.data.access_token) {
-          authService.setToken(response.data.access_token);
+        try {
+          // Get current user data and update auth store
+          const user = await authService.getCurrentUser();
+          authStore.setUser(user);
+          
+          // Redirect to dashboard
           push('/dashboard');
-        } else {
-          // Si el token no está disponible, intentar refresh token
-          try {
-            const tokenResponse = await authService.refreshToken();
-            if (tokenResponse.access_token) {
-              push('/dashboard');
-            } else {
-              error = 'No se pudo obtener el token de autenticación';
-            }
-          } catch (refreshError) {
-            error = 'Error durante el proceso de autenticación';
-          }
+        } catch (userError) {
+          console.error('Error fetching user data:', userError);
+          error = 'Error al obtener datos del usuario';
         }
-      } catch (sessionError) {
-        error = 'Error al verificar la sesión';
+      } else {
+        error = 'No se recibió token de acceso';
       }
-    } catch (err) {
-      console.error('Error en el callback de Google:', err);
-      error = 'Error durante el proceso de autenticación';
+    } catch (err: any) {
+      console.error('Error en autenticación con Google:', err);
+      error = err.response?.data?.detail || 'Error durante la autenticación con Google';
     } finally {
       loading = false;
     }
   });
+
+  function goToLogin() {
+    push('/login');
+  }
 </script>
 
-<div class="callback-container">
-  <div class="callback-card">
-    {#if loading}
-      <div class="loading-state">
-        <h2>Procesando la autenticación...</h2>
-        <p>Por favor espere mientras completamos el proceso.</p>
-        <div class="spinner"></div>
-      </div>
-    {:else if error}
-      <div class="error-state">
-        <h2>Error de Autenticación</h2>
-        <p>{error}</p>
-        <button 
-          on:click={() => push('/login')}
-          class="btn-primary"
-        >
-          Volver al Inicio de Sesión
-        </button>
-      </div>
-    {/if}
-  </div>
+<div class="oauth-callback-container">
+  {#if loading}
+    <div class="loading">
+      <div class="spinner"></div>
+      <p>Procesando autenticación con Google...</p>
+    </div>
+  {:else if error}
+    <div class="error">
+      <h2>Error de autenticación</h2>
+      <p>{error}</p>
+      <button on:click={goToLogin}>Volver a iniciar sesión</button>
+    </div>
+  {/if}
 </div>
 
 <style>
-  .callback-container {
-    max-width: 500px;
-    margin: 0 auto;
-    padding: var(--space-xl) var(--space-md);
+  .oauth-callback-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+    background-color: #f5f5f5;
   }
-  
-  .callback-card {
-    background-color: white;
-    border-radius: var(--radius-md);
-    box-shadow: 0 2px 10px var(--shadow);
-    padding: var(--space-xl);
+
+  .loading, .error {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     text-align: center;
+    max-width: 400px;
+    width: 100%;
   }
-  
-  .loading-state h2,
-  .error-state h2 {
-    color: var(--primary);
-    margin-bottom: var(--space-md);
-  }
-  
-  .loading-state p,
-  .error-state p {
-    color: var(--text-secondary);
-    margin-bottom: var(--space-lg);
-  }
-  
+
   .spinner {
     border: 4px solid rgba(0, 0, 0, 0.1);
     border-radius: 50%;
-    border-top: 4px solid var(--primary);
-    width: 40px;
-    height: 40px;
-    margin: 0 auto;
+    border-top: 4px solid #3498db;
+    width: 50px;
+    height: 50px;
+    margin: 0 auto 1rem auto;
     animation: spin 1s linear infinite;
   }
-  
-  .error-state button {
-    margin-top: var(--space-md);
+
+  .error h2 {
+    color: #e74c3c;
+    margin-bottom: 1rem;
   }
-  
+
+  button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: background-color 0.2s;
+  }
+
+  button:hover {
+    background-color: #2980b9;
+  }
+
   @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
