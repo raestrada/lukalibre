@@ -70,17 +70,18 @@
 <style>
   .header {
     background-color: #d3e0d3;
-    box-shadow: 0 2px 10px var(--shadow);
+    box-shadow: 0 1px 4px var(--shadow);
     position: sticky;
     top: 0;
     z-index: 100;
+    width: 100%;
   }
   
   .header-content {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1rem 0;
+    padding: 0.5rem 0;
   }
   
   .brand {
@@ -89,8 +90,8 @@
     text-decoration: none;
     color: var(--text-primary);
     background-color: #d3e0d3;
-    padding: 8px 16px;
-    border-radius: var(--radius-md);
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
   }
   
   .logo {

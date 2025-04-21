@@ -3,7 +3,7 @@
   import { authStore } from '../stores/authStore';
 </script>
 
-<div class="home-container">
+<div class="container">
   <div class="hero">
     <h1>Bienvenido a Luka Libre</h1>
     <p class="subtitle">Tu plataforma de educación financiera para Chile</p>
@@ -20,17 +20,17 @@
   </div>
   
   <div class="features">
-    <div class="feature-card">
+    <div class="card feature-card">
       <h3>Aprende sobre finanzas</h3>
       <p>Accede a contenido educativo sobre inversiones, ahorro y planificación financiera.</p>
     </div>
     
-    <div class="feature-card">
+    <div class="card feature-card">
       <h3>Herramientas prácticas</h3>
       <p>Utiliza nuestras calculadoras y herramientas para tomar mejores decisiones financieras.</p>
     </div>
     
-    <div class="feature-card">
+    <div class="card feature-card">
       <h3>Comunidad activa</h3>
       <p>Conecta con otras personas interesadas en mejorar su educación financiera.</p>
     </div>
@@ -38,27 +38,21 @@
 </div>
 
 <style>
-  .home-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: var(--space-xl) var(--space-md);
-  }
-  
   .hero {
     text-align: center;
-    margin-bottom: var(--space-xxl);
+    margin-bottom: var(--space-xl);
     padding: var(--space-xl) 0;
   }
   
   h1 {
-    font-size: 3rem;
+    font-size: clamp(2rem, 5vw, 3rem);
     font-weight: 700;
     color: var(--primary);
     margin-bottom: var(--space-md);
   }
   
   .subtitle {
-    font-size: 1.5rem;
+    font-size: clamp(1.2rem, 2.5vw, 1.5rem);
     color: var(--text-secondary);
     margin-bottom: var(--space-xl);
   }
@@ -72,17 +66,24 @@
   
   .features {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: var(--space-lg);
-    margin-top: var(--space-xxl);
+    margin-top: var(--space-xl);
+    margin-bottom: var(--space-xl);
   }
   
   .feature-card {
-    background-color: white;
-    border-radius: var(--radius-md);
-    box-shadow: 0 2px 8px var(--shadow);
-    padding: var(--space-lg);
     text-align: center;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px var(--shadow);
   }
   
   .feature-card h3 {
@@ -93,17 +94,10 @@
   
   .feature-card p {
     color: var(--text-secondary);
+    margin-bottom: 0;
   }
   
   @media (max-width: 768px) {
-    h1 {
-      font-size: 2.5rem;
-    }
-    
-    .subtitle {
-      font-size: 1.2rem;
-    }
-    
     .cta-buttons {
       flex-direction: column;
       align-items: center;
