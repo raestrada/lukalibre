@@ -20,7 +20,7 @@
         <div class="logo">
           <img src="/icons/logo.png" alt="LukaLibre Logo" />
         </div>
-        <span class="brand-text">LukaLibre</span>
+        <span class="brand-text">LukaLibre ZK App</span>
       </a>
       
       <button 

@@ -5,8 +5,8 @@
 
 <div class="container">
   <div class="hero">
-    <h1>Bienvenido a Luka Libre</h1>
-    <p class="subtitle">Tu plataforma de educación financiera para Chile</p>
+    <h1>Bienvenido a LukaLibre ZK App</h1>
+    <p class="subtitle">Tu plataforma de educación financiera con privacidad garantizada mediante Zero Knowledge</p>
     
     <div class="cta-buttons">
       {#if $authStore.isAuthenticated}
@@ -21,18 +21,18 @@
   
   <div class="features">
     <div class="card feature-card">
-      <h3>Aprende sobre finanzas</h3>
-      <p>Accede a contenido educativo sobre inversiones, ahorro y planificación financiera.</p>
+      <h3>Privacidad de Datos</h3>
+      <p>Tus datos financieros están protegidos mediante tecnología Zero Knowledge. Nadie, ni siquiera nosotros, puede ver tu información financiera personal.</p>
     </div>
     
     <div class="card feature-card">
-      <h3>Herramientas prácticas</h3>
-      <p>Utiliza nuestras calculadoras y herramientas para tomar mejores decisiones financieras.</p>
+      <h3>Verificación sin Divulgación</h3>
+      <p>Demuestra tus activos y transacciones financieras sin revelar montos exactos o detalles sensibles, gracias a las pruebas de Zero Knowledge.</p>
     </div>
     
     <div class="card feature-card">
-      <h3>Comunidad activa</h3>
-      <p>Conecta con otras personas interesadas en mejorar su educación financiera.</p>
+      <h3>Educación Financiera Segura</h3>
+      <p>Aprende sobre finanzas personales y recibe recomendaciones basadas en tus datos, sin comprometer tu privacidad ni seguridad.</p>
     </div>
   </div>
 </div>
