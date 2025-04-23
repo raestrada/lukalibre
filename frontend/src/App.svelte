@@ -1,7 +1,10 @@
 <script lang="ts">
   import Router from 'svelte-spa-router';
   import { wrap } from 'svelte-spa-router/wrap';
+  import { push } from 'svelte-spa-router';
   import Layout from './components/layout/Layout.svelte';
+  import { authStore } from './stores/authStore';
+  import { get } from 'svelte/store';
   
   // Componentes para las rutas
   import Home from './components/Home.svelte';
@@ -9,6 +12,14 @@
   import Register from './components/auth/Register.svelte';
   import GoogleCallback from './components/auth/GoogleCallback.svelte';
   import Profile from './components/user/Profile.svelte';
+  
+  // Función para verificar si el usuario está autenticado
+  function isAuthenticated() {
+    const state = get(authStore);
+    const autenticado = state.isAuthenticated && !state.loading;
+    console.log('Verificación de autenticación en ruta:', autenticado);
+    return autenticado;
+  }
   
   // Definición de rutas
   const routes = {
@@ -20,8 +31,11 @@
       component: Profile,
       conditions: [
         () => {
-          // Aquí podemos verificar si el usuario está autenticado
-          // Por ahora, permitimos acceso a todos
+          if (!isAuthenticated()) {
+            console.log('Usuario no autenticado, redirigiendo a login');
+            push('/login');
+            return false;
+          }
           return true;
         }
       ]
@@ -30,7 +44,11 @@
       component: Profile, // Usar el componente Profile como dashboard
       conditions: [
         () => {
-          // Verificar autenticación cuando tengamos la lógica lista
+          if (!isAuthenticated()) {
+            console.log('Usuario no autenticado, redirigiendo a login');
+            push('/login');
+            return false;
+          }
           return true;
         }
       ]

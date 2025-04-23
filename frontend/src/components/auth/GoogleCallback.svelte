@@ -12,13 +12,18 @@
   // Obtenemos la URL de la API desde las variables de entorno
   const API_URL = import.meta.env.VITE_API_URL || '/api/v1';
   
-  // Función para redireccionar al dashboard de manera limpia
+  // Función para redireccionar al dashboard de manera forzada
   function redirectToDashboard() {
-    console.log("Redirigiendo al dashboard...");
-    // Usar history.replaceState para evitar que quede en el historial
-    window.history.replaceState({}, '', '/#/dashboard');
-    // Recargar para asegurar que se aplique correctamente
-    window.location.reload();
+    console.log("Redirigiendo al dashboard de manera forzada...");
+    
+    // Método directo y forzado - esto garantiza que se navegue al dashboard
+    // Eliminar primero la URL actual con sus parámetros
+    window.location.href = '/';
+    
+    // Luego de un breve momento, ir al dashboard
+    setTimeout(() => {
+      window.location.href = '/#/dashboard';
+    }, 100);
   }
   
   onMount(async () => {
@@ -47,7 +52,11 @@
           // Inicializar la store de autenticación
           await authStore.init();
           
-          // Redireccionar al dashboard
+          // Registrar para depuración
+          const state = authStore.getState();
+          console.log("Token almacenado y authStore inicializado. Usuario:", state.user ? state.user.email : "No disponible");
+          
+          // Redireccionar al dashboard de manera forzada
           redirectToDashboard();
           return;
         } catch (err) {
@@ -78,7 +87,11 @@
             // Inicializar el store de autenticación con el token
             await authStore.init();
             
-            // Redireccionar al dashboard
+            // Registrar para depuración
+            const storeState = authStore.getState();
+            console.log("Token almacenado y authStore inicializado. Usuario:", storeState.user ? storeState.user.email : "No disponible");
+            
+            // Redireccionar al dashboard de manera forzada
             redirectToDashboard();
             return;
           } else {

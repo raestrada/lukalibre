@@ -1,16 +1,16 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { get } from 'svelte/store';
   import { authStore } from '../../stores/authStore';
   import authService from '../../services/authService';
   import axios from 'axios';
   import type { User } from '../../services/authService';
+  import { push } from 'svelte-spa-router';
   
   // Obtenemos la URL de la API desde las variables de entorno
   const API_URL = import.meta.env.VITE_API_URL || '/api/v1';
   
-  let user = get(authStore).user;
-  let loading = false;
+  let user = authStore.getState().user;
+  let loading = true;
   let editMode = false;
   let message = { text: '', type: '' };
   
@@ -18,37 +18,69 @@
   let fullName = user?.full_name || '';
   let email = user?.email || '';
   
-  onMount(() => {
+  onMount(async () => {
+    console.log("Profile - Estado de autenticación:", authStore.getState().isAuthenticated);
+    console.log("Profile - Usuario actual:", user ? user.email : "No disponible");
+    
+    // Verificar si hay sesión activa
     if (!user) {
+      const isAuthenticated = await authService.checkSession();
+      if (!isAuthenticated) {
+        console.log("Usuario no autenticado, redirigiendo a login");
+        push('/login');
+        return;
+      }
+      
+      // Si hay sesión pero no usuario, obtenerlo
+      await fetchUserData();
+    } else {
+      // Asegurarse de que tengamos la información más actualizada
       fetchUserData();
     }
+    
+    loading = false;
   });
   
   const fetchUserData = async () => {
     loading = true;
     try {
+      console.log("Obteniendo datos de usuario desde API...");
       const token = authService.getToken();
-      if (!token) return;
+      if (!token) {
+        console.error("No se encontró token");
+        push('/login');
+        return;
+      }
       
-      const response = await axios.get(`${API_URL}/users/me`, {
+      const response = await axios.get<User>(`${API_URL}/users/me`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       
       if (response.data) {
-        user = response.data;
-        fullName = user.full_name || '';
-        email = user.email || '';
-        authStore.setUser(user);
+        // Asegurarse de que la respuesta tenga los datos necesarios
+        const userData: User = response.data;
+        user = userData;
+        fullName = userData.full_name || '';
+        email = userData.email || '';
+        authStore.setUser(userData);
+        console.log("Datos de usuario obtenidos correctamente:", userData.email);
       }
     } catch (error) {
       console.error('Error al obtener datos del usuario:', error);
       message = { text: 'No se pudieron cargar los datos del perfil', type: 'error' };
+      
+      // Si hay un error de autenticación, redireccionar al login
+      if (axios.isAxiosError(error) && error.response?.status === 401) {
+        authStore.logout();
+      }
     } finally {
       loading = false;
     }
   };
   
   const updateProfile = async () => {
+    if (!user) return;
+    
     loading = true;
     message = { text: '', type: '' };
     
@@ -56,7 +88,7 @@
       const token = authService.getToken();
       if (!token) return;
       
-      const response = await axios.put(
+      const response = await axios.put<User>(
         `${API_URL}/users/me`,
         { full_name: fullName, email },
         { headers: { Authorization: `Bearer ${token}` } }
@@ -77,10 +109,12 @@
   };
   
   const toggleEditMode = () => {
+    if (!user) return;
+    
     if (editMode) {
       // Cancelar edición, restaurar valores originales
-      fullName = user?.full_name || '';
-      email = user?.email || '';
+      fullName = user.full_name || '';
+      email = user.email || '';
     }
     editMode = !editMode;
     message = { text: '', type: '' };
