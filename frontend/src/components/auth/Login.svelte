@@ -1,55 +1,87 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import { authStore } from '../../stores/authStore';
   import authService from '../../services/authService';
   import { link } from 'svelte-spa-router';
+  import { push } from 'svelte-spa-router';
+  import { get } from 'svelte/store';
   
   let loading = false;
   let error = '';
+  let checkingAuth = true;
+  
+  onMount(async () => {
+    try {
+      // Verificar si hay una sesión activa utilizando el método mejorado
+      console.log("Verificando sesión existente...");
+      const isAuthenticated = await authService.checkSession();
+      
+      if (isAuthenticated) {
+        console.log("Sesión activa encontrada, redirigiendo a dashboard...");
+        push('/dashboard');
+        return;
+      }
+      
+      // No hay sesión, mostrar pantalla de login
+      checkingAuth = false;
+    } catch (err) {
+      console.error("Error verificando sesión:", err);
+      checkingAuth = false;
+    }
+  });
   
   function handleGoogleLogin() {
+    loading = true;
     window.location.href = authService.getGoogleAuthUrl();
   }
 </script>
 
 <div class="container">
   <div class="auth-container">
-    <div class="card">
-      <div class="card-header">
-        <h1>Iniciar Sesión</h1>
-        <p>Accede a tu cuenta de LukaLibre con Google</p>
+    {#if checkingAuth}
+      <div class="loading-state">
+        <div class="spinner"></div>
+        <p>Verificando sesión...</p>
       </div>
-      
-      {#if error}
-        <div class="alert alert-error">
-          {error}
+    {:else}
+      <div class="card">
+        <div class="card-header">
+          <h1>Iniciar Sesión</h1>
+          <p>Accede a tu cuenta de LukaLibre con Google</p>
         </div>
-      {/if}
-      
-      {#if loading}
-        <div class="loading-state">
-          <div class="spinner"></div>
-          <p>Iniciando sesión...</p>
+        
+        {#if error}
+          <div class="alert alert-error">
+            {error}
+          </div>
+        {/if}
+        
+        {#if loading}
+          <div class="loading-state">
+            <div class="spinner"></div>
+            <p>Iniciando sesión...</p>
+          </div>
+        {:else}
+          <div class="google-auth-container">
+            <p class="auth-message">Para sincronizar datos entre dispositivos, usamos Google Drive como almacenamiento seguro</p>
+            
+            <button 
+              type="button" 
+              class="btn-google full-width" 
+              on:click={handleGoogleLogin}
+              disabled={loading}
+            >
+              <img src="/icons/google.svg" alt="Google" />
+              <span>Iniciar sesión con Google</span>
+            </button>
+          </div>
+        {/if}
+        
+        <div class="auth-footer">
+          <p>¿No tienes cuenta? <a href="/register" use:link>Regístrate</a></p>
         </div>
-      {:else}
-        <div class="google-auth-container">
-          <p class="auth-message">Para sincronizar datos entre dispositivos, usamos Google Drive como almacenamiento seguro</p>
-          
-          <button 
-            type="button" 
-            class="btn-google full-width" 
-            on:click={handleGoogleLogin}
-            disabled={loading}
-          >
-            <img src="/icons/google.svg" alt="Google" />
-            <span>Iniciar sesión con Google</span>
-          </button>
-        </div>
-      {/if}
-      
-      <div class="auth-footer">
-        <p>¿No tienes cuenta? <a href="/register" use:link>Regístrate</a></p>
       </div>
-    </div>
+    {/if}
   </div>
 </div>
 

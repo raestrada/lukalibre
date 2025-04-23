@@ -3,54 +3,125 @@
   import { authStore } from '../stores/authStore';
   import { push } from 'svelte-spa-router';
   import { link } from 'svelte-spa-router';
+  import { get } from 'svelte/store';
+  import authService from '../services/authService';
+  import type { Unsubscriber } from 'svelte/store';
+  
+  let checkingAuth = true;
   
   onMount(() => {
-    // Verificar si el usuario está autenticado y redirigirlo al dashboard
+    // Función asíncrona para verificar autenticación
+    async function checkAuthentication() {
+      try {
+        console.log("Verificando estado de sesión completo...");
+        
+        // Usar el nuevo método que verifica la sesión completa
+        const isAuthenticated = await authService.checkSession();
+        
+        if (isAuthenticated) {
+          console.log("Sesión activa detectada, inicializando authStore...");
+          await authStore.init();
+          // La redirección se realizará en la suscripción si el usuario está autenticado
+        } else {
+          console.log("No hay sesión activa");
+          checkingAuth = false;
+        }
+      } catch (error) {
+        console.error("Error verificando autenticación:", error);
+        checkingAuth = false;
+      }
+    }
+    
+    // Ejecutar la verificación
+    checkAuthentication();
+    
+    // Suscribirse para detectar cambios de estado
     const unsubscribe = authStore.subscribe(state => {
-      if (state.isAuthenticated && !state.loading) {
-        push('/dashboard');
+      if (!state.loading) {
+        checkingAuth = false;
+        
+        if (state.isAuthenticated) {
+          console.log("Usuario autenticado, redirigiendo al dashboard...");
+          push('/dashboard');
+        }
       }
     });
     
     return unsubscribe;
   });
+
+  function goToLogin() {
+    push('/login');
+  }
 </script>
 
 <div class="container">
-  <div class="hero">
-    <h1>Bienvenido a LukaLibre ZK App</h1>
-    <p class="subtitle">Tu plataforma de educación financiera con privacidad garantizada mediante Zero Knowledge</p>
-    
-    <div class="cta-buttons">
-      {#if $authStore.isAuthenticated}
-        <a href="/dashboard" use:link class="btn-primary">Mi Dashboard</a>
-        <a href="/profile" use:link class="btn-secondary">Mi Perfil</a>
-      {:else}
-        <a href="/login" use:link class="btn-primary">Iniciar Sesión</a>
-        <a href="/register" use:link class="btn-secondary">Registrarse</a>
-      {/if}
+  {#if checkingAuth}
+    <div class="loading-container">
+      <div class="spinner"></div>
+      <p>Verificando sesión...</p>
     </div>
-  </div>
-  
-  <div class="features">
-    <div class="card feature-card">
-      <h3>Privacidad de Datos</h3>
-      <p>Tus datos financieros están protegidos mediante tecnología Zero Knowledge. Nadie, ni siquiera nosotros, puede ver tu información financiera personal.</p>
-    </div>
-    
-    <div class="card feature-card">
-      <h3>Verificación sin Divulgación</h3>
-      <p>Demuestra tus activos y transacciones financieras sin revelar montos exactos o detalles sensibles, gracias a las pruebas de Zero Knowledge.</p>
+  {:else}
+    <div class="hero">
+      <h1>Bienvenido a LukaLibre ZK App</h1>
+      <p class="subtitle">Tu plataforma de educación financiera con privacidad garantizada mediante Zero Knowledge</p>
+      
+      <div class="cta-buttons">
+        {#if $authStore.isAuthenticated}
+          <a href="/dashboard" use:link class="btn-primary">Mi Dashboard</a>
+          <a href="/profile" use:link class="btn-secondary">Mi Perfil</a>
+        {:else}
+          <a href="/login" use:link class="btn-primary">Iniciar Sesión</a>
+          <a href="/register" use:link class="btn-secondary">Registrarse</a>
+        {/if}
+      </div>
     </div>
     
-    <div class="card feature-card">
-      <h3>Educación Financiera Segura</h3>
-      <p>Aprende sobre finanzas personales y recibe recomendaciones basadas en tus datos, sin comprometer tu privacidad ni seguridad.</p>
+    <div class="features">
+      <div class="card feature-card">
+        <h3>Privacidad de Datos</h3>
+        <p>Tus datos financieros están protegidos mediante tecnología Zero Knowledge. Nadie, ni siquiera nosotros, puede ver tu información financiera personal.</p>
+      </div>
+      
+      <div class="card feature-card">
+        <h3>Verificación sin Divulgación</h3>
+        <p>Demuestra tus activos y transacciones financieras sin revelar montos exactos o detalles sensibles, gracias a las pruebas de Zero Knowledge.</p>
+      </div>
+      
+      <div class="card feature-card">
+        <h3>Educación Financiera Segura</h3>
+        <p>Aprende sobre finanzas personales y recibe recomendaciones basadas en tus datos, sin comprometer tu privacidad ni seguridad.</p>
+      </div>
     </div>
-  </div>
+  {/if}
 </div>
 
 <style>
+  .loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 50vh;
+    padding: var(--space-xl) 0;
+  }
+  
+  .spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    border-top: 4px solid var(--primary);
+    width: 40px;
+    height: 40px;
+    margin-bottom: var(--space-md);
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  /* Mantener estilos existentes */
   .hero {
     text-align: center;
     margin-bottom: var(--space-xl);

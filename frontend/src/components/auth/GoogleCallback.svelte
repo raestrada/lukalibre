@@ -12,6 +12,15 @@
   // Obtenemos la URL de la API desde las variables de entorno
   const API_URL = import.meta.env.VITE_API_URL || '/api/v1';
   
+  // Función para redireccionar al dashboard de manera limpia
+  function redirectToDashboard() {
+    console.log("Redirigiendo al dashboard...");
+    // Usar history.replaceState para evitar que quede en el historial
+    window.history.replaceState({}, '', '/#/dashboard');
+    // Recargar para asegurar que se aplique correctamente
+    window.location.reload();
+  }
+  
   onMount(async () => {
     try {
       // Registrar toda la URL para debugging
@@ -38,9 +47,8 @@
           // Inicializar la store de autenticación
           await authStore.init();
           
-          // Redireccionar al dashboard inmediatamente
-          console.log("Redirigiendo al dashboard...");
-          window.location.href = '/#/dashboard';
+          // Redireccionar al dashboard
+          redirectToDashboard();
           return;
         } catch (err) {
           console.error("Error procesando token:", err);
@@ -70,9 +78,8 @@
             // Inicializar el store de autenticación con el token
             await authStore.init();
             
-            // Redireccionar al dashboard usando window.location para forzar recarga
-            console.log("Redirigiendo al dashboard...");
-            window.location.href = '/#/dashboard';
+            // Redireccionar al dashboard
+            redirectToDashboard();
             return;
           } else {
             throw new Error('No se recibió un token válido');

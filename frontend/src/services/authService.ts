@@ -27,6 +27,29 @@ export interface User {
 }
 
 class AuthService {
+  // Verificar estado de sesión completo (incluyendo Google)
+  async checkSession(): Promise<boolean> {
+    // Primero verificamos si hay un token almacenado localmente
+    if (this.isLoggedIn()) {
+      try {
+        // Intentar obtener el usuario actual para verificar que el token es válido
+        await this.getCurrentUser();
+        return true;
+      } catch (error) {
+        // Si falla, intentar refrescar el token
+        try {
+          await this.refreshToken();
+          return true;
+        } catch (refreshError) {
+          // Si también falla el refresh, limpiar el token y retornar false
+          this.logout();
+          return false;
+        }
+      }
+    }
+    return false;
+  }
+
   async login(credentials: UserCredentials): Promise<AuthResponse> {
     const formData = new FormData();
     formData.append('username', credentials.email);

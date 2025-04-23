@@ -1,8 +1,28 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import { link } from 'svelte-spa-router';
   import { authStore } from '../../stores/authStore';
+  import { get } from 'svelte/store';
+  import authService from '../../services/authService';
   
   let menuOpen = false;
+  let initializing = true;
+  
+  onMount(async () => {
+    try {
+      // Verificar si hay una sesión activa
+      const isAuthenticated = await authService.checkSession();
+      
+      if (isAuthenticated) {
+        // Ya está autenticado, inicializar authStore
+        await authStore.init();
+      }
+    } catch (error) {
+      console.error("Error al verificar estado de autenticación:", error);
+    } finally {
+      initializing = false;
+    }
+  });
   
   function toggleMenu() {
     menuOpen = !menuOpen;
@@ -10,6 +30,11 @@
   
   function closeMenu() {
     menuOpen = false;
+  }
+
+  function handleLogout() {
+    authStore.logout();
+    closeMenu();
   }
 </script>
 
@@ -34,7 +59,10 @@
       
       <nav class={menuOpen ? 'nav open' : 'nav'}>
         <ul class="nav-list">
-          {#if $authStore.isAuthenticated}
+          {#if initializing}
+            <!-- Mostrar un placeholder mientras se verifica la autenticación -->
+            <li class="loading-placeholder"></li>
+          {:else if $authStore.isAuthenticated}
             <li>
               <a href="/dashboard" use:link on:click={closeMenu}>
                 <img src="/icons/dashboard.svg" alt="Dashboard" class="icon" />
@@ -42,7 +70,7 @@
               </a>
             </li>
             <li>
-              <button on:click={() => { authStore.logout(); closeMenu(); }}>
+              <button on:click={handleLogout}>
                 <img src="/icons/logout.svg" alt="Cerrar Sesión" class="icon" />
                 Cerrar Sesión
               </button>
@@ -68,6 +96,21 @@
 </header>
 
 <style>
+  /* Añadir estilo para el placeholder de carga */
+  .loading-placeholder {
+    width: 80px;
+    height: 20px;
+    background: #f0f0f0;
+    border-radius: 4px;
+    animation: pulse 1.5s infinite;
+  }
+  
+  @keyframes pulse {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
+  }
+  
   .header {
     background-color: #d3e0d3;
     box-shadow: 0 1px 4px var(--shadow);
