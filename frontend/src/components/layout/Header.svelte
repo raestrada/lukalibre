@@ -6,6 +6,10 @@
   import { get } from 'svelte/store';
   import authService from '../../services/authService';
   import type { User } from '../../services/authService';
+  import { createLogger } from '../../utils/logger';
+  
+  // Logger para este componente
+  const log = createLogger('Header');
   
   // Prop para saber si Layout está inicializando la autenticación
   export let isInitializing: boolean = false;
@@ -21,9 +25,11 @@
   
   // Variable reactiva para el avatar con depuración
   $: {
-    console.log("Header: Usuario detectado:", user);
-    if (user?.google_avatar) {
-      console.log("Header: Avatar de Google encontrado:", user.google_avatar);
+    if (user) {
+      log.debug("Usuario detectado:", user);
+      if (user?.google_avatar) {
+        log.debug("Avatar de Google encontrado:", log.trimLongString(user.google_avatar));
+      }
     }
   }
   $: userAvatar = getUserAvatar(user);
@@ -31,16 +37,16 @@
   // Función para obtener el avatar del usuario priorizando Google
   function getUserAvatar(user: User | null) {
     if (!user) {
-      console.log("Header: No hay usuario, usando avatar predeterminado");
+      log.debug("No hay usuario, usando avatar predeterminado");
       return defaultProfilePic;
     }
     
     // Si tenemos el avatar de Google, lo usamos
     if (user.google_avatar) {
-      console.log("Header: Usando avatar de Google:", user.google_avatar);
+      log.debug("Usando avatar de Google:", log.trimLongString(user.google_avatar));
       // Verificar si la URL está vacía (a veces Google devuelve string vacío)
       if (!user.google_avatar.trim()) {
-        console.log("Header: Avatar de Google es string vacío");
+        log.warn("Avatar de Google es string vacío");
         return defaultProfilePic;
       }
       
@@ -51,11 +57,11 @@
     // Verificar si hay un avatar guardado en localStorage
     const savedAvatar = localStorage.getItem('google_avatar');
     if (savedAvatar && savedAvatar.trim()) {
-      console.log("Header: Usando avatar guardado en localStorage:", savedAvatar);
+      log.debug("Usando avatar guardado en localStorage");
       return savedAvatar;
     }
     
-    console.log("Header: No se encontró avatar, usando predeterminado:", defaultProfilePic);
+    log.debug("No se encontró avatar, usando predeterminado:", defaultProfilePic);
     // Si no hay información, usar el avatar predeterminado
     return defaultProfilePic;
   }
@@ -64,17 +70,15 @@
   function testImageDirectly(url: string) {
     if (!url) return;
     
-    console.log(`Probando imagen directamente: ${url}`);
+    log.debug(`Probando imagen directamente: ${log.trimLongString(url)}`);
     const img = new Image();
     
     img.onload = () => {
-      console.log(`✅ La imagen cargó correctamente: ${url}`);
-      console.log(`   Dimensiones: ${img.width}x${img.height}`);
+      log.info(`La imagen cargó correctamente: ${img.width}x${img.height}`);
     };
     
     img.onerror = (e) => {
-      console.log(`❌ Error al cargar la imagen: ${url}`);
-      console.log(`   Error detallado:`, e);
+      log.error(`Error al cargar la imagen:`, e);
     };
     
     img.src = url;
@@ -82,12 +86,12 @@
   
   onMount(async () => {
     try {
-      console.log("Header: Estado de autenticación:", get(authStore).isAuthenticated);
+      log.debug("Estado de autenticación:", get(authStore).isAuthenticated);
       // Imprimir avatar para depuración
       const currentUser = get(authStore).user;
       if (currentUser) {
-        console.log("Header: Avatar en usuario:", currentUser.google_avatar);
-        console.log("Header: Avatar en localStorage:", localStorage.getItem('google_avatar'));
+        log.debug("Avatar en usuario:", log.trimLongString(currentUser.google_avatar));
+        log.debug("Avatar en localStorage:", localStorage.getItem('google_avatar'));
         
         // Probar carga de imagen directamente
         if (currentUser.google_avatar) {
@@ -100,7 +104,7 @@
         }
       }
     } catch (error) {
-      console.error("Header: Error al verificar estado de autenticación:", error);
+      log.error("Error al verificar estado de autenticación:", error);
     }
   });
   
@@ -123,6 +127,7 @@
   }
 
   function handleLogout() {
+    log.info("Usuario cerrando sesión");
     authStore.logout();
     closeMenu();
     closeUserMenu();
@@ -140,22 +145,22 @@
   
   // Función para manejar errores de carga de imagen
   function handleImageError(event: Event) {
-    console.error("Header: Error al cargar imagen de avatar");
+    log.error("Error al cargar imagen de avatar");
     const imgElement = event.target as HTMLImageElement;
-    console.log("Header: URL que falló:", imgElement.src);
+    log.warn("URL que falló:", log.trimLongString(imgElement.src));
     
     // Verificar si ya estamos usando la imagen por defecto para evitar bucles
     if (imgElement.src.includes('/icons/user.svg')) {
-      console.log("Header: Ya estamos usando la imagen por defecto, no se realiza cambio");
+      log.debug("Ya estamos usando la imagen por defecto, no se realiza cambio");
       return;
     }
     
     // Aplicar imagen por defecto
-    console.log("Header: Cambiando a imagen por defecto:", defaultProfilePic);
+    log.debug("Cambiando a imagen por defecto:", defaultProfilePic);
     imgElement.src = defaultProfilePic;
     
-    // Asegurarnos de que se elimina el crossorigin para la imagen por defecto
-    imgElement.removeAttribute('crossorigin');
+    // Asegurarnos de que se elimina el referrerpolicy para la imagen por defecto
+    imgElement.removeAttribute('referrerpolicy');
   }
 </script>
 

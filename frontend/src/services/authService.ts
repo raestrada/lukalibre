@@ -1,4 +1,8 @@
 import axios from 'axios';
+import { createLogger } from '../utils/logger';
+
+// Logger específico para este servicio
+const log = createLogger('AuthService');
 
 // Obtenemos la URL de la API desde las variables de entorno
 const API_URL = import.meta.env.VITE_API_URL || '/api/v1';
@@ -30,36 +34,36 @@ export interface User {
 class AuthService {
   // Verificar estado de sesión completo (incluyendo Google)
   async checkSession(): Promise<boolean> {
-    console.log("AuthService: Verificando sesión");
+    log.debug("Verificando sesión");
     // Primero verificamos si hay un token almacenado localmente
     if (this.isLoggedIn()) {
       try {
-        console.log("AuthService: Token encontrado, verificando validez");
+        log.debug("Token encontrado, verificando validez");
         // Intentar obtener el usuario actual para verificar que el token es válido
         await this.getCurrentUser();
-        console.log("AuthService: Token válido, sesión activa");
+        log.info("Token válido, sesión activa");
         return true;
       } catch (error) {
-        console.log("AuthService: Token inválido, intentando refresh");
+        log.warn("Token inválido, intentando refresh");
         // Si falla, intentar refrescar el token
         try {
           await this.refreshToken();
-          console.log("AuthService: Token refrescado exitosamente");
+          log.info("Token refrescado exitosamente");
           return true;
         } catch (refreshError) {
-          console.error("AuthService: Fallo al refrescar token");
+          log.error("Fallo al refrescar token");
           // Si también falla el refresh, limpiar el token y retornar false
           this.logout();
           return false;
         }
       }
     }
-    console.log("AuthService: No hay token almacenado");
+    log.debug("No hay token almacenado");
     return false;
   }
 
   async login(credentials: UserCredentials): Promise<AuthResponse> {
-    console.log("AuthService: Iniciando login con credenciales");
+    log.debug("Iniciando login con credenciales");
     const formData = new FormData();
     formData.append('username', credentials.email);
     formData.append('password', credentials.password);
@@ -70,7 +74,7 @@ class AuthService {
       { withCredentials: true } // Para recibir cookies (refresh token)
     );
     
-    console.log("AuthService: Login exitoso, guardando token");
+    log.info("Login exitoso, guardando token");
     this.setToken(response.data.access_token);
     return response.data;
   }
@@ -80,14 +84,14 @@ class AuthService {
   }
   
   async refreshToken(): Promise<AuthResponse> {
-    console.log("AuthService: Intentando refrescar token");
+    log.debug("Intentando refrescar token");
     const response = await axios.post<AuthResponse>(
       `${API_URL}/auth/refresh`,
       {},
       { withCredentials: true }
     );
     
-    console.log("AuthService: Token refrescado exitosamente");
+    log.info("Token refrescado exitosamente");
     this.setToken(response.data.access_token);
     return response.data;
   }
@@ -96,11 +100,11 @@ class AuthService {
     const token = this.getToken();
     
     if (!token) {
-      console.error("AuthService: No se encontró token al obtener usuario actual");
+      log.error("No se encontró token al obtener usuario actual");
       throw new Error('No authentication token found');
     }
     
-    console.log("AuthService: Obteniendo usuario con token");
+    log.debug("Obteniendo usuario con token");
     const response = await axios.post<User>(
       `${API_URL}/login/test-token`,
       {},
@@ -116,22 +120,22 @@ class AuthService {
     // Verificar si hay un avatar de Google en localStorage
     const googleAvatar = localStorage.getItem('google_avatar');
     if (googleAvatar && !userData.google_avatar) {
-      console.log("AuthService: Usando avatar de localStorage:", googleAvatar);
+      log.debug("Usando avatar de localStorage:", googleAvatar);
       userData.google_avatar = googleAvatar;
     } else if (userData.google_avatar) {
-      console.log("AuthService: Usuario ya tiene avatar en los datos:", userData.google_avatar);
+      log.debug("Usuario ya tiene avatar en los datos:", userData.google_avatar);
       
       // Ya no modificamos la URL, la usamos tal como viene
     } else {
-      console.log("AuthService: No se encontró avatar ni en usuario ni en localStorage");
+      log.debug("No se encontró avatar ni en usuario ni en localStorage");
     }
     
-    console.log("AuthService: Usuario obtenido:", userData.email);
+    log.info("Usuario obtenido:", userData.email);
     return userData;
   }
   
   logout(): void {
-    console.log("AuthService: Eliminando token y sesión");
+    log.debug("Eliminando token y sesión");
     localStorage.removeItem('token');
     localStorage.removeItem('google_avatar');
     // También se puede añadir código para eliminar la cookie de refresh token
@@ -139,14 +143,14 @@ class AuthService {
     try {
       // Intentar eliminar cookies de refresh token si existen
       axios.post(`${API_URL}/auth/logout`, {}, { withCredentials: true })
-        .catch(err => console.log("No se pudo eliminar cookie de refresh token:", err));
+        .catch(err => log.warn("No se pudo eliminar cookie de refresh token:", err));
     } catch (error) {
-      console.error("Error al intentar logout en servidor:", error);
+      log.error("Error al intentar logout en servidor:", error);
     }
   }
   
   setToken(token: string): void {
-    console.log("AuthService: Guardando nuevo token");
+    log.debug("Guardando nuevo token");
     localStorage.setItem('token', token);
   }
   
@@ -157,7 +161,7 @@ class AuthService {
   
   isLoggedIn(): boolean {
     const hasToken = !!this.getToken();
-    console.log("AuthService: ¿Tiene token?", hasToken);
+    log.debug("¿Tiene token?", hasToken);
     return hasToken;
   }
 }

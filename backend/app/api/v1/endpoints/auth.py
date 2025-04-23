@@ -109,7 +109,7 @@ async def google_callback(
     """
     Callback de autenticación de Google para procesar el código de autorización
     """
-    logger.debug("Procesando callback de Google OAuth")
+    logger.info("Procesando callback de Google OAuth")
     
     # Registrar el estado y código para depuración
     params = dict(request.query_params)
@@ -127,10 +127,12 @@ async def google_callback(
         # Obtener token de Google directamente usando el código de autorización
         code = request.query_params.get("code")
         if not code:
+            logger.warning("No se recibió código de autorización")
             raise ValueError("No se recibió código de autorización")
             
         token_endpoint = client.server_metadata.get("token_endpoint")
         if not token_endpoint:
+            logger.error("Error de configuración OAuth: No se encontró el endpoint de token")
             raise ValueError("Error de configuración OAuth: No se encontró el endpoint de token")
         
         # Construir los datos para la solicitud de token
@@ -152,6 +154,7 @@ async def google_callback(
                 raise ValueError("No se pudo obtener el token de acceso de Google")
             
             token = token_response.json()
+            logger.info("Token de acceso obtenido correctamente de Google")
             
     except Exception as e:
         logger.error(f"Error al obtener token de acceso de Google: {str(e)}")
@@ -163,7 +166,9 @@ async def google_callback(
     
     # Obtener información del usuario de Google
     try:
+        logger.debug("Obteniendo información del usuario con el token de acceso")
         user_info = await security.get_google_user_info(token["access_token"])
+        logger.info(f"Información de usuario obtenida: {user_info.get('email')}")
     except Exception as e:
         logger.error(f"Error al obtener información de usuario de Google: {str(e)}")
         # Redireccionar a frontend con error
@@ -177,7 +182,7 @@ async def google_callback(
     
     if not user:
         # Crear un nuevo usuario
-        logger.debug("Creando nuevo usuario con Google OAuth")
+        logger.info(f"Creando nuevo usuario con Google OAuth: {user_info['email']}")
         user_in = schemas.UserCreate(
             email=user_info["email"],
             password=secrets.token_urlsafe(16),  # Contraseña aleatoria que no se usará
@@ -188,13 +193,15 @@ async def google_callback(
         )
         user = crud.user.create(db, obj_in=user_in)
     else:
+        logger.info(f"Usuario existente encontrado: {user.email}")
         # Actualizar Google ID si no existe
         if not user.google_id:
-            logger.debug("Actualizando Google ID para usuario existente")
+            logger.debug(f"Actualizando Google ID para usuario: {user.email}")
             user_update = {"google_id": user_info["sub"]}
             user = crud.user.update(db, db_obj=user, obj_in=user_update)
     
     # Actualizar tokens de Google y hora de último login
+    logger.debug(f"Actualizando tokens y datos de Google para usuario: {user.email}")
     user_update = {
         "google_access_token": token.get("access_token"),
         "google_refresh_token": token.get("refresh_token"),
@@ -227,16 +234,17 @@ async def google_callback(
     
     # Redireccionar al frontend con el token
     frontend_url = settings.CLIENT_FRONTEND_URL or "http://localhost:5173"
-    logger.debug("Inicio de sesión con Google exitoso")
+    logger.info(f"Inicio de sesión con Google exitoso para: {user.email}")
     
     # Procesar la URL del avatar para asegurarse de que está codificada correctamente
     avatar_url = user_info.get('picture', '')
     if avatar_url:
-        logger.debug(f"Avatar de Google encontrado: {avatar_url}")
+        logger.debug(f"Avatar de Google encontrado: {avatar_url[:50]}...")
         # Usamos la URL tal como la proporciona Google, sin codificación adicional
         avatar_url_encoded = avatar_url
     else:
         avatar_url_encoded = ''
+        logger.debug("No se encontró avatar en la información de Google")
     
     return RedirectResponse(
         url=f"{frontend_url}/auth/callback?token={access_token}&user_id={user.id}&email={user.email}&google_avatar={avatar_url_encoded}"
@@ -340,7 +348,7 @@ async def google_callback_post(
     """
     Procesa el código de autorización de Google a través de una solicitud POST
     """
-    logger.debug("Procesando callback de Google OAuth (POST)")
+    logger.info("Procesando callback de Google OAuth (POST)")
     
     try:
         # En lugar de usar authorize_access_token que verifica el state,
@@ -350,6 +358,7 @@ async def google_callback_post(
         # Obtener token de Google directamente usando el código de autorización
         token_endpoint = client.server_metadata.get("token_endpoint")
         if not token_endpoint:
+            logger.error("Error de configuración OAuth: No se encontró el endpoint de token")
             raise HTTPException(
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                 detail="Error de configuración OAuth: No se encontró el endpoint de token"
@@ -370,15 +379,18 @@ async def google_callback_post(
             token_response = await http_client.post(token_endpoint, data=token_data)
             
             if token_response.status_code != 200:
-                logger.error(f"Error en respuesta de token: {token_response.text}")
+                error_message = f"Error en respuesta de token: {token_response.text}"
+                logger.error(error_message)
                 raise HTTPException(
                     status_code=status.HTTP_400_BAD_REQUEST, 
                     detail="No se pudo obtener el token de acceso de Google"
                 )
             
             token = token_response.json()
+            logger.info("Token de acceso obtenido correctamente de Google")
     except Exception as e:
-        logger.error(f"Error al obtener token de acceso de Google: {str(e)}")
+        error_message = f"Error al obtener token de acceso de Google: {str(e)}"
+        logger.error(error_message)
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=f"Error al procesar la autenticación con Google: {str(e)}"
@@ -386,9 +398,12 @@ async def google_callback_post(
     
     # Obtener información del usuario de Google
     try:
+        logger.debug("Obteniendo información del usuario con el token de acceso")
         user_info = await security.get_google_user_info(token["access_token"])
+        logger.info(f"Información de usuario obtenida: {user_info.get('email')}")
     except Exception as e:
-        logger.error(f"Error al obtener información de usuario de Google: {str(e)}")
+        error_message = f"Error al obtener información de usuario de Google: {str(e)}"
+        logger.error(error_message)
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="No se pudo obtener la información del usuario"
@@ -399,7 +414,7 @@ async def google_callback_post(
     
     if not user:
         # Crear un nuevo usuario
-        logger.debug("Creando nuevo usuario con Google OAuth")
+        logger.info(f"Creando nuevo usuario con Google OAuth: {user_info['email']}")
         user_in = schemas.UserCreate(
             email=user_info["email"],
             password=secrets.token_urlsafe(16),  # Contraseña aleatoria que no se usará
@@ -410,13 +425,15 @@ async def google_callback_post(
         )
         user = crud.user.create(db, obj_in=user_in)
     else:
+        logger.info(f"Usuario existente encontrado: {user.email}")
         # Actualizar Google ID si no existe
         if not user.google_id:
-            logger.debug("Actualizando Google ID para usuario existente")
+            logger.debug(f"Actualizando Google ID para usuario: {user.email}")
             user_update = {"google_id": user_info["sub"]}
             user = crud.user.update(db, db_obj=user, obj_in=user_update)
     
     # Actualizar tokens de Google y hora de último login
+    logger.debug(f"Actualizando tokens y datos de Google para usuario: {user.email}")
     user_update = {
         "google_access_token": token.get("access_token"),
         "google_refresh_token": token.get("refresh_token"),
@@ -437,12 +454,14 @@ async def google_callback_post(
         user.id, data={"type": "refresh"}, expires_delta=refresh_token_expires
     )
     
-    logger.debug("Inicio de sesión con Google exitoso")
+    logger.info(f"Inicio de sesión con Google exitoso para: {user.email}")
     
     # Procesar la URL del avatar para la respuesta
     avatar_url = user_info.get('picture', '')
     if avatar_url:
-        logger.debug(f"Avatar de Google encontrado en POST: {avatar_url}")
+        logger.debug(f"Avatar de Google encontrado: {avatar_url[:50]}...")
+    else:
+        logger.debug("No se encontró avatar en la información de Google")
     
     return {
         "access_token": access_token,

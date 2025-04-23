@@ -4,6 +4,10 @@
   import axios from 'axios';
   import { authStore } from '../../stores/authStore';
   import authService from '../../services/authService';
+  import { createLogger } from '../../utils/logger';
+  
+  // Logger para este componente
+  const log = createLogger('GoogleCallback');
   
   let loading = true;
   let error: string | null = null;
@@ -16,11 +20,11 @@
     try {
       // Verificar si el componente se cargó desde una URL sin hash (ya manejada por App.svelte)
       if (window.location.pathname === '/auth/callback') {
-        console.log("GoogleCallback: URL sin hash detectada, saltando procesamiento (ya manejado por App)");
+        log.debug("URL sin hash detectada, saltando procesamiento (ya manejado por App)");
         
         // Verificar si ya estamos autenticados
         if (authStore.getState().isAuthenticated) {
-          console.log("GoogleCallback: Ya autenticado, redirigiendo al dashboard");
+          log.debug("Ya autenticado, redirigiendo al dashboard");
           push('/dashboard');
           return;
         }
@@ -31,7 +35,7 @@
       
       // Registrar toda la URL para debugging
       debugInfo = `URL: ${window.location.href}`;
-      console.log("URL completa:", window.location.href);
+      log.debug("URL completa:", window.location.href);
       
       // Obtener parámetros de la URL
       const urlParams = new URLSearchParams(window.location.search);
@@ -39,6 +43,7 @@
       // Si hay un error, mostrarlo
       if (urlParams.has('error')) {
         error = urlParams.get('error');
+        log.error("Error recibido:", error);
         loading = false;
         return;
       }
@@ -53,12 +58,12 @@
           // Si hay un avatar de Google, guardarlo en localStorage para uso futuro
           if (urlParams.has('google_avatar')) {
             const googleAvatar = urlParams.get('google_avatar')!;
-            console.log("GoogleCallback: Avatar recibido:", googleAvatar);
+            log.debug("Avatar recibido:", log.trimLongString(googleAvatar));
             
             // Guardar la URL tal como llega, sin procesamiento adicional
             localStorage.setItem('google_avatar', googleAvatar);
           } else {
-            console.log("GoogleCallback: No se recibió avatar de Google en la URL");
+            log.debug("No se recibió avatar de Google en la URL");
           }
           
           // Inicializar la store de autenticación
@@ -66,14 +71,14 @@
           
           // Registrar para depuración
           const state = authStore.getState();
-          console.log("Token almacenado y authStore inicializado. Usuario:", state.user ? state.user.email : "No disponible");
+          log.info("Token almacenado y authStore inicializado. Usuario:", state.user ? state.user.email : "No disponible");
           
           // Redirigir directamente al dashboard
-          console.log("Redirigiendo al dashboard...");
+          log.debug("Redirigiendo al dashboard...");
           push('/dashboard');
           return;
         } catch (err) {
-          console.error("Error procesando token:", err);
+          log.error("Error procesando token:", err);
           error = "Error al procesar el token de autenticación";
           loading = false;
           return;
@@ -87,6 +92,7 @@
         const state = urlParams.get('state');
         
         try {
+          log.debug("Procesando código de autorización");
           // Llamar a nuestro endpoint en el backend
           const response = await axios.post(`${API_URL}/auth/google-callback`, { 
             code, 
@@ -102,17 +108,17 @@
             
             // Registrar para depuración
             const storeState = authStore.getState();
-            console.log("Token almacenado y authStore inicializado. Usuario:", storeState.user ? storeState.user.email : "No disponible");
+            log.info("Token almacenado y authStore inicializado. Usuario:", storeState.user ? storeState.user.email : "No disponible");
             
             // Redirigir directamente al dashboard
-            console.log("Redirigiendo al dashboard...");
+            log.debug("Redirigiendo al dashboard...");
             push('/dashboard');
             return;
           } else {
             throw new Error('No se recibió un token válido');
           }
         } catch (err: any) {
-          console.error('Error al procesar el código de autorización:', err);
+          log.error('Error al procesar el código de autorización:', err);
           error = err.response?.data?.detail || 'Error al procesar la autenticación con Google';
           debugInfo = `Error detallado: ${JSON.stringify(err.response?.data || err.message)}`;
           loading = false;
@@ -121,10 +127,11 @@
       }
       
       // Si no hay código ni token, hay un error
+      log.warn('No se recibieron parámetros de autenticación');
       error = 'No se recibieron parámetros de autenticación';
       loading = false;
     } catch (err: any) {
-      console.error('Error en autenticación con Google:', err);
+      log.error('Error en autenticación con Google:', err);
       error = err.response?.data?.detail || 'Error durante la autenticación con Google';
       debugInfo = `Error general: ${err.message}`;
       loading = false;
@@ -132,6 +139,7 @@
   });
 
   function goToLogin() {
+    log.debug("Volviendo a login");
     push('/login');
   }
 </script>
