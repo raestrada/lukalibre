@@ -12,22 +12,23 @@
   // Obtenemos la URL de la API desde las variables de entorno
   const API_URL = import.meta.env.VITE_API_URL || '/api/v1';
   
-  // Función para redireccionar al dashboard de manera forzada
-  function redirectToDashboard() {
-    console.log("Redirigiendo al dashboard de manera forzada...");
-    
-    // Método directo y forzado - esto garantiza que se navegue al dashboard
-    // Eliminar primero la URL actual con sus parámetros
-    window.location.href = '/';
-    
-    // Luego de un breve momento, ir al dashboard
-    setTimeout(() => {
-      window.location.href = '/#/dashboard';
-    }, 100);
-  }
-  
   onMount(async () => {
     try {
+      // Verificar si el componente se cargó desde una URL sin hash (ya manejada por App.svelte)
+      if (window.location.pathname === '/auth/callback') {
+        console.log("GoogleCallback: URL sin hash detectada, saltando procesamiento (ya manejado por App)");
+        
+        // Verificar si ya estamos autenticados
+        if (authStore.getState().isAuthenticated) {
+          console.log("GoogleCallback: Ya autenticado, redirigiendo al dashboard");
+          push('/dashboard');
+          return;
+        }
+        
+        loading = false;
+        return;
+      }
+      
       // Registrar toda la URL para debugging
       debugInfo = `URL: ${window.location.href}`;
       console.log("URL completa:", window.location.href);
@@ -56,8 +57,9 @@
           const state = authStore.getState();
           console.log("Token almacenado y authStore inicializado. Usuario:", state.user ? state.user.email : "No disponible");
           
-          // Redireccionar al dashboard de manera forzada
-          redirectToDashboard();
+          // Redirigir directamente al dashboard
+          console.log("Redirigiendo al dashboard...");
+          push('/dashboard');
           return;
         } catch (err) {
           console.error("Error procesando token:", err);
@@ -91,8 +93,9 @@
             const storeState = authStore.getState();
             console.log("Token almacenado y authStore inicializado. Usuario:", storeState.user ? storeState.user.email : "No disponible");
             
-            // Redireccionar al dashboard de manera forzada
-            redirectToDashboard();
+            // Redirigir directamente al dashboard
+            console.log("Redirigiendo al dashboard...");
+            push('/dashboard');
             return;
           } else {
             throw new Error('No se recibió un token válido');

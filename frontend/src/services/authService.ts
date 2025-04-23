@@ -29,28 +29,36 @@ export interface User {
 class AuthService {
   // Verificar estado de sesión completo (incluyendo Google)
   async checkSession(): Promise<boolean> {
+    console.log("AuthService: Verificando sesión");
     // Primero verificamos si hay un token almacenado localmente
     if (this.isLoggedIn()) {
       try {
+        console.log("AuthService: Token encontrado, verificando validez");
         // Intentar obtener el usuario actual para verificar que el token es válido
         await this.getCurrentUser();
+        console.log("AuthService: Token válido, sesión activa");
         return true;
       } catch (error) {
+        console.log("AuthService: Token inválido, intentando refresh");
         // Si falla, intentar refrescar el token
         try {
           await this.refreshToken();
+          console.log("AuthService: Token refrescado exitosamente");
           return true;
         } catch (refreshError) {
+          console.error("AuthService: Fallo al refrescar token");
           // Si también falla el refresh, limpiar el token y retornar false
           this.logout();
           return false;
         }
       }
     }
+    console.log("AuthService: No hay token almacenado");
     return false;
   }
 
   async login(credentials: UserCredentials): Promise<AuthResponse> {
+    console.log("AuthService: Iniciando login con credenciales");
     const formData = new FormData();
     formData.append('username', credentials.email);
     formData.append('password', credentials.password);
@@ -61,6 +69,7 @@ class AuthService {
       { withCredentials: true } // Para recibir cookies (refresh token)
     );
     
+    console.log("AuthService: Login exitoso, guardando token");
     this.setToken(response.data.access_token);
     return response.data;
   }
@@ -70,12 +79,14 @@ class AuthService {
   }
   
   async refreshToken(): Promise<AuthResponse> {
+    console.log("AuthService: Intentando refrescar token");
     const response = await axios.post<AuthResponse>(
       `${API_URL}/auth/refresh`,
       {},
       { withCredentials: true }
     );
     
+    console.log("AuthService: Token refrescado exitosamente");
     this.setToken(response.data.access_token);
     return response.data;
   }
@@ -84,9 +95,11 @@ class AuthService {
     const token = this.getToken();
     
     if (!token) {
+      console.error("AuthService: No se encontró token al obtener usuario actual");
       throw new Error('No authentication token found');
     }
     
+    console.log("AuthService: Obteniendo usuario con token");
     const response = await axios.post<User>(
       `${API_URL}/login/test-token`,
       {},
@@ -97,25 +110,38 @@ class AuthService {
       }
     );
     
+    console.log("AuthService: Usuario obtenido:", response.data.email);
     return response.data;
   }
   
   logout(): void {
+    console.log("AuthService: Eliminando token y sesión");
     localStorage.removeItem('token');
     // También se puede añadir código para eliminar la cookie de refresh token
     // haciendo una petición al backend que elimine la cookie
+    try {
+      // Intentar eliminar cookies de refresh token si existen
+      axios.post(`${API_URL}/auth/logout`, {}, { withCredentials: true })
+        .catch(err => console.log("No se pudo eliminar cookie de refresh token:", err));
+    } catch (error) {
+      console.error("Error al intentar logout en servidor:", error);
+    }
   }
   
   setToken(token: string): void {
+    console.log("AuthService: Guardando nuevo token");
     localStorage.setItem('token', token);
   }
   
   getToken(): string | null {
-    return localStorage.getItem('token');
+    const token = localStorage.getItem('token');
+    return token;
   }
   
   isLoggedIn(): boolean {
-    return !!this.getToken();
+    const hasToken = !!this.getToken();
+    console.log("AuthService: ¿Tiene token?", hasToken);
+    return hasToken;
   }
 }
 

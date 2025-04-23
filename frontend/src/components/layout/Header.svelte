@@ -5,22 +5,16 @@
   import { get } from 'svelte/store';
   import authService from '../../services/authService';
   
+  // Prop para saber si Layout está inicializando la autenticación
+  export let isInitializing: boolean = false;
+  
   let menuOpen = false;
-  let initializing = true;
   
   onMount(async () => {
     try {
-      // Verificar si hay una sesión activa
-      const isAuthenticated = await authService.checkSession();
-      
-      if (isAuthenticated) {
-        // Ya está autenticado, inicializar authStore
-        await authStore.init();
-      }
+      console.log("Header: Estado de autenticación:", get(authStore).isAuthenticated);
     } catch (error) {
-      console.error("Error al verificar estado de autenticación:", error);
-    } finally {
-      initializing = false;
+      console.error("Header: Error al verificar estado de autenticación:", error);
     }
   });
   
@@ -59,7 +53,7 @@
       
       <nav class={menuOpen ? 'nav open' : 'nav'}>
         <ul class="nav-list">
-          {#if initializing}
+          {#if isInitializing}
             <!-- Mostrar un placeholder mientras se verifica la autenticación -->
             <li class="loading-placeholder"></li>
           {:else if $authStore.isAuthenticated}

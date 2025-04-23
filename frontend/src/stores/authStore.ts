@@ -33,27 +33,33 @@ function createAuthStore() {
       
       try {
         if (authService.isLoggedIn()) {
+          console.log("AuthStore: Hay token, obteniendo usuario actual");
           const user = await authService.getCurrentUser();
           set({ user, isAuthenticated: true, loading: false, error: null });
-          console.log("AuthStore inicializado con usuario:", user.email);
+          console.log("AuthStore: Usuario autenticado:", user.email);
+          return true;
         } else {
+          console.log("AuthStore: No hay token válido");
           set({ ...initialState, loading: false });
-          console.log("AuthStore inicializado sin usuario autenticado");
+          return false;
         }
       } catch (err) {
-        console.error('Error initializing auth store:', err);
+        console.error('AuthStore: Error initializing auth store:', err);
         
         try {
           // Intentar refresh token si falla la inicialización
+          console.log("AuthStore: Intentando refrescar token");
           await authService.refreshToken();
           const user = await authService.getCurrentUser();
           set({ user, isAuthenticated: true, loading: false, error: null });
-          console.log("AuthStore inicializado con token refrescado");
+          console.log("AuthStore: Token refrescado, usuario:", user.email);
+          return true;
         } catch (refreshErr) {
-          console.error('Error refreshing token:', refreshErr);
+          console.error('AuthStore: Error refreshing token:', refreshErr);
           authService.logout();
           set({ ...initialState, loading: false });
-          console.log("Fallo al refrescar token, estado limpiado");
+          console.log("AuthStore: Fallo al refrescar token, estado limpiado");
+          return false;
         }
       }
     },
@@ -63,13 +69,16 @@ function createAuthStore() {
       update(state => ({ ...state, loading: true, error: null }));
       
       try {
+        console.log("AuthStore: Iniciando login con email/password");
         await authService.login({ email, password });
         const user = await authService.getCurrentUser();
         set({ user, isAuthenticated: true, loading: false, error: null });
+        console.log("AuthStore: Login exitoso, navegando al dashboard");
         navigate('/dashboard');
         return true;
       } catch (err: any) {
         const errorMessage = err.response?.data?.detail || 'Error al iniciar sesión';
+        console.error("AuthStore: Error en login:", errorMessage);
         set({ ...initialState, loading: false, error: errorMessage });
         return false;
       }
@@ -77,13 +86,20 @@ function createAuthStore() {
     
     // Logout
     logout: () => {
+      console.log("AuthStore: Cerrando sesión");
       authService.logout();
       set({ ...initialState, loading: false });
-      navigate('/login');
+      
+      // Forzar la navegación al login limpiando cualquier estado previo
+      setTimeout(() => {
+        console.log("AuthStore: Redirigiendo a login después de logout");
+        navigate('/login');
+      }, 100);
     },
     
     // Actualizar usuario actual
     setUser: (user: User) => {
+      console.log("AuthStore: Actualizando usuario:", user.email);
       update(state => ({ ...state, user, isAuthenticated: true }));
     },
     
