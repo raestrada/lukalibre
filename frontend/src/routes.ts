@@ -3,7 +3,7 @@ import Login from './components/auth/Login.svelte';
 import Register from './components/auth/Register.svelte';
 import Dashboard from './components/dashboard/Dashboard.svelte';
 import NotFound from './components/NotFound.svelte';
-import GoogleCallback from './components/auth/GoogleCallback.svelte';
+import GoogleAuthCallback from './components/auth/GoogleAuthCallback.svelte';
 import Profile from './components/user/Profile.svelte';
 import { authStore } from './stores/authStore';
 import { push } from 'svelte-spa-router';
@@ -24,7 +24,7 @@ const routes = {
   '/': Home,
   '/login': Login,
   '/register': Register,
-  '/auth/google/callback': GoogleCallback,
+  '/auth/google/callback': GoogleAuthCallback,
   
   '/dashboard': wrap({
     component: Dashboard,

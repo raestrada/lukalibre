@@ -1,4 +1,6 @@
-// Niveles de log
+/**
+ * Niveles de logging disponibles
+ */
 export enum LogLevel {
   DEBUG = 0,
   INFO = 1,
@@ -6,187 +8,116 @@ export enum LogLevel {
   ERROR = 3
 }
 
-// Configuración global de nivel mínimo de log (se puede cambiar en tiempo de ejecución)
-export const logConfig = {
-  level: LogLevel.INFO, // Nivel por defecto
-  enabled: true,
-  storeInLocalStorage: false, // Opción para guardar logs en localStorage
-  maxStoredLogs: 100, // Máximo número de logs a almacenar
-  printTimestamp: true, // Mostrar timestamp en logs
+/**
+ * Configuración del logger
+ */
+interface LoggerConfig {
+  minLevel: LogLevel;
+  enableConsole: boolean;
+  prefix: string;
+  maxStringLength: number;
+}
+
+/**
+ * Configuración global del logger
+ */
+const globalConfig: LoggerConfig = {
+  minLevel: import.meta.env.DEV ? LogLevel.DEBUG : LogLevel.INFO,
+  enableConsole: true,
+  prefix: '[LukaLibre]',
+  maxStringLength: 500
 };
 
-// Definir tipo para colores de log
-type LogColors = {
-  debug: string;
-  info: string;
-  warn: string;
-  error: string;
-  timestamp: string;
-  context: string;
-}
+/**
+ * Crea un nuevo logger para un componente específico
+ * @param module Nombre del módulo o componente
+ * @returns Objeto logger con métodos de logging
+ */
+export function createLogger(module: string) {
+  const modulePrefix = `${globalConfig.prefix} [${module}]`;
 
-// Colores para consola
-const COLORS: LogColors = {
-  debug: '#6c757d', // gris
-  info: '#0dcaf0',  // celeste
-  warn: '#ffc107',  // amarillo
-  error: '#dc3545', // rojo
-  timestamp: '#adb5bd', // gris claro para el timestamp
-  context: '#20c997', // verde para contexto adicional
-}
-
-// Interfaz para mensajes de log estructurados
-export interface LogMessage {
-  timestamp: string;
-  level: LogLevel;
-  component: string;
-  message: string;
-  data?: any;
-}
-
-// Clase principal de logger
-export class Logger {
-  private name: string;
-  private prefix: string;
-
-  constructor(name: string) {
-    this.name = name;
-    this.prefix = `[${name}]`;
+  /**
+   * Determina si un mensaje de un nivel específico debe ser mostrado
+   * @param level Nivel de log a verificar
+   * @returns true si el mensaje debe ser mostrado
+   */
+  function shouldLog(level: LogLevel): boolean {
+    return level >= globalConfig.minLevel && globalConfig.enableConsole;
   }
 
-  private formatMessage(message: string): string {
-    let formatted = '';
-    
-    // Añadir timestamp si está habilitado
-    if (logConfig.printTimestamp) {
-      const now = new Date();
-      const timestamp = now.toISOString().split('T')[1].slice(0, 12);
-      formatted += `%c${timestamp} `;
+  /**
+   * Acorta una cadena larga para evitar que sature la consola
+   * @param value Valor a acortar
+   * @returns Cadena acortada si es muy larga
+   */
+  function trimLongString(value: any): any {
+    if (typeof value !== 'string') {
+      return value;
     }
-    
-    // Añadir el componente
-    formatted += `%c${this.prefix} ${message}`;
-    
-    return formatted;
-  }
 
-  private getStyles(level: keyof typeof COLORS): string[] {
-    const styles: string[] = [];
-    
-    if (logConfig.printTimestamp) {
-      styles.push(`color: ${COLORS.timestamp}; font-size: 0.9em;`);
+    if (value.length > globalConfig.maxStringLength) {
+      return `${value.substring(0, globalConfig.maxStringLength)}... (${value.length - globalConfig.maxStringLength} more chars)`;
     }
-    
-    styles.push(`color: ${COLORS[level]}; font-weight: ${level === 'error' ? 'bold' : 'normal'};`);
-    
-    return styles;
+
+    return value;
   }
 
-  private storeLog(level: LogLevel, message: string, data?: any): void {
-    if (!logConfig.storeInLocalStorage) return;
-    
-    try {
-      // Crear entrada de log
-      const logEntry: LogMessage = {
-        timestamp: new Date().toISOString(),
-        level,
-        component: this.name,
-        message,
-        data: data || undefined
-      };
-      
-      // Obtener logs existentes o inicializar array
-      const storedLogs = JSON.parse(localStorage.getItem('app_logs') || '[]');
-      
-      // Añadir nueva entrada y limitar tamaño
-      storedLogs.push(logEntry);
-      if (storedLogs.length > logConfig.maxStoredLogs) {
-        storedLogs.splice(0, storedLogs.length - logConfig.maxStoredLogs);
+  /**
+   * Formatea los argumentos del log para mostrarlos correctamente
+   * @param args Argumentos a formatear
+   * @returns Argumentos formateados
+   */
+  function formatArgs(args: any[]): any[] {
+    return args.map(arg => {
+      if (typeof arg === 'object' && arg !== null) {
+        try {
+          // Para objetos, clonarlos para evitar referencia circular
+          return JSON.parse(JSON.stringify(arg));
+        } catch (e) {
+          return '[Objeto no serializable]';
+        }
       }
-      
-      // Guardar logs actualizados
-      localStorage.setItem('app_logs', JSON.stringify(storedLogs));
-    } catch (error) {
-      console.error('Error al guardar log en localStorage:', error);
-    }
+      return trimLongString(arg);
+    });
   }
 
-  debug(message: string, ...args: any[]): void {
-    if (logConfig.enabled && logConfig.level <= LogLevel.DEBUG) {
-      const formattedMessage = this.formatMessage(message);
-      const styles = this.getStyles('debug');
-      console.debug(formattedMessage, ...styles, ...args);
-      this.storeLog(LogLevel.DEBUG, message, args.length ? args : undefined);
-    }
-  }
+  return {
+    debug(...args: any[]): void {
+      if (shouldLog(LogLevel.DEBUG)) {
+        console.debug(modulePrefix, ...formatArgs(args));
+      }
+    },
 
-  info(message: string, ...args: any[]): void {
-    if (logConfig.enabled && logConfig.level <= LogLevel.INFO) {
-      const formattedMessage = this.formatMessage(message);
-      const styles = this.getStyles('info');
-      console.info(formattedMessage, ...styles, ...args);
-      this.storeLog(LogLevel.INFO, message, args.length ? args : undefined);
-    }
-  }
+    info(...args: any[]): void {
+      if (shouldLog(LogLevel.INFO)) {
+        console.info(modulePrefix, ...formatArgs(args));
+      }
+    },
 
-  warn(message: string, ...args: any[]): void {
-    if (logConfig.enabled && logConfig.level <= LogLevel.WARN) {
-      const formattedMessage = this.formatMessage(message);
-      const styles = this.getStyles('warn');
-      console.warn(formattedMessage, ...styles, ...args);
-      this.storeLog(LogLevel.WARN, message, args.length ? args : undefined);
-    }
-  }
+    warn(...args: any[]): void {
+      if (shouldLog(LogLevel.WARN)) {
+        console.warn(modulePrefix, ...formatArgs(args));
+      }
+    },
 
-  error(message: string, ...args: any[]): void {
-    if (logConfig.enabled && logConfig.level <= LogLevel.ERROR) {
-      const formattedMessage = this.formatMessage(message);
-      const styles = this.getStyles('error');
-      console.error(formattedMessage, ...styles, ...args);
-      this.storeLog(LogLevel.ERROR, message, args.length ? args : undefined);
-    }
-  }
+    error(...args: any[]): void {
+      if (shouldLog(LogLevel.ERROR)) {
+        console.error(modulePrefix, ...formatArgs(args));
+      }
+    },
 
-  // Método para trunear URLs o mensajes largos en el log
-  trimLongString(str: string, maxLength: number = 100): string {
-    if (str && str.length > maxLength) {
-      return `${str.substring(0, maxLength)}... (total ${str.length} chars)`;
-    }
-    return str;
-  }
-  
-  // Método para limpiar todos los logs almacenados
-  static clearStoredLogs(): void {
-    localStorage.removeItem('app_logs');
-  }
-  
-  // Método para obtener todos los logs almacenados
-  static getStoredLogs(): LogMessage[] {
-    try {
-      return JSON.parse(localStorage.getItem('app_logs') || '[]');
-    } catch (error) {
-      console.error('Error al leer logs de localStorage:', error);
-      return [];
-    }
-  }
+    // Utilidad para acortar cadenas
+    trimLongString
+  };
 }
 
-// Función para obtener una instancia de logger
-export function createLogger(name: string): Logger {
-  return new Logger(name);
+/**
+ * Configura los parámetros globales del logger
+ * @param config Configuración a aplicar
+ */
+export function configureLogger(config: Partial<LoggerConfig>): void {
+  Object.assign(globalConfig, config);
 }
 
-// Configurar nivel de log según entorno
-if (import.meta.env.MODE === 'development') {
-  logConfig.level = LogLevel.DEBUG;
-} else {
-  logConfig.level = LogLevel.INFO;
-}
-
-// Logger por defecto para uso general
-export const logger = createLogger('App');
-
-// Exponer función para exportar logs
-export function exportLogs(): string {
-  return JSON.stringify(Logger.getStoredLogs(), null, 2);
-} 
+// Logger global
+export default createLogger('App'); 
