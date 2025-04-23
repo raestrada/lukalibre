@@ -24,6 +24,7 @@ export interface User {
   is_active: boolean;
   is_superuser: boolean;
   created_at?: string;
+  google_avatar?: string;
 }
 
 class AuthService {
@@ -110,13 +111,27 @@ class AuthService {
       }
     );
     
-    console.log("AuthService: Usuario obtenido:", response.data.email);
-    return response.data;
+    const userData = response.data;
+    
+    // Verificar si hay un avatar de Google en localStorage
+    const googleAvatar = localStorage.getItem('google_avatar');
+    if (googleAvatar && !userData.google_avatar) {
+      console.log("AuthService: Usando avatar de localStorage:", googleAvatar);
+      userData.google_avatar = googleAvatar;
+    } else if (userData.google_avatar) {
+      console.log("AuthService: Usuario ya tiene avatar en los datos:", userData.google_avatar);
+    } else {
+      console.log("AuthService: No se encontró avatar ni en usuario ni en localStorage");
+    }
+    
+    console.log("AuthService: Usuario obtenido:", userData.email);
+    return userData;
   }
   
   logout(): void {
     console.log("AuthService: Eliminando token y sesión");
     localStorage.removeItem('token');
+    localStorage.removeItem('google_avatar');
     // También se puede añadir código para eliminar la cookie de refresh token
     // haciendo una petición al backend que elimine la cookie
     try {

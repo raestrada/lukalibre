@@ -26,15 +26,10 @@
       <p>Esta es tu área personal en Luka Libre.</p>
     </div>
     
-    <div class="dashboard-content">
-      <div class="dashboard-card">
-        <h3>Tareas recientes</h3>
-        <p>No hay tareas recientes.</p>
-      </div>
-      
-      <div class="dashboard-card">
-        <h3>Actividad</h3>
-        <p>No hay actividad reciente.</p>
+    <div class="dashboard-empty">
+      <div class="empty-message">
+        <p>El dashboard está actualmente vacío.</p>
+        <p>Próximamente añadiremos funcionalidades y herramientas para mejorar tu experiencia.</p>
       </div>
     </div>
   {:else}
@@ -71,26 +66,24 @@
     border-left: 4px solid var(--primary-color, #4a69bd);
   }
   
-  .dashboard-content {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
-  }
-  
-  .dashboard-card {
+  .dashboard-empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem;
     background-color: white;
     border-radius: 8px;
-    padding: 1.5rem;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
   
-  .dashboard-card h3 {
-    margin-top: 0;
-    color: var(--primary-color, #4a69bd);
-    font-size: 1.2rem;
+  .empty-message {
+    text-align: center;
+    max-width: 500px;
+    color: #666;
+  }
+  
+  .empty-message p {
     margin-bottom: 1rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid #eaeaea;
   }
   
   .error {

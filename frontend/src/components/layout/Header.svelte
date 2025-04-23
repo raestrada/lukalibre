@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { link } from 'svelte-spa-router';
+  import { push } from 'svelte-spa-router';
   import { authStore } from '../../stores/authStore';
   import { get } from 'svelte/store';
   import authService from '../../services/authService';
@@ -9,10 +10,57 @@
   export let isInitializing: boolean = false;
   
   let menuOpen = false;
+  let userMenuOpen = false;
+  
+  // Obtener usuario del authStore
+  $: user = $authStore.user;
+  
+  // URL de la foto predeterminada (ahora usamos SVG)
+  let defaultProfilePic = '/icons/user.svg';
+  
+  // Variable reactiva para el avatar con depuración
+  $: {
+    console.log("Header: Usuario detectado:", user);
+    if (user?.google_avatar) {
+      console.log("Header: Avatar de Google encontrado:", user.google_avatar);
+    }
+  }
+  $: userAvatar = getUserAvatar(user);
+  
+  // Función para obtener el avatar del usuario priorizando Google
+  function getUserAvatar(user) {
+    if (!user) {
+      console.log("Header: No hay usuario, usando avatar predeterminado");
+      return defaultProfilePic;
+    }
+    
+    // Si tenemos el avatar de Google, lo usamos
+    if (user.google_avatar) {
+      console.log("Header: Usando avatar de Google:", user.google_avatar);
+      return user.google_avatar;
+    }
+    
+    // Verificar si hay un avatar guardado en localStorage
+    const savedAvatar = localStorage.getItem('google_avatar');
+    if (savedAvatar) {
+      console.log("Header: Usando avatar guardado en localStorage:", savedAvatar);
+      return savedAvatar;
+    }
+    
+    console.log("Header: No se encontró avatar, usando predeterminado:", defaultProfilePic);
+    // Si no hay información, usar el avatar predeterminado
+    return defaultProfilePic;
+  }
   
   onMount(async () => {
     try {
       console.log("Header: Estado de autenticación:", get(authStore).isAuthenticated);
+      // Imprimir avatar para depuración
+      const currentUser = get(authStore).user;
+      if (currentUser) {
+        console.log("Header: Avatar en usuario:", currentUser.google_avatar);
+        console.log("Header: Avatar en localStorage:", localStorage.getItem('google_avatar'));
+      }
     } catch (error) {
       console.error("Header: Error al verificar estado de autenticación:", error);
     }
@@ -20,15 +68,43 @@
   
   function toggleMenu() {
     menuOpen = !menuOpen;
+    // Cerrar menú de usuario si está abierto
+    if (menuOpen) userMenuOpen = false;
+  }
+  
+  function toggleUserMenu() {
+    userMenuOpen = !userMenuOpen;
   }
   
   function closeMenu() {
     menuOpen = false;
   }
+  
+  function closeUserMenu() {
+    userMenuOpen = false;
+  }
 
   function handleLogout() {
     authStore.logout();
     closeMenu();
+    closeUserMenu();
+  }
+  
+  function goToSettings() {
+    push('/user/settings');
+    closeUserMenu();
+  }
+  
+  function goToDashboard() {
+    push('/dashboard');
+    closeUserMenu();
+  }
+  
+  // Función para manejar errores de carga de imagen
+  function handleImageError(event: Event) {
+    console.error("Header: Error al cargar imagen de avatar");
+    const imgElement = event.target as HTMLImageElement;
+    imgElement.src = defaultProfilePic;
   }
 </script>
 
@@ -57,13 +133,20 @@
             <!-- Mostrar un placeholder mientras se verifica la autenticación -->
             <li class="loading-placeholder"></li>
           {:else if $authStore.isAuthenticated}
-            <li>
+            <!-- Mostrar perfil de usuario en móvil -->
+            <li class="mobile-only">
               <a href="/dashboard" use:link on:click={closeMenu}>
                 <img src="/icons/dashboard.svg" alt="Dashboard" class="icon" />
                 Dashboard
               </a>
             </li>
-            <li>
+            <li class="mobile-only">
+              <a href="/user/settings" use:link on:click={closeMenu}>
+                <img src="/icons/settings.svg" alt="Configuración" class="icon" />
+                Configuración
+              </a>
+            </li>
+            <li class="mobile-only">
               <button on:click={handleLogout}>
                 <img src="/icons/logout.svg" alt="Cerrar Sesión" class="icon" />
                 Cerrar Sesión
@@ -85,6 +168,62 @@
           {/if}
         </ul>
       </nav>
+      
+      <!-- Menú de usuario con foto de perfil (solo escritorio) -->
+      {#if !isInitializing && $authStore.isAuthenticated}
+        <div class="user-menu-container desktop-only">
+          <button 
+            class="user-menu-toggle" 
+            on:click={toggleUserMenu}
+            aria-expanded={userMenuOpen}
+          >
+            <img 
+              src={userAvatar} 
+              alt="Foto de perfil" 
+              class="user-avatar"
+              on:error={handleImageError}
+            />
+          </button>
+          
+          {#if userMenuOpen}
+            <div class="user-dropdown" on:mouseleave={closeUserMenu}>
+              <div class="user-info">
+                <img 
+                  src={userAvatar} 
+                  alt="Foto de perfil" 
+                  class="user-avatar-large"
+                  on:error={handleImageError}
+                />
+                <div class="user-details">
+                  <span class="user-name">{user?.full_name || 'Usuario'}</span>
+                  <span class="user-email">{user?.email}</span>
+                </div>
+              </div>
+              <ul class="user-menu-list">
+                <li>
+                  <button on:click={goToDashboard}>
+                    <img src="/icons/dashboard.svg" alt="Dashboard" class="icon" />
+                    Dashboard
+                  </button>
+                </li>
+                <li>
+                  <button on:click={goToSettings}>
+                    <img src="/icons/settings.svg" alt="Configuración" class="icon" />
+                    Configuración
+                  </button>
+                </li>
+                <li class="divider"></li>
+                <li>
+                  <button on:click={handleLogout}>
+                    <img src="/icons/logout.svg" alt="Cerrar Sesión" class="icon" />
+                    Cerrar Sesión
+                  </button>
+                </li>
+              </ul>
+            </div>
+          {/if}
+        </div>
+      {/if}
     </div>
   </div>
 </header>
@@ -187,6 +326,116 @@
     transition: color 0.2s;
   }
   
+  /* Estilos para el menú de usuario */
+  .user-menu-container {
+    position: relative;
+    margin-left: 1rem;
+  }
+  
+  .user-menu-toggle {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+  
+  .user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  }
+  
+  .user-dropdown {
+    position: absolute;
+    top: calc(100% + 5px);
+    right: 0;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    width: 250px;
+    overflow: hidden;
+    z-index: 200;
+  }
+  
+  .user-info {
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    background-color: #f5f9ff;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .user-avatar-large {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 1rem;
+    border: 2px solid #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  }
+  
+  .user-details {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .user-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  
+  .user-email {
+    font-size: 0.85rem;
+    color: #777;
+    word-break: break-all;
+  }
+  
+  .user-menu-list {
+    list-style: none;
+    margin: 0;
+    padding: 0.5rem 0;
+  }
+  
+  .user-menu-list li {
+    margin: 0;
+  }
+  
+  .user-menu-list button {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.95rem;
+    text-align: left;
+    transition: background-color 0.2s;
+  }
+  
+  .user-menu-list button:hover {
+    background-color: #f5f5f5;
+  }
+  
+  .divider {
+    height: 1px;
+    background-color: #eee;
+    margin: 0.5rem 0;
+  }
+  
+  .icon {
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+    vertical-align: middle;
+  }
+  
   .menu-toggle {
     display: none;
     background: none;
@@ -223,14 +472,24 @@
     bottom: -8px;
   }
   
-  .icon {
-    width: 18px;
-    height: 18px;
-    margin-right: 5px;
-    vertical-align: middle;
+  /* Estilos responsivos */
+  .desktop-only {
+    display: block;
+  }
+  
+  .mobile-only {
+    display: none;
   }
   
   @media (max-width: 768px) {
+    .desktop-only {
+      display: none;
+    }
+    
+    .mobile-only {
+      display: block;
+    }
+    
     .menu-toggle {
       display: block;
     }

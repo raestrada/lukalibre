@@ -11,6 +11,7 @@ class UserBase(BaseModel):
     is_superuser: bool = False
     full_name: Optional[str] = None
     google_id: Optional[str] = None
+    google_avatar: Optional[str] = None
 
 
 # Properties to receive via API on creation
@@ -18,6 +19,7 @@ class UserCreate(UserBase):
     email: EmailStr
     password: str
     google_id: Optional[str] = None
+    google_avatar: Optional[str] = None
 
 
 # Properties to receive via API on update
@@ -26,6 +28,7 @@ class UserUpdate(UserBase):
     google_id: Optional[str] = None
     google_access_token: Optional[str] = None
     google_refresh_token: Optional[str] = None
+    google_avatar: Optional[str] = None
     last_login: Optional[datetime] = None
 
 
@@ -41,11 +44,12 @@ class UserInDBBase(UserBase):
 
 # Additional properties to return via API
 class User(UserInDBBase):
-    pass
+    google_avatar: Optional[str] = None
 
 
 # Additional properties stored in DB
 class UserInDB(UserInDBBase):
     hashed_password: str
     google_access_token: Optional[str] = None
-    google_refresh_token: Optional[str] = None 
+    google_refresh_token: Optional[str] = None
+    google_avatar: Optional[str] = None 

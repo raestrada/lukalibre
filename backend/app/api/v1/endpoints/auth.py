@@ -86,6 +86,8 @@ def test_token(current_user: models.User = Depends(deps.get_current_user)) -> An
     """
     Test access token
     """
+    # Registrar el estado del usuario para depuración
+    logger.debug(f"Usuario autenticado: {current_user.email}, Avatar: {current_user.google_avatar}")
     return current_user
 
 
@@ -181,6 +183,7 @@ async def google_callback(
             password=secrets.token_urlsafe(16),  # Contraseña aleatoria que no se usará
             full_name=user_info.get("name", ""),
             google_id=user_info["sub"],
+            google_avatar=user_info.get("picture"),  # Guardar la URL del avatar
             is_active=True,
         )
         user = crud.user.create(db, obj_in=user_in)
@@ -195,6 +198,7 @@ async def google_callback(
     user_update = {
         "google_access_token": token.get("access_token"),
         "google_refresh_token": token.get("refresh_token"),
+        "google_avatar": user_info.get("picture"),  # Actualizar el avatar en cada login
         "last_login": datetime.now()
     }
     user = crud.user.update(db, db_obj=user, obj_in=user_update)
@@ -225,7 +229,7 @@ async def google_callback(
     frontend_url = settings.CLIENT_FRONTEND_URL or "http://localhost:5173"
     logger.debug("Inicio de sesión con Google exitoso")
     return RedirectResponse(
-        url=f"{frontend_url}/auth/callback?token={access_token}&user_id={user.id}&email={user.email}"
+        url=f"{frontend_url}/auth/callback?token={access_token}&user_id={user.id}&email={user.email}&google_avatar={user_info.get('picture', '')}"
     )
 
 
@@ -391,6 +395,7 @@ async def google_callback_post(
             password=secrets.token_urlsafe(16),  # Contraseña aleatoria que no se usará
             full_name=user_info.get("name", ""),
             google_id=user_info["sub"],
+            google_avatar=user_info.get("picture"),  # Guardar la URL del avatar
             is_active=True,
         )
         user = crud.user.create(db, obj_in=user_in)
@@ -405,6 +410,7 @@ async def google_callback_post(
     user_update = {
         "google_access_token": token.get("access_token"),
         "google_refresh_token": token.get("refresh_token"),
+        "google_avatar": user_info.get("picture"),  # Actualizar el avatar en cada login
         "last_login": datetime.now()
     }
     user = crud.user.update(db, db_obj=user, obj_in=user_update)
@@ -426,5 +432,6 @@ async def google_callback_post(
         "access_token": access_token,
         "token_type": "bearer",
         "user_id": str(user.id),
-        "email": user.email
+        "email": user.email,
+        "google_avatar": user_info.get('picture', '')
     } 

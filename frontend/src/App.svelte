@@ -14,6 +14,7 @@
   import Register from './components/auth/Register.svelte';
   import GoogleCallback from './components/auth/GoogleCallback.svelte';
   import Profile from './components/user/Profile.svelte';
+  import Dashboard from './components/dashboard/Dashboard.svelte';
   
   let isInitializing = true;
   
@@ -110,8 +111,12 @@
       component: Profile,
       conditions: [redirectIfNotAuthenticated]
     }),
+    '/user/settings': wrap({
+      component: Profile, // Usamos Profile como componente de configuración
+      conditions: [redirectIfNotAuthenticated]
+    }),
     '/dashboard': wrap({
-      component: Profile, // Usar el componente Profile como dashboard
+      component: Dashboard, // Ahora usamos el componente Dashboard
       conditions: [redirectIfNotAuthenticated]
     }),
     // Ruta por defecto (404)

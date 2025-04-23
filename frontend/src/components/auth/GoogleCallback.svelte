@@ -50,6 +50,15 @@
           const token = urlParams.get('token')!;
           authService.setToken(token);
           
+          // Si hay un avatar de Google, guardarlo en localStorage para uso futuro
+          if (urlParams.has('google_avatar')) {
+            const googleAvatar = urlParams.get('google_avatar')!;
+            console.log("GoogleCallback: Avatar recibido:", googleAvatar);
+            localStorage.setItem('google_avatar', googleAvatar);
+          } else {
+            console.log("GoogleCallback: No se recibió avatar de Google en la URL");
+          }
+          
           // Inicializar la store de autenticación
           await authStore.init();
           
