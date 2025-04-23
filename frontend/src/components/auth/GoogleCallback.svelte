@@ -12,65 +12,49 @@
   const API_URL = import.meta.env.VITE_API_URL || '/api/v1';
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
   
+  interface AuthResponse {
+    access_token: string;
+    refresh_token?: string;
+  }
+  
   onMount(async () => {
+    // Get the authorization code from the URL
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get('code');
+    const errorParam = params.get('error');
+
+    if (errorParam) {
+      loading = false;
+      error = `Error durante la autenticación con Google: ${errorParam}`;
+      return;
+    }
+
+    if (!code) {
+      loading = false;
+      error = 'No se recibió un código de autorización de Google';
+      return;
+    }
+
     try {
-      // Obtener parámetros de la URL
-      const urlParams = new URLSearchParams(window.location.search);
+      // Exchange the code for a token
+      const response = await axios.post<AuthResponse>(`${API_URL}/auth/google-callback`, { code });
       
-      // Si hay un error, mostrarlo
-      if (urlParams.has('error')) {
-        error = urlParams.get('error');
-        loading = false;
-        return;
-      }
-      
-      // Si hay un token, procesarlo (este caso ocurre cuando el backend redirige de vuelta)
-      if (urlParams.has('token')) {
-        // Almacenar el token
-        const token = urlParams.get('token')!;
-        authService.setToken(token);
+      if (response.data && response.data.access_token) {
+        // Store the token
+        authService.setToken(response.data.access_token);
         
-        // Actualizar la store de autenticación
-        if (urlParams.has('user_id') && urlParams.has('email')) {
-          const userId = parseInt(urlParams.get('user_id')!);
-          const email = urlParams.get('email')!;
-          
-          try {
-            // Intentar obtener datos completos del usuario
-            const user = await authService.getCurrentUser();
-            authStore.setUser(user);
-          } catch (userError) {
-            console.error('Error al obtener datos completos del usuario:', userError);
-            // Crear un objeto básico con los datos que tenemos
-            authStore.setUser({
-              id: userId,
-              email: email,
-              full_name: '',
-              is_active: true,
-              is_superuser: false
-            });
-          }
-          
-          // Redireccionar al dashboard
-          push('/dashboard');
-          return;
-        }
+        // Initialize the auth store with the token
+        await authStore.init();
+        
+        // Redirect to dashboard
+        push('/dashboard');
+      } else {
+        throw new Error('No se recibió un token válido');
       }
-      
-      // Si hay un código de autorización pero no token (este es el caso inicial)
-      if (urlParams.has('code') && !urlParams.has('token')) {
-        // Redireccionar al backend para procesar el código
-        window.location.href = `${API_BASE_URL}${API_URL}/auth/google/callback?${urlParams.toString()}`;
-        return;
-      }
-      
-      // Si no hay código ni token, hay un error
-      error = 'No se recibieron parámetros de autenticación';
-      loading = false;
     } catch (err: any) {
-      console.error('Error en autenticación con Google:', err);
-      error = err.response?.data?.detail || 'Error durante la autenticación con Google';
+      console.error('Error during Google OAuth callback:', err);
       loading = false;
+      error = err.response?.data?.detail || 'Error al procesar la autenticación con Google';
     }
   });
 

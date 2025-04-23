@@ -3,28 +3,8 @@
   import authService from '../../services/authService';
   import { link } from 'svelte-spa-router';
   
-  let email = '';
-  let password = '';
   let loading = false;
   let error = '';
-  
-  async function handleLogin(event: Event) {
-    event.preventDefault();
-    loading = true;
-    error = '';
-    
-    try {
-      const success = await authStore.login(email, password);
-      if (!success) {
-        error = $authStore.error || 'Error al iniciar sesión';
-      }
-    } catch (err) {
-      console.error('Error de login:', err);
-      error = 'Error al conectar con el servidor';
-    } finally {
-      loading = false;
-    }
-  }
   
   function handleGoogleLogin() {
     window.location.href = authService.getGoogleAuthUrl();
@@ -36,7 +16,7 @@
     <div class="card">
       <div class="card-header">
         <h1>Iniciar Sesión</h1>
-        <p>Accede a tu cuenta de LukaLibre</p>
+        <p>Accede a tu cuenta de LukaLibre con Google</p>
       </div>
       
       {#if error}
@@ -51,53 +31,19 @@
           <p>Iniciando sesión...</p>
         </div>
       {:else}
-        <form on:submit={handleLogin}>
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input 
-              type="email" 
-              id="email" 
-              bind:value={email} 
-              required 
-              placeholder="correo@ejemplo.com"
-              disabled={loading}
-            />
-          </div>
-          
-          <div class="form-group">
-            <label for="password">Contraseña</label>
-            <input 
-              type="password" 
-              id="password" 
-              bind:value={password} 
-              required 
-              placeholder="Tu contraseña"
-              disabled={loading}
-            />
-          </div>
+        <div class="google-auth-container">
+          <p class="auth-message">Para sincronizar datos entre dispositivos, usamos Google Drive como almacenamiento seguro</p>
           
           <button 
-            type="submit" 
-            class="btn-primary full-width" 
+            type="button" 
+            class="btn-google full-width" 
+            on:click={handleGoogleLogin}
             disabled={loading}
           >
-            Iniciar Sesión
+            <img src="/icons/google.svg" alt="Google" />
+            <span>Iniciar sesión con Google</span>
           </button>
-        </form>
-        
-        <div class="divider">
-          <span>o</span>
         </div>
-        
-        <button 
-          type="button" 
-          class="btn-google full-width" 
-          on:click={handleGoogleLogin}
-          disabled={loading}
-        >
-          <img src="/icons/google.svg" alt="Google" />
-          <span>Iniciar sesión con Google</span>
-        </button>
       {/if}
       
       <div class="auth-footer">
@@ -118,29 +64,26 @@
     width: 100%;
   }
   
-  .divider {
+  .google-auth-container {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    margin: var(--space-md) 0;
+    padding: var(--space-md) 0;
+  }
+  
+  .auth-message {
+    text-align: center;
+    margin-bottom: var(--space-md);
     color: var(--text-secondary);
-  }
-  
-  .divider::before,
-  .divider::after {
-    content: '';
-    flex: 1;
-    border-bottom: 1px solid var(--border);
-  }
-  
-  .divider span {
-    padding: 0 var(--space-sm);
+    font-size: 0.95rem;
+    line-height: 1.5;
   }
   
   .btn-google {
     background-color: white;
     color: #757575;
     border: 1px solid #dddddd;
-    padding: var(--space-sm) var(--space-md);
+    padding: var(--space-md);
     border-radius: var(--radius-sm);
     font-weight: 500;
     cursor: pointer;
@@ -149,10 +92,13 @@
     justify-content: center;
     transition: background-color 0.2s, box-shadow 0.2s;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    font-size: 1rem;
   }
   
   .btn-google img {
     margin-right: 10px;
+    width: 20px;
+    height: 20px;
   }
   
   .btn-google:hover {
@@ -172,5 +118,27 @@
   .auth-footer p {
     margin-bottom: 0;
     font-size: 0.9rem;
+  }
+  
+  .loading-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--space-md) 0;
+  }
+  
+  .spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    border-top: 4px solid #3498db;
+    width: 30px;
+    height: 30px;
+    margin: 0 auto var(--space-sm) auto;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
   }
 </style> 
