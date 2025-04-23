@@ -10,9 +10,9 @@ logger = get_logger("app.initial_data")
 
 
 def init() -> None:
-    logger.info("Conectando a la base de datos...")
+    logger.debug("Conectando a la base de datos...")
     db = SessionLocal()
-    logger.info("Inicializando datos...")
+    logger.debug("Inicializando datos...")
     init_db(db)
     db.close()
 

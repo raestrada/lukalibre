@@ -12,7 +12,7 @@ setup_logging()
 logger = get_logger("app.scripts.create_superuser")
 
 def create_superuser(email: str, password: str, full_name: str):
-    logger.info(f"Intentando crear superusuario: {email}")
+    logger.debug("Intentando crear superusuario")
     
     db = SessionLocal()
     try:
@@ -30,7 +30,7 @@ def create_superuser(email: str, password: str, full_name: str):
             full_name=full_name,
         )
         crud.user.create(db, obj_in=user_in)
-        logger.info(f"[bold green]✓ Superusuario {email} creado correctamente[/]")
+        logger.info("[bold green]✓ Superusuario creado correctamente[/]")
     except Exception as e:
         logger.error(f"[bold red]✗ Error al crear superusuario: {str(e)}[/]")
         sys.exit(1)

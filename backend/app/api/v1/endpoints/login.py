@@ -23,7 +23,7 @@ def login_access_token(
     """
     OAuth2 compatible token login, get an access token for future requests
     """
-    logger.info(f"Intento de login para usuario: {form_data.username}")
+    logger.debug("Intento de login recibido")
     
     user = crud.user.authenticate(
         db, email=form_data.username, password=form_data.password
@@ -46,7 +46,7 @@ def login_access_token(
         "token_type": "bearer",
     }
     
-    logger.info(f"[bold green]Login exitoso para usuario: {form_data.username}[/]")
+    logger.debug("Login exitoso")
     return token
 
 
@@ -55,5 +55,5 @@ def test_token(current_user: models.User = Depends(deps.get_current_user)) -> An
     """
     Test access token
     """
-    logger.info(f"Verificación de token solicitada por usuario: {current_user.email}")
+    logger.debug("Verificación de token solicitada")
     return current_user 

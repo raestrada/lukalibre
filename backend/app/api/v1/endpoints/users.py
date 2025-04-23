@@ -21,7 +21,7 @@ def read_users(
     """
     Retrieve users.
     """
-    logger.info(f"Listando usuarios (skip={skip}, limit={limit}) solicitado por: {current_user.email}")
+    logger.debug(f"Listado de usuarios solicitado (skip={skip}, limit={limit})")
     users = crud.user.get_multi(db, skip=skip, limit=limit)
     logger.debug(f"Se obtuvieron {len(users)} usuarios de la base de datos")
     return users
@@ -37,7 +37,7 @@ def create_user(
     """
     Create new user.
     """
-    logger.info(f"Creación de usuario solicitada para: {user_in.email} por: {current_user.email}")
+    logger.debug("Solicitud de creación de usuario recibida")
     
     user = crud.user.get_by_email(db, email=user_in.email)
     if user:
@@ -48,7 +48,7 @@ def create_user(
         )
     
     user = crud.user.create(db, obj_in=user_in)
-    logger.info(f"[bold green]Usuario creado exitosamente: {user_in.email}[/]")
+    logger.debug("Usuario creado exitosamente")
     return user
 
 
@@ -59,5 +59,5 @@ def read_user_me(
     """
     Get current user.
     """
-    logger.info(f"Usuario {current_user.email} accediendo a sus propios datos")
+    logger.debug("Usuario accediendo a sus propios datos")
     return current_user 

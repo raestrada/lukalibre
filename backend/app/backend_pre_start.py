@@ -31,7 +31,7 @@ def init() -> None:
 
 
 def main() -> None:
-    logger.info("[bold blue]Inicializando verificación previa del servicio[/]")
+    logger.debug("[bold blue]Inicializando verificación previa del servicio[/]")
     init()
     logger.info("[bold green]Verificación previa completada con éxito[/]")
 

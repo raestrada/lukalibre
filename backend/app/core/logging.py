@@ -89,7 +89,7 @@ def setup_logging() -> None:
     # Log inicial para verificar configuración
     root_logger = logging.getLogger()
     root_logger.setLevel(level)
-    root_logger.info(f"[bold green]Logging configurado con nivel: {logging.getLevelName(level)}[/]")
+    root_logger.debug(f"[bold green]Logging configurado con nivel: {logging.getLevelName(level)}[/]")
 
 
 def get_logger(name: str) -> logging.Logger:
