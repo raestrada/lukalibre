@@ -5,6 +5,7 @@
   import { authStore } from '../../stores/authStore';
   import { get } from 'svelte/store';
   import authService from '../../services/authService';
+  import type { User } from '../../services/authService';
   
   // Prop para saber si Layout está inicializando la autenticación
   export let isInitializing: boolean = false;
@@ -28,7 +29,7 @@
   $: userAvatar = getUserAvatar(user);
   
   // Función para obtener el avatar del usuario priorizando Google
-  function getUserAvatar(user) {
+  function getUserAvatar(user: User | null) {
     if (!user) {
       console.log("Header: No hay usuario, usando avatar predeterminado");
       return defaultProfilePic;
@@ -37,12 +38,19 @@
     // Si tenemos el avatar de Google, lo usamos
     if (user.google_avatar) {
       console.log("Header: Usando avatar de Google:", user.google_avatar);
+      // Verificar si la URL está vacía (a veces Google devuelve string vacío)
+      if (!user.google_avatar.trim()) {
+        console.log("Header: Avatar de Google es string vacío");
+        return defaultProfilePic;
+      }
+      
+      // Usar directamente la URL original de Google
       return user.google_avatar;
     }
     
     // Verificar si hay un avatar guardado en localStorage
     const savedAvatar = localStorage.getItem('google_avatar');
-    if (savedAvatar) {
+    if (savedAvatar && savedAvatar.trim()) {
       console.log("Header: Usando avatar guardado en localStorage:", savedAvatar);
       return savedAvatar;
     }
@@ -50,6 +58,26 @@
     console.log("Header: No se encontró avatar, usando predeterminado:", defaultProfilePic);
     // Si no hay información, usar el avatar predeterminado
     return defaultProfilePic;
+  }
+  
+  // Función para hacer una prueba directa del avatar en el DOM
+  function testImageDirectly(url: string) {
+    if (!url) return;
+    
+    console.log(`Probando imagen directamente: ${url}`);
+    const img = new Image();
+    
+    img.onload = () => {
+      console.log(`✅ La imagen cargó correctamente: ${url}`);
+      console.log(`   Dimensiones: ${img.width}x${img.height}`);
+    };
+    
+    img.onerror = (e) => {
+      console.log(`❌ Error al cargar la imagen: ${url}`);
+      console.log(`   Error detallado:`, e);
+    };
+    
+    img.src = url;
   }
   
   onMount(async () => {
@@ -60,6 +88,16 @@
       if (currentUser) {
         console.log("Header: Avatar en usuario:", currentUser.google_avatar);
         console.log("Header: Avatar en localStorage:", localStorage.getItem('google_avatar'));
+        
+        // Probar carga de imagen directamente
+        if (currentUser.google_avatar) {
+          testImageDirectly(currentUser.google_avatar);
+        }
+        
+        const savedAvatar = localStorage.getItem('google_avatar');
+        if (savedAvatar) {
+          testImageDirectly(savedAvatar);
+        }
       }
     } catch (error) {
       console.error("Header: Error al verificar estado de autenticación:", error);
@@ -104,7 +142,20 @@
   function handleImageError(event: Event) {
     console.error("Header: Error al cargar imagen de avatar");
     const imgElement = event.target as HTMLImageElement;
+    console.log("Header: URL que falló:", imgElement.src);
+    
+    // Verificar si ya estamos usando la imagen por defecto para evitar bucles
+    if (imgElement.src.includes('/icons/user.svg')) {
+      console.log("Header: Ya estamos usando la imagen por defecto, no se realiza cambio");
+      return;
+    }
+    
+    // Aplicar imagen por defecto
+    console.log("Header: Cambiando a imagen por defecto:", defaultProfilePic);
     imgElement.src = defaultProfilePic;
+    
+    // Asegurarnos de que se elimina el crossorigin para la imagen por defecto
+    imgElement.removeAttribute('crossorigin');
   }
 </script>
 
@@ -182,6 +233,7 @@
               alt="Foto de perfil" 
               class="user-avatar"
               on:error={handleImageError}
+              referrerpolicy="no-referrer"
             />
           </button>
           
@@ -193,6 +245,7 @@
                   alt="Foto de perfil" 
                   class="user-avatar-large"
                   on:error={handleImageError}
+                  referrerpolicy="no-referrer"
                 />
                 <div class="user-details">
                   <span class="user-name">{user?.full_name || 'Usuario'}</span>

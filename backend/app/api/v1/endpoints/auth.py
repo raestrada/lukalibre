@@ -228,8 +228,18 @@ async def google_callback(
     # Redireccionar al frontend con el token
     frontend_url = settings.CLIENT_FRONTEND_URL or "http://localhost:5173"
     logger.debug("Inicio de sesión con Google exitoso")
+    
+    # Procesar la URL del avatar para asegurarse de que está codificada correctamente
+    avatar_url = user_info.get('picture', '')
+    if avatar_url:
+        logger.debug(f"Avatar de Google encontrado: {avatar_url}")
+        # Usamos la URL tal como la proporciona Google, sin codificación adicional
+        avatar_url_encoded = avatar_url
+    else:
+        avatar_url_encoded = ''
+    
     return RedirectResponse(
-        url=f"{frontend_url}/auth/callback?token={access_token}&user_id={user.id}&email={user.email}&google_avatar={user_info.get('picture', '')}"
+        url=f"{frontend_url}/auth/callback?token={access_token}&user_id={user.id}&email={user.email}&google_avatar={avatar_url_encoded}"
     )
 
 
@@ -428,10 +438,16 @@ async def google_callback_post(
     )
     
     logger.debug("Inicio de sesión con Google exitoso")
+    
+    # Procesar la URL del avatar para la respuesta
+    avatar_url = user_info.get('picture', '')
+    if avatar_url:
+        logger.debug(f"Avatar de Google encontrado en POST: {avatar_url}")
+    
     return {
         "access_token": access_token,
         "token_type": "bearer",
         "user_id": str(user.id),
         "email": user.email,
-        "google_avatar": user_info.get('picture', '')
+        "google_avatar": avatar_url
     } 

@@ -54,6 +54,8 @@
           if (urlParams.has('google_avatar')) {
             const googleAvatar = urlParams.get('google_avatar')!;
             console.log("GoogleCallback: Avatar recibido:", googleAvatar);
+            
+            // Guardar la URL tal como llega, sin procesamiento adicional
             localStorage.setItem('google_avatar', googleAvatar);
           } else {
             console.log("GoogleCallback: No se recibió avatar de Google en la URL");

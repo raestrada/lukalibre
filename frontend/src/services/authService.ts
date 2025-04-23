@@ -120,6 +120,8 @@ class AuthService {
       userData.google_avatar = googleAvatar;
     } else if (userData.google_avatar) {
       console.log("AuthService: Usuario ya tiene avatar en los datos:", userData.google_avatar);
+      
+      // Ya no modificamos la URL, la usamos tal como viene
     } else {
       console.log("AuthService: No se encontró avatar ni en usuario ni en localStorage");
     }
