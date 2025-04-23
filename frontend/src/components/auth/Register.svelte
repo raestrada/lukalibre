@@ -142,12 +142,12 @@
           on:click={handleGoogleSignup}
           disabled={loading}
         >
-          Registrarse con Google
+        <img src="/icons/google.svg" alt="Google" /><span>Registrarse con Google</span>
         </button>
       {/if}
       
       <div class="auth-footer">
-        <p>¿Ya tienes cuenta? <a href="/login" use:link>Iniciar Sesión</a></p>
+        <p>¿Ya tienes cuenta? <a href="/login" use:link>Inicia sesión</a></p>
       </div>
     </div>
   </div>
@@ -183,9 +183,9 @@
   }
   
   .btn-google {
-    background-color: #f5f8f5;
-    color: var(--text-primary);
-    border: 1px solid var(--border);
+    background-color: white;
+    color: #757575;
+    border: 1px solid #dddddd;
     padding: var(--space-sm) var(--space-md);
     border-radius: var(--radius-sm);
     font-weight: 500;
@@ -193,16 +193,21 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background-color 0.2s, transform 0.1s;
+    transition: background-color 0.2s, box-shadow 0.2s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  
+  .btn-google img {
+    margin-right: 10px;
   }
   
   .btn-google:hover {
-    background-color: #eaf2ea;
-    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    background-color: #fafafa;
   }
   
   .btn-google:active {
-    transform: translateY(0);
+    background-color: #f5f5f5;
   }
   
   .auth-footer {
