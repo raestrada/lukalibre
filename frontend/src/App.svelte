@@ -15,13 +15,22 @@
     '/': Home,
     '/login': Login,
     '/register': Register,
-    '/auth/google/callback': GoogleCallback,
+    '/auth/callback': GoogleCallback,
     '/profile': wrap({
       component: Profile,
       conditions: [
         () => {
           // Aquí podemos verificar si el usuario está autenticado
           // Por ahora, permitimos acceso a todos
+          return true;
+        }
+      ]
+    }),
+    '/dashboard': wrap({
+      component: Profile, // Usar el componente Profile como dashboard
+      conditions: [
+        () => {
+          // Verificar autenticación cuando tengamos la lógica lista
           return true;
         }
       ]

@@ -6,6 +6,7 @@ from passlib.context import CryptContext
 from authlib.integrations.starlette_client import OAuth
 from starlette.config import Config
 import httpx
+from authlib.integrations.base_client.errors import MismatchingStateError
 
 from app.core.config import settings
 from app.core.logging import get_logger
@@ -26,8 +27,10 @@ oauth.register(
     client_secret=settings.GOOGLE_CLIENT_SECRET,
     client_kwargs={
         "scope": "openid email profile",
-        "redirect_uri": settings.GOOGLE_REDIRECT_URI
-    }
+        "redirect_uri": settings.GOOGLE_REDIRECT_URI,
+        "prompt": "consent"
+    },
+    compliance_fix=lambda client: client
 )
 
 

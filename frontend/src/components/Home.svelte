@@ -1,6 +1,19 @@
 <script lang="ts">
-  import { link } from 'svelte-spa-router';
+  import { onMount } from 'svelte';
   import { authStore } from '../stores/authStore';
+  import { push } from 'svelte-spa-router';
+  import { link } from 'svelte-spa-router';
+  
+  onMount(() => {
+    // Verificar si el usuario está autenticado y redirigirlo al dashboard
+    const unsubscribe = authStore.subscribe(state => {
+      if (state.isAuthenticated && !state.loading) {
+        push('/dashboard');
+      }
+    });
+    
+    return unsubscribe;
+  });
 </script>
 
 <div class="container">

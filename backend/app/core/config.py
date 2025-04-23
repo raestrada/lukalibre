@@ -69,7 +69,7 @@ class Settings(BaseSettings):
     GOOGLE_REDIRECT_URI: str = "http://localhost:8000/api/v1/auth/google/callback"
 
     # Frontend URL
-    CLIENT_FRONTEND_URL: str = "http://localhost:8000"
+    CLIENT_FRONTEND_URL: str = "http://localhost:5173"
 
     model_config = {
         "case_sensitive": True,

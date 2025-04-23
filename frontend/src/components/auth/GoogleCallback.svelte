@@ -7,54 +7,93 @@
   
   let loading = true;
   let error: string | null = null;
+  let debugInfo: string | null = null;
   
   // Obtenemos la URL de la API desde las variables de entorno
   const API_URL = import.meta.env.VITE_API_URL || '/api/v1';
-  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
-  
-  interface AuthResponse {
-    access_token: string;
-    refresh_token?: string;
-  }
   
   onMount(async () => {
-    // Get the authorization code from the URL
-    const params = new URLSearchParams(window.location.search);
-    const code = params.get('code');
-    const errorParam = params.get('error');
-
-    if (errorParam) {
-      loading = false;
-      error = `Error durante la autenticación con Google: ${errorParam}`;
-      return;
-    }
-
-    if (!code) {
-      loading = false;
-      error = 'No se recibió un código de autorización de Google';
-      return;
-    }
-
     try {
-      // Exchange the code for a token
-      const response = await axios.post<AuthResponse>(`${API_URL}/auth/google-callback`, { code });
+      // Registrar toda la URL para debugging
+      debugInfo = `URL: ${window.location.href}`;
+      console.log("URL completa:", window.location.href);
       
-      if (response.data && response.data.access_token) {
-        // Store the token
-        authService.setToken(response.data.access_token);
-        
-        // Initialize the auth store with the token
-        await authStore.init();
-        
-        // Redirect to dashboard
-        push('/dashboard');
-      } else {
-        throw new Error('No se recibió un token válido');
+      // Obtener parámetros de la URL
+      const urlParams = new URLSearchParams(window.location.search);
+      
+      // Si hay un error, mostrarlo
+      if (urlParams.has('error')) {
+        error = urlParams.get('error');
+        loading = false;
+        return;
       }
-    } catch (err: any) {
-      console.error('Error during Google OAuth callback:', err);
+      
+      // Si hay un token, procesarlo (este caso ocurre cuando el backend redirige de vuelta)
+      if (urlParams.has('token')) {
+        try {
+          // Almacenar el token
+          const token = urlParams.get('token')!;
+          authService.setToken(token);
+          
+          // Inicializar la store de autenticación
+          await authStore.init();
+          
+          // Redireccionar al dashboard inmediatamente
+          console.log("Redirigiendo al dashboard...");
+          window.location.href = '/#/dashboard';
+          return;
+        } catch (err) {
+          console.error("Error procesando token:", err);
+          error = "Error al procesar el token de autenticación";
+          loading = false;
+          return;
+        }
+      }
+      
+      // Si hay un código de autorización
+      if (urlParams.has('code')) {
+        // Obtener el código
+        const code = urlParams.get('code');
+        const state = urlParams.get('state');
+        
+        try {
+          // Llamar a nuestro endpoint en el backend
+          const response = await axios.post(`${API_URL}/auth/google-callback`, { 
+            code, 
+            state 
+          });
+          
+          if (response.data && response.data.access_token) {
+            // Guardar el token de acceso
+            authService.setToken(response.data.access_token);
+            
+            // Inicializar el store de autenticación con el token
+            await authStore.init();
+            
+            // Redireccionar al dashboard usando window.location para forzar recarga
+            console.log("Redirigiendo al dashboard...");
+            window.location.href = '/#/dashboard';
+            return;
+          } else {
+            throw new Error('No se recibió un token válido');
+          }
+        } catch (err: any) {
+          console.error('Error al procesar el código de autorización:', err);
+          error = err.response?.data?.detail || 'Error al procesar la autenticación con Google';
+          debugInfo = `Error detallado: ${JSON.stringify(err.response?.data || err.message)}`;
+          loading = false;
+        }
+        return;
+      }
+      
+      // Si no hay código ni token, hay un error
+      error = 'No se recibieron parámetros de autenticación';
       loading = false;
-      error = err.response?.data?.detail || 'Error al procesar la autenticación con Google';
+    } catch (err: any) {
+      console.error('Error en autenticación con Google:', err);
+      error = err.response?.data?.detail || 'Error durante la autenticación con Google';
+      debugInfo = `Error general: ${err.message}`;
+      loading = false;
     }
   });
 
@@ -73,6 +112,12 @@
     <div class="error">
       <h2>Error de autenticación</h2>
       <p>{error}</p>
+      {#if debugInfo}
+        <details>
+          <summary>Información de depuración</summary>
+          <pre>{debugInfo}</pre>
+        </details>
+      {/if}
       <button on:click={goToLogin}>Volver a iniciar sesión</button>
     </div>
   {/if}
@@ -111,6 +156,25 @@
   .error h2 {
     color: #e74c3c;
     margin-bottom: 1rem;
+  }
+  
+  details {
+    margin: 1rem 0;
+    text-align: left;
+  }
+  
+  pre {
+    background: #f0f0f0;
+    padding: 0.5rem;
+    border-radius: 4px;
+    overflow-x: auto;
+    font-size: 0.8rem;
+  }
+  
+  summary {
+    cursor: pointer;
+    color: #666;
+    font-size: 0.9rem;
   }
 
   button {
