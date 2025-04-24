@@ -18,65 +18,30 @@
   
   let isInitializing = true;
   
-  // Función para detectar y procesar token desde la URL
-  async function handleTokenFromUrl(): Promise<boolean> {
-    // Verificar URL de callback sin hash
-    if (window.location.pathname === '/auth/callback') {
-      const urlParams = new URLSearchParams(window.location.search);
-      
-      if (urlParams.has('token')) {
-        const token = urlParams.get('token')!;
-        authService.setToken(token, 'jwt');
-        await authStore.init();
-        
-        setTimeout(() => {
-          window.history.replaceState({}, document.title, '/');
-          push('/dashboard');
-        }, 100);
-        
+  // Simplificada: solo maneja JWT propio
+  function extractJwtFromHash() {
+    if (window.location.hash.includes('access_token=')) {
+      const params = new URLSearchParams(window.location.hash.substring(1));
+      const jwt = params.get('access_token');
+      if (jwt) {
+        authService.setToken(jwt, 'jwt');
+        window.history.replaceState({}, document.title, '/dashboard');
+        push('/dashboard');
         return true;
       }
     }
-    
-    // Verificar callback de Google con hash
-    if (window.location.pathname === '/auth/google/callback' && window.location.hash.includes('access_token=')) {
-      const hash = window.location.hash;
-      const params = new URLSearchParams(hash.substring(1));
-      const accessToken = params.get('access_token');
-      
-      if (accessToken) {
-        authService.setToken(accessToken, 'google');
-        localStorage.setItem('googleDriveToken', accessToken);
-        await authStore.init();
-        
-        setTimeout(() => {
-          window.history.replaceState({}, document.title, '/dashboard');
-          push('/dashboard');
-        }, 100);
-        
-        return true;
-      }
-    }
-    
     return false;
   }
-  
+
   onMount(async () => {
     try {
-      // Intentar procesar token desde URL primero
-      const tokenProcessed = await handleTokenFromUrl();
-      if (tokenProcessed) {
+      // Si hay JWT en el hash, procesar y redirigir
+      if (extractJwtFromHash()) {
+        await authStore.init();
         isInitializing = false;
         return;
       }
-      
-      // Ruta de callback con hash (dejar que componente maneje)
-      if (window.location.hash.includes('/auth/callback')) {
-        isInitializing = false;
-        return;
-      }
-      
-      // Inicializar normalmente
+      // Inicialización normal
       await authStore.init();
     } catch (error) {
       console.error("Error al inicializar:", error);

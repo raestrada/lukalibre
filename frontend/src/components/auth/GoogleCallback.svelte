@@ -31,9 +31,7 @@
         return;
       }
       
-      // Registrar toda la URL para debugging
-      debugInfo = `URL: ${window.location.href}`;
-      log.debug("URL completa:", window.location.href);
+
       
       // Obtener parámetros de la URL
       const urlParams = new URLSearchParams(window.location.search);
@@ -49,34 +47,13 @@
       // Si hay un token, procesarlo (este caso ocurre cuando el backend redirige de vuelta)
       if (urlParams.has('token')) {
         try {
-          // Almacenar el token
+          // Almacenar el token JWT
           const token = urlParams.get('token')!;
-          authService.setToken(token, 'jwt');
-          
-          // Si hay un avatar de Google, guardarlo en localStorage para uso futuro
-          if (urlParams.has('google_avatar')) {
-            const googleAvatar = urlParams.get('google_avatar')!;
-            log.debug("Avatar recibido:", log.trimLongString(googleAvatar));
-            
-            // Guardar la URL tal como llega, sin procesamiento adicional
-            localStorage.setItem('google_avatar', googleAvatar);
-          } else {
-            log.debug("No se recibió avatar de Google en la URL");
-          }
-          
-          // Inicializar la store de autenticación
+          authService.setToken(token);
           await authStore.init();
-          
-          // Registrar para depuración
-          const state = authStore.getState();
-          log.info("Token almacenado y authStore inicializado. Usuario:", state.user ? state.user.email : "No disponible");
-          
-          // Redirigir directamente al dashboard
-          log.debug("Redirigiendo al dashboard...");
           push('/dashboard');
           return;
         } catch (err) {
-          log.error("Error procesando token:", err);
           error = "Error al procesar el token de autenticación";
           loading = false;
           return;

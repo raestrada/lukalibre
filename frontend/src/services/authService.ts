@@ -28,7 +28,7 @@ export interface User {
 }
 
 class AuthService {
-  // Verificar estado de sesión completo (incluyendo Google)
+  // Verificar estado de sesión completo con el JWT propio
   async checkSession(): Promise<boolean> {
     log.debug("Verificando sesión");
     if (this.isLoggedIn()) {
@@ -85,7 +85,7 @@ class AuthService {
 
       const response = await httpService.post<AuthResponse>('/login/access-token', data);
       
-      this.setToken(response.data.access_token, 'jwt');
+      this.setToken(response.data.access_token);
       log.info("Login exitoso para usuario:", email);
       return response.data;
     } catch (err) {
@@ -106,7 +106,7 @@ class AuthService {
       // Guardamos info de Google para uso offline
       this.saveGoogleUserData(credential);
       
-      this.setToken(response.data.access_token, 'google');
+      this.setToken(response.data.access_token);
       log.info("Login con Google exitoso");
       return response.data;
     } catch (err) {
@@ -117,7 +117,7 @@ class AuthService {
       if (error.message === 'Network Error' || error.code === 'ERR_NETWORK') {
         log.warn("Error de red al login con Google. Configurando modo offline");
         
-        this.setToken(credential, 'google');
+        this.setToken(credential);
         this.saveGoogleUserData(credential);
         
         // Crear respuesta simplificada para uso offline
@@ -168,38 +168,17 @@ class AuthService {
     );
     
     log.info("Token refrescado exitosamente");
-    this.setToken(response.data.access_token, 'jwt');
+    this.setToken(response.data.access_token);
     return response.data;
   }
   
   // Obtener datos del usuario actual
   async getCurrentUser(): Promise<User> {
     const token = this.getToken();
-    const tokenType = this.getTokenType();
     
     if (!token) {
       log.error("No se encontró token al obtener usuario actual");
       throw new Error('No authentication token found');
-    }
-    
-    // Para tokens de Google, primero intentar recuperar datos locales
-    if (tokenType === 'google') {
-      log.debug("Token de Google detectado, obteniendo información local");
-      const email = localStorage.getItem('google_email');
-      const name = localStorage.getItem('google_name');
-      const avatar = localStorage.getItem('google_picture') || localStorage.getItem('google_avatar');
-      
-      if (email && name) {
-        log.info("Usando información de Google almacenada localmente");
-        return {
-          id: 0, // ID temporal
-          email: email,
-          full_name: name,
-          is_active: true,
-          is_superuser: false,
-          google_avatar: avatar || undefined
-        };
-      }
     }
     
     log.debug("Obteniendo usuario con token desde el backend");
@@ -216,12 +195,6 @@ class AuthService {
       
       const userData = response.data;
       
-      // Asignar avatar de Google si existe en localStorage
-      const googleAvatar = localStorage.getItem('google_picture') || localStorage.getItem('google_avatar');
-      if (googleAvatar && !userData.google_avatar) {
-        userData.google_avatar = googleAvatar;
-      }
-      
       log.info("Usuario obtenido:", userData.email);
       return userData;
     } catch (error) {
@@ -232,22 +205,14 @@ class AuthService {
         (error as AxiosError).message === 'Network Error' || 
         (error as AxiosError).code === 'ERR_NETWORK'
       )) {
-        // Verificar datos de Google locales
-        const email = localStorage.getItem('google_email');
-        const name = localStorage.getItem('google_name');
-        const avatar = localStorage.getItem('google_picture') || localStorage.getItem('google_avatar');
-        
-        if (email || name) {
-          log.warn("Error de red, usando datos de Google almacenados localmente");
-          return {
-            id: 0,
-            email: email || "usuario@google.com",
-            full_name: name || "Usuario de Google",
-            is_active: true,
-            is_superuser: false,
-            google_avatar: avatar || undefined
-          };
-        }
+        log.warn("Error de red, asumiendo token válido en modo offline");
+        return {
+          id: 0,
+          email: "usuario@offline.com",
+          full_name: "Usuario Offline",
+          is_active: true,
+          is_superuser: false
+        };
       }
       
       throw error;
@@ -257,31 +222,17 @@ class AuthService {
   // Cerrar sesión
   logout(): void {
     log.info("Cerrando sesión");
-    localStorage.removeItem('token');
-    localStorage.removeItem('token_type');
-    
-    // También limpiar datos de Google
-    localStorage.removeItem('googleDriveToken');
+    localStorage.removeItem('access_token');
   }
   
   // Guardar token de autenticación
-  setToken(token: string, type: 'jwt' | 'google'): void {
-    localStorage.setItem('token', token);
-    localStorage.setItem('token_type', type);
-    
-    if (type === 'google') {
-      localStorage.setItem('google_token', token);
-    }
+  setToken(token: string) {
+    localStorage.setItem('access_token', token);
   }
   
   // Obtener token actual
   getToken(): string | null {
-    return localStorage.getItem('token');
-  }
-  
-  // Obtener tipo de token
-  getTokenType(): 'jwt' | 'google' | null {
-    return localStorage.getItem('token_type') as 'jwt' | 'google' | null;
+    return localStorage.getItem('access_token');
   }
   
   // Verificar si hay sesión iniciada
