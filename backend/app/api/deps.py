@@ -54,6 +54,32 @@ def get_current_user(
     logger.debug(f"Usuario autenticado: {user.email}")
     return user
 
+from fastapi import Request
+
+from fastapi import Header, Request
+
+def get_current_user_bypass(
+    x_debug_bypass: str = Header(None),
+    db: Session = Depends(get_db),
+    token: str = Depends(reusable_oauth2),
+    request: Request = None
+) -> models.User:
+    # Permitir bypass solo si:
+    # - DEBUG está activo
+    # - Header X-Debug-Bypass es '1'
+    # - Host remoto es localhost
+    if settings.DEBUG and x_debug_bypass == "1" and request is not None:
+        client_host = request.client.host
+        backend_hosts = [
+            getattr(settings, "SERVER_HOST", "http://localhost:8000"),
+            getattr(settings, "SERVER_NAME", "localhost")
+        ]
+        # Considerar solo el host sin protocolo ni puerto
+        backend_is_local = any(h.replace("http://", "").replace("https://", "").split(":")[0] in ("127.0.0.1", "localhost") for h in backend_hosts)
+        if client_host in ("127.0.0.1", "::1", "localhost") and backend_is_local:
+            from app.models.user import User
+            return User(id=0, full_name="Debug User", email="debug@local", hashed_password="", is_active=True, is_superuser=True)
+    return get_current_user(db=db, token=token)
 
 def get_current_active_user(
     current_user: models.User = Depends(get_current_user),
