@@ -154,4 +154,13 @@ async def llm_proxy(
         {"role": "user", "content": message_content}
     ]
     llm_output = await call_openai(messages)
+    # Logging condicional solo en DEBUG y localhost
+    from app.core.config import settings
+    import logging
+    if (
+        getattr(settings, 'LOG_LEVEL', '').upper() == 'DEBUG'
+        and 'localhost' in str(getattr(settings, 'SERVER_HOST', ''))
+    ):
+        logging.getLogger("llm_proxy").debug(f"[DEBUG][localhost] Mensaje enviado a LLM: {messages}")
+        logging.getLogger("llm_proxy").debug(f"[DEBUG][localhost] Respuesta cruda del LLM: {llm_output}")
     return JSONResponse(content={"llm_output": llm_output})

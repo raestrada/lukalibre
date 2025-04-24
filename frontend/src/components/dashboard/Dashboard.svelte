@@ -38,7 +38,15 @@
       const schemaNames = schemas.map(s => s.name);
       // 2. Identificar el esquema
       const detectedSchema = await llmService.identifySchema(llmFile, schemaNames);
-      const schemaObj = schemas.find(s => s.name === detectedSchema);
+      // Match robusto ignorando mayúsculas, tildes y espacios
+      function normalize(str) {
+        return str
+          .toLowerCase()
+          .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // quita tildes
+          .replace(/\s+/g, ''); // quita espacios
+      }
+      const detectedNorm = normalize(detectedSchema);
+      const schemaObj = schemas.find(s => normalize(s.name) === detectedNorm);
       if (!schemaObj) throw new Error('No se pudo identificar el esquema del documento.');
       // 3. Extraer y poblar datos
       await llmService.extractAndInsertData(llmFile, detectedSchema, schemaObj.schema);
