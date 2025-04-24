@@ -92,7 +92,7 @@
 <div class="app">
   <Header {isInitializing} />
   <div class="layout-main">
-    {#if !['/', '/login', '/register'].includes(window.location.pathname)}
+    {#if !['/', '/login', '/register'].includes(window.location.pathname) && $authStore.isAuthenticated}
       <Sidebar onLogout={handleLogout} onSettings={handleSettings} />
     {/if}
     <main class="main">
