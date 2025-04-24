@@ -87,18 +87,8 @@
   {/if}
 </div>
 
-<style>
-  .loading.home-container {
-    background: var(--secondary);
-    color: var(--text-primary);
+<style lang="css">
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 50vh;
-    padding: var(--space-xl) 0;
-  }
   
   .spinner {
     border: 4px solid rgba(0, 0, 0, 0.1);

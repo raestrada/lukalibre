@@ -244,10 +244,11 @@
           
           {#if userMenuOpen}
             <div 
-              class="user-dropdown" 
-              on:mouseleave={closeUserMenu}
-              role="menu"
-            >
+               class="user-dropdown" 
+               on:mouseleave={closeUserMenu}
+               role="menu"
+               tabindex="0"
+             >
               <div class="user-info">
                 <img 
                   src={userAvatar} 
@@ -262,26 +263,20 @@
                 </div>
               </div>
               <ul class="user-menu-list">
-                <li>
-                  <button on:click={goToDashboard}>
-                    <img src="/icons/dashboard.svg" alt="Dashboard" class="icon" />
-                    Dashboard
-                  </button>
-                </li>
-                <li>
-                  <button on:click={goToSettings}>
-                    <img src="/icons/settings.svg" alt="Configuración" class="icon" />
-                    Configuración
-                  </button>
-                </li>
-                <li class="divider"></li>
-                <li>
-                  <button on:click={handleLogout}>
-                    <img src="/icons/logout.svg" alt="Cerrar Sesión" class="icon" />
-                    Cerrar Sesión
-                  </button>
-                </li>
-              </ul>
+  <li>
+    <button on:click={goToSettings}>
+      <img src="/icons/settings.svg" alt="Configuración" class="icon" />
+      Configuración
+    </button>
+  </li>
+  <li class="divider"></li>
+  <li>
+    <button on:click={handleLogout}>
+      <img src="/icons/logout.svg" alt="Cerrar Sesión" class="icon" />
+      Cerrar Sesión
+    </button>
+  </li>
+</ul>
             </div>
           {/if}
         </div>
@@ -408,9 +403,18 @@
     height: 40px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid #fff;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    border: 2px solid var(--primary);
+    box-shadow: 0 1px 3px var(--shadow);
+    background: var(--primary);
+    color: var(--text-inverse);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-transform: uppercase;
   }
+  
   
   .user-dropdown {
     position: absolute;
@@ -438,9 +442,18 @@
     border-radius: 50%;
     object-fit: cover;
     margin-right: 1rem;
-    border: 2px solid #fff;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    border: 2px solid var(--primary);
+    box-shadow: 0 1px 3px var(--shadow);
+    background: var(--primary);
+    color: var(--text-inverse);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    font-weight: 600;
+    text-transform: uppercase;
   }
+  
   
   .user-details {
     display: flex;

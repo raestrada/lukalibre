@@ -1,12 +1,17 @@
 <script lang="ts">
   import Header from './Header.svelte';
+  import Sidebar from './Sidebar.svelte';
   import { onMount } from 'svelte';
   import { authStore } from '../../stores/authStore';
   import authService from '../../services/authService';
-  
   // Iniciamos como inicializando y App.svelte se encargará de actualizar
   let isInitializing = true;
-  
+  function handleLogout() {
+    authService.logout();
+  }
+  function handleSettings() {
+    window.location.href = '/user/settings';
+  }
   onMount(async () => {
     try {
       console.log("Layout: Montado");
@@ -86,13 +91,16 @@
 
 <div class="app">
   <Header {isInitializing} />
-  
-  <main class="main">
-    <div class="container">
-      <slot></slot>
-    </div>
-  </main>
-  
+  <div class="layout-main">
+    {#if !['/', '/login', '/register'].includes(window.location.pathname)}
+      <Sidebar onLogout={handleLogout} onSettings={handleSettings} />
+    {/if}
+    <main class="main">
+      <div class="container">
+        <slot></slot>
+      </div>
+    </main>
+  </div>
   <footer class="footer">
     <div class="container">
       <p>&copy; {new Date().getFullYear()} LukaLibre — Proyecto sin fines de lucro.</p>
@@ -107,10 +115,16 @@
     flex-direction: column;
     min-height: 100vh;
   }
-  
+  .layout-main {
+    display: flex;
+    flex: 1 1 auto;
+    min-height: 0;
+  }
   .main {
-    flex: 1;
+    flex: 1 1 auto;
     padding: var(--space-lg) 0;
+    min-width: 0;
+    min-height: 0;
   }
   
   .footer {

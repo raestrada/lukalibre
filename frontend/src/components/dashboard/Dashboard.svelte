@@ -75,7 +75,7 @@
   {/if}
 </div>
 
-<style>
+<style lang="css">
   .dashboard {
     max-width: 1200px;
     margin: 0 auto;
@@ -121,13 +121,6 @@
   }
   .welcome h2, .welcome p {
     color: #fff;
-  }
-  
-  .dashboard-content {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: var(--space-lg);
-    margin-bottom: var(--space-lg);
   }
   
   .dashboard-empty {
