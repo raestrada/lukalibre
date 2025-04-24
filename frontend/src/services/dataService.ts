@@ -1,3 +1,4 @@
+import httpService from './httpService';
 import { createLogger } from '../utils/logger';
 import sqliteService from './sqliteService';
 import googleDriveService from './googleDriveService';
@@ -21,27 +22,14 @@ class DataService {
    * Devuelve los schemas disponibles (mock temporal)
    */
   async getSchemas(): Promise<any[]> {
-    // MOCK: Puedes reemplazar esto por fetch a una API o lectura de base local
-    return [
-      {
-        name: 'factura',
-        schema: {
-          numero: 'string',
-          fecha: 'string',
-          proveedor: 'string',
-          monto: 'number'
-        }
-      },
-      {
-        name: 'recibo',
-        schema: {
-          id: 'string',
-          fecha: 'string',
-          cliente: 'string',
-          total: 'number'
-        }
-      }
-    ];
+    const resp = await httpService.get('/schemas', {
+      headers: { 'Authorization': `Bearer ${localStorage.getItem('jwt')}` }
+    });
+    // Compatibilidad: si la API devuelve meta.schema, adaptamos
+    return (resp.data || []).map((s: any) => ({
+      name: s.name,
+      schema: s.meta?.schema || s.schema || s.meta || {}
+    }));
   }
   
   /**

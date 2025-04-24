@@ -12,7 +12,11 @@ export async function getPromptTemplates(forceReload = false): Promise<Record<st
 
 export async function identifySchema(file: File, availableSchemas: string[]): Promise<string> {
   const templates = await getPromptTemplates();
-  const prompt = templates['identify_schema'] || `¿A qué tipo de documento pertenece el archivo adjunto? Opciones: ${availableSchemas.join(', ')}.`;
+  let prompt = templates['identify_schema'] || `¿A qué tipo de documento pertenece el archivo adjunto? Opciones: ${availableSchemas.join(', ')}.`;
+  // Sustituye {{schemas}} y {{content}} si existen en el template
+  prompt = prompt
+    .replace(/\{\{schemas\}\}/g, availableSchemas.join(', '))
+    .replace(/\{\{content\}\}/g, 'en el archivo adjunto');
   const formData = new FormData();
   formData.append('prompt', prompt);
   formData.append('files', file);
