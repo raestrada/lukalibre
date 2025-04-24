@@ -88,7 +88,10 @@
 </div>
 
 <style>
-  .loading-container {
+  .loading.home-container {
+    background: var(--secondary);
+    color: var(--text-primary);
+
     display: flex;
     flex-direction: column;
     align-items: center;

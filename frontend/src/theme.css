@@ -1,0 +1,53 @@
+/* theme.css: Centraliza todos los colores y variables de diseño */
+:root {
+  /* Paleta principal */
+  --primary: #3A6351;
+  --primary-light: #4F8A65;
+  --primary-dark: #274030;
+  --secondary: #F4F6F8;
+  --accent: #17a2b8;
+  --success: #3A6351;
+  --error: #dc3545;
+  --warning: #ffc107;
+  --info: #17a2b8;
+
+  /* Texto */
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --text-inverse: #fff;
+
+  /* Elementos */
+  --border: #dee2e6;
+  --shadow: rgba(0, 0, 0, 0.08);
+
+  /* Espaciados */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-xxl: 3rem;
+
+  /* Radios */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 1rem;
+}
+
+/* Utilidades globales */
+body {
+  color: var(--text-primary);
+  background: var(--secondary);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--primary);
+}
+
+a {
+  color: var(--accent);
+}
+
+a:hover {
+  color: var(--primary);
+}

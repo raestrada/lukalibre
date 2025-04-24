@@ -142,12 +142,14 @@
 
 <style>
   .oauth-callback-container {
+    background: var(--secondary);
+    color: var(--text-primary);
+
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     width: 100%;
-    background-color: #f5f5f5;
   }
 
   .loading, .error {

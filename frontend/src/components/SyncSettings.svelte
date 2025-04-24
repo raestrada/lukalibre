@@ -197,13 +197,16 @@
 
 <style>
   .sync-banner {
-    background: linear-gradient(to right, #243B55, #141E30);
-    color: white;
-    padding: 0.4rem 1rem;
+    background: var(--secondary, #f4f6f8);
+    color: var(--text-primary, #212529);
+    padding: var(--space-xs) var(--space-md);
     margin: 0;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 1px 3px var(--shadow);
+    border: 1px solid var(--border, #dee2e6);
+    border-radius: var(--radius-md);
     position: relative;
     z-index: 10;
+    min-height: 38px;
   }
   
   .sync-toolbar {
@@ -219,71 +222,62 @@
     align-items: center;
     justify-content: center;
     gap: 0.25rem;
-    background-color: transparent;
-    color: white;
+    background: var(--text-inverse);
+    color: var(--primary);
     font-weight: 500;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 3px;
-    padding: 0.25rem 0.75rem;
-    cursor: pointer;
-    transition: all 0.2s;
-    font-size: 0.8rem;
-  }
-  
-  .toolbar-button:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 0.18rem 0.7rem;
+    font-size: 0.94rem;
+    height: 32px;
+    min-width: 100px;
+    justify-content: center;
+    transition: background 0.15s, color 0.15s, border 0.15s;
+    box-sizing: border-box;
   }
   
   .toolbar-button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+    background: var(--secondary);
+    color: var(--text-secondary);
+  }
+  .toolbar-button input[type="file"] {
+    height: 32px;
+    min-width: 0;
+    font-size: 0.94rem;
+    padding: 0;
+    margin: 0;
+    background: none;
+    border: none;
+    color: inherit;
   }
   
-  .toolbar-button.download {
-    background-color: rgba(40, 167, 69, 0.2);
+  .toolbar-button span {
+    margin-left: 0.3rem;
+    letter-spacing: 0.01em;
+    font-size: 1rem;
+    text-transform: none;
+    display: flex;
+    align-items: center;
+    height: 100%;
   }
   
-  .toolbar-button.download:hover {
-    background-color: rgba(40, 167, 69, 0.3);
+  .toolbar-button:hover {
+    background: var(--primary-light);
+    color: var(--text-inverse);
+    border: 1.5px solid var(--primary);
   }
   
-  .toolbar-button.upload {
-    background-color: rgba(253, 126, 20, 0.2);
-    cursor: pointer;
-  }
-  
-  .toolbar-button.upload:hover {
-    background-color: rgba(253, 126, 20, 0.3);
-  }
-  
-  .toolbar-button.sync {
-    background-color: rgba(108, 117, 125, 0.2);
-  }
-  
-  .toolbar-button.sync:hover {
-    background-color: rgba(108, 117, 125, 0.3);
-  }
-  
-  .toolbar-button.sync.active {
-    background-color: rgba(0, 123, 255, 0.2);
-  }
-  
-  .toolbar-button.sync.active:hover {
-    background-color: rgba(0, 123, 255, 0.3);
-  }
-  
-  .toolbar-button.sync-now {
-    background-color: rgba(23, 162, 184, 0.2);
-    padding: 0.25rem 0.5rem;
-  }
-  
-  .toolbar-button.sync-now:hover {
-    background-color: rgba(23, 162, 184, 0.3);
+  .toolbar-button.active {
+    background: var(--primary);
+    color: var(--text-inverse);
+    border: 1.5px solid var(--primary);
   }
   
   .import-panel {
-    background-color: rgba(255, 255, 255, 0.9);
-    color: #333;
+    background-color: var(--secondary);
+    color: var(--text-primary);
     margin-top: 0.5rem;
     padding: 0.5rem;
     border-radius: 3px;

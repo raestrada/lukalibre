@@ -43,8 +43,8 @@
 </script>
 
 <div class="dashboard">
-  <SyncSettings />
-  
+  <div class="sync-bar"><SyncSettings /></div>
+
   {#if loading}
     <div class="loading">
       <div class="spinner"></div>
@@ -60,16 +60,7 @@
       <h2>Bienvenido, {user.full_name || user.email}</h2>
       <p>Esta es tu área personal en Luka Libre.</p>
     </div>
-    
-    {#if dbInitialized}
-      <div class="dashboard-content">
-        <div class="info-card">
-          <h3>Base de datos SQLite</h3>
-          <p>La base de datos SQLite ha sido inicializada correctamente.</p>
-          <p>Tus datos se almacenan localmente en tu navegador.</p>
-        </div>
-      </div>
-    {:else}
+    {#if !dbInitialized}
       <div class="dashboard-empty">
         <div class="empty-message">
           <p>El dashboard está actualmente vacío.</p>
@@ -116,42 +107,46 @@
   }
   
   .welcome {
-    background-color: #f5f9ff;
-    padding: 1.5rem;
-    border-radius: 8px;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-    border-left: 4px solid var(--primary-color, #4a69bd);
+  background-color: var(--primary);
+  color: var(--text-inverse);
+
+    background-color: var(--primary, #3A6351);
+    color: #fff;
+    padding: var(--space-lg);
+    border-radius: var(--radius-lg);
+    margin-top: var(--space-lg);
+    margin-bottom: var(--space-lg);
+    border-left: 6px solid var(--success, #3A6351);
+    box-shadow: 0 2px 8px var(--shadow);
+  }
+  .welcome h2, .welcome p {
+    color: #fff;
   }
   
   .dashboard-content {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-  }
-  
-  .info-card {
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    padding: 1.5rem;
-  }
-  
-  .info-card h3 {
-    margin-top: 0;
-    color: var(--primary-color, #4a69bd);
-    margin-bottom: 1rem;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-lg);
   }
   
   .dashboard-empty {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 3rem;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: var(--space-xl);
+    background-color: var(--secondary, #6c757d);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 2px 8px var(--shadow);
+  }
+  .empty-message {
+    text-align: center;
+    max-width: 500px;
+    color: #fff;
+  }
+  .empty-message p {
+    margin-bottom: 1rem;
+    color: #fff;
   }
   
   .empty-message {
