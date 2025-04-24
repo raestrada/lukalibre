@@ -1,58 +1,12 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
   import { authStore } from '../stores/authStore';
-  import { push } from 'svelte-spa-router';
   import { link } from 'svelte-spa-router';
-  import { get } from 'svelte/store';
-  import authService from '../services/authService';
-  import type { Unsubscriber } from 'svelte/store';
-  
-  let checkingAuth = true;
-  
-  onMount(() => {
-    async function checkAuthentication() {
-      try {
-        const state = get(authStore);
-        if (state.isAuthenticated && !state.loading) {
-          push('/dashboard');
-          return;
-        }
-        const isAuthenticated = await authService.checkSession();
-        if (isAuthenticated) {
-          await authStore.init();
-        } else {
-          checkingAuth = false;
-        }
-      } catch (error) {
-        checkingAuth = false;
-      }
-    }
-    checkAuthentication();
-    const unsubscribe = authStore.subscribe(state => {
-      if (!state.loading) {
-        checkingAuth = false;
-        if (state.isAuthenticated) {
-          push('/dashboard');
-          push('/dashboard');
-        }
-      }
-    });
-    
-    return unsubscribe;
-  });
-
-  function goToLogin() {
-    push('/login');
-  }
+  // Eliminada la lógica de navegación y chequeo de autenticación automática.
+  // Solo se mantiene el acceso a authStore para mostrar los botones correctos.
 </script>
 
 <div class="container">
-  {#if checkingAuth}
-    <div class="loading-container">
-      <div class="spinner"></div>
-      <p>Verificando sesión...</p>
-    </div>
-  {:else}
+  <!-- Eliminada la pantalla de carga por chequeo de autenticación, ya que esto lo maneja App.svelte -->
     <div class="hero">
       <h1>Bienvenido a LukaLibre ZK App</h1>
       <p class="subtitle">Tu plataforma de educación financiera con privacidad garantizada mediante Zero Knowledge</p>
@@ -84,7 +38,6 @@
         <p>Aprende sobre finanzas personales y recibe recomendaciones basadas en tus datos, sin comprometer tu privacidad ni seguridad.</p>
       </div>
     </div>
-  {/if}
 </div>
 
 <style lang="css">
