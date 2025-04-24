@@ -169,9 +169,50 @@ async def google_auth_callback(
                 
                 logger.info("Token obtenido correctamente")
                 
-                # Redireccionar al frontend con el token
+                # Obtener información del usuario de Google
+                user_info = await security.get_google_user_info(access_token)
+                logger.info(f"Usuario autenticado con Google: {user_info['email']}")
+
+                # Buscar o crear usuario en la base de datos
+                from app import crud, models, schemas
+                from app.api.deps import get_db
+                db = next(get_db())
+                user = crud.user.get_by_email(db, email=user_info['email'])
+                if not user:
+                    user_in = schemas.user.UserCreate(
+                        email=user_info['email'],
+                        password=secrets.token_urlsafe(16),  # Contraseña aleatoria (no se usará)
+                        full_name=user_info.get('name', ''),
+                        google_id=user_info.get('sub'),
+                        google_avatar=user_info.get('picture', None)
+                    )
+                    user = crud.user.create(db, obj_in=user_in)
+                else:
+                    # Actualizar datos de Google si cambian
+                    update_data = {}
+                    if user.google_id != user_info.get('sub'):
+                        update_data['google_id'] = user_info.get('sub')
+                    if user.google_avatar != user_info.get('picture'):
+                        update_data['google_avatar'] = user_info.get('picture')
+                    if update_data:
+                        user = crud.user.update(db, db_obj=user, obj_in=update_data)
+
+                # Generar JWT propio
+                jwt_token = security.create_access_token(
+                    subject=user.id,
+                    data={
+                        "email": user.email,
+                        "full_name": user.full_name,
+                        "is_superuser": user.is_superuser,
+                        "google_id": user.google_id,
+                        "google_avatar": user.google_avatar
+                    }
+                )
+                logger.info("JWT propio generado para el usuario autenticado con Google")
+
+                # Redireccionar al frontend con el JWT propio
                 return RedirectResponse(
-                    url=f"{frontend_url}#access_token={access_token}&state={state or 'googleDriveAuth'}"
+                    url=f"{frontend_url}#access_token={jwt_token}&state={state or 'googleDriveAuth'}"
                 )
                 
         except Exception as e:

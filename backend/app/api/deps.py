@@ -33,23 +33,23 @@ def get_current_user(
     db: Session = Depends(get_db), token: str = Depends(reusable_oauth2)
 ) -> models.User:
     try:
-        logger.debug("Decodificando token JWT")
+        logger.debug("Decodificando token JWT propio del backend")
         payload = jwt.decode(
-            token, settings.SECRET_KEY, algorithms=[security.ALGORITHM]
+            token, settings.SECRET_KEY, algorithms=[settings.JWT_ALGORITHM]
         )
         token_data = schemas.TokenPayload(**payload)
     except (jwt.JWTError, ValidationError) as e:
-        logger.warning(f"Error al validar token: {str(e)}")
+        logger.warning(f"Error al validar JWT propio: {str(e)}")
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="Could not validate credentials",
+            detail="No se pudieron validar las credenciales",
         )
     
     logger.debug(f"Buscando usuario con ID: {token_data.sub}")
     user = crud.user.get(db, id=token_data.sub)
     if not user:
         logger.warning(f"Usuario con ID {token_data.sub} no encontrado")
-        raise HTTPException(status_code=404, detail="User not found")
+        raise HTTPException(status_code=404, detail="Usuario no encontrado")
     
     logger.debug(f"Usuario autenticado: {user.email}")
     return user
