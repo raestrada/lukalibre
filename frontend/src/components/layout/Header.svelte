@@ -491,11 +491,13 @@
     cursor: pointer;
     font-size: 0.95rem;
     text-align: left;
-    transition: background-color 0.2s;
+    transition: background-color 0.2s, color 0.2s;
+    color: #222; /* Color oscuro y legible */
   }
   
   .user-menu-list button:hover {
-    background-color: #f5f5f5;
+    background-color: #e3f0e3;
+    color: var(--primary, #2e7d32);
   }
   
   .divider {

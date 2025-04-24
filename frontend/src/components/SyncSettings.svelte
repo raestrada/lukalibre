@@ -145,7 +145,9 @@
 </script>
 
 <div class="sync-banner">
-  <div class="sync-toolbar">
+  <div class="sync-bar-flex">
+    <span class="sync-description">Gestiona tus copias de seguridad y sincronización aquí.</span>
+    <div class="sync-toolbar">
     <button class="toolbar-button download" on:click={exportDatabase} disabled={exportingDb} title="Descargar copia de seguridad">
       {#if exportingDb}
         <span class="loading-spinner"></span>
@@ -176,8 +178,8 @@
         <span>SINCRONIZAR</span>
       </button>
     {/if}
+    </div>
   </div>
-  
   {#if importFile}
     <div class="import-panel">
       <p>¿Importar archivo {importFile.name}?</p>
@@ -197,43 +199,81 @@
 
 <style>
   .sync-banner {
-    background: var(--secondary, #f4f6f8);
+    background: rgba(255,255,255,0.85); /* Fondo blanco sutil/transparente */
     color: var(--text-primary, #212529);
-    padding: var(--space-xs) var(--space-md);
+    padding: 0.25rem 0.75rem; /* Mucho menos padding */
     margin: 0;
-    box-shadow: 0 1px 3px var(--shadow);
-    border: 1px solid var(--border, #dee2e6);
-    border-radius: var(--radius-md);
+    box-shadow: none;
+    border: 1.5px solid var(--border, #e0e0e0); /* Borde más sutil */
+    border-radius: 12px;
     position: relative;
     z-index: 10;
-    min-height: 38px;
+    min-height: 22px; /* Mucho más baja */
+    width: 100%;
+    margin-top: 0.5rem;
   }
+  .sync-bar-flex {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    flex-wrap: nowrap;
+    width: 100%;
+    overflow-x: auto;
+  }
+  .sync-description {
+    font-size: 0.93rem;
+    color: #495057;
+    opacity: 0.85;
+    white-space: nowrap;
+    margin-bottom: 0;
+    padding-left: 0.1rem;
+    flex-shrink: 0;
+  }
+  .sync-toolbar {
+    display: flex;
+    gap: 0.35rem;
+    justify-content: flex-end;
+    align-items: center;
+    flex-wrap: nowrap;
+    min-height: 28px;
+    overflow-x: auto;
+  }
+  
   
   .sync-toolbar {
     display: flex;
-    gap: 0.5rem;
+    gap: 0.35rem;
     justify-content: flex-end;
     align-items: center;
     flex-wrap: wrap;
+    min-height: 28px;
   }
   
   .toolbar-button {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.25rem;
-    background: var(--text-inverse);
+    gap: 0.18rem;
+    background: transparent;
     color: var(--primary);
     font-weight: 500;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
-    padding: 0.18rem 0.7rem;
-    font-size: 0.94rem;
-    height: 32px;
-    min-width: 100px;
-    justify-content: center;
-    transition: background 0.15s, color 0.15s, border 0.15s;
+    border: 1.5px solid var(--primary);
+    border-radius: 8px;
+    padding: 0.09rem 0.55rem;
+    font-size: 0.92rem;
+    height: 26px;
+    min-width: 80px;
+    transition: background 0.18s, color 0.18s, border 0.18s;
     box-sizing: border-box;
+    cursor: pointer;
+  }
+  .toolbar-button:hover:not(:disabled) {
+    background: var(--primary, #2e7d32);
+    color: #fff;
+    border-color: var(--primary, #2e7d32);
+    box-shadow: 0 2px 8px rgba(44,62,80,0.04);
   }
   
   .toolbar-button:disabled {

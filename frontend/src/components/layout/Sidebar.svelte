@@ -21,10 +21,6 @@
       <img src="/icons/dashboard.svg" alt="Dashboard" class="icon" />
       Dashboard
     </a>
-    <button class="sidebar-link sidebar-link-logout" on:click={onLogout}>
-      <img src="/icons/logout.svg" alt="Cerrar Sesión" class="icon" />
-      Cerrar Sesión
-    </button>
   </nav>
 </aside>
 
