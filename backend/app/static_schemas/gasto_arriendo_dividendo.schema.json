@@ -1,0 +1,52 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Gasto: Arriendo o Dividendo Habitacional",
+    "type": "object",
+    "required": ["tipo_gasto", "monto_pagado", "tipo_pago", "direccion"],
+    "properties": {
+      "tipo_gasto": {
+        "type": "string",
+        "const": "arriendo_dividendo"
+      },
+      "monto_pagado": {
+        "type": "number",
+        "description": "Monto total pagado en el período"
+      },
+      "moneda": {
+        "type": "string",
+        "enum": ["CLP", "UF", "USD"],
+        "description": "Moneda en que se realiza el pago"
+      },
+      "tipo_pago": {
+        "type": "string",
+        "enum": ["arriendo", "dividendo"],
+        "description": "Tipo de pago: arriendo mensual o dividendo hipotecario"
+      },
+      "direccion": {
+        "type": "string",
+        "description": "Dirección del inmueble pagado"
+      },
+      "institucion_receptora": {
+        "type": "string",
+        "description": "Banco o arrendador que recibe el pago"
+      },
+      "cuota_actual": {
+        "type": "integer",
+        "description": "Número de cuota actual (si es dividendo)"
+      },
+      "cuotas_totales": {
+        "type": "integer",
+        "description": "Total de cuotas pactadas (si es crédito hipotecario)"
+      },
+      "fecha_pago": {
+        "type": "string",
+        "format": "date",
+        "description": "Fecha de pago del gasto"
+      },
+      "comentario": {
+        "type": "string",
+        "description": "Comentario libre generado por el usuario o LLM"
+      }
+    }
+  }
+  

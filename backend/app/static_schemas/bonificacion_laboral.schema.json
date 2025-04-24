@@ -1,0 +1,43 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Ingreso: Bonificación Laboral",
+    "type": "object",
+    "required": ["tipo_ingreso", "monto", "tipo_bonificacion", "empleador"],
+    "properties": {
+      "tipo_ingreso": {
+        "type": "string",
+        "const": "bonificacion_laboral"
+      },
+      "monto": {
+        "type": "number",
+        "description": "Monto recibido por concepto de bonificación"
+      },
+      "tipo_bonificacion": {
+        "type": "string",
+        "enum": ["aguinaldo", "bono_desempeno", "bono_meta", "gratificacion", "otros"],
+        "description": "Tipo de bonificación entregada"
+      },
+      "empleador": {
+        "type": "string",
+        "description": "Nombre del empleador que otorga la bonificación"
+      },
+      "fecha_pago": {
+        "type": "string",
+        "format": "date",
+        "description": "Fecha de recepción del bono"
+      },
+      "descripcion_motivo": {
+        "type": "string",
+        "description": "Motivo específico del bono (ej: cumplimiento de KPI, festividad)"
+      },
+      "tributable": {
+        "type": "boolean",
+        "description": "Indica si el bono está sujeto a impuestos"
+      },
+      "comentario": {
+        "type": "string",
+        "description": "Comentario libre generado por el usuario o LLM"
+      }
+    }
+  }
+  

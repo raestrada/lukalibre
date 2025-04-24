@@ -1,0 +1,46 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Ingreso: Dividendos",
+    "type": "object",
+    "required": ["tipo_ingreso", "monto_neto", "entidad_pagadora"],
+    "properties": {
+      "tipo_ingreso": {
+        "type": "string",
+        "const": "dividendos"
+      },
+      "monto_neto": {
+        "type": "number",
+        "description": "Monto recibido luego de impuestos o retenciones"
+      },
+      "monto_bruto": {
+        "type": "number",
+        "description": "Monto original antes de impuestos"
+      },
+      "retencion": {
+        "type": "number",
+        "description": "Retención aplicada (en porcentaje o monto)"
+      },
+      "tipo_instrumento": {
+        "type": "string",
+        "description": "Tipo de instrumento: acción, fondo mutuo, ETF, etc."
+      },
+      "entidad_pagadora": {
+        "type": "string",
+        "description": "Empresa o fondo que paga el dividendo"
+      },
+      "institucion_intermediaria": {
+        "type": "string",
+        "description": "Corredora o entidad que lo distribuye (ej: BICE Inversiones)"
+      },
+      "fecha_pago": {
+        "type": "string",
+        "format": "date",
+        "description": "Fecha de pago del dividendo"
+      },
+      "comentario": {
+        "type": "string",
+        "description": "Comentario libre generado por el usuario o LLM"
+      }
+    }
+  }
+  

@@ -1,0 +1,51 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Ingreso: Venta Ocasional",
+    "type": "object",
+    "required": ["tipo_ingreso", "monto", "descripcion_venta", "comprador"],
+    "properties": {
+      "tipo_ingreso": {
+        "type": "string",
+        "const": "venta_ocasional"
+      },
+      "monto": {
+        "type": "number",
+        "description": "Monto recibido por la venta"
+      },
+      "moneda": {
+        "type": "string",
+        "enum": ["CLP", "USD", "EUR", "UF", "BTC", "OTRA"],
+        "description": "Moneda del ingreso"
+      },
+      "descripcion_venta": {
+        "type": "string",
+        "description": "Descripción del bien o activo vendido"
+      },
+      "tipo_bien": {
+        "type": "string",
+        "description": "Tipo de bien (auto, mueble, NFT, computador, etc.)"
+      },
+      "comprador": {
+        "type": "string",
+        "description": "Nombre o alias del comprador (opcional)"
+      },
+      "fecha_venta": {
+        "type": "string",
+        "format": "date",
+        "description": "Fecha de la venta"
+      },
+      "canal_venta": {
+        "type": "string",
+        "description": "Dónde se vendió (Marketplace, OLX, en persona, etc.)"
+      },
+      "documento_asociado": {
+        "type": "string",
+        "description": "Boleta, contrato, transferencia o ID de la transacción"
+      },
+      "comentario": {
+        "type": "string",
+        "description": "Comentario libre generado por el usuario o LLM"
+      }
+    }
+  }
+  

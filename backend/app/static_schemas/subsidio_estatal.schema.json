@@ -1,0 +1,43 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Ingreso: Subsidio Estatal",
+    "type": "object",
+    "required": ["tipo_ingreso", "monto", "nombre_subsidio", "institucion"],
+    "properties": {
+      "tipo_ingreso": {
+        "type": "string",
+        "const": "subsidio_estatal"
+      },
+      "nombre_subsidio": {
+        "type": "string",
+        "description": "Nombre del beneficio recibido (ej: IFE, Bono Marzo, PGU)"
+      },
+      "monto": {
+        "type": "number",
+        "description": "Monto total recibido"
+      },
+      "institucion": {
+        "type": "string",
+        "description": "Entidad que entrega el beneficio (ej: IPS, SENCE, SII)"
+      },
+      "frecuencia": {
+        "type": "string",
+        "enum": ["único", "mensual", "trimestral", "variable"],
+        "description": "Frecuencia del subsidio"
+      },
+      "fecha_pago": {
+        "type": "string",
+        "format": "date",
+        "description": "Fecha en que se recibió el monto"
+      },
+      "rut_beneficiario": {
+        "type": "string",
+        "description": "RUT de quien recibe el beneficio si no es el usuario"
+      },
+      "comentario": {
+        "type": "string",
+        "description": "Comentario libre generado por el usuario o LLM"
+      }
+    }
+  }
+  

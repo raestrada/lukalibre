@@ -1,0 +1,68 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Gasto: Pago de Deuda o Crédito",
+    "type": "object",
+    "required": ["tipo_gasto", "monto_pagado", "tipo_deuda", "entidad", "fecha_pago"],
+    "properties": {
+      "tipo_gasto": {
+        "type": "string",
+        "const": "deuda_credito"
+      },
+      "tipo_deuda": {
+        "type": "string",
+        "enum": [
+          "tarjeta_credito",
+          "credito_consumo",
+          "credito_hipotecario",
+          "credito_automotriz",
+          "credito_estudiantil",
+          "avance_efectivo",
+          "otros"
+        ],
+        "description": "Tipo de deuda que se está pagando"
+      },
+      "entidad": {
+        "type": "string",
+        "description": "Entidad emisora o banco (ej: BancoEstado, Scotiabank, Coopeuch)"
+      },
+      "monto_pagado": {
+        "type": "number",
+        "description": "Monto total pagado en la cuota"
+      },
+      "interes_pagado": {
+        "type": "number",
+        "description": "Porción de interés del pago (si está disponible)"
+      },
+      "capital_pagado": {
+        "type": "number",
+        "description": "Porción del capital amortizado"
+      },
+      "cuota_actual": {
+        "type": "integer",
+        "description": "Número de cuota actual (opcional)"
+      },
+      "cuotas_totales": {
+        "type": "integer",
+        "description": "Total de cuotas del crédito (opcional)"
+      },
+      "saldo_restante": {
+        "type": "number",
+        "description": "Saldo de deuda restante (si se conoce)"
+      },
+      "moneda": {
+        "type": "string",
+        "enum": ["CLP", "USD", "UF", "EUR"],
+        "description": "Moneda del crédito"
+      },
+      "fecha_pago": {
+        "type": "string",
+        "format": "date",
+        "description": "Fecha en que se realizó el pago"
+      },
+      "comentario": {
+        "type": "string",
+        "description": "Comentario libre generado por el usuario o LLM"
+      }
+    }
+  }
+  

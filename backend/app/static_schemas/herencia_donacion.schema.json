@@ -1,0 +1,48 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Ingreso: Herencia o Donación",
+    "type": "object",
+    "required": ["tipo_ingreso", "monto", "origen", "tipo_transferencia", "fecha_recepcion"],
+    "properties": {
+      "tipo_ingreso": {
+        "type": "string",
+        "const": "herencia_donacion"
+      },
+      "monto": {
+        "type": "number",
+        "description": "Monto total recibido"
+      },
+      "moneda": {
+        "type": "string",
+        "enum": ["CLP", "USD", "EUR", "UF", "OTRA"],
+        "description": "Moneda en la que se recibió el ingreso"
+      },
+      "origen": {
+        "type": "string",
+        "description": "Nombre o identificación de la persona o entidad que dona o hereda"
+      },
+      "tipo_transferencia": {
+        "type": "string",
+        "enum": ["herencia", "donacion", "anticipo_herencia"],
+        "description": "Tipo de ingreso legal"
+      },
+      "relacion_con_origen": {
+        "type": "string",
+        "description": "Parentesco o vínculo con la persona que entrega la herencia o donación"
+      },
+      "fecha_recepcion": {
+        "type": "string",
+        "format": "date",
+        "description": "Fecha en que se recibió el monto o activo"
+      },
+      "documento_legal": {
+        "type": "string",
+        "description": "Nombre o referencia al documento notarial o contrato asociado"
+      },
+      "comentario": {
+        "type": "string",
+        "description": "Comentario libre generado por el usuario o LLM"
+      }
+    }
+  }
+  
