@@ -21,7 +21,7 @@ Frontend para la aplicación LukaLibre ZK, una plataforma de educación financie
 
    Ejemplo de contenido:
    ```
-   VITE_API_URL=/api/v1
+   VITE_API_BASE_URL=/api/v1
    VITE_API_BASE_URL=http://localhost:8000  # Para desarrollo
    # VITE_API_BASE_URL=https://api.lukalibre.com  # Para producción
    ```

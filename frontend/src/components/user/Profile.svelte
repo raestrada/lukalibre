@@ -7,7 +7,7 @@
   import { push } from 'svelte-spa-router';
   
   // Obtenemos la URL de la API desde las variables de entorno
-  const API_URL = import.meta.env.VITE_API_URL || '/api/v1';
+  const API_URL = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_PATH}`;
   
   let user = authStore.getState().user;
   let loading = true;

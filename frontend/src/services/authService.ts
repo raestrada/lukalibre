@@ -5,10 +5,7 @@ import { createLogger } from '../utils/logger';
 const log = createLogger('AuthService');
 
 // Obtenemos la URL de la API desde las variables de entorno
-const API_URL = import.meta.env.VITE_API_URL || '/api/v1';
-// Obtenemos la URL base para el proxy en desarrollo o directo en producción
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-
+const API_URL = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_PATH}`;
 export interface AuthResponse {
   access_token: string;
   token_type: string;

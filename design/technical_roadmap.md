@@ -1148,7 +1148,7 @@ export class ApiClient {
     private token: string | null;
 
     constructor() {
-        this.baseUrl = import.meta.env.VITE_API_URL;
+        this.baseUrl = import.meta.env.VITE_API_BASE_URL;
     }
 
     async get<T>(endpoint: string): Promise<T> {

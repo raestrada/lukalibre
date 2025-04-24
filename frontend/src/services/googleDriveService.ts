@@ -194,7 +194,8 @@ class GoogleDriveService {
     const authUrl = 'https://accounts.google.com/o/oauth2/v2/auth';
     
     // Usar exactamente el URI de redirección que está registrado en la consola de Google Cloud
-    const redirectUri = 'http://localhost:8000/api/v1/auth/google/callback';
+    const redirectUri = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_PATH}/auth/google/callback`;
+
     
     // Guardar la URL actual para volver después de la autenticación
     const returnToUrl = window.location.href;
