@@ -53,7 +53,7 @@
       localStorage.setItem('googleDriveToken', accessToken);
       
       // También almacenar el token para la autenticación general de la aplicación
-      authService.setToken(accessToken);
+      authService.setToken(accessToken, 'google');
       
       // Obtener información del usuario de Google
       try {
@@ -83,24 +83,36 @@
         localStorage.setItem('google_name', 'Usuario de Google');
       }
       
-      // Intentar obtener datos del perfil de usuario si es posible
+      // Intentar login con Google usando el store de autenticación
       try {
-        // Verificar si el token es válido realizando una solicitud de prueba
-        log.info("Verificando token con el backend...");
-        
-        // Inicializar el store de autenticación con el token
-        log.info("Inicializando authStore con el token");
-        const success = await authStore.init();
+        log.info("Intentando login con Google a través del authStore...");
+        const success = await authStore.loginWithGoogle(accessToken);
         
         if (success) {
-          log.info("Token verificado y authStore inicializado correctamente");
+          log.info("Login con Google exitoso mediante authStore");
         } else {
-          log.warn("El token fue guardado pero no se pudo verificar con el backend");
-          // Continuamos de todos modos, ya que el token podría ser válido para Google Drive
+          log.warn("Login con Google no exitoso pero continuamos");
+          // Forzar estado autenticado como último recurso
+          authStore.forceAuthenticated({
+            id: 0,
+            email: localStorage.getItem('google_email') || 'usuario@google.com',
+            full_name: localStorage.getItem('google_name') || 'Usuario de Google',
+            is_active: true,
+            is_superuser: false,
+            google_avatar: localStorage.getItem('google_picture') || undefined
+          });
         }
-      } catch (tokenErr) {
-        // Si hay un error al verificar el token, lo registramos pero continuamos
-        log.error("Error al verificar el token:", tokenErr);
+      } catch (loginErr) {
+        log.error("Error al hacer login con Google mediante authStore:", loginErr);
+        // Forzar estado autenticado como último recurso
+        authStore.forceAuthenticated({
+          id: 0,
+          email: localStorage.getItem('google_email') || 'usuario@google.com',
+          full_name: localStorage.getItem('google_name') || 'Usuario de Google',
+          is_active: true,
+          is_superuser: false,
+          google_avatar: localStorage.getItem('google_picture') || undefined
+        });
       }
       
       // Limpiar el estado pendiente para evitar ciclos

@@ -31,8 +31,16 @@
   });
   
   function handleGoogleLogin() {
-    loading = true;
-    window.location.href = authService.getGoogleAuthUrl();
+    try {
+      loading = true;
+      const googleAuthUrl = authService.getGoogleAuthUrl();
+      console.log("Redirigiendo a la URL de autenticación de Google:", googleAuthUrl);
+      window.location.href = googleAuthUrl;
+    } catch (err) {
+      console.error("Error al obtener la URL de autenticación de Google:", err);
+      loading = false;
+      error = "Error al iniciar el proceso de autenticación con Google";
+    }
   }
 </script>
 

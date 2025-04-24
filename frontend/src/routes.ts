@@ -61,6 +61,12 @@ const routes = {
   '/register': Register,
   '/auth/google/callback': GoogleAuthCallback,
   
+  // Special route for handling direct Google callbacks from frontend
+  '/auth/callback': GoogleAuthCallback,
+  
+  // Special route for handling direct Google Drive auth
+  '/auth/google/drive/callback': GoogleAuthCallback,
+  
   '/dashboard': wrap({
     component: Dashboard,
     conditions: [

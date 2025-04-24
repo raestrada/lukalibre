@@ -110,14 +110,6 @@
     animation: spin 1s linear infinite;
   }
   
-  .spinner.small {
-    width: 20px;
-    height: 20px;
-    border-width: 2px;
-    margin-bottom: 0;
-    margin-right: 8px;
-  }
-  
   @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
@@ -144,29 +136,6 @@
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     padding: 1.5rem;
-  }
-  
-  .gdrive-card.connected {
-    border-left: 4px solid #27ae60;
-  }
-  
-  .gdrive-card.error {
-    border-left: 4px solid #e74c3c;
-  }
-  
-  .gdrive-card.syncing {
-    border-left: 4px solid #f39c12;
-  }
-  
-  .gdrive-card.pending {
-    border-left: 4px solid #3498db;
-  }
-  
-  .sync-indicator {
-    display: flex;
-    align-items: center;
-    margin-top: 10px;
-    color: #666;
   }
   
   .info-card h3 {
@@ -202,36 +171,6 @@
     border-radius: 8px;
     text-align: center;
     margin-bottom: 1.5rem;
-  }
-  
-  .btn-primary {
-    background-color: var(--primary-color, #4a69bd);
-    color: white;
-    border: none;
-    padding: 0.6rem 1rem;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: background-color 0.2s;
-  }
-  
-  .btn-primary:hover {
-    background-color: #3a5a9b;
-  }
-  
-  .btn-secondary {
-    background-color: #e9ecef;
-    color: #495057;
-    border: 1px solid #ced4da;
-    padding: 0.6rem 1rem;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: background-color 0.2s;
-  }
-  
-  .btn-secondary:hover {
-    background-color: #dee2e6;
   }
   
   button {

@@ -243,7 +243,11 @@
           </button>
           
           {#if userMenuOpen}
-            <div class="user-dropdown" on:mouseleave={closeUserMenu}>
+            <div 
+              class="user-dropdown" 
+              on:mouseleave={closeUserMenu}
+              role="menu"
+            >
               <div class="user-info">
                 <img 
                   src={userAvatar} 

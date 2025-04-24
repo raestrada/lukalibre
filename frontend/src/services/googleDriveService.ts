@@ -1,5 +1,6 @@
 import { createLogger } from '../utils/logger';
 import authService from './authService';
+import { API_URL } from './httpService';
 
 const log = createLogger('GoogleDriveService');
 
@@ -194,7 +195,7 @@ class GoogleDriveService {
     const authUrl = 'https://accounts.google.com/o/oauth2/v2/auth';
     
     // Usar exactamente el URI de redirección que está registrado en la consola de Google Cloud
-    const redirectUri = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_PATH}/auth/google/callback`;
+    const redirectUri = `${API_URL}/auth/google/callback`;
 
     
     // Guardar la URL actual para volver después de la autenticación

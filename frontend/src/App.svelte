@@ -18,137 +18,100 @@
   
   let isInitializing = true;
   
-  // Función para detectar si hay un token en la URL y procesarlo
-  async function detectAndProcessToken() {
-    try {
-      // Verificar si estamos en una URL de callback sin hash
-      if (window.location.pathname === '/auth/callback') {
-        console.log("App: Detectada URL de callback sin hash, procesando token...");
-        const urlParams = new URLSearchParams(window.location.search);
-        
-        if (urlParams.has('token')) {
-          console.log("App: Token encontrado en URL, almacenando...");
-          const token = urlParams.get('token')!;
-          authService.setToken(token);
-          
-          // Inicializar store
-          await authStore.init();
-          
-          // Redirigir al dashboard y limpiar URL
-          setTimeout(() => {
-            window.history.replaceState({}, document.title, '/');
-            push('/dashboard');
-          }, 100);
-          
-          return true;
-        }
-      }
+  // Función para detectar y procesar token desde la URL
+  async function handleTokenFromUrl(): Promise<boolean> {
+    // Verificar URL de callback sin hash
+    if (window.location.pathname === '/auth/callback') {
+      const urlParams = new URLSearchParams(window.location.search);
       
-      // Verificar si estamos en la URL específica de callback de Google con hash
-      if (window.location.pathname === '/auth/google/callback' && window.location.hash.includes('access_token=')) {
-        console.log("App: Detectado callback de Google con access_token en hash");
+      if (urlParams.has('token')) {
+        const token = urlParams.get('token')!;
+        authService.setToken(token, 'jwt');
+        await authStore.init();
         
-        // Extraer el token del hash
-        const hash = window.location.hash;
-        const params = new URLSearchParams(hash.substring(1)); // Quitar el # inicial
-        const accessToken = params.get('access_token');
+        setTimeout(() => {
+          window.history.replaceState({}, document.title, '/');
+          push('/dashboard');
+        }, 100);
         
-        if (accessToken) {
-          console.log("App: Token extraído del hash, almacenando...");
-          
-          try {
-            // Guardar el token para autenticación
-            authService.setToken(accessToken);
-            
-            // También almacenar para Google Drive si es necesario
-            localStorage.setItem('googleDriveToken', accessToken);
-            
-            // Inicializar store - IMPORTANTE: Usar await para asegurar que se complete
-            console.log("App: Inicializando authStore con token de Google...");
-            const success = await authStore.init();
-            
-            if (success) {
-              console.log("App: AuthStore inicializado correctamente");
-            } else {
-              console.warn("App: AuthStore no se pudo inicializar pero continuamos con token válido");
-            }
-            
-            // Limpiar la URL para eliminar el token y redirigir
-            setTimeout(() => {
-              window.history.replaceState({}, document.title, '/dashboard');
-              push('/dashboard');
-            }, 100);
-            
-            return true;
-          } catch (error) {
-            console.error("App: Error procesando token Google:", error);
-            // Continuar con el token aunque haya error
-            return true;
-          }
-        }
+        return true;
       }
-      
-      return false;
-    } catch (error) {
-      console.error("App: Error procesando token de URL:", error);
-      return false;
     }
+    
+    // Verificar callback de Google con hash
+    if (window.location.pathname === '/auth/google/callback' && window.location.hash.includes('access_token=')) {
+      const hash = window.location.hash;
+      const params = new URLSearchParams(hash.substring(1));
+      const accessToken = params.get('access_token');
+      
+      if (accessToken) {
+        authService.setToken(accessToken, 'google');
+        localStorage.setItem('googleDriveToken', accessToken);
+        await authStore.init();
+        
+        setTimeout(() => {
+          window.history.replaceState({}, document.title, '/dashboard');
+          push('/dashboard');
+        }, 100);
+        
+        return true;
+      }
+    }
+    
+    return false;
   }
   
   onMount(async () => {
-    console.log("App: Inicializando aplicación");
     try {
-      // Primero, intentar detectar y procesar token en la URL
-      const tokenProcessed = await detectAndProcessToken();
+      // Intentar procesar token desde URL primero
+      const tokenProcessed = await handleTokenFromUrl();
       if (tokenProcessed) {
-        console.log("App: Token procesado de URL, omitiendo inicialización normal");
         isInitializing = false;
         return;
       }
       
-      // Verificar si estamos en una ruta de callback con hash
+      // Ruta de callback con hash (dejar que componente maneje)
       if (window.location.hash.includes('/auth/callback')) {
-        console.log("App: Detectada ruta de callback con hash, dejando que el componente maneje la autenticación");
         isInitializing = false;
         return;
       }
       
-      // Inicializar authStore normalmente
+      // Inicializar normalmente
       await authStore.init();
     } catch (error) {
-      console.error("App: Error al inicializar authStore:", error);
+      console.error("Error al inicializar:", error);
+      
+      // Recuperación de emergencia con datos Google
+      const email = localStorage.getItem('google_email');
+      if (email && localStorage.getItem('token_type') === 'google') {
+        authStore.forceAuthenticated({
+          id: 0,
+          email: email,
+          full_name: localStorage.getItem('google_name') || 'Usuario de Google',
+          is_active: true,
+          is_superuser: false,
+          google_avatar: localStorage.getItem('google_picture') || undefined
+        });
+      }
     } finally {
       isInitializing = false;
-      console.log("App: Inicialización completada");
     }
   });
   
-  // Función para verificar si el usuario está autenticado
+  // Verificación simplificada
   function isAuthenticated() {
-    if (isInitializing) {
-      console.log('App: Aún inicializando, no se puede verificar autenticación');
-      return false;
-    }
+    if (isInitializing) return false;
     
-    // Primera comprobación: verificar el estado del store
     const state = get(authStore);
-    const autenticadoStore = state.isAuthenticated && !state.loading;
+    const authFromStore = state.isAuthenticated && !state.loading;
+    const authFromToken = authService.isLoggedIn();
     
-    // Segunda comprobación: verificar también si hay un token válido directamente
-    const hayToken = authService.isLoggedIn();
-    
-    console.log('App: Verificación de autenticación en ruta:', 
-      { storeAuth: autenticadoStore, tokenAuth: hayToken });
-    
-    // Si cualquiera de las dos comprobaciones es positiva, consideramos al usuario autenticado
-    return autenticadoStore || hayToken;
+    return authFromStore || authFromToken;
   }
   
   // Redirige a login si no está autenticado
   function redirectIfNotAuthenticated() {
-    const auth = isAuthenticated();
-    if (!auth) {
-      console.log('App: Usuario no autenticado, redirigiendo a login');
+    if (!isAuthenticated()) {
       push('/login');
       return false;
     }
@@ -166,11 +129,11 @@
       conditions: [redirectIfNotAuthenticated]
     }),
     '/user/settings': wrap({
-      component: Profile, // Usamos Profile como componente de configuración
+      component: Profile,
       conditions: [redirectIfNotAuthenticated]
     }),
     '/dashboard': wrap({
-      component: Dashboard, // Ahora usamos el componente Dashboard
+      component: Dashboard,
       conditions: [redirectIfNotAuthenticated]
     }),
     // Ruta por defecto (404)

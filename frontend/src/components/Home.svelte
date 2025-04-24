@@ -15,7 +15,44 @@
       try {
         console.log("Verificando estado de sesión completo...");
         
-        // Usar el nuevo método que verifica la sesión completa
+        // Verificar primero el estado del store, puede que ya esté inicializado
+        const state = get(authStore);
+        if (state.isAuthenticated && !state.loading) {
+          console.log("Usuario ya autenticado en el store, redirigiendo...");
+          checkingAuth = false;
+          push('/dashboard');
+          return;
+        }
+        
+        // Comprobar tipo de token
+        const tokenType = localStorage.getItem('token_type');
+        
+        // Si hay token de Google y datos, podemos forzar la autenticación
+        if (tokenType === 'google' && localStorage.getItem('google_email')) {
+          console.log("Datos de sesión Google encontrados, restaurando...");
+          
+          // Obtener datos guardados
+          const email = localStorage.getItem('google_email') || 'usuario@google.com';
+          const name = localStorage.getItem('google_name') || 'Usuario de Google';
+          const avatar = localStorage.getItem('google_picture') || localStorage.getItem('google_avatar');
+          
+          // Forzar autenticación
+          authStore.forceAuthenticated({
+            id: 0,
+            email: email,
+            full_name: name,
+            is_active: true,
+            is_superuser: false,
+            google_avatar: avatar || undefined
+          });
+          
+          console.log("Sesión Google restaurada manualmente");
+          checkingAuth = false;
+          push('/dashboard');
+          return;
+        }
+        
+        // Usar el método que verifica la sesión completa
         const isAuthenticated = await authService.checkSession();
         
         if (isAuthenticated) {

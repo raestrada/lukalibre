@@ -4,6 +4,7 @@
   import axios from 'axios';
   import { authStore } from '../../stores/authStore';
   import authService from '../../services/authService';
+  import { API_URL } from '../../services/httpService';
   import { createLogger } from '../../utils/logger';
   
   // Logger para este componente
@@ -12,9 +13,6 @@
   let loading = true;
   let error: string | null = null;
   let debugInfo: string | null = null;
-  
-  // Obtenemos la URL de la API desde las variables de entorno
-  const API_URL = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_PATH}`;
   
   onMount(async () => {
     try {
@@ -53,7 +51,7 @@
         try {
           // Almacenar el token
           const token = urlParams.get('token')!;
-          authService.setToken(token);
+          authService.setToken(token, 'jwt');
           
           // Si hay un avatar de Google, guardarlo en localStorage para uso futuro
           if (urlParams.has('google_avatar')) {
@@ -101,7 +99,7 @@
           
           if (response.data && response.data.access_token) {
             // Guardar el token de acceso
-            authService.setToken(response.data.access_token);
+            authService.setToken(response.data.access_token, 'jwt');
             
             // Inicializar el store de autenticación con el token
             await authStore.init();

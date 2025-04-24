@@ -5,9 +5,7 @@
   import axios from 'axios';
   import type { User } from '../../services/authService';
   import { push } from 'svelte-spa-router';
-  
-  // Obtenemos la URL de la API desde las variables de entorno
-  const API_URL = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_PATH}`;
+  import { API_URL } from '../../services/httpService';
   
   let user = authStore.getState().user;
   let loading = true;
