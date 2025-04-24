@@ -2,14 +2,13 @@ from fastapi import APIRouter, UploadFile, File, Form, HTTPException
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from typing import Optional, List
-import httpx
+import openai
 from app.core.config import settings
 
 router = APIRouter()
 
-GROQ_API_KEY = settings.GROQ_API_KEY
-GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
-GROQ_MODEL = "deepseek-r1-distill-llama-70b"
+OPENAI_API_KEY = settings.OPENAI_API_KEY
+OPENAI_MODEL = settings.OPENAI_MODEL
 
 class LLMProxyRequest(BaseModel):
     content: str  # Texto plano extraído del archivo o pegado
@@ -24,23 +23,21 @@ class LLMProxyResponse(BaseModel):
     json_data: Optional[dict] = None
     llm_output: Optional[str] = None
 
-async def call_groq(messages):
-    headers = {
-        "Authorization": f"Bearer {GROQ_API_KEY}",
-        "Content-Type": "application/json"
-    }
-    payload = {
-        "model": GROQ_MODEL,
-        "messages": messages,
-        "temperature": 0.1,
-        "max_tokens": 2048
-    }
-    async with httpx.AsyncClient() as client:
-        response = await client.post(GROQ_API_URL, headers=headers, json=payload)
-        if response.status_code != 200:
-            raise HTTPException(status_code=500, detail=f"Groq LLM error: {response.text}")
-        data = response.json()
-        return data["choices"][0]["message"]["content"]
+import aiofiles
+from fastapi import UploadFile
+import tempfile
+
+import base64
+
+async def call_openai(messages):
+    client = openai.AsyncOpenAI(api_key=OPENAI_API_KEY)
+    response = await client.chat.completions.create(
+        model=OPENAI_MODEL,
+        messages=messages,
+        max_tokens=2048,
+        temperature=0.1,
+    )
+    return response.choices[0].message.content
 
 from fastapi import Depends, Header
 from app.api import deps
@@ -51,9 +48,18 @@ from sqlalchemy.orm import Session
 from app.api.deps import get_db
 from app.crud import crud_llm_limits
 
-@router.post("/proxy", response_model=LLMProxyResponse)
+from fastapi import UploadFile, File, Form
+
+from fastapi import UploadFile, File, Form
+from typing import List
+
+from fastapi import Request
+
+@router.post("/proxy")
 async def llm_proxy(
-    payload: LLMProxyRequest,
+    request: Request,
+    prompt: str = Form(None),
+    files: List[UploadFile] = File(None),
     current_user: User = Depends(deps.get_current_user),
     db: Session = Depends(get_db)
 ):
@@ -63,46 +69,65 @@ async def llm_proxy(
         raise HTTPException(status_code=429, detail=f"Límite de uso excedido ({key}: {limit})")
     crud_llm_limits.log_llm_request(db, current_user.id)
 
-    if not GROQ_API_KEY:
-        raise HTTPException(status_code=500, detail="GROQ_API_KEY not set in environment")
-    # Paso 1: Identificación de esquema
-    if payload.step == "identify_schema":
-        system_prompt = (
-            "Eres un asistente experto en clasificación de documentos. "
-            "Dado el siguiente contenido y la lista de esquemas, responde solo con el nombre del esquema más adecuado. "
-            "Lista de esquemas disponibles: " + ", ".join(payload.schemas or [])
-        )
-        messages = [
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": payload.content}
-        ]
-        schema_name = await call_groq(messages)
-        return LLMProxyResponse(schema_name=schema_name.strip())
-    # Paso 2: Generación de SQL y JSON
-    elif payload.step == "generate_sql_json":
-        if not payload.schema_name:
-            raise HTTPException(status_code=400, detail="schema_name is required for this step")
-        system_prompt = (
-            f"Eres un experto en extracción de datos. Dado el siguiente contenido, genera:\n"
-            f"- Los comandos SQL INSERT para poblar todas las tablas relevantes del esquema '{payload.schema_name}' en SQLite.\n"
-            f"- El JSON correspondiente siguiendo el schema '{payload.schema_name}'.\n"
-            f"Responde en formato JSON así: {{'sql_inserts': '...', 'json_data': {{...}}}}"
-        )
-        messages = [
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": payload.content}
-        ]
-        llm_output = await call_groq(messages)
-        # Intentar extraer los campos esperados
-        try:
-            import json
-            output = json.loads(llm_output.replace("'", '"'))  # LLM puede usar comillas simples
-            return LLMProxyResponse(
-                sql_inserts=output.get('sql_inserts'),
-                json_data=output.get('json_data'),
-                llm_output=llm_output
+    if not OPENAI_API_KEY:
+        raise HTTPException(status_code=500, detail="OPENAI_API_KEY not set in environment")
+
+    content_type = request.headers.get("content-type", "")
+    if content_type.startswith("application/json"):
+        body = await request.json()
+        # Soportar los campos: content, schemas, step, etc.
+        content = body.get("content")
+        schemas = body.get("schemas")
+        step = body.get("step")
+        # Prompt dinámico según el step
+        if step == "identify_schema":
+            # Prompt para identificar el esquema
+            schemas_str = f"\nOpciones: {', '.join(schemas)}" if schemas else ""
+            full_prompt = (
+                "Eres un asistente experto en clasificación de documentos. "
+                "Dado el siguiente contenido y la lista de esquemas, responde solo con el nombre del esquema más adecuado." + schemas_str
             )
-        except Exception as e:
-            return LLMProxyResponse(llm_output=llm_output)
-    else:
-        raise HTTPException(status_code=400, detail="Invalid step value")
+            messages = [
+                {"role": "system", "content": full_prompt},
+                {"role": "user", "content": content}
+            ]
+        elif step == "generate_sql_json":
+            # Prompt para extracción de datos
+            full_prompt = (
+                "Eres un experto en extracción de datos. Dado el siguiente contenido, genera:\n"
+                "- Los comandos SQL INSERT para poblar todas las tablas relevantes del esquema en SQLite.\n"
+                "- El JSON correspondiente siguiendo el schema.\n"
+                "Responde en formato JSON así: {'sql_inserts': '...', 'json_data': {...}}"
+            )
+            messages = [
+                {"role": "system", "content": full_prompt},
+                {"role": "user", "content": content}
+            ]
+        else:
+            # Prompt directo si no hay step
+            messages = [
+                {"role": "user", "content": content}
+            ]
+        llm_output = await call_openai(messages)
+        return JSONResponse(content={"llm_output": llm_output})
+    # Si es multipart/form-data
+    if prompt is None:
+        raise HTTPException(status_code=400, detail="Missing prompt field.")
+    message_content = [
+        {"type": "text", "text": prompt}
+    ]
+    if files:
+        for f in files:
+            content = await f.read()
+            mime = f.content_type or "application/octet-stream"
+            b64 = base64.b64encode(content).decode()
+            data_url = f"data:{mime};base64,{b64}"
+            message_content.append({
+                "type": "image_url",  # OpenAI trata PDFs y otras imágenes igual
+                "image_url": {"url": data_url}
+            })
+    messages = [
+        {"role": "user", "content": message_content}
+    ]
+    llm_output = await call_openai(messages)
+    return JSONResponse(content={"llm_output": llm_output})
