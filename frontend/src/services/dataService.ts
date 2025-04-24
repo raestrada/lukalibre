@@ -16,6 +16,33 @@ class DataService {
   private initialized = false;
   private syncSource: SyncSource = 'none';
   private syncStatus: SyncStatus = 'offline';
+
+  /**
+   * Devuelve los schemas disponibles (mock temporal)
+   */
+  async getSchemas(): Promise<any[]> {
+    // MOCK: Puedes reemplazar esto por fetch a una API o lectura de base local
+    return [
+      {
+        name: 'factura',
+        schema: {
+          numero: 'string',
+          fecha: 'string',
+          proveedor: 'string',
+          monto: 'number'
+        }
+      },
+      {
+        name: 'recibo',
+        schema: {
+          id: 'string',
+          fecha: 'string',
+          cliente: 'string',
+          total: 'number'
+        }
+      }
+    ];
+  }
   
   /**
    * Inicializa los servicios de datos requeridos

@@ -11,6 +11,11 @@ router = APIRouter()
 def list_prompts(db: Session = Depends(get_db)):
     return crud_prompt_template.get_all_prompts(db)
 
+@router.get("/templates")
+def get_prompt_templates(db: Session = Depends(get_db)):
+    prompts = crud_prompt_template.get_all_prompts(db)
+    return {p.name: p.template for p in prompts}
+
 @router.get("/{name}", response_model=PromptTemplateOut)
 def get_prompt(name: str, db: Session = Depends(get_db)):
     prompt = crud_prompt_template.get_prompt_by_name(db, name)

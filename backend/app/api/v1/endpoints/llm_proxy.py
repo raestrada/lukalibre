@@ -122,10 +122,34 @@ async def llm_proxy(
             mime = f.content_type or "application/octet-stream"
             b64 = base64.b64encode(content).decode()
             data_url = f"data:{mime};base64,{b64}"
-            message_content.append({
-                "type": "image_url",  # OpenAI trata PDFs y otras imágenes igual
-                "image_url": {"url": data_url}
-            })
+            if mime.startswith("image/"):
+                message_content.append({
+                    "type": "image_url",
+                    "image_url": {"url": data_url}
+                })
+            elif mime.startswith("audio/"):
+                message_content.append({
+                    "type": "audio",
+                    "audio": {"url": data_url}
+                })
+            else:
+                # Subir archivo a OpenAI y usar file_id
+                import httpx
+                headers = {"Authorization": f"Bearer {OPENAI_API_KEY}"}
+                files_upload = {"file": (f.filename, content, mime)}
+                async with httpx.AsyncClient() as client:
+                    upload_resp = await client.post(
+                        "https://api.openai.com/v1/files",
+                        headers=headers,
+                        files=files_upload,
+                        data={"purpose": "assistants"}
+                    )
+                    upload_resp.raise_for_status()
+                    file_id = upload_resp.json()["id"]
+                message_content.append({
+                    "type": "file",
+                    "file": {"file_id": file_id}
+                })
     messages = [
         {"role": "user", "content": message_content}
     ]
