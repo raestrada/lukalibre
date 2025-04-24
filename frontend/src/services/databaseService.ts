@@ -318,6 +318,30 @@ class DatabaseService {
       log.info('Servicio de base de datos cerrado');
     }
   }
+  
+  /**
+   * Devuelve un array con los nombres de todas las tablas de usuario
+   */
+  async listTables(): Promise<string[]> {
+    await this.ensureInitialized();
+    return sqliteService.listTables();
+  }
+
+  /**
+   * Devuelve todos los registros de una tabla
+   */
+  async getAll(table: string): Promise<any[]> {
+    await this.ensureInitialized();
+    return sqliteService.getAll(table);
+  }
+
+  /**
+   * Devuelve los nombres de las columnas de una tabla
+   */
+  async getTableColumns(table: string): Promise<string[]> {
+    await this.ensureInitialized();
+    return sqliteService.getTableColumns(table);
+  }
 }
 
 export default new DatabaseService(); 

@@ -55,6 +55,8 @@ const authGuard = async () => {
   return true;
 };
 
+import DataViewer from './components/data/DataViewer.svelte';
+
 const routes = {
   '/': Home,
   '/login': Login,
@@ -76,6 +78,12 @@ const routes = {
     async: true
   }),
   
+  '/data': wrap({
+    component: DataViewer,
+    conditions: [authGuard],
+    async: true
+  }),
+
   '/profile': wrap({
     component: Profile,
     conditions: [

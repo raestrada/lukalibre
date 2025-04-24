@@ -8,6 +8,7 @@
   // Estado para tablas y datos
   let tables: string[] = [];
   let tableData: Record<string, any[]> = {};
+  let tableColumns: Record<string, string[]> = {};
   let activeTab: string = '';
   let loading = true;
   let error = '';
@@ -19,9 +20,10 @@
       tables = await databaseService.listTables();
       if (tables.length > 0) {
         activeTab = tables[0];
-        // Cargar datos de todas las tablas
+        // Cargar datos y columnas de todas las tablas
         for (const table of tables) {
           tableData[table] = await databaseService.getAll(table);
+          tableColumns[table] = await databaseService.getTableColumns(table);
         }
       }
     } catch (e) {
@@ -32,7 +34,7 @@
 </script>
 
 <div class="data-viewer">
-  <h1>Datos de SQLite (Browser)</h1>
+  <h2 class="datos-title">Datos</h2>
   {#if loading}
     <div class="loading">Cargando datos...</div>
   {:else if error}
@@ -55,19 +57,27 @@
         <table>
           <thead>
             <tr>
-              {#each Object.keys(tableData[activeTab][0] || {}) as col}
+              {#each tableColumns[activeTab] || [] as col}
                 <th>{col}</th>
               {/each}
             </tr>
           </thead>
           <tbody>
-            {#each tableData[activeTab] as row}
+            {#if tableData[activeTab].length > 0}
+              {#each tableData[activeTab] as row}
+                <tr>
+                  {#each tableColumns[activeTab] || [] as col}
+                    <td>{row[col]}</td>
+                  {/each}
+                </tr>
+              {/each}
+            {:else}
               <tr>
-                {#each Object.values(row) as value}
-                  <td>{value}</td>
-                {/each}
+                <td class="no-data-row" colspan={(tableColumns[activeTab] || []).length || 1}>
+                  No hay datos en esta tabla.
+                </td>
               </tr>
-            {/each}
+            {/if}
           </tbody>
         </table>
       {/if}
@@ -78,6 +88,39 @@
 <style lang="css">
 .data-viewer {
   padding: var(--space-xl);
+}
+.datos-title {
+  font-size: 1.5rem;
+  color: var(--text-primary, #222);
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  margin-top: 0.5rem;
+}
+.no-data-row {
+  text-align: center;
+  color: #999;
+  font-style: italic;
+  background: #fafbfc;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  background: #fff;
+}
+th, td {
+  border: 1px solid #e0e0e0;
+  padding: 0.5rem 1rem;
+}
+th {
+  background: #f5f6fa;
+  color: #222;
+  font-weight: 600;
+  text-align: left;
+}
+td {
+  color: #222;
+  background: #fff;
 }
 .tabs {
   display: flex;

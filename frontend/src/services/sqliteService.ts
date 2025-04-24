@@ -317,6 +317,35 @@ class SQLiteService {
       }
     }
   }
+
+  /**
+   * Devuelve un array con los nombres de todas las tablas de usuario (excluye las internas de SQLite)
+   */
+  listTables(): string[] {
+    if (!this.db) throw new Error('La base de datos no está inicializada');
+    const sql = "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%';";
+    const result = this.query(sql);
+    return result.map((row: any) => row.name);
+  }
+
+  /**
+   * Devuelve todos los registros de una tabla
+   */
+  getAll(table: string): any[] {
+    if (!this.db) throw new Error('La base de datos no está inicializada');
+    const sql = `SELECT * FROM ${table}`;
+    return this.query(sql);
+  }
+
+  /**
+   * Devuelve los nombres de las columnas de una tabla
+   */
+  getTableColumns(table: string): string[] {
+    if (!this.db) throw new Error('La base de datos no está inicializada');
+    const sql = `PRAGMA table_info(${table})`;
+    const result = this.query(sql);
+    return result.map((row: any) => row.name);
+  }
 }
 
 export default new SQLiteService(); 

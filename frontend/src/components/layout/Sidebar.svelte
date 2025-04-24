@@ -21,6 +21,10 @@
       <img src="/icons/dashboard.svg" alt="Dashboard" class="icon" />
       Dashboard
     </a>
+    <a href="/data" use:link class="sidebar-link">
+      <img src="/icons/database.svg" alt="Datos" class="icon" />
+      Datos
+    </a>
   </nav>
 </aside>
 

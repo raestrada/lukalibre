@@ -84,7 +84,9 @@
   }
   
   // Definición de rutas
-  const routes = {
+  import DataViewer from './components/data/DataViewer.svelte';
+
+const routes = {
     '/': Home,
     '/login': Login,
     '/register': Register,
@@ -99,6 +101,10 @@
     }),
     '/dashboard': wrap({
       component: Dashboard,
+      conditions: [redirectIfNotAuthenticated]
+    }),
+    '/data': wrap({
+      component: DataViewer,
       conditions: [redirectIfNotAuthenticated]
     }),
     // Ruta por defecto (404)
