@@ -40,16 +40,37 @@ class AuthService {
         await this.getCurrentUser();
         log.info("Token válido, sesión activa");
         return true;
-      } catch (error) {
+      } catch (error: any) {
+        // Detectar si es un error de red o CORS
+        const isNetworkError = error.message === 'Network Error' || 
+                              error.code === 'ERR_NETWORK' ||
+                              (error.response && error.response.status === 0);
+        
+        if (isNetworkError) {
+          log.warn("Error de red al verificar token. Asumiendo token válido para permitir navegación offline");
+          // Si es un error de red, asumimos que el token es válido para permitir navegación
+          return true;
+        }
+        
         log.warn("Token inválido, intentando refresh");
-        // Si falla, intentar refrescar el token
+        // Si falla por otras razones, intentar refrescar el token
         try {
           await this.refreshToken();
           log.info("Token refrescado exitosamente");
           return true;
-        } catch (refreshError) {
+        } catch (refreshError: any) {
+          // También verificar si es un error de red en el refresh
+          const isRefreshNetworkError = refreshError.message === 'Network Error' || 
+                                       refreshError.code === 'ERR_NETWORK' ||
+                                       (refreshError.response && refreshError.response.status === 0);
+          
+          if (isRefreshNetworkError) {
+            log.warn("Error de red al refrescar token. Asumiendo token válido para permitir navegación offline");
+            return true;
+          }
+          
           log.error("Fallo al refrescar token");
-          // Si también falla el refresh, limpiar el token y retornar false
+          // Si también falla el refresh por otras razones, limpiar el token
           this.logout();
           return false;
         }
@@ -59,21 +80,73 @@ class AuthService {
     return false;
   }
 
-  async login(credentials: UserCredentials): Promise<AuthResponse> {
-    log.debug("Iniciando login con credenciales");
-    const formData = new FormData();
-    formData.append('username', credentials.email);
-    formData.append('password', credentials.password);
-    
-    const response = await axios.post<AuthResponse>(
-      `${API_URL}/login/access-token`,
-      formData,
-      { withCredentials: true } // Para recibir cookies (refresh token)
-    );
-    
-    log.info("Login exitoso, guardando token");
-    this.setToken(response.data.access_token);
-    return response.data;
+  async login(email: string, password: string): Promise<AuthResponse> {
+    try {
+      const data = new FormData();
+      data.append('username', email);
+      data.append('password', password);
+
+      const response = await axios.post<AuthResponse>(`${API_URL}/login/access-token`, data);
+      
+      this.setToken(response.data.access_token, 'jwt');
+      log.info("Login exitoso para usuario:", email);
+      return response.data;
+    } catch (err: any) {
+      log.error("Error en login:", err.message);
+      throw err;
+    }
+  }
+  
+  async loginWithGoogle(credential: string): Promise<AuthResponse> {
+    try {
+      log.debug("Intentando login con Google");
+      const response = await axios.post<AuthResponse>(
+        `${API_URL}/login/google`,
+        { token: credential }
+      );
+      
+      // Guardar información de Google para uso offline
+      try {
+        const base64Url = credential.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+        
+        const payload = JSON.parse(jsonPayload);
+        
+        // Store Google user data for offline use
+        if (payload.email) localStorage.setItem('google_email', payload.email);
+        if (payload.name) localStorage.setItem('google_name', payload.name);
+        if (payload.picture) localStorage.setItem('google_picture', payload.picture);
+      } catch (decodeError) {
+        log.warn("No se pudo decodificar el token de Google:", decodeError);
+      }
+      
+      this.setToken(response.data.access_token, 'google');
+      log.info("Login con Google exitoso");
+      return response.data;
+    } catch (err: any) {
+      log.error("Error en login con Google:", err.message);
+      
+      // Para errores de red, permitir navegación offline si tenemos el token de Google
+      if (err.message === 'Network Error' || err.code === 'ERR_NETWORK') {
+        log.warn("Error de red al login con Google. Configurando modo offline");
+        
+        // Store the Google token to use it later
+        this.setToken(credential, 'google');
+        
+        // Create a simplified response for offline use
+        return {
+          access_token: credential,
+          token_type: "bearer",
+          user_id: "offline-user",
+          email: localStorage.getItem('google_email') || "offline@user.com"
+        };
+      }
+      
+      throw err;
+    }
   }
   
   getGoogleAuthUrl(): string {
@@ -89,46 +162,122 @@ class AuthService {
     );
     
     log.info("Token refrescado exitosamente");
-    this.setToken(response.data.access_token);
+    this.setToken(response.data.access_token, 'jwt');
     return response.data;
   }
   
   async getCurrentUser(): Promise<User> {
     const token = this.getToken();
+    const tokenType = this.getTokenType();
     
     if (!token) {
       log.error("No se encontró token al obtener usuario actual");
       throw new Error('No authentication token found');
     }
     
-    log.debug("Obteniendo usuario con token");
-    const response = await axios.post<User>(
-      `${API_URL}/login/test-token`,
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }
-    );
-    
-    const userData = response.data;
-    
-    // Verificar si hay un avatar de Google en localStorage
-    const googleAvatar = localStorage.getItem('google_avatar');
-    if (googleAvatar && !userData.google_avatar) {
-      log.debug("Usando avatar de localStorage:", googleAvatar);
-      userData.google_avatar = googleAvatar;
-    } else if (userData.google_avatar) {
-      log.debug("Usuario ya tiene avatar en los datos:", userData.google_avatar);
+    // If it's a Google token, try to get user info locally first
+    if (tokenType === 'google') {
+      log.debug("Token de Google detectado, obteniendo información local");
+      const email = localStorage.getItem('google_email');
+      const name = localStorage.getItem('google_name');
+      const avatar = localStorage.getItem('google_picture') || localStorage.getItem('google_avatar');
       
-      // Ya no modificamos la URL, la usamos tal como viene
-    } else {
-      log.debug("No se encontró avatar ni en usuario ni en localStorage");
+      if (email && name) {
+        log.info("Usando información de Google almacenada localmente");
+        // Create a user from locally stored Google information
+        const user: User = {
+          id: 0, // Temporary ID
+          email: email,
+          full_name: name,
+          is_active: true,
+          is_superuser: false,
+          google_avatar: avatar || undefined
+        };
+        
+        return user;
+      }
     }
     
-    log.info("Usuario obtenido:", userData.email);
-    return userData;
+    log.debug("Obteniendo usuario con token desde el backend");
+    try {
+      const response = await axios.post<User>(
+        `${API_URL}/login/test-token`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+      
+      const userData = response.data;
+      
+      // Verificar si hay un avatar de Google en localStorage
+      const googleAvatar = localStorage.getItem('google_picture') || localStorage.getItem('google_avatar');
+      if (googleAvatar && !userData.google_avatar) {
+        log.debug("Usando avatar de localStorage:", googleAvatar);
+        userData.google_avatar = googleAvatar;
+      } else if (userData.google_avatar) {
+        log.debug("Usuario ya tiene avatar en los datos:", userData.google_avatar);
+      } else {
+        log.debug("No se encontró avatar ni en usuario ni en localStorage");
+      }
+      
+      log.info("Usuario obtenido:", userData.email);
+      return userData;
+    } catch (error: any) {
+      log.error("Error obteniendo usuario actual:", error.message);
+      
+      // Si es un error de red y tenemos datos locales o un token JWT, devolver un usuario básico
+      if ((error.message === 'Network Error' || error.code === 'ERR_NETWORK')) {
+        // First check if we have Google data locally
+        const email = localStorage.getItem('google_email');
+        const name = localStorage.getItem('google_name');
+        const avatar = localStorage.getItem('google_picture') || localStorage.getItem('google_avatar');
+        
+        if (email || name) {
+          log.warn("Error de red, usando datos de Google almacenados localmente");
+          return {
+            id: 0,
+            email: email || "usuario@google.com",
+            full_name: name || "Usuario de Google",
+            is_active: true,
+            is_superuser: false,
+            google_avatar: avatar || undefined
+          };
+        }
+        
+        // If no Google data but we have JWT token
+        if (token && tokenType === 'jwt') {
+          log.warn("Error de red, usando datos de token JWT para usuario básico");
+          
+          // Intentar decodificar el JWT para obtener información básica
+          try {
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+              return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+            
+            const payload = JSON.parse(jsonPayload);
+            
+            // Crear usuario básico con la información del token
+            return {
+              id: 0,  // ID temporal
+              email: payload.email || "usuario@example.com",
+              full_name: payload.name || null,
+              is_active: true,
+              is_superuser: false
+            };
+          } catch (parseError) {
+            log.error("No se pudo decodificar el token JWT:", parseError);
+          }
+        }
+      }
+      
+      // Re-lanzar el error si no se pudo manejar
+      throw error;
+    }
   }
   
   logout(): void {
@@ -146,14 +295,22 @@ class AuthService {
     }
   }
   
-  setToken(token: string): void {
+  setToken(token: string, type: 'jwt' | 'google'): void {
     log.debug("Guardando nuevo token");
+    
+    // Store the token type to distinguish between Google and JWT tokens
+    localStorage.setItem('token_type', type);
+    
     localStorage.setItem('token', token);
   }
   
   getToken(): string | null {
     const token = localStorage.getItem('token');
     return token;
+  }
+  
+  getTokenType(): 'jwt' | 'google' | null {
+    return (localStorage.getItem('token_type') as 'jwt' | 'google' | null) || null;
   }
   
   isLoggedIn(): boolean {

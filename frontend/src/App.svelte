@@ -43,6 +43,51 @@
           return true;
         }
       }
+      
+      // Verificar si estamos en la URL específica de callback de Google con hash
+      if (window.location.pathname === '/auth/google/callback' && window.location.hash.includes('access_token=')) {
+        console.log("App: Detectado callback de Google con access_token en hash");
+        
+        // Extraer el token del hash
+        const hash = window.location.hash;
+        const params = new URLSearchParams(hash.substring(1)); // Quitar el # inicial
+        const accessToken = params.get('access_token');
+        
+        if (accessToken) {
+          console.log("App: Token extraído del hash, almacenando...");
+          
+          try {
+            // Guardar el token para autenticación
+            authService.setToken(accessToken);
+            
+            // También almacenar para Google Drive si es necesario
+            localStorage.setItem('googleDriveToken', accessToken);
+            
+            // Inicializar store - IMPORTANTE: Usar await para asegurar que se complete
+            console.log("App: Inicializando authStore con token de Google...");
+            const success = await authStore.init();
+            
+            if (success) {
+              console.log("App: AuthStore inicializado correctamente");
+            } else {
+              console.warn("App: AuthStore no se pudo inicializar pero continuamos con token válido");
+            }
+            
+            // Limpiar la URL para eliminar el token y redirigir
+            setTimeout(() => {
+              window.history.replaceState({}, document.title, '/dashboard');
+              push('/dashboard');
+            }, 100);
+            
+            return true;
+          } catch (error) {
+            console.error("App: Error procesando token Google:", error);
+            // Continuar con el token aunque haya error
+            return true;
+          }
+        }
+      }
+      
       return false;
     } catch (error) {
       console.error("App: Error procesando token de URL:", error);
@@ -85,15 +130,24 @@
       return false;
     }
     
+    // Primera comprobación: verificar el estado del store
     const state = get(authStore);
-    const autenticado = state.isAuthenticated && !state.loading;
-    console.log('App: Verificación de autenticación en ruta:', autenticado);
-    return autenticado;
+    const autenticadoStore = state.isAuthenticated && !state.loading;
+    
+    // Segunda comprobación: verificar también si hay un token válido directamente
+    const hayToken = authService.isLoggedIn();
+    
+    console.log('App: Verificación de autenticación en ruta:', 
+      { storeAuth: autenticadoStore, tokenAuth: hayToken });
+    
+    // Si cualquiera de las dos comprobaciones es positiva, consideramos al usuario autenticado
+    return autenticadoStore || hayToken;
   }
   
   // Redirige a login si no está autenticado
   function redirectIfNotAuthenticated() {
-    if (!isAuthenticated()) {
+    const auth = isAuthenticated();
+    if (!auth) {
       console.log('App: Usuario no autenticado, redirigiendo a login');
       push('/login');
       return false;

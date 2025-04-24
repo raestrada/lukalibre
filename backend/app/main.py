@@ -1,6 +1,7 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
+from starlette.responses import Response
 
 from app.api.v1.api import api_router
 from app.core.config import settings
@@ -33,6 +34,41 @@ if settings.BACKEND_CORS_ORIGINS:
         allow_headers=["*"],
     )
     logger.info(f"CORS configurado para: {', '.join(str(origin) for origin in settings.BACKEND_CORS_ORIGINS)}")
+
+# Add a custom middleware to ensure CORS headers are added
+@app.middleware("http")
+async def add_cors_headers(request: Request, call_next):
+    try:
+        response = await call_next(request)
+        
+        # Add CORS headers explicitly to ensure they're present
+        response.headers["Access-Control-Allow-Origin"] = "http://localhost:5173"
+        response.headers["Access-Control-Allow-Credentials"] = "true"
+        response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
+        response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization, X-Requested-With"
+        
+        # Handle preflight OPTIONS requests
+        if request.method == "OPTIONS":
+            if not response.status_code == 200:
+                return Response(
+                    status_code=200,
+                    headers=response.headers
+                )
+        
+        return response
+    except Exception as e:
+        logger.error(f"Error in CORS middleware: {e}")
+        # Return a simple error response to prevent unhandled exceptions
+        return Response(
+            status_code=500,
+            content=f"Internal server error: {str(e)}",
+            headers={
+                "Access-Control-Allow-Origin": "http://localhost:5173",
+                "Access-Control-Allow-Credentials": "true",
+                "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+                "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Requested-With"
+            }
+        )
 
 app.include_router(api_router, prefix=settings.API_V1_STR)
 logger.info(f"API montada en ruta: {settings.API_V1_STR}")

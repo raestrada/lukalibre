@@ -3,6 +3,8 @@
   import { push } from 'svelte-spa-router';
   import { createLogger } from '../../utils/logger';
   import googleDriveService from '../../services/googleDriveService';
+  import authService from '../../services/authService';
+  import { authStore } from '../../stores/authStore';
 
   const log = createLogger('GoogleAuthCallback');
   let message = 'Procesando la autenticación con Google...';
@@ -47,8 +49,59 @@
         // Continuamos incluso con state inesperado, pero lo registramos
       }
       
-      // Almacenar el token para uso futuro
+      // Almacenar el token para uso de Google Drive
       localStorage.setItem('googleDriveToken', accessToken);
+      
+      // También almacenar el token para la autenticación general de la aplicación
+      authService.setToken(accessToken);
+      
+      // Obtener información del usuario de Google
+      try {
+        const response = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        });
+        
+        if (response.ok) {
+          const userData = await response.json();
+          // Store basic Google user info for offline use
+          localStorage.setItem('google_email', userData.email || '');
+          localStorage.setItem('google_name', userData.name || '');
+          localStorage.setItem('google_picture', userData.picture || '');
+          log.info("Información de usuario de Google guardada:", userData.email);
+        } else {
+          log.warn("No se pudo obtener la información del usuario de Google");
+          // Guardar valores por defecto para mantener la funcionalidad offline
+          localStorage.setItem('google_email', 'usuario@google.com');
+          localStorage.setItem('google_name', 'Usuario de Google');
+        }
+      } catch (userInfoErr) {
+        log.error("Error al obtener información del usuario:", userInfoErr);
+        // Guardar valores por defecto para mantener la funcionalidad offline
+        localStorage.setItem('google_email', 'usuario@google.com');
+        localStorage.setItem('google_name', 'Usuario de Google');
+      }
+      
+      // Intentar obtener datos del perfil de usuario si es posible
+      try {
+        // Verificar si el token es válido realizando una solicitud de prueba
+        log.info("Verificando token con el backend...");
+        
+        // Inicializar el store de autenticación con el token
+        log.info("Inicializando authStore con el token");
+        const success = await authStore.init();
+        
+        if (success) {
+          log.info("Token verificado y authStore inicializado correctamente");
+        } else {
+          log.warn("El token fue guardado pero no se pudo verificar con el backend");
+          // Continuamos de todos modos, ya que el token podría ser válido para Google Drive
+        }
+      } catch (tokenErr) {
+        // Si hay un error al verificar el token, lo registramos pero continuamos
+        log.error("Error al verificar el token:", tokenErr);
+      }
       
       // Limpiar el estado pendiente para evitar ciclos
       localStorage.removeItem('pendingGoogleAuth');
