@@ -46,11 +46,23 @@ from fastapi import Depends, Header
 from app.api import deps
 from app.models.user import User
 
+from fastapi import Depends
+from sqlalchemy.orm import Session
+from app.api.deps import get_db
+from app.crud import crud_llm_limits
+
 @router.post("/proxy", response_model=LLMProxyResponse)
 async def llm_proxy(
     payload: LLMProxyRequest,
-    current_user: User = Depends(deps.get_current_user)
+    current_user: User = Depends(deps.get_current_user),
+    db: Session = Depends(get_db)
 ):
+    # --- Rate limiting ---
+    key, limit = crud_llm_limits.check_llm_limits(db, current_user.id)
+    if key is not None:
+        raise HTTPException(status_code=429, detail=f"Límite de uso excedido ({key}: {limit})")
+    crud_llm_limits.log_llm_request(db, current_user.id)
+
     if not GROQ_API_KEY:
         raise HTTPException(status_code=500, detail="GROQ_API_KEY not set in environment")
     # Paso 1: Identificación de esquema
