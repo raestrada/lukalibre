@@ -25,6 +25,10 @@
       <img src="/icons/database.svg" alt="Datos" class="icon" />
       Datos
     </a>
+    <a href="/goals" use:link class="sidebar-link">
+      <img src="/icons/target.svg" alt="Metas" class="icon" />
+      Metas
+    </a>
   </nav>
 </aside>
 

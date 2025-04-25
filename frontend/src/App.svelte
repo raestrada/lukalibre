@@ -15,6 +15,7 @@
   import GoogleCallback from './components/auth/GoogleCallback.svelte';
   import Profile from './components/user/Profile.svelte';
   import Dashboard from './components/dashboard/Dashboard.svelte';
+  import Goals from './routes/goals.svelte';
   
   let isInitializing = true;
   
@@ -105,6 +106,10 @@ const routes = {
     }),
     '/data': wrap({
       component: DataViewer,
+      conditions: [redirectIfNotAuthenticated]
+    }),
+    '/goals': wrap({
+      component: Goals,
       conditions: [redirectIfNotAuthenticated]
     }),
     // Ruta por defecto (404)
