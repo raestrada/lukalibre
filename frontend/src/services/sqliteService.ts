@@ -35,10 +35,14 @@ class SQLiteService {
       log.info('Inicializando SQLite');
       // Cargar SQL.js
       this.SQL = await initSqlJs({
-        // Esta ruta debe corresponder a donde esté el archivo wasm en la carpeta public
         locateFile: (file: string) => `/sql.js/${file}`
       });
-      
+      // Intentar cargar base de datos desde localStorage
+      const stored = this.loadFromStorage();
+      if (stored) {
+        log.info('Base de datos encontrada en localStorage, cargando...');
+        this.db = new this.SQL.Database(stored);
+      }
       this.initialized = true;
       log.info('SQLite inicializado correctamente');
     } catch (error) {
@@ -58,13 +62,12 @@ class SQLiteService {
     try {
       log.info('Creando nueva base de datos SQLite');
       this.db = new this.SQL.Database();
-      
       // Crear las tablas según el esquema definido en el diseño
       this.createTables();
-      
       // Exportar la base de datos como array binario
       const data = this.db.export();
-      log.info('Base de datos creada correctamente');
+      this.saveToStorage(data);
+      log.info('Base de datos creada y guardada en localStorage correctamente');
       return data;
     } catch (error) {
       log.error('Error creando base de datos:', error);
@@ -82,7 +85,6 @@ class SQLiteService {
 
     try {
       log.info('Cargando base de datos SQLite existente');
-      
       // Convertir Blob a Uint8Array si es necesario
       let dataArray: Uint8Array;
       if (data instanceof Blob) {
@@ -91,9 +93,9 @@ class SQLiteService {
       } else {
         dataArray = data;
       }
-      
       this.db = new this.SQL.Database(dataArray);
-      log.info('Base de datos cargada correctamente');
+      this.saveToStorage(dataArray);
+      log.info('Base de datos cargada y guardada en localStorage correctamente');
     } catch (error) {
       log.error('Error cargando base de datos:', error);
       throw new Error('No se pudo cargar la base de datos SQLite');
@@ -271,10 +273,12 @@ class SQLiteService {
     if (!this.db) {
       throw new Error('La base de datos no está inicializada');
     }
-    
     try {
       log.debug('Ejecutando sentencia SQL:', sql);
       this.db.run(sql, params);
+      // Persistir la base tras cada cambio
+      const data = this.db.export();
+      this.saveToStorage(data);
     } catch (error) {
       log.error('Error ejecutando sentencia SQL:', error);
       throw new Error(`Error en la sentencia SQL: ${error}`);
@@ -345,6 +349,38 @@ class SQLiteService {
     const sql = `PRAGMA table_info(${table})`;
     const result = this.query(sql);
     return result.map((row: any) => row.name);
+  }
+  /**
+   * Guarda el array binario de la base de datos en localStorage
+   */
+  private saveToStorage(data: Uint8Array): void {
+    try {
+      const base64 = btoa(String.fromCharCode(...data));
+      localStorage.setItem('lukalibre_sqlite_db', base64);
+      log.info('Base de datos guardada en localStorage');
+    } catch (err) {
+      log.error('Error guardando base de datos en localStorage:', err);
+    }
+  }
+
+  /**
+   * Carga la base de datos desde localStorage, si existe
+   */
+  private loadFromStorage(): Uint8Array | null {
+    try {
+      const base64 = localStorage.getItem('lukalibre_sqlite_db');
+      if (!base64) return null;
+      const binary = atob(base64);
+      const bytes = new Uint8Array(binary.length);
+      for (let i = 0; i < binary.length; i++) {
+        bytes[i] = binary.charCodeAt(i);
+      }
+      log.info('Base de datos cargada desde localStorage');
+      return bytes;
+    } catch (err) {
+      log.error('Error cargando base de datos desde localStorage:', err);
+      return null;
+    }
   }
 }
 

@@ -79,10 +79,22 @@ class DatabaseService {
         }
       }
       
-      // Si no se creó la base de datos de Google Drive, crear una local
+      // Si no se creó la base de datos de Google Drive, usar la persistida local o crear una nueva si no existe
       if (!dbCreated) {
-        log.info('Creando base de datos local');
-        await sqliteService.createNewDatabase();
+        // Si ya hay una base cargada en memoria, no hacer nada
+        if (sqliteService.db) {
+          log.info('Base de datos ya cargada en memoria, no se crea una nueva.');
+        } else {
+          // Si hay una base persistida en localStorage, cargarla
+          const stored = sqliteService["loadFromStorage"]?.();
+          if (stored) {
+            log.info('Base de datos encontrada en localStorage, cargando...');
+            await sqliteService.loadDatabase(stored);
+          } else {
+            log.info('No existe base de datos local, creando nueva.');
+            await sqliteService.createNewDatabase();
+          }
+        }
       }
       
       // Iniciar sincronización automática si está habilitada
