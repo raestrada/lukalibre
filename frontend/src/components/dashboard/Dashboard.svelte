@@ -6,6 +6,7 @@
   import googleDriveService from '../../services/googleDriveService';
   import { createLogger } from '../../utils/logger';
   import SyncSettings from '../SyncSettings.svelte';
+  import StatusMessage from '../common/StatusMessage.svelte';
 
   const log = createLogger('Dashboard');
   
@@ -113,14 +114,24 @@
         <button class="llm-bar-btn" type="submit" disabled={llmLoading}>
           {llmLoading ? 'Procesando...' : 'Enviar'}
         </button>
-        {#if llmError}
-          <span class="llm-bar-alert error">{llmError}</span>
-        {/if}
-        {#if llmSuccess}
-          <span class="llm-bar-alert success">{llmSuccess}</span>
-        {/if}
       </form>
     </div>
+    
+    {#if llmSuccess}
+      <StatusMessage
+        type="success"
+        message={llmSuccess}
+        onClose={() => llmSuccess = null}
+      />
+    {/if}
+    
+    {#if llmError}
+      <StatusMessage
+        type="error"
+        message={llmError}
+        onClose={() => llmError = null}
+      />
+    {/if}
     {#if !dbInitialized}
       <div class="dashboard-empty">
         <div class="empty-message">

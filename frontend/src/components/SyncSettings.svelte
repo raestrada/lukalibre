@@ -22,6 +22,11 @@
   let resettingDb: boolean = false;
   let resetSuccess: boolean = false;
   let resetError: string | null = null;
+  // Mensajes para exportar/importar
+  let exportSuccess: boolean = false;
+  let exportError: string | null = null;
+  let importSuccess: boolean = false;
+  let importError: string | null = null;
 
   async function confirmResetDb() {
     resettingDb = true;
@@ -133,12 +138,20 @@
   async function exportDatabase() {
     if (exportingDb) return;
     
+    // Resetear mensajes previos
+    exportSuccess = false;
+    exportError = null;
+    importSuccess = false;
+    importError = null;
+    
     try {
       exportingDb = true;
       await databaseService.exportDatabaseForDownload();
+      exportSuccess = true;
+      setTimeout(() => { exportSuccess = false; }, 5000); // Auto-ocultar después de 5 segundos
     } catch (error: any) {
       log.error('Error exportando base de datos:', error);
-      alert(`Error al exportar base de datos: ${error.message || 'Error desconocido'}`);
+      exportError = `Error al exportar base de datos: ${error.message || 'Error desconocido'}`;
     } finally {
       exportingDb = false;
     }
@@ -162,6 +175,12 @@
   async function confirmImport() {
     if (importingDb || !importFile) return;
     
+    // Resetear mensajes previos
+    exportSuccess = false;
+    exportError = null;
+    importSuccess = false;
+    importError = null;
+    
     try {
       importingDb = true;
       await databaseService.importDatabaseFromFile(importFile);
@@ -169,9 +188,11 @@
       // Actualizar fecha de sincronización
       lastSyncDate = new Date().toISOString();
       await settingsStore.updateSetting('lastSyncDate', lastSyncDate);
+      importSuccess = true;
+      setTimeout(() => { importSuccess = false; }, 5000); // Auto-ocultar después de 5 segundos
     } catch (error: any) {
       log.error('Error importando base de datos:', error);
-      alert(`Error al importar base de datos: ${error.message || 'Error desconocido'}`);
+      importError = `Error al importar base de datos: ${error.message || 'Error desconocido'}`;
     } finally {
       importingDb = false;
     }
@@ -286,6 +307,38 @@
     type="error"
     message={resetError}
     onClose={() => resetError = null}
+  />
+{/if}
+
+{#if exportSuccess}
+  <StatusMessage
+    type="success"
+    message="Base de datos exportada correctamente"
+    onClose={() => exportSuccess = false}
+  />
+{/if}
+
+{#if exportError}
+  <StatusMessage
+    type="error"
+    message={exportError}
+    onClose={() => exportError = null}
+  />
+{/if}
+
+{#if importSuccess}
+  <StatusMessage
+    type="success"
+    message="Base de datos importada correctamente"
+    onClose={() => importSuccess = false}
+  />
+{/if}
+
+{#if importError}
+  <StatusMessage
+    type="error"
+    message={importError}
+    onClose={() => importError = null}
   />
 {/if}
 
@@ -433,57 +486,7 @@
     color: var(--warning, #ffc107);
   }
   
-  .toggle-details {
-    margin-top: 0.25rem;
-    background: transparent;
-    border: none;
-    color: var(--text-muted, #6c757d);
-    font-size: 0.8rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    padding: 0;
-  }
-  
-  .toggle-details:hover {
-    color: var(--text-primary, #212529);
-    text-decoration: underline;
-  }
-  
-  .import-confirmation {
-    margin-top: 0.5rem;
-    padding: 0.5rem;
-    background-color: var(--warning-bg, #fff3cd);
-    border: 1px solid var(--warning-border, #ffecb5);
-    border-radius: 4px;
-    font-size: 0.85rem;
-  }
-  
-  .import-actions {
-    display: flex;
-    gap: 0.5rem;
-    margin-top: 0.5rem;
-    justify-content: flex-end;
-  }
-  
-  .import-button {
-    padding: 0.25rem 0.5rem;
-    border-radius: 4px;
-    border: none;
-    cursor: pointer;
-    font-size: 0.8rem;
-  }
-  
-  .import-button.confirm {
-    background-color: #28a745;
-    color: white;
-  }
-  
-  .import-button.cancel {
-    background-color: #dc3545;
-    color: white;
-  }
+  /* CSS no usado eliminado */
   
   .loading-spinner {
     display: inline-block;
