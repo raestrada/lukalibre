@@ -103,7 +103,7 @@
   </div>
   <footer class="footer">
     <div class="container">
-      <p>&copy; {new Date().getFullYear()} LukaLibre — Proyecto sin fines de lucro.</p>
+      <p>&copy; {new Date().getFullYear()} LukaLibre — Proyecto OSS que mantiene tus datos en tu dispositivo</p>
       <p>Educación Financiera para Chile</p>
     </div>
   </footer>

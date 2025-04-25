@@ -75,7 +75,7 @@
 - **Lenguaje claro**: Explicaciones simples de conceptos complejos
 - **Accesibilidad**: Funciona en dispositivos de todas las gamas
 
-### Enfoque Sin Fines de Lucro
+### Enfoque Open Source y Privacidad Local
 ![Social](https://res.cloudinary.com/dyknhuvxt/image/upload/v1744931115/social-icon_qdrt3x.png)
 - **Misión social**: Mejoramos la salud financiera colectiva
 - **Desarrollo comunitario**: Construido por y para los usuarios

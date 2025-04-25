@@ -55,7 +55,7 @@ LukaLibre no tiene forma de recuperar tu información si pierdes tu **clave secu
 
 ## 🚀 Diseñado para ayudarte, no para espiarte
 
-LukaLibre es una plataforma **abierta, sin fines de lucro y transparente**. No tenemos publicidad, no vendemos datos, y no rastreamos tu actividad.
+LukaLibre es una plataforma **abierta, de código libre que mantiene tus datos en tu dispositivo y transparente**. No tenemos publicidad, no vendemos datos, y no rastreamos tu actividad.
 
 Creemos que la educación financiera real debe estar al alcance de todos, sin poner en riesgo tu seguridad.
 

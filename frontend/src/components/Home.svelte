@@ -24,18 +24,18 @@
     
     <div class="features">
       <div class="card feature-card">
-        <h3>Privacidad de Datos</h3>
-        <p>Tus datos financieros están protegidos mediante tecnología Zero Knowledge. Nadie, ni siquiera nosotros, puede ver tu información financiera personal.</p>
+        <h3>Control Total de tus Finanzas</h3>
+        <p>Registra y visualiza tus ingresos, gastos y categorías en un solo lugar. Todos tus datos financieros permanecen en tu dispositivo, sin almacenarse en servidores externos.</p>
       </div>
       
       <div class="card feature-card">
-        <h3>Verificación sin Divulgación</h3>
-        <p>Demuestra tus activos y transacciones financieras sin revelar montos exactos o detalles sensibles, gracias a las pruebas de Zero Knowledge.</p>
+        <h3>Análisis Inteligente</h3>
+        <p>Importa documentos financieros y facturas para que sean procesados automáticamente con IA, ahorrando tiempo en la gestión de tus registros sin comprometer tu privacidad.</p>
       </div>
       
       <div class="card feature-card">
-        <h3>Educación Financiera Segura</h3>
-        <p>Aprende sobre finanzas personales y recibe recomendaciones basadas en tus datos, sin comprometer tu privacidad ni seguridad.</p>
+        <h3>Metas y Presupuesto</h3>
+        <p>Establece objetivos financieros, haz seguimiento de tus ahorros, y administra un presupuesto realista adaptado a tus necesidades y estilo de vida.</p>
       </div>
     </div>
 </div>
