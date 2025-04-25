@@ -40,7 +40,16 @@ export async function extractAndInsertData(file: File, schemaName: string, schem
   if (!templates['extract_data']) {
     throw new Error('No se encontró el prompt "extract_data" en los templates del backend.');
   }
-  const prompt = templates['extract_data'];
+  let prompt = templates['extract_data'];
+  // Obtener todas las tablas y columnas
+  const tableNames = await databaseService.listTables();
+  const tables: { name: string, columns: string[] }[] = [];
+  for (const table of tableNames) {
+    const columns = await databaseService.getTableColumns(table);
+    tables.push({ name: table, columns });
+  }
+  // Reemplazar {tables} o {{tables}} en el prompt
+  prompt = prompt.replace(/\{\{tables\}\}|\{tables\}/g, JSON.stringify(tables));
   console.log('PROMPT TEMPLATE USADO:', prompt);
   const formData = new FormData();
   formData.append('prompt', prompt);
