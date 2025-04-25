@@ -4,6 +4,7 @@
   import databaseService from '../services/databaseService';
   import googleDriveService from '../services/googleDriveService';
   import { createLogger } from '../utils/logger';
+  import StatusMessage from './common/StatusMessage.svelte';
   
   const log = createLogger('SyncSettings');
   
@@ -230,21 +231,7 @@
     </div>
   {/if}
   
-  {#if importFile}
-    <div class="import-confirmation">
-      <p>¿Importar archivo "{importFile.name}"? Esto reemplazará todos los datos actuales.</p>
-      <div class="import-actions">
-        <button class="import-button confirm" on:click={confirmImport} disabled={importingDb}>
-          {#if importingDb}
-            <span class="loading-spinner"></span> Importando...
-          {:else}
-            Confirmar
-          {/if}
-        </button>
-        <button class="import-button cancel" on:click={cancelImport} disabled={importingDb}>Cancelar</button>
-      </div>
-    </div>
-  {/if}
+  
 </div>
 
 {#if showResetModal}
@@ -265,8 +252,41 @@
     </div>
   </div>
 {/if}
+{#if importFile}
+  <StatusMessage
+    type="warning"
+    message={`¿Importar archivo "${importFile.name}"? Esto reemplazará todos los datos actuales.`}
+    closable={false}
+    actions={[
+      {
+        label: importingDb ? 'Importando...' : 'Confirmar',
+        onClick: confirmImport,
+        disabled: importingDb,
+        loading: importingDb
+      },
+      {
+        label: 'Cancelar',
+        onClick: cancelImport,
+        disabled: importingDb
+      }
+    ]}
+  />
+{/if}
+
 {#if resetSuccess}
-  <div class="reset-success">Base de datos reseteada correctamente.</div>
+  <StatusMessage
+    type="success"
+    message="Base de datos reseteada correctamente."
+    onClose={() => resetSuccess = false}
+  />
+{/if}
+
+{#if resetError}
+  <StatusMessage
+    type="error"
+    message={resetError}
+    onClose={() => resetError = null}
+  />
 {/if}
 
 <style>
@@ -290,10 +310,7 @@
   .toolbar-button.danger {
     background: #d32f2f; color: #fff;
   }
-  .reset-success {
-    background: #4caf50; color: #fff; padding: 0.5rem 1rem; border-radius: 4px; margin: 1rem 0;
-    text-align: center;
-  }
+  /* Estilos eliminados ya que ahora están en el componente StatusMessage */
   .sync-banner {
     background: rgba(255,255,255,0.85); /* Fondo blanco sutil/transparente */
     color: var(--text-primary, #212529);

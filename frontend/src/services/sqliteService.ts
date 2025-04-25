@@ -113,7 +113,7 @@ class SQLiteService {
     this.db.exec(`
       CREATE TABLE categorias (
         id TEXT PRIMARY KEY,
-        tipo TEXT CHECK (tipo IN ('ingreso', 'gasto', 'ahorro')),
+        tipo TEXT,
         nombre TEXT NOT NULL,
         sub_tipo TEXT,
         descripcion TEXT,
@@ -173,7 +173,7 @@ class SQLiteService {
         objetivo_monto REAL,
         fecha_objetivo TEXT,
         prioridad INTEGER,
-        tipo TEXT CHECK (tipo IN ('emergencia', 'viaje', 'vivienda', 'educacion', 'jubilacion', 'otro')),
+        tipo TEXT,
         activa BOOLEAN DEFAULT true
       );
     `);
@@ -283,6 +283,47 @@ class SQLiteService {
     } catch (error) {
       log.error('Error ejecutando sentencia SQL:', error);
       throw new Error(`Error en la sentencia SQL: ${error}`);
+    }
+  }
+
+  /**
+   * Ejecuta múltiples sentencias SQL separadas por punto y coma
+   * @param sqlMultiple Cadena con múltiples sentencias SQL separadas por ;
+   */
+  execMultiple(sqlMultiple: string): void {
+    if (!this.db) {
+      throw new Error('La base de datos no está inicializada');
+    }
+    
+    try {
+      log.info('Ejecutando múltiples sentencias SQL');
+      
+      // Dividir las sentencias SQL por punto y coma
+      const statements = sqlMultiple
+        .split(';')
+        .map(stmt => stmt.trim())
+        .filter(stmt => stmt.length > 0); // Filtrar sentencias vacías
+      
+      log.info(`Se encontraron ${statements.length} sentencias SQL para ejecutar`);
+      
+      // Ejecutar cada sentencia individualmente
+      statements.forEach((sql, index) => {
+        try {
+          log.debug(`Ejecutando sentencia SQL #${index + 1}:`, sql);
+          this.db.run(sql);
+        } catch (stmtError) {
+          log.error(`Error ejecutando sentencia SQL #${index + 1}:`, stmtError);
+          throw new Error(`Error en la sentencia SQL #${index + 1}: ${stmtError}`);
+        }
+      });
+      
+      // Persistir la base de datos después de ejecutar todas las sentencias
+      const data = this.db.export();
+      this.saveToStorage(data);
+      log.info('Todas las sentencias SQL ejecutadas correctamente');
+    } catch (error) {
+      log.error('Error ejecutando múltiples sentencias SQL:', error);
+      throw error;
     }
   }
 

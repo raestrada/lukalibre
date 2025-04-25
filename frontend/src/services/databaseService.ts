@@ -131,6 +131,14 @@ class DatabaseService {
     await this.ensureInitialized();
     sqliteService.exec(sql, params);
   }
+
+  /**
+   * Ejecuta múltiples sentencias SQL separadas por punto y coma
+   */
+  async execMultiple(sqlMultiple: string): Promise<void> {
+    await this.ensureInitialized();
+    sqliteService.execMultiple(sqlMultiple);
+  }
   
   /**
    * Sincroniza la base de datos con Google Drive manualmente

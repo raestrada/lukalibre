@@ -93,6 +93,6 @@ export async function extractAndInsertData(file: File, schemaName: string, schem
     .replace(/\s+/g, ' ')
     .trim();
   console.log('SQL limpio a ejecutar:', cleanSql);
-  // Ejecutar los INSERTS en la base local
-  await databaseService.exec(cleanSql);
+  // Ejecutar los INSERTS en la base local - usado execMultiple para sentencias separadas por ;
+  await databaseService.execMultiple(cleanSql);
 }
