@@ -23,6 +23,30 @@
   let llmLoading = false;
   let llmSuccess: string | null = null;
   let llmError: string | null = null;
+  
+  // Variables para la barra de progreso
+  let progressPercentage = 0;
+  let currentStage = 0;
+  let currentStageMessage = '';
+  
+  // Definir las etapas del proceso
+  const processingStages = [
+    { id: 'upload', label: 'Subiendo archivo', percentage: 10 },
+    { id: 'identify', label: 'Identificando tipo de documento', percentage: 30 },
+    { id: 'extract', label: 'Extrayendo datos con IA', percentage: 70 },
+    { id: 'insert', label: 'Insertando en base de datos', percentage: 90 },
+    { id: 'complete', label: 'Proceso completado', percentage: 100 }
+  ];
+  
+  // Función para actualizar el progreso
+  function updateProgress(stageId: string) {
+    const stageIndex = processingStages.findIndex(stage => stage.id === stageId);
+    if (stageIndex >= 0) {
+      currentStage = stageIndex;
+      progressPercentage = processingStages[stageIndex].percentage;
+      currentStageMessage = processingStages[stageIndex].label;
+    }
+  }
 
   async function handleLLMProxySubmit(e: Event) {
     e.preventDefault();
@@ -32,28 +56,49 @@
       llmError = 'Debes seleccionar un archivo.';
       return;
     }
+    
+    // Iniciar progreso
     llmLoading = true;
+    progressPercentage = 0;
+    currentStageMessage = '';
+    
     try {
-      // 1. Obtener schemas disponibles (puede ser desde dataService o API)
+      // 1. Iniciar subida de archivo
+      updateProgress('upload');
+      await new Promise(resolve => setTimeout(resolve, 500)); // Simular tiempo de procesamiento
+      
+      // 2. Obtener schemas disponibles e identificar el esquema
+      updateProgress('identify');
       const schemas = await dataService.getSchemas();
       const schemaNames = schemas.map(s => s.name);
-      // 2. Identificar el esquema
       const detectedSchema = await llmService.identifySchema(llmFile, schemaNames);
+      
       // Match robusto ignorando mayúsculas, tildes y espacios
-      function normalize(str) {
+      function normalize(str: string): string {
         return str
           .toLowerCase()
           .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // quita tildes
           .replace(/\s+/g, ''); // quita espacios
       }
+      
       const detectedNorm = normalize(detectedSchema);
       const schemaObj = schemas.find(s => normalize(s.name) === detectedNorm);
       if (!schemaObj) throw new Error('No se pudo identificar el esquema del documento.');
-      // 3. Extraer y poblar datos
+      
+      // 3. Extraer datos con IA
+      updateProgress('extract');
+      
+      // 4. Insertar en base de datos
+      updateProgress('insert');
       await llmService.extractAndInsertData(llmFile, detectedSchema, schemaObj.schema);
+      
+      // 5. Completar proceso
+      updateProgress('complete');
+      await new Promise(resolve => setTimeout(resolve, 500)); // Mantener barra completa por un momento
+      
       llmSuccess = `¡Documento procesado e insertado en la tabla '${detectedSchema}' exitosamente!`;
       llmFile = null;
-    } catch (err) {
+    } catch (err: any) {
       if (import.meta.env && import.meta.env.DEV) {
         llmError = err.message || 'Error desconocido';
       } else {
@@ -61,6 +106,12 @@
       }
     } finally {
       llmLoading = false;
+      // Resetear el progreso después de un breve retraso
+      setTimeout(() => {
+        progressPercentage = 0;
+        currentStageMessage = '';
+        currentStage = 0;
+      }, 2000);
     }
   }
 
@@ -110,11 +161,19 @@
     <div class="llm-bar">
       <form class="llm-bar-flex" on:submit={handleLLMProxySubmit}>
         <span class="llm-bar-label">Subir documento o imagen para procesar con IA:</span>
-        <input class="llm-bar-file" type="file" accept="image/*,.pdf" on:change={e => llmFile = e.target.files[0]} />
+        <input class="llm-bar-file" type="file" accept="image/*,.pdf" on:change={e => llmFile = e.target?.files?.[0]} />
         <button class="llm-bar-btn" type="submit" disabled={llmLoading}>
           {llmLoading ? 'Procesando...' : 'Enviar'}
         </button>
       </form>
+      
+      {#if llmLoading}
+        <div class="progress-container">
+          <div class="progress-bar" style="width: {progressPercentage}%"></div>
+          <div class="progress-stage">{currentStageMessage}</div>
+          <div class="progress-percentage">{progressPercentage}%</div>
+        </div>
+      {/if}
     </div>
     
     {#if llmSuccess}
@@ -156,6 +215,84 @@
     width: 100%;
     box-sizing: border-box;
     margin-bottom: 1.5rem;
+  }
+  
+  .progress-container {
+    margin-top: 0.75rem;
+    margin-bottom: 0.5rem;
+    position: relative;
+    height: 24px;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+  }
+  
+  .progress-bar {
+    height: 100%;
+    background-color: #4caf50;
+    border-radius: 4px;
+    transition: width 0.4s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .progress-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-image: linear-gradient(
+      -45deg,
+      rgba(255, 255, 255, 0.2) 25%,
+      transparent 25%,
+      transparent 50%,
+      rgba(255, 255, 255, 0.2) 50%,
+      rgba(255, 255, 255, 0.2) 75%,
+      transparent 75%,
+      transparent
+    );
+    background-size: 50px 50px;
+    animation: progress-animation 2s linear infinite;
+    border-radius: 4px;
+  }
+  
+  @keyframes progress-animation {
+    0% {
+      background-position: 0 0;
+    }
+    100% {
+      background-position: 50px 50px;
+    }
+  }
+  
+  .progress-stage {
+    position: absolute;
+    left: 10px;
+    top: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    color: white;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    z-index: 2;
+  }
+  
+  .progress-percentage {
+    position: absolute;
+    right: 10px;
+    top: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    color: #333;
+    font-size: 0.85rem;
+    font-weight: bold;
+    z-index: 2;
   }
   .llm-bar-flex {
     display: flex;
