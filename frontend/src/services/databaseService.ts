@@ -379,6 +379,12 @@ class DatabaseService {
     log.info('Sincronizando base de datos con Google Drive');
     return Promise.resolve();
   }
+  /**
+   * Devuelve todas las metas financieras
+   */
+  async getMetas(): Promise<any[]> {
+    return this.getAll('metas');
+  }
 }
 
 export default new DatabaseService();

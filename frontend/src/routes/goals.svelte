@@ -68,9 +68,10 @@
 </script>
 
 <section class="goals-page">
-  <h2>Crear nueva meta financiera</h2>
-
-  <form class="goal-form" on:submit|preventDefault={crearMeta}>
+  <div class="goals-layout">
+    <div class="goals-form-section">
+      <h2>Crear nueva meta financiera</h2>
+      <form class="goal-form" on:submit|preventDefault={crearMeta}>
     <div class="form-row">
       <label>Nombre<span class="required"></span></label>
       <input bind:value={nombre} required placeholder="Ej: Fondo de emergencia" />
@@ -105,53 +106,100 @@
       </select>
     </div>
     <button class="btn-primary" type="submit" disabled={loading}>Crear meta</button>
-  </form>
+    </form>
 
-  {#if error}
-    <StatusMessage type="error" message={error} on:close={() => error = null} />
-  {/if}
-  {#if success}
-    <StatusMessage type="success" message={success} on:close={() => success = null} />
-  {/if}
-
-  <hr />
-
-  <h3>Mis metas</h3>
-  {#if loading}
-    <div class="loading-bar">Cargando...</div>
-  {:else if metas.length === 0}
-    <p class="empty">Aún no has creado metas financieras.</p>
-  {:else}
-    <ul class="goals-list">
-      {#each metas as meta}
-        <li class="goal-item">
-          <div class="goal-main">
-            <strong>{meta.nombre}</strong>
-            <span class="goal-type">{meta.tipo}</span>
-          </div>
-          <div class="goal-details">
-            <span>Monto objetivo: <b>${meta.objetivo_monto.toLocaleString()}</b></span>
-            <span>Fecha: {meta.fecha_objetivo}</span>
-            <span>Prioridad: {meta.prioridad}</span>
-            {#if meta.descripcion}
-              <span class="goal-desc">{meta.descripcion}</span>
-            {/if}
-          </div>
-        </li>
-      {/each}
-    </ul>
-  {/if}
+    {#if error}
+      <StatusMessage type="error" message={error} on:close={() => error = null} />
+    {/if}
+    {#if success}
+      <StatusMessage type="success" message={success} on:close={() => success = null} />
+    {/if}
+    </div>
+    <div class="goals-list-section">
+      <h3>Mis metas</h3>
+      {#if loading}
+        <div class="loading-bar">Cargando...</div>
+      {:else if metas.length === 0}
+        <p class="empty">Aún no has creado metas financieras.</p>
+      {:else}
+        <ul class="goals-list">
+          {#each metas as meta}
+            <li class="goal-item">
+              <div class="goal-main">
+                <strong>{meta.nombre}</strong>
+                <span class="goal-type">{meta.tipo}</span>
+              </div>
+              <div class="goal-details">
+                <span>Monto objetivo: <b>${meta.objetivo_monto.toLocaleString()}</b></span>
+                <span>Fecha: {meta.fecha_objetivo}</span>
+                <span>Prioridad: {meta.prioridad}</span>
+                {#if meta.descripcion}
+                  <span class="goal-desc">{meta.descripcion}</span>
+                {/if}
+              </div>
+            </li>
+          {/each}
+        </ul>
+      {/if}
+    </div>
+  </div>
 </section>
 
 <style>
 .goals-page {
-  max-width: 520px;
-  margin: 2rem auto 3rem auto;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
   background: #fff;
-  border-radius: 14px;
-  box-shadow: 0 6px 32px 0 rgba(58,99,81,0.08);
-  padding: 2.5rem 2rem 2rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
+
+.goals-layout {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+}
+
+.goals-form-section {
+  flex: 1 1 340px;
+  min-width: 290px;
+  max-width: 400px;
+}
+
+.goals-list-section {
+  flex: 2 1 460px;
+  min-width: 300px;
+  max-width: 650px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.goals-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-height: 520px;
+  overflow-y: auto;
+  border-radius: 8px;
+  background: #f7f7f7;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+
+@media (max-width: 900px) {
+  .goals-layout {
+    flex-direction: column;
+  }
+  .goals-form-section, .goals-list-section {
+    max-width: 100%;
+    min-width: 0;
+  }
+  .goals-list {
+    max-height: 340px;
+  }
+}
+
 .goal-form {
   display: flex;
   flex-direction: column;
@@ -239,15 +287,25 @@ hr {
 .goal-main {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.5rem;
 }
+.goal-main strong {
+  color: #263238;
+  font-weight: 700;
+}
+
 .goal-type {
-  background: #e1f2e3;
-  color: #3A6351;
-  border-radius: 5px;
-  padding: 0.12rem 0.7rem;
-  font-size: 0.95rem;
-  font-weight: 500;
+  display: inline-block;
+  background: #e0f2f1;
+  color: #00695c;
+  font-size: 0.95em;
+  padding: 2px 10px;
+  border-radius: 8px;
+  margin-left: 8px;
+  min-width: 80px;
+  text-align: center;
+  font-weight: 600;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
 }
 .goal-details {
   display: flex;
