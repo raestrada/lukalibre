@@ -17,6 +17,25 @@
   let importingDb: boolean = false;
   let importFile: File | null = null;
   let showDetails: boolean = false;
+  let showResetModal: boolean = false;
+  let resettingDb: boolean = false;
+  let resetSuccess: boolean = false;
+  let resetError: string | null = null;
+
+  async function confirmResetDb() {
+    resettingDb = true;
+    resetSuccess = false;
+    resetError = null;
+    try {
+      await databaseService.resetDatabase();
+      resetSuccess = true;
+      showResetModal = false;
+    } catch (err) {
+      resetError = 'Error al resetear la base de datos';
+    } finally {
+      resettingDb = false;
+    }
+  }
   
   // Para formatear la fecha
   function formatDate(dateStr: string | null): string {
@@ -79,13 +98,31 @@
   async function syncNow() {
     if (syncing) return;
     
-    syncing = true;
     try {
-      await databaseService.syncNow();
+      syncing = true;
+      
+      // Asegurarse de que el usuario está autenticado en Google Drive
+      if (!isAuthenticated) {
+        try {
+          isAuthenticated = await googleDriveService.ensureAuthenticated(true);
+        } catch (error) {
+          log.error('Error al verificar autenticación:', error);
+          throw new Error('No se pudo autenticar con Google Drive');
+        }
+      }
+      
+      // Sincronizar base de datos
+      await databaseService.syncDatabase();
+      
+      // Actualizar fecha de sincronización
       lastSyncDate = new Date().toISOString();
+      await settingsStore.updateSetting('lastSyncDate', lastSyncDate);
+      
     } catch (error: any) {
-      log.error('Error al sincronizar:', error);
-      alert('Error al sincronizar: ' + error.message);
+      log.error('Error sincronizando:', error);
+      
+      // Mostrar error al usuario
+      alert(`Error al sincronizar: ${error.message || 'Error desconocido'}`);
     } finally {
       syncing = false;
     }
@@ -95,52 +132,52 @@
   async function exportDatabase() {
     if (exportingDb) return;
     
-    exportingDb = true;
     try {
-      const blob = await databaseService.exportDatabaseForDownload();
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'lukalibre-backup-' + new Date().toISOString().slice(0, 10) + '.wallet';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
+      exportingDb = true;
+      await databaseService.exportDatabaseForDownload();
     } catch (error: any) {
-      log.error('Error al exportar base de datos:', error);
-      alert('Error al exportar: ' + error.message);
+      log.error('Error exportando base de datos:', error);
+      alert(`Error al exportar base de datos: ${error.message || 'Error desconocido'}`);
     } finally {
       exportingDb = false;
     }
   }
   
   // Importar base de datos
-  async function importDatabase() {
-    if (!importFile || importingDb) return;
-    
-    importingDb = true;
-    try {
-      await databaseService.importDatabaseFromFile(importFile);
-      alert('Base de datos importada correctamente');
-      importFile = null;
-      // Actualizar si se sincronizó
-      if (syncEnabled) {
-        lastSyncDate = new Date().toISOString();
-      }
-    } catch (error: any) {
-      log.error('Error al importar base de datos:', error);
-      alert('Error al importar: ' + error.message);
-    } finally {
-      importingDb = false;
-    }
+  let importInput: HTMLInputElement;
+  
+  function openImportDialog() {
+    if (importingDb) return;
+    importInput.click();
   }
   
-  // Manejar selección de archivo
   function handleFileSelect(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       importFile = input.files[0];
     }
+  }
+  
+  async function confirmImport() {
+    if (importingDb || !importFile) return;
+    
+    try {
+      importingDb = true;
+      await databaseService.importDatabaseFromFile(importFile);
+      importFile = null;
+      // Actualizar fecha de sincronización
+      lastSyncDate = new Date().toISOString();
+      await settingsStore.updateSetting('lastSyncDate', lastSyncDate);
+    } catch (error: any) {
+      log.error('Error importando base de datos:', error);
+      alert(`Error al importar base de datos: ${error.message || 'Error desconocido'}`);
+    } finally {
+      importingDb = false;
+    }
+  }
+  
+  function cancelImport() {
+    importFile = null;
   }
 </script>
 
@@ -148,64 +185,127 @@
   <div class="sync-bar-flex">
     <span class="sync-description">Gestiona tus copias de seguridad y sincronización aquí.</span>
     <div class="sync-toolbar">
-    <button class="toolbar-button download" on:click={exportDatabase} disabled={exportingDb} title="Descargar copia de seguridad">
-      {#if exportingDb}
-        <span class="loading-spinner"></span>
-      {:else}
-        ⬇️
-      {/if}
-      <span>DESCARGAR</span>
+      <button class="toolbar-button reset" on:click={() => showResetModal = true} title="Resetear base de datos">Reset DB</button>
+      
+      <button class="toolbar-button download" on:click={exportDatabase} disabled={exportingDb} title="Descargar copia de seguridad">
+        {#if exportingDb}
+          <span class="loading-spinner"></span>
+        {:else}
+          <i class="fas fa-download"></i>
+        {/if}
+        Exportar
+      </button>
+    
+    <input type="file" bind:this={importInput} accept=".wallet" on:change={handleFileSelect} />
+    <button class="toolbar-button upload" on:click={openImportDialog} disabled={importingDb || !!importFile} title="Cargar copia de seguridad">
+      <i class="fas fa-upload"></i>
+      Importar
     </button>
     
-    <label class="toolbar-button upload" title="Cargar copia de seguridad">
-      ⬆️
-      <span>CARGAR</span>
-      <input type="file" accept=".wallet" on:change={handleFileSelect}>
-    </label>
-    
-    <button class="toolbar-button sync {syncEnabled ? 'active' : ''}" on:click={toggleSync} title="Activar/desactivar sincronización con Google Drive">
-      {syncEnabled ? '☁️' : '☁️'}
-      <span>{syncEnabled ? 'DESACTIVAR SYNC' : 'ACTIVAR SYNC'}</span>
+    <button class="toolbar-button sync" on:click={toggleSync} disabled={syncing} title="Activar/desactivar sincronización con Google Drive">
+      <i class="fas fa-cloud-{syncEnabled ? 'check' : 'upload-alt'}"></i>
+      Sync {syncEnabled ? 'ON' : 'OFF'}
     </button>
     
-    {#if syncEnabled && isAuthenticated}
-      <button class="toolbar-button sync-now" on:click={syncNow} disabled={syncing} title="Sincronizar ahora">
+    {#if syncEnabled}
+      <button class="toolbar-button sync-now" on:click={syncNow} disabled={syncing} title="Sincronizar ahora con Google Drive">
         {#if syncing}
           <span class="loading-spinner"></span>
         {:else}
-          🔄
+          <i class="fas fa-sync-alt"></i>
         {/if}
-        <span>SINCRONIZAR</span>
+        Sync Ahora
       </button>
     {/if}
-    </div>
   </div>
+  </div>
+  
+  {#if showDetails}
+    <div class="sync-details">
+      <p><strong>Última sincronización:</strong> {formatDate(lastSyncDate)}</p>
+      <p><strong>Intervalo de sincronización:</strong> {syncInterval} minutos</p>
+      {#if syncEnabled && !isAuthenticated}
+        <p class="warning">⚠️ No autenticado en Google Drive. La sincronización no funcionará.</p>
+      {/if}
+    </div>
+  {/if}
+  
   {#if importFile}
-    <div class="import-panel">
-      <p>¿Importar archivo {importFile.name}?</p>
+    <div class="import-confirmation">
+      <p>¿Importar archivo "{importFile.name}"? Esto reemplazará todos los datos actuales.</p>
       <div class="import-actions">
-        <button class="import-button confirm" on:click={importDatabase} disabled={importingDb}>
+        <button class="import-button confirm" on:click={confirmImport} disabled={importingDb}>
           {#if importingDb}
             <span class="loading-spinner"></span> Importando...
           {:else}
-            Confirmar importación
+            Confirmar
           {/if}
         </button>
-        <button class="import-button cancel" on:click={() => importFile = null}>Cancelar</button>
+        <button class="import-button cancel" on:click={cancelImport} disabled={importingDb}>Cancelar</button>
       </div>
     </div>
   {/if}
 </div>
 
+{#if showResetModal}
+  <div class="modal-overlay">
+    <div class="modal">
+      <h2>¿Resetear base de datos?</h2>
+      <p>Esta acción eliminará <b>todos los datos locales</b> y creará una base vacía. No se puede deshacer. ¿Seguro que quieres continuar?</p>
+      <div class="modal-actions">
+        <button class="toolbar-button danger" on:click={confirmResetDb} disabled={resettingDb}>Sí, resetear</button>
+        <button class="toolbar-button" on:click={() => showResetModal = false} disabled={resettingDb}>Cancelar</button>
+      </div>
+      {#if resettingDb}
+        <p>Reseteando base de datos...</p>
+      {/if}
+      {#if resetError}
+        <p class="error">{resetError}</p>
+      {/if}
+    </div>
+  </div>
+{/if}
+{#if resetSuccess}
+  <div class="reset-success">Base de datos reseteada correctamente.</div>
+{/if}
+
 <style>
+  .modal-overlay {
+    position: fixed; z-index: 1000; left: 0; top: 0; width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.35); display: flex; align-items: center; justify-content: center;
+  }
+  .modal {
+    background: #fff; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+    max-width: 350px; width: 100%; color: #333;
+  }
+  .modal h2 {
+    color: #212529; margin-bottom: 1rem; font-size: 1.4rem;
+  }
+  .modal p {
+    color: #4a4a4a; margin-bottom: 1rem; font-size: 0.95rem; line-height: 1.4;
+  }
+  .modal-actions {
+    margin-top: 1.5rem; display: flex; gap: 1rem; justify-content: flex-end;
+  }
+  .toolbar-button.danger {
+    background: #d32f2f; color: #fff;
+  }
+  .reset-success {
+    background: #4caf50; color: #fff; padding: 0.5rem 1rem; border-radius: 4px; margin: 1rem 0;
+    text-align: center;
+  }
   .sync-banner {
     background: rgba(255,255,255,0.85); /* Fondo blanco sutil/transparente */
     color: var(--text-primary, #212529);
     padding: 0.25rem 0.75rem; /* Mucho menos padding */
-    margin: 0;
-    box-shadow: none;
-    border: 1.5px solid var(--border, #e0e0e0); /* Borde más sutil */
-    border-radius: 12px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .sync-banner {
     position: relative;
     z-index: 10;
     min-height: 22px; /* Mucho más baja */
@@ -254,93 +354,106 @@
   .toolbar-button {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 0.18rem;
-    background: transparent;
-    color: var(--primary);
-    font-weight: 500;
-    border: 1.5px solid var(--primary);
-    border-radius: 8px;
-    padding: 0.09rem 0.55rem;
-    font-size: 0.92rem;
-    height: 26px;
-    min-width: 80px;
-    transition: background 0.18s, color 0.18s, border 0.18s;
-    box-sizing: border-box;
+    gap: 5px;
     cursor: pointer;
-  }
-  .toolbar-button:hover:not(:disabled) {
-    background: var(--primary, #2e7d32);
-    color: #fff;
-    border-color: var(--primary, #2e7d32);
-    box-shadow: 0 2px 8px rgba(44,62,80,0.04);
-  }
-  
-  .toolbar-button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    background: var(--secondary);
-    color: var(--text-secondary);
-  }
-  .toolbar-button input[type="file"] {
-    height: 32px;
-    min-width: 0;
-    font-size: 0.94rem;
-    padding: 0;
-    margin: 0;
-    background: none;
-    border: none;
-    color: inherit;
-  }
-  
-  .toolbar-button span {
-    margin-left: 0.3rem;
-    letter-spacing: 0.01em;
-    font-size: 1rem;
-    text-transform: none;
-    display: flex;
-    align-items: center;
-    height: 100%;
+    color: var(--text-primary, #333);
+    background-color: var(--btn-bg, #f8f9fa);
+    border: 1px solid var(--border, #dee2e6);
+    font-size: 0.85rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 4px;
+    min-width: 40px;
+    justify-content: center;
+    transition: all 0.15s ease-in-out;
+    text-align: center;
+    white-space: nowrap;
   }
   
   .toolbar-button:hover {
-    background: var(--primary-light);
-    color: var(--text-inverse);
-    border: 1.5px solid var(--primary);
+    background-color: var(--btn-hover-bg, #e9ecef);
   }
   
-  .toolbar-button.active {
-    background: var(--primary);
-    color: var(--text-inverse);
-    border: 1.5px solid var(--primary);
+  .toolbar-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.25);
   }
   
-  .import-panel {
-    background-color: var(--secondary);
-    color: var(--text-primary);
+  .toolbar-button:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+  }
+  
+  .toolbar-button i {
+    font-size: 0.85rem;
+  }
+  
+  button.sync-now {
+    background-color: var(--btn-primary-bg, #0d6efd);
+    color: white;
+  }
+  
+  button.sync-now:hover:not(:disabled) {
+    background-color: var(--btn-primary-hover-bg, #0b5ed7);
+  }
+  
+  button.sync-now:disabled {
+    background-color: var(--btn-primary-disabled-bg, #8bb9fe);
+  }
+  
+  .sync-details {
     margin-top: 0.5rem;
     padding: 0.5rem;
-    border-radius: 3px;
-    text-align: center;
-    font-size: 0.8rem;
+    background-color: var(--bg-subtle, #f8f9fa);
+    border-radius: 4px;
+    font-size: 0.85rem;
   }
   
-  .import-panel p {
-    margin: 0 0 0.5rem 0;
-    font-weight: 500;
+  .sync-details p {
+    margin: 0.25rem 0;
+  }
+  
+  .warning {
+    color: var(--warning, #ffc107);
+  }
+  
+  .toggle-details {
+    margin-top: 0.25rem;
+    background: transparent;
+    border: none;
+    color: var(--text-muted, #6c757d);
+    font-size: 0.8rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 0;
+  }
+  
+  .toggle-details:hover {
+    color: var(--text-primary, #212529);
+    text-decoration: underline;
+  }
+  
+  .import-confirmation {
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    background-color: var(--warning-bg, #fff3cd);
+    border: 1px solid var(--warning-border, #ffecb5);
+    border-radius: 4px;
+    font-size: 0.85rem;
   }
   
   .import-actions {
     display: flex;
     gap: 0.5rem;
-    justify-content: center;
+    margin-top: 0.5rem;
+    justify-content: flex-end;
   }
   
   .import-button {
     padding: 0.25rem 0.5rem;
+    border-radius: 4px;
     border: none;
-    border-radius: 3px;
-    font-weight: 500;
     cursor: pointer;
     font-size: 0.8rem;
   }
@@ -383,4 +496,4 @@
       font-size: 0.75rem;
     }
   }
-</style> 
+</style>

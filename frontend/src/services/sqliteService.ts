@@ -42,6 +42,7 @@ class SQLiteService {
       if (stored) {
         log.info('Base de datos encontrada en localStorage, cargando...');
         this.db = new this.SQL.Database(stored);
+        log.info('Base de datos cargada desde localStorage correctamente');
       }
       this.initialized = true;
       log.info('SQLite inicializado correctamente');
@@ -380,6 +381,28 @@ class SQLiteService {
     } catch (err) {
       log.error('Error cargando base de datos desde localStorage:', err);
       return null;
+    }
+  }
+  /**
+   * Verifica si el servicio ya está inicializado y tiene una base de datos activa
+   */
+  public isInitialized(): boolean {
+    return this.initialized && this.db !== null;
+  }
+
+  /**
+   * Resetea la base de datos: elimina en memoria y en localStorage, y crea una nueva vacía.
+   */
+  public async resetDatabase(): Promise<void> {
+    try {
+      log.warn('Reseteando base de datos: eliminando en memoria y localStorage');
+      this.db = null;
+      localStorage.removeItem('lukalibre_sqlite_db');
+      await this.createNewDatabase();
+      log.info('Base de datos reseteada correctamente.');
+    } catch (err) {
+      log.error('Error reseteando base de datos:', err);
+      throw err;
     }
   }
 }

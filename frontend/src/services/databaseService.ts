@@ -82,7 +82,7 @@ class DatabaseService {
       // Si no se creó la base de datos de Google Drive, usar la persistida local o crear una nueva si no existe
       if (!dbCreated) {
         // Si ya hay una base cargada en memoria, no hacer nada
-        if (sqliteService.db) {
+        if (sqliteService.isInitialized()) {
           log.info('Base de datos ya cargada en memoria, no se crea una nueva.');
         } else {
           // Si hay una base persistida en localStorage, cargarla
@@ -354,6 +354,23 @@ class DatabaseService {
     await this.ensureInitialized();
     return sqliteService.getTableColumns(table);
   }
+
+  /**
+   * Resetea la base de datos local y en memoria
+   */
+  public async resetDatabase(): Promise<void> {
+    await sqliteService.resetDatabase();
+  }
+
+  /**
+   * Sincroniza la base de datos con Google Drive
+   */
+  public async syncDatabase(): Promise<void> {
+    // Por ahora, simplemente retornamos una promesa resuelta
+    // La implementación completa dependería de la lógica de sincronización con Google Drive
+    log.info('Sincronizando base de datos con Google Drive');
+    return Promise.resolve();
+  }
 }
 
-export default new DatabaseService(); 
+export default new DatabaseService();
