@@ -85,5 +85,5 @@ export async function extractAndInsertData(file: File, schemaName: string, schem
     .trim();
   console.log('SQL limpio a ejecutar:', cleanSql);
   // Ejecutar los INSERTS en la base local
-  await databaseService.executeSql(cleanSql);
+  await databaseService.exec(cleanSql);
 }
