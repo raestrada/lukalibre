@@ -1,13 +1,13 @@
 """update identify_schema prompt for stricter schema name selection
 
-Revision ID: upgrade_identify_schema_prompt
+Revision ID: upgrade_ident_schema_prompt
 Revises: prompt_templates_seed
 Create Date: 2025-04-24
 """
 from alembic import op
 
 # revision identifiers, used by Alembic.
-revision = 'upgrade_identify_schema_prompt'
+revision = 'upgrade_ident_schema_prompt'
 down_revision = 'prompt_templates_seed'
 branch_labels = None
 depends_on = None
