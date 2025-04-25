@@ -3,22 +3,39 @@ version: '3'
 tasks:
   # Backend tasks
   install-backend:
-    desc: Install backend (Python) dependencies
+    desc: Install backend (Python/Poetry) dependencies
     dir: backend
     cmds:
-      - pip install -r requirements.txt
+      - poetry install
 
   run-backend:
-    desc: Run backend in development mode
+    desc: Run backend in development mode (with Poetry, DB via docker-compose)
     dir: backend
     cmds:
-      - uvicorn main:app --reload
+      - docker-compose up -d
+      - poetry run uvicorn main:app --reload
+    preconditions:
+      - sh: "docker ps --filter 'name=lukalibre-db' --filter 'status=running' --format '{{.Names}}' | grep lukalibre-db"
+        msg: "Database container 'lukalibre-db' is not running, starting with docker-compose up -d."
+    sources: [../docker-compose.yml]
+    silent: false
+    status:
+      - '[ $(docker ps --filter "name=lukalibre-db" --filter "status=running" --format "{{.Names}}") ]'
+    deps: []
+    env: {}
+    ignore_error: false
+    interactive: true
+    post:
+      - docker-compose stop
 
   test-backend:
-    desc: Run backend tests
+    desc: Run backend tests (with Poetry, DB via docker-compose)
     dir: backend
     cmds:
-      - pytest
+      - docker-compose up -d
+      - poetry run pytest
+    post:
+      - docker-compose stop
 
   # Frontend tasks
   install-frontend:
