@@ -53,7 +53,11 @@
       llmSuccess = `¡Documento procesado e insertado en la tabla '${detectedSchema}' exitosamente!`;
       llmFile = null;
     } catch (err) {
-      llmError = err.message || 'Error desconocido';
+      if (import.meta.env && import.meta.env.DEV) {
+        llmError = err.message || 'Error desconocido';
+      } else {
+        llmError = 'Ocurrió un error al procesar el archivo.';
+      }
     } finally {
       llmLoading = false;
     }
