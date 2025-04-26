@@ -12,6 +12,8 @@ class UserBase(BaseModel):
     full_name: Optional[str] = None
     google_id: Optional[str] = None
     google_avatar: Optional[str] = None
+    is_developer: Optional[bool] = False
+    dev_plan_active: Optional[bool] = False
 
 
 # Properties to receive via API on creation

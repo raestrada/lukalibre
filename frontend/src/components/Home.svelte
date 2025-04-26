@@ -1,6 +1,8 @@
 <script lang="ts">
   import { authStore } from '../stores/authStore';
-  import { link } from 'svelte-spa-router';
+
+  import Button from './common/Button.svelte';
+  import { push } from 'svelte-spa-router';
   // Eliminada la lógica de navegación y chequeo de autenticación automática.
   // Solo se mantiene el acceso a authStore para mostrar los botones correctos.
 </script>
@@ -13,11 +15,11 @@
       
       <div class="cta-buttons">
         {#if $authStore.isAuthenticated}
-          <a href="/dashboard" use:link class="btn-primary">Mi Dashboard</a>
-          <a href="/profile" use:link class="btn-secondary">Mi Perfil</a>
+          <Button variant="primary" fullWidth={false} style="margin-right:0.7rem;" on:click={() => push('/dashboard')}>Mi Dashboard</Button>
+          <Button variant="secondary" fullWidth={false} on:click={() => push('/profile')}>Mi Perfil</Button>
         {:else}
-          <a href="/login" use:link class="btn-primary">Iniciar Sesión</a>
-          <a href="/register" use:link class="btn-secondary">Registrarse</a>
+           <Button variant="primary" fullWidth={false} style="margin-right:0.7rem;" on:click={() => push('/login')}>Iniciar Sesión</Button>
+           <Button variant="secondary" fullWidth={false} on:click={() => push('/register')}>Registrarse</Button>
         {/if}
       </div>
     </div>
@@ -43,20 +45,6 @@
 <style lang="css">
 
   
-  .spinner {
-    border: 4px solid rgba(0, 0, 0, 0.1);
-    border-radius: 50%;
-    border-top: 4px solid var(--primary);
-    width: 40px;
-    height: 40px;
-    margin-bottom: var(--space-md);
-    animation: spin 1s linear infinite;
-  }
-  
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
 
   /* Mantener estilos existentes */
   .hero {
@@ -124,9 +112,6 @@
       align-items: center;
     }
     
-    .cta-buttons a {
-      width: 100%;
-      max-width: 250px;
-    }
+    /* Selector eliminado porque ya no se usa desde que cambiamos a Button */
   }
 </style> 

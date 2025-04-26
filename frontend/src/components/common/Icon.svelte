@@ -13,6 +13,8 @@
   export let color: string = "currentColor";
   // Clase CSS adicional
   export let className: string = "";
+  // Permitir estilos inline
+  export let style: string = "";
   
   // Mapeo de nombres a objetos de iconos
   const icons = {
@@ -30,7 +32,7 @@
   
   // Convertir el objeto de icono a HTML
   function getIconHtml(iconName: string): string {
-    const iconObject = icons[iconName];
+    const iconObject = icons[iconName as keyof typeof icons];
     
     if (!iconObject) {
       console.error(`Icono '${iconName}' no encontrado`);
@@ -50,7 +52,7 @@
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
-<span class="icon {className}" on:click style="display: inline-flex; align-items: center;" aria-hidden="true">
+<span class="icon {className}" on:click style="display: inline-flex; align-items: center; {style}" aria-hidden="true">
   {@html iconHtml}
 </span>
 

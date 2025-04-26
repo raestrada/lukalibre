@@ -3,10 +3,11 @@
   import { authStore } from '../../stores/authStore';
   import type { User } from '../../services/authService';
   import databaseService from '../../services/databaseService';
-  import googleDriveService from '../../services/googleDriveService';
+  import Button from '../common/Button.svelte';
   import { createLogger } from '../../utils/logger';
   import SyncSettings from '../SyncSettings.svelte';
   import StatusMessage from '../common/StatusMessage.svelte';
+  import LlmBar from './LlmBar.svelte';
 
   const log = createLogger('Dashboard');
   
@@ -144,6 +145,7 @@
 </script>
 
 <div class="dashboard">
+  <LlmBar />
   <div class="sync-bar"><SyncSettings /></div>
 
   {#if loading}
@@ -161,10 +163,10 @@
     <div class="llm-bar">
       <form class="llm-bar-flex" on:submit={handleLLMProxySubmit}>
         <span class="llm-bar-label">Subir documento o imagen para procesar con IA:</span>
-        <input class="llm-bar-file" type="file" accept="image/*,.pdf" on:change={e => llmFile = e.target?.files?.[0]} />
-        <button class="llm-bar-btn" type="submit" disabled={llmLoading}>
-          {llmLoading ? 'Procesando...' : 'Enviar'}
-        </button>
+        <input class="llm-bar-file" type="file" accept="image/*,.pdf" on:change={e => llmFile = (e.target as HTMLInputElement)?.files?.[0] ?? null} />
+        <Button type="submit" variant="primary" size="md" disabled={llmLoading} loading={llmLoading} fullWidth={false}>
+  {llmLoading ? 'Procesando...' : 'Enviar'}
+</Button>
       </form>
       
       {#if llmLoading}
@@ -316,125 +318,8 @@
     font-size: 1rem;
     margin-right: 0.5rem;
   }
-  .llm-bar-btn {
-    background: #3a6351;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 0.5rem 1.2rem;
-    font-weight: 700;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background 0.2s;
-    margin-right: 0.5rem;
-  }
-  .llm-bar-btn:disabled {
-    background: #b2bec3;
-    cursor: not-allowed;
-  }
-  .llm-bar-btn:not(:disabled):hover {
-    background: #26543c;
-  }
-  .llm-bar-alert {
-    margin-left: 0.5rem;
-    padding: 0.35rem 0.8rem;
-    border-radius: 6px;
-    font-size: 0.98rem;
-    font-weight: 500;
-    min-width: 120px;
-    text-align: center;
-    display: inline-block;
-  }
-  .llm-bar-alert.error {
-    background: #ffeded;
-    color: #d63031;
-    border: 1px solid #fab1a0;
-  }
-  .llm-bar-alert.success {
-    background: #eafaf1;
-    color: #218c5a;
-    border: 1px solid #55efc4;
-  }
-
-  .llm-upload-bg {
-    min-height: 60vh;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    background: #f5f6fa;
-    padding-top: 3rem;
-  }
-  .llm-upload-card {
-    background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 4px 24px rgba(44, 62, 80, 0.08);
-    padding: 2.5rem 2rem 2rem 2rem;
-    max-width: 400px;
-    width: 100%;
-    text-align: center;
-    margin: 0 auto;
-  }
-  .llm-upload-card h2 {
-    color: #222f3e;
-    margin-bottom: 1.5rem;
-    font-size: 1.5rem;
-    font-weight: 700;
-  }
-  .llm-label {
-    display: block;
-    color: #576574;
-    font-weight: 500;
-    margin-bottom: 1.5rem;
-    text-align: left;
-  }
-  .llm-file {
-    margin-top: 0.5rem;
-    width: 100%;
-    padding: 0.5rem;
-    border-radius: 8px;
-    border: 1px solid #dfe4ea;
-    background: #f1f2f6;
-    font-size: 1rem;
-  }
-  .llm-btn {
-    width: 100%;
-    padding: 0.75rem 0;
-    border: none;
-    border-radius: 8px;
-    background: #3a6351;
-    color: #fff;
-    font-size: 1.1rem;
-    font-weight: 700;
-    cursor: pointer;
-    margin-top: 0.5rem;
-    transition: background 0.2s;
-  }
-  .llm-btn:disabled {
-    background: #b2bec3;
-    cursor: not-allowed;
-  }
-  .llm-btn:not(:disabled):hover {
-    background: #26543c;
-  }
-  .llm-alert {
-    margin-top: 1.2rem;
-    padding: 1rem;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 500;
-    text-align: center;
-  }
-  .llm-alert.error {
-    background: #ffeded;
-    color: #d63031;
-    border: 1px solid #fab1a0;
-  }
-  .llm-alert.success {
-    background: #eafaf1;
-    color: #218c5a;
-    border: 1px solid #55efc4;
-  }
-
+  
+  
   .dashboard {
     max-width: 1200px;
     margin: 0 auto;
@@ -465,24 +350,9 @@
     100% { transform: rotate(360deg); }
   }
   
-  .welcome {
-  background-color: var(--primary);
-  color: var(--text-inverse);
-
-    background-color: var(--primary, #3A6351);
-    color: #fff;
-    padding: var(--space-lg);
-    border-radius: var(--radius-lg);
-    margin-top: var(--space-lg);
-    margin-bottom: var(--space-lg);
-    border-left: 6px solid var(--success, #3A6351);
-    box-shadow: 0 2px 8px var(--shadow);
-  }
-  .welcome h2, .welcome p {
-    color: #fff;
-  }
   
-  .dashboard-empty {
+
+.dashboard-empty {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -492,24 +362,14 @@
     box-shadow: 0 2px 8px var(--shadow);
   }
   .empty-message {
-    text-align: center;
-    max-width: 500px;
-    color: #fff;
-  }
-  .empty-message p {
-    margin-bottom: 1rem;
-    color: #fff;
-  }
-  
-  .empty-message {
-    text-align: center;
-    max-width: 500px;
-    color: #666;
-  }
-  
-  .empty-message p {
-    margin-bottom: 1rem;
-  }
+  text-align: center;
+  max-width: 500px;
+  color: #666;
+}
+
+.empty-message p {
+  margin-bottom: 1rem;
+}
   
   .error {
     color: #d63031;
@@ -532,4 +392,4 @@
   button:hover {
     background-color: #eaeaea;
   }
-</style> 
+</style>

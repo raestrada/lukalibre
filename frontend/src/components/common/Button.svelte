@@ -13,6 +13,7 @@
   export let id = '';
   export let ariaLabel = '';
   export let dataCy = '';
+  export let style: string = "";
   
   // Computed props
   $: classes = [
@@ -31,6 +32,7 @@
   disabled={disabled || loading}
   aria-label={ariaLabel}
   data-cy={dataCy}
+  style={style}
   on:click
   on:focus
   on:blur
@@ -81,6 +83,7 @@
   
   .btn-primary:hover {
     background-color: var(--primary-hover);
+    color: var(--primary-fg);
   }
   
   .btn-secondary {
@@ -89,7 +92,8 @@
   }
   
   .btn-secondary:hover {
-    background-color: var(--secondary-hover);
+    background-color: #e1e4e8;
+    color: #212529;
   }
   
   .btn-outline {
@@ -118,6 +122,7 @@
   
   .btn-danger:hover {
     background-color: var(--danger-hover);
+    color: var(--danger-fg);
   }
   
   .btn-sm {

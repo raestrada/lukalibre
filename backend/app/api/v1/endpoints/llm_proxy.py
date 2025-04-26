@@ -63,11 +63,36 @@ async def llm_proxy(
     current_user: User = Depends(deps.get_current_user),
     db: Session = Depends(get_db)
 ):
+    # --- Chequeo de plan y créditos ---
+    # Primero, verificar si el usuario es desarrollador con plan activo
+    if getattr(current_user, "is_developer", False) and getattr(current_user, "dev_plan_active", False):
+        # Los desarrolladores tienen acceso ilimitado al proxy LLM
+        pass
+    else:
+        # Para usuarios normales, verificar plan y créditos en la tabla user_plans
+        from app.crud import crud_user_plan
+        plan = crud_user_plan.get_active_plan(db, current_user.id)
+        if not plan or not plan.is_active:
+            raise HTTPException(status_code=403, detail="No tienes un plan activo para usar el proxy LLM.")
+        if plan.credits <= 0:
+            raise HTTPException(status_code=402, detail="No tienes créditos suficientes para usar el proxy LLM.")
+
     # --- Rate limiting ---
-    key, limit = crud_llm_limits.check_llm_limits(db, current_user.id)
-    if key is not None:
-        raise HTTPException(status_code=429, detail=f"Límite de uso excedido ({key}: {limit})")
+    # Verificar si el usuario es desarrollador
+    is_developer = getattr(current_user, "is_developer", False) and getattr(current_user, "dev_plan_active", False)
+    
+    # Solo aplicar rate limiting a usuarios no desarrolladores
+    if not is_developer:
+        key, limit = crud_llm_limits.check_llm_limits(db, current_user.id)
+        if key is not None:
+            raise HTTPException(status_code=429, detail=f"Límite de uso excedido ({key}: {limit})")
+    
+    # Siempre registrar el uso para propósitos de auditoría
     crud_llm_limits.log_llm_request(db, current_user.id)
+    
+    # Solo consumir créditos para usuarios normales
+    if not is_developer:
+        crud_user_plan.consume_credit(db, current_user.id)
 
     if not OPENAI_API_KEY:
         raise HTTPException(status_code=500, detail="OPENAI_API_KEY not set in environment")

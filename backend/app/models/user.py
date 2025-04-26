@@ -14,6 +14,10 @@ class User(Base):
     hashed_password = Column(String, nullable=False)
     is_active = Column(Boolean(), default=True)
     is_superuser = Column(Boolean(), default=False)
+
+    # Developer fields
+    is_developer = Column(Boolean(), default=False, nullable=False)
+    dev_plan_active = Column(Boolean(), default=False, nullable=False)
     
     # OAuth fields
     google_id = Column(String, unique=True, nullable=True, index=True)

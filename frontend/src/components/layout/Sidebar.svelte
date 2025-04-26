@@ -5,8 +5,8 @@
   import type { User } from '../../services/authService';
 
   // Acciones
-  export let onLogout = () => {};
-  export let onSettings = () => {};
+  export const onLogout = () => {};
+  export const onSettings = () => {};
 
   $: user = $authStore.user;
   let defaultProfilePic = '/icons/user.svg';
@@ -45,58 +45,7 @@
     top: 0;
     z-index: 90;
   }
-  .sidebar-header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: var(--space-lg) var(--space-md) var(--space-md) var(--space-md);
-    border-bottom: 1px solid var(--primary-light);
-    background: var(--primary);
-  }
-  .sidebar-avatar {
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    object-fit: cover;
-    background: var(--primary-light);
-    color: var(--text-inverse);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.6rem;
-    font-weight: 600;
-    margin-bottom: var(--space-sm);
-    border: 2px solid var(--primary-light);
-  }
-  .sidebar-avatar-initials {
-    background: var(--primary-light);
-    color: var(--text-inverse);
-    border: 2px solid var(--primary-light);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 56px;
-    height: 56px;
-    font-size: 1.6rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    margin-bottom: var(--space-sm);
-  }
-  .sidebar-user {
-    text-align: center;
-  }
-  .sidebar-name {
-    font-weight: 600;
-    font-size: 1.05rem;
-    color: var(--text-inverse);
-    display: block;
-  }
-  .sidebar-email {
-    font-size: 0.95rem;
-    color: rgba(255,255,255,0.7);
-    display: block;
-    word-break: break-all;
-  }
+  
   .sidebar-menu {
     display: flex;
     flex-direction: column;
@@ -123,13 +72,7 @@
     background: var(--primary-light);
     color: var(--text-inverse);
   }
-  .sidebar-link-logout {
-    color: var(--error);
-  }
-  .sidebar-link-logout:hover, .sidebar-link-logout:focus {
-    background: rgba(220, 53, 69, 0.15);
-    color: var(--error);
-  }
+  
   .icon {
     width: 22px;
     height: 22px;

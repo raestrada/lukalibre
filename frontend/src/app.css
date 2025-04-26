@@ -14,6 +14,7 @@
 
   /* Colores */
   --primary: #3A6351;
+  --primary-hover: #274030;
   --secondary: #6c757d;
   --success: #3A6351;
   --error: #dc3545;
@@ -24,6 +25,9 @@
   /* Textos */
   --text-primary: #212529;
   --text-secondary: #6c757d;
+  --primary-fg: #fff;
+  --secondary-fg: #fff;
+  --danger-fg: #fff;
   
   /* Elementos */
   --border: #dee2e6;
@@ -138,44 +142,7 @@ button:focus-visible {
   box-sizing: border-box;
 }
 
-.btn-primary {
-  display: inline-block;
-  background-color: var(--primary);
-  color: white;
-  padding: var(--space-sm) var(--space-md);
-  border-radius: var(--radius-sm);
-  text-decoration: none;
-  font-weight: 500;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.2s, transform 0.1s;
-}
 
-.btn-primary:hover {
-  background-color: #2a4c3c;
-  transform: translateY(-1px);
-}
-
-.btn-primary:active {
-  transform: translateY(0);
-}
-
-.btn-primary:disabled {
-  background-color: #8aad9b;
-  cursor: not-allowed;
-  transform: none;
-}
-
-.btn-secondary {
-  display: inline-block;
-  background-color: #f5f8f5;
-  color: var(--primary);
-  padding: var(--space-sm) var(--space-md);
-  border-radius: var(--radius-sm);
-  text-decoration: none;
-  font-weight: 500;
-  border: 1px solid var(--primary);
-  cursor: pointer;
   transition: background-color 0.2s, transform 0.1s;
 }
 

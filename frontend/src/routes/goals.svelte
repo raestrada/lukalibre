@@ -73,29 +73,29 @@
       <h2>Crear nueva meta financiera</h2>
       <form class="goal-form" on:submit|preventDefault={crearMeta}>
     <div class="form-row">
-      <label>Nombre<span class="required"></span></label>
-      <input bind:value={nombre} required placeholder="Ej: Fondo de emergencia" />
+      <label for="nombre">Nombre<span class="required"></span></label>
+      <input id="nombre" bind:value={nombre} required placeholder="Ej: Fondo de emergencia" />
     </div>
     <div class="form-row">
-      <label>Descripción</label>
-      <input bind:value={descripcion} placeholder="Descripción breve" />
+      <label for="descripcion">Descripción</label>
+      <input id="descripcion" bind:value={descripcion} placeholder="Descripción breve" />
     </div>
     <div class="form-row">
-      <label>Monto objetivo<span class="required"></span> ($)</label>
-      <input type="number" min="1" bind:value={objetivo_monto} required placeholder="Ej: 1000000" />
+      <label for="objetivo_monto">Monto objetivo<span class="required"></span> ($)</label>
+      <input id="objetivo_monto" type="number" min="1" bind:value={objetivo_monto} required placeholder="Ej: 1000000" />
     </div>
     <div class="form-row">
-      <label>Fecha objetivo<span class="required"></span></label>
-      <input type="date" bind:value={fecha_objetivo} required />
+      <label for="fecha_objetivo">Fecha objetivo<span class="required"></span></label>
+      <input id="fecha_objetivo" type="date" bind:value={fecha_objetivo} required />
     </div>
     <div class="form-row">
-      <label>Prioridad</label>
-      <input type="range" min="1" max="5" bind:value={prioridad} />
+      <label for="prioridad">Prioridad</label>
+      <input id="prioridad" type="range" min="1" max="5" bind:value={prioridad} />
       <span class="prioridad-label">{prioridad}</span>
     </div>
     <div class="form-row">
-      <label>Tipo</label>
-      <select bind:value={tipo}>
+      <label for="tipo">Tipo</label>
+      <select id="tipo" bind:value={tipo}>
         <option value="general">General</option>
         <option value="emergencia">Emergencia</option>
         <option value="vacaciones">Vacaciones</option>
@@ -214,7 +214,7 @@
   letter-spacing: 0.01em;
   display: inline-block;
 }
-.goal-form label .required, .goal-form label[for][data-required]::after {
+.goal-form label .required {
   content: '*';
   color: #c43b3b;
   margin-left: 2px;
@@ -261,11 +261,6 @@ input[type="range"] {
 .btn-primary:disabled {
   opacity: 0.6;
   cursor: not-allowed;
-}
-hr {
-  margin: 2.2rem 0 1.2rem 0;
-  border: none;
-  border-top: 1.5px solid #e6ece7;
 }
 .goals-list {
   list-style: none;

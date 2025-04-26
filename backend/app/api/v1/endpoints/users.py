@@ -60,4 +60,55 @@ def read_user_me(
     Get current user.
     """
     logger.debug("Usuario accediendo a sus propios datos")
-    return current_user 
+    return current_user
+
+
+@router.get("/plan")
+def get_user_plan(
+    db: Session = Depends(deps.get_db),
+    current_user: models.User = Depends(deps.get_current_user)
+):
+    """
+    Devuelve el plan activo y créditos del usuario autenticado.
+    Si es desarrollador y tiene el plan activo, devuelve plan especial ilimitado.
+    """
+    if getattr(current_user, "is_developer", False) and getattr(current_user, "dev_plan_active", False):
+        return {
+            "id": None,
+            "user_id": current_user.id,
+            "plan_name": "Desarrollador LukaLibre",
+            "is_active": True,
+            "credits": None,  # ilimitados
+            "created_at": None,
+            "updated_at": None,
+            "developer": True,
+            "is_developer": True,
+            "dev_plan_active": True
+        }
+    from app.crud import crud_user_plan
+    plan = crud_user_plan.get_active_plan(db, current_user.id)
+    if not plan:
+        return {
+            "id": None,
+            "user_id": current_user.id,
+            "plan_name": None,
+            "is_active": False,
+            "credits": 0,
+            "created_at": None,
+            "updated_at": None,
+            "developer": getattr(current_user, "is_developer", False),
+            "is_developer": getattr(current_user, "is_developer", False),
+            "dev_plan_active": getattr(current_user, "dev_plan_active", False)
+        }
+    return {
+        "id": plan.id,
+        "user_id": plan.user_id,
+        "plan_name": plan.plan_name,
+        "is_active": plan.is_active,
+        "credits": plan.credits,
+        "created_at": plan.created_at,
+        "updated_at": plan.updated_at,
+        "developer": getattr(current_user, "is_developer", False),
+        "is_developer": getattr(current_user, "is_developer", False),
+        "dev_plan_active": getattr(current_user, "dev_plan_active", False)
+    }
