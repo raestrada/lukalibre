@@ -5,26 +5,27 @@
   import Card from '../common/Card.svelte';
   import Icon from '../common/Icon.svelte';
   import Tabs from '../common/Tabs.svelte';
+  import FinancialReport from './FinancialReport.svelte';
   import { generateDashboardReport } from '../../services/dashboardService';
   import { onMount } from 'svelte';
-  
+
   const log = createLogger('DashboardReport');
-  
+
   // Estado del reporte
   let loading = false;
   let error: string | null = null;
   let success: string | null = null;
-  let reportHTML: string | null = null;
+  let reportData: any = null;
   let lastReportDate: string | null = null;
 
   // Tabs disponibles
   type Tab = 'reporte' | 'balance' | 'recomendaciones' | 'alertas' | 'chat';
   let activeTab: Tab = 'reporte';
-  
+
   // Info para localStorage
-  const LS_REPORT_KEY = 'dashboard_last_report_html';
+  const LS_REPORT_KEY = 'dashboard_last_report_data';
   const LS_REPORT_DATE_KEY = 'dashboard_last_report_date';
-  
+
   // Configuración de las tabs
   const tabs: Array<{id: Tab, label: string, name: string}> = [
     { id: 'reporte', label: 'Reporte', name: 'assessment' },
@@ -33,7 +34,7 @@
     { id: 'alertas', label: 'Alertas', name: 'notifications' },
     { id: 'chat', label: 'Chat', name: 'chat' }
   ];
-  
+
   // Cambiar de tab
   function setActiveTab(tabId: string) {
     activeTab = tabId as Tab;
@@ -43,34 +44,38 @@
     const cached = localStorage.getItem(LS_REPORT_KEY);
     const cachedDate = localStorage.getItem(LS_REPORT_DATE_KEY);
     if (cached) {
-      reportHTML = cached;
-      lastReportDate = cachedDate;
+      try {
+        reportData = JSON.parse(cached);
+        lastReportDate = cachedDate;
+      } catch (err) {
+        log.error('Error al parsear datos almacenados:', err);
+        // Si hay error de parseo, limpiamos el localStorage
+        localStorage.removeItem(LS_REPORT_KEY);
+        localStorage.removeItem(LS_REPORT_DATE_KEY);
+      }
     }
   });
-  
+
   async function handleGenerateReport() {
     loading = true;
     error = null;
     success = null;
-    reportHTML = null;
-    
     try {
-      reportHTML = await generateDashboardReport();
-      const now = new Date();
-      lastReportDate = now.toISOString();
-      localStorage.setItem(LS_REPORT_KEY, reportHTML);
-      localStorage.setItem(LS_REPORT_DATE_KEY, lastReportDate);
-      success = 'Reporte generado correctamente';
-    } catch (err: any) {
-      error = `Error al generar el reporte: ${err.message}`;
-      log.error('Error generando reporte:', err);
+      reportData = await generateDashboardReport();
+      lastReportDate = new Date().toLocaleString();
+      localStorage.setItem(LS_REPORT_KEY, JSON.stringify(reportData));
+      localStorage.setItem(LS_REPORT_DATE_KEY, lastReportDate || '');
+      success = 'Reporte generado exitosamente';
+    } catch (err) {
+      log.error('Error al generar reporte:', err);
+      error = `Error al generar reporte: ${err}`;
     } finally {
       loading = false;
     }
   }
-  
+
   function clearReport() {
-    reportHTML = null;
+    reportData = null;
     lastReportDate = null;
     localStorage.removeItem(LS_REPORT_KEY);
     localStorage.removeItem(LS_REPORT_DATE_KEY);
@@ -124,7 +129,7 @@
             >
               {loading ? 'Generando...' : 'Generar Reporte'}
             </Button>
-            {#if reportHTML}
+            {#if reportData}
               <Button
                 on:click={clearReport}
                 icon="clear"
@@ -180,7 +185,7 @@
   </Card>
   
   <!-- Contenido del reporte (solo visible cuando hay un reporte generado y estamos en la tab de reporte) -->
-  {#if reportHTML && activeTab === 'reporte'}
+  {#if reportData && activeTab === 'reporte'}
     <div class="report-container">
       <Card>
         <div class="card-title">
@@ -188,9 +193,8 @@
           <span>Reporte Financiero</span>
         </div>
         <div class="card-content">
-          <!-- svelte-ignore a11y-inner-html -->
           <div class="report-content">
-            {@html reportHTML}
+            <FinancialReport reportData={reportData} />
           </div>
         </div>
       </Card>

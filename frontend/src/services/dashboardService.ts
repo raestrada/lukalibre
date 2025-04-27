@@ -52,9 +52,9 @@ export async function exportDatabaseToJson(): Promise<any> {
 }
 
 /**
- * Genera un reporte HTML usando el LLM y los datos de la base de datos
+ * Genera datos para el reporte financiero usando el LLM y los datos de la base de datos
  */
-export async function generateDashboardReport(): Promise<string> {
+export async function generateDashboardReport(): Promise<any> {
   try {
     log.info('Generando reporte de dashboard');
     
@@ -69,25 +69,29 @@ export async function generateDashboardReport(): Promise<string> {
     }
     
     // Manejar la estructura { default: { ... } } si es necesario
-    const templateKey = 'dashboard_html_report_cl';
+    // Usar el template HTML existente temporalmente
+    const templateKey = 'dashboard_html_report_cl'; // Usar el template existente que ya funciona
     let templateContent: string;
     
     if ('default' in templates && typeof templates.default === 'object') {
       // Si viene en formato { default: { key1: value1, key2: value2 } }
       const defaultTemplates = templates.default as Record<string, string>;
       templateContent = defaultTemplates[templateKey];
-      // Añadir instrucción para respuesta en HTML crudo
-      templateContent = templateContent.trim() + '\n\nDevuelve únicamente el HTML crudo, sin etiquetas de bloque de código ni explicaciones, para poder pintarlo directamente en el navegador.';
     } else {
       // Si viene en formato { key1: value1, key2: value2 }
       templateContent = (templates as Record<string, string>)[templateKey];
-      // Añadir instrucción para respuesta en HTML crudo
-      templateContent = templateContent.trim() + '\n\nDevuelve únicamente el HTML crudo, sin etiquetas de bloque de código ni explicaciones, para poder pintarlo directamente en el navegador.';
     }
     
     if (!templateContent) {
       throw new Error('No se encontró el template para el reporte de dashboard');
     }
+    
+    // Añadir instrucción para respuesta en JSON crudo en lugar de HTML
+    templateContent = templateContent.trim();
+    // Reemplazar cualquier instrucción de devolver HTML
+    templateContent = templateContent.replace(/Devuelve.*HTML.*crudo.*navegador\./g, '');
+    // Añadir la instrucción para JSON
+    templateContent += '\n\nDevuelve ÚNICAMENTE el objeto JSON, sin anotaciones ```json ni explicaciones. El JSON debe ser válido y parseable directamente.';
     
     // 3. Reemplazar el marcador {{user_json}} con los datos reales
     const userJson = JSON.stringify(dbData, null, 2);
@@ -99,20 +103,27 @@ export async function generateDashboardReport(): Promise<string> {
     formData.append('prompt', prompt);
     formData.append('step', 'dashboard_report');
     
-    // 5. Llamar al LLM para generar el HTML
-    // Llama a la función vía LLMProxyJs, ya que callLLMService no está exportada
+    // 5. Llamar al LLM para generar los datos JSON del reporte
     const apiKey = localStorage.getItem('openai_api_key') || '';
     const LLMProxyJs = (await import('./llmProxyJs')).default;
     const localProxy = new LLMProxyJs(apiKey);
     const response = await localProxy.proxyWithFile(formData);
     
-    // 6. Devolver el HTML generado
+    // 6. Parsear el JSON de respuesta
     if (!response.llm_output) {
       throw new Error('No se recibió respuesta del LLM');
     }
     
-    log.info('Reporte de dashboard generado correctamente');
-    return response.llm_output;
+    try {
+      // Intentar parsear la respuesta como JSON
+      const reportData = JSON.parse(response.llm_output.trim());
+      log.info('Reporte de dashboard generado correctamente');
+      return reportData;
+    } catch (jsonError) {
+      log.error('Error al parsear la respuesta JSON del LLM:', jsonError);
+      log.error('Respuesta recibida:', response.llm_output);
+      throw new Error('El formato de respuesta del LLM no es un JSON válido');
+    }
   } catch (error) {
     log.error('Error generando reporte de dashboard:', error);
     throw new Error(`Error generando reporte: ${error}`);

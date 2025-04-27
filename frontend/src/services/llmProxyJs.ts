@@ -320,7 +320,7 @@ export class LLMProxyJs {
         console.log('Usando mensaje de sistema para generate_sql_json');
       } else if (step === 'identify_schema') {
         messages = [
-          { role: 'system', content: 'Identifica el esquema correspondiente.' },
+          { role: 'system', content: 'Identifica el esquema correspondiente de la base de datos, analizando el documento proporcionado.' },
           { role: 'user', content: messageContent }
         ];
         console.log('Usando mensaje de sistema para identify_schema');

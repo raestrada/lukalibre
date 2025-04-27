@@ -6,6 +6,7 @@
   export let fullWidth: boolean = false;
   export let interactive: boolean = false;
   export let hoverable: boolean = false;
+  export let className: string = '';
   
   // Classes
   $: classes = [
@@ -16,13 +17,27 @@
     interactive ? 'card-interactive' : '',
     hoverable ? 'card-hoverable' : '',
     `padding-${padding}`,
-    `radius-${radius}`
+    `radius-${radius}`,
+    className // Incluir clases personalizadas
   ].filter(Boolean).join(' ');
 </script>
 
-<div class={classes} on:click>
-  <slot></slot>
-</div>
+<!-- Si el componente es interactivo, usamos un button para accesibilidad -->
+{#if interactive}
+  <button 
+    type="button"
+    class={classes} 
+    on:click
+    on:keydown
+  >
+    <slot></slot>
+  </button>
+{:else}
+  <!-- Si no es interactivo, usamos un div regular -->
+  <div class={classes}>
+    <slot></slot>
+  </div>
+{/if}
 
 <style>
   .card {
