@@ -51,6 +51,8 @@ export async function exportDatabaseToJson(): Promise<any> {
   }
 }
 
+// Eliminada la verificación del frontend para dar prioridad a la inteligencia del LLM
+
 /**
  * Genera datos para el reporte financiero usando el LLM y los datos de la base de datos
  */
@@ -90,8 +92,9 @@ export async function generateDashboardReport(): Promise<any> {
     templateContent = templateContent.trim();
     // Reemplazar cualquier instrucción de devolver HTML
     templateContent = templateContent.replace(/Devuelve.*HTML.*crudo.*navegador\./g, '');
-    // Añadir la instrucción para JSON
-    templateContent += '\n\nDevuelve ÚNICAMENTE el objeto JSON, sin anotaciones ```json ni explicaciones. El JSON debe ser válido y parseable directamente.';
+    
+    // Añadir instrucción clara y específica para el LLM
+    templateContent += '\n\nIMPORTANTE SOBRE LOS DATOS:\n1. USA TU INTELIGENCIA para analizar si hay suficientes datos financieros para generar un reporte.\n2. Si NO HAY SUFICIENTES DATOS (transacciones vacías, sin información financiera relevante), devuelve exactamente este JSON:\n\n{\n  "resumen": {\n    "informacionAdicional": "No hay suficientes datos financieros para generar un reporte. Por favor, sube algún archivo de transacciones o agrega datos manualmente."\n  },\n  "metas": { "items": [] },\n  "alertas": { \n    "items": [\n      {\n        "tipo": "info",\n        "titulo": "Base de datos vacía",\n        "mensaje": "No se encontraron transacciones o cuentas significativas. Sube algún archivo de extracto bancario para comenzar."\n      }\n    ] \n  },\n  "categorias": { "gastosPrincipales": [], "gastosDeducibles": [] },\n  "consejos": { "items": [] }\n}\n\n3. Si HAY SUFICIENTES DATOS, devuelve el JSON completo con el análisis financiero según la estructura solicitada.\n4. RESPUESTA EN JSON PURO: Devuelve ÚNICAMENTE el objeto JSON, sin explicaciones, anotaciones ```json o comentarios adicionales.';
     
     // 3. Reemplazar el marcador {{user_json}} con los datos reales
     const userJson = JSON.stringify(dbData, null, 2);

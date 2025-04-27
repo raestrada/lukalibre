@@ -62,9 +62,11 @@
     success = null;
     try {
       reportData = await generateDashboardReport();
-      lastReportDate = new Date().toLocaleString();
+      // Guardar la fecha en ISO string para asegurar compatibilidad
+      const now = new Date();
+      lastReportDate = now.toISOString();
       localStorage.setItem(LS_REPORT_KEY, JSON.stringify(reportData));
-      localStorage.setItem(LS_REPORT_DATE_KEY, lastReportDate || '');
+      localStorage.setItem(LS_REPORT_DATE_KEY, lastReportDate);
       success = 'Reporte generado exitosamente';
     } catch (err) {
       log.error('Error al generar reporte:', err);
@@ -92,7 +94,7 @@
       {#if lastReportDate && activeTab === 'reporte'}
         <span class="last-report-badge">
           <span class="material-icons" style="font-size:1em;vertical-align:middle;">event</span>
-          Último reporte: {new Date(lastReportDate).toLocaleString('es-CL')}
+          Último reporte: {new Date(lastReportDate).toLocaleString('es-CL', {dateStyle: 'medium', timeStyle: 'short'})}
         </span>
       {/if}
     </div>
