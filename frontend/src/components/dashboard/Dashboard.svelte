@@ -177,8 +177,6 @@
           <div class="progress-percentage">{progressPercentage}%</div>
         </div>
       {/if}
-    </div>
-    <DashboardReport />
     {#if llmSuccess}
       <StatusMessage
         type="success"
@@ -186,7 +184,6 @@
         onClose={() => llmSuccess = null}
       />
     {/if}
-    
     {#if llmError}
       <StatusMessage
         type="error"
@@ -194,6 +191,8 @@
         onClose={() => llmError = null}
       />
     {/if}
+    </div>
+    <DashboardReport />
     {#if !dbInitialized}
       <div class="dashboard-empty">
         <div class="empty-message">
