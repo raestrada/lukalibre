@@ -1,8 +1,11 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { writable } from 'svelte/store';
+  import Tabs from '../common/Tabs.svelte';
+  import Card from '../common/Card.svelte';
+  import Icon from '../common/Icon.svelte';
+  import StatusMessage from '../common/StatusMessage.svelte';
 
-  // Asumimos que tienes un servicio para acceder a SQLite en el browser
+  // Importar el servicio de base de datos
   import databaseService from '../../services/databaseService';
 
   // Estado para tablas y datos
@@ -12,6 +15,58 @@
   let activeTab: string = '';
   let loading = true;
   let error = '';
+  let searchTerm = '';
+  
+  // Formatear las tablas para el componente Tabs
+  $: formattedTabs = tables.map(table => ({
+    id: table,
+    label: table.charAt(0).toUpperCase() + table.slice(1),
+    name: getIconForTable(table) // Asignar un icono según el tipo de tabla
+  }));
+  
+  // Filtrar datos de la tabla según el término de búsqueda
+  $: filteredData = activeTab && tableData[activeTab] 
+    ? tableData[activeTab].filter(row => {
+        if (!searchTerm) return true;
+        return Object.values(row).some(value => 
+          String(value).toLowerCase().includes(searchTerm.toLowerCase())
+        );
+      })
+    : [];
+
+  // Función para determinar iconos según el tipo de tabla
+  function getIconForTable(tableName: string): string {
+    const tableIconMap: Record<string, string> = {
+      'transactions': 'dollar-sign',
+      'accounts': 'credit-card',
+      'categories': 'tag',
+      'budget': 'pie-chart',
+      'goals': 'target',
+      'settings': 'settings'
+    };
+    
+    return tableIconMap[tableName.toLowerCase()] || 'database';
+  }
+  
+  // Función para cambiar de pestaña
+  function handleTabChange(tabId: string) {
+    activeTab = tabId;
+    searchTerm = '';
+  }
+  
+  // Formatear el valor según el tipo de dato
+  function formatCellValue(value: any): string {
+    if (value === null || value === undefined) return '-';
+    if (value === '') return '[vacío]';
+    if (typeof value === 'boolean') return value ? 'Sí' : 'No';
+    if (typeof value === 'object') return JSON.stringify(value);
+    return String(value);
+  }
+  
+  // Verificar si un valor está vacío para aplicar estilos
+  function isEmptyValue(value: any): boolean {
+    return value === null || value === undefined || value === '';
+  }
 
   onMount(async () => {
     loading = true;
@@ -34,137 +89,317 @@
 </script>
 
 <div class="data-viewer">
-  <h2 class="datos-title">Datos</h2>
+  <h2 class="data-title">Datos</h2>
+  
   {#if loading}
-    <div class="loading">Cargando datos...</div>
+    <div class="loading-container">
+      <div class="loading-spinner"></div>
+      <p>Cargando datos...</p>
+    </div>
   {:else if error}
-    <div class="error">{error}</div>
+    <StatusMessage type="error" message={error} />
   {:else if tables.length === 0}
-    <div>No hay tablas en la base de datos.</div>
+    <StatusMessage type="info" message="No hay tablas en la base de datos." />
   {:else}
-    <div class="tabs">
-      {#each tables as table}
-        <button
-          class:active={activeTab === table}
-          on:click={() => (activeTab = table)}
-        >
-          {table}
-        </button>
-      {/each}
-    </div>
-    <div class="tab-content">
-      {#if activeTab && tableData[activeTab]}
-        <table>
-          <thead>
-            <tr>
-              {#each tableColumns[activeTab] || [] as col}
-                <th>{col}</th>
-              {/each}
-            </tr>
-          </thead>
-          <tbody>
-            {#if tableData[activeTab].length > 0}
-              {#each tableData[activeTab] as row}
-                <tr>
-                  {#each tableColumns[activeTab] || [] as col}
-                    <td>{row[col]}</td>
-                  {/each}
-                </tr>
-              {/each}
-            {:else}
-              <tr>
-                <td class="no-data-row" colspan={(tableColumns[activeTab] || []).length || 1}>
-                  No hay datos en esta tabla.
-                </td>
-              </tr>
+    <Card variant="default" padding="md" elevated={true} fullWidth={true} className="data-card">
+      <div class="data-header">
+        <Tabs tabs={formattedTabs} {activeTab} onTabChange={handleTabChange} />
+        
+        <div class="search-container">
+          <div class="search-input-wrapper">
+            <Icon name="search" size={16} />
+            <input 
+              type="text" 
+              placeholder="Buscar en tabla..." 
+              bind:value={searchTerm}
+              class="search-input" 
+            />
+            {#if searchTerm}
+              <button class="clear-search" on:click={() => searchTerm = ''}>
+                <Icon name="x" size={14} />
+              </button>
             {/if}
-          </tbody>
-        </table>
-      {/if}
-    </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="table-container">
+        {#if activeTab && tableData[activeTab]}
+          {#if filteredData.length > 0}
+            <div class="responsive-table-wrapper">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    {#each tableColumns[activeTab] || [] as col}
+                      <th>{col}</th>
+                    {/each}
+                  </tr>
+                </thead>
+                <tbody>
+                  {#each filteredData as row}
+                    <tr>
+                      {#each tableColumns[activeTab] || [] as col}
+                        <td>
+                          <div 
+                            class="cell-content {isEmptyValue(row[col]) ? 'empty-value' : ''}"
+                            title={formatCellValue(row[col])}
+                          >
+                            {formatCellValue(row[col])}
+                          </div>
+                        </td>
+                      {/each}
+                    </tr>
+                  {/each}
+                </tbody>
+              </table>
+            </div>
+            <div class="table-footer">
+              Mostrando {filteredData.length} de {tableData[activeTab].length} registros
+              {#if searchTerm}
+                (filtrados por "{searchTerm}")
+              {/if}
+            </div>
+          {:else}
+            <div class="no-data-message">
+              {#if searchTerm}
+                <Icon name="search" size={24} />
+                <p>No se encontraron resultados para "{searchTerm}"</p>
+                <button class="reset-search" on:click={() => searchTerm = ''}>
+                  Mostrar todos los datos
+                </button>
+              {:else}
+                <Icon name="database" size={24} />
+                <p>No hay datos en esta tabla</p>
+              {/if}
+            </div>
+          {/if}
+        {/if}
+      </div>
+    </Card>
   {/if}
 </div>
 
-<style lang="css">
-.data-viewer {
-  padding: var(--space-xl);
-}
-.datos-title {
-  font-size: 1.5rem;
-  color: var(--text-primary, #222);
-  font-weight: 700;
-  margin-bottom: 1.5rem;
-  margin-top: 0.5rem;
-}
-.no-data-row {
-  text-align: center;
-  color: #999;
-  font-style: italic;
-  background: #fafbfc;
-}
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 1.5rem 0;
-  background: #fff;
-}
-th, td {
-  border: 1px solid #e0e0e0;
-  padding: 0.5rem 1rem;
-}
-th {
-  background: #f5f6fa;
-  color: #222;
-  font-weight: 600;
-  text-align: left;
-}
-td {
-  color: #222;
-  background: #fff;
-}
-.tabs {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-.tabs button {
-  background: var(--primary-light);
-  color: var(--text-primary);
-  border: none;
-  padding: 0.5rem 1.5rem;
-  border-radius: 8px 8px 0 0;
-  cursor: pointer;
-  font-weight: 600;
-  outline: none;
-  transition: background 0.2s;
-}
-.tabs button.active,
-.tabs button:hover {
-  background: var(--primary);
-  color: var(--text-inverse);
-}
-.tab-content {
-  background: white;
-  border-radius: 0 8px 8px 8px;
-  box-shadow: 0 2px 8px var(--shadow);
-  padding: 2rem;
-  min-height: 120px;
-}
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-th, td {
-  border: 1px solid #eee;
-  padding: 0.5rem 0.8rem;
-  text-align: left;
-}
-th {
-  background: var(--primary-light);
-}
-.loading, .error {
-  padding: 2rem;
-  text-align: center;
-  color: var(--danger);
-}
+<style>
+  .data-viewer {
+    padding: var(--space-md);
+    width: 100%;
+  }
+  
+  .data-title {
+    font-size: 1.5rem;
+    color: var(--text-primary);
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+  
+  :global(.data-card) {
+    overflow: hidden;
+  }
+  
+  .data-header {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  @media (min-width: 768px) {
+    .data-header {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+  
+  .search-container {
+    margin: 1rem 0.5rem;
+  }
+  
+  @media (min-width: 768px) {
+    .search-container {
+      margin: 0 1rem 0 0;
+    }
+  }
+  
+  .search-input-wrapper {
+    display: flex;
+    align-items: center;
+    background-color: var(--background-secondary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+    width: 100%;
+    max-width: 300px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  }
+  
+  .search-input-wrapper:focus-within {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(58, 99, 81, 0.15);
+  }
+  
+  .search-input {
+    border: none;
+    background: transparent;
+    padding: 0 0.5rem;
+    flex-grow: 1;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+  }
+  
+  .search-input:focus {
+    outline: none;
+  }
+  
+  .clear-search {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    color: var(--text-secondary);
+  }
+  
+  .table-container {
+    padding: 0.5rem;
+    overflow: hidden;
+  }
+  
+  .responsive-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    table-layout: auto;
+  }
+  
+  .data-table th {
+    background-color: var(--background-secondary);
+    color: var(--text-primary);
+    font-weight: 600;
+    text-align: left;
+    padding: 0.75rem 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    white-space: nowrap;
+  }
+  
+  .data-table td {
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 1rem;
+    vertical-align: top;
+    background-color: var(--background-primary);
+    color: #222 !important;
+  }
+  
+  .cell-content {
+    max-width: 400px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #222 !important;
+  }
+  
+  /* Para pantallas pequeñas */
+  @media (max-width: 767px) {
+    .cell-content {
+      max-width: 150px;
+    }
+  }
+  
+  /* Para pantallas medianas */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .cell-content {
+      max-width: 250px;
+    }
+  }
+  
+  /* Para textos largos */
+  .data-table tr:hover .cell-content {
+    white-space: normal;
+    word-break: break-word;
+  }
+  
+  /* Estilos para valores vacíos */
+  .empty-value {
+    color: #666 !important;
+    font-style: italic;
+    background-color: var(--background-secondary, #f5f5f5);
+    border-radius: 4px;
+    padding: 0.15rem 0.4rem;
+    font-size: 0.9em;
+  }
+  
+  .loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1rem;
+    background-color: var(--background-primary);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    text-align: center;
+  }
+  
+  .loading-spinner {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border: 4px solid var(--primary-light);
+    border-radius: 50%;
+    border-top-color: var(--primary);
+    animation: spin 1s ease-in-out infinite;
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  
+  .no-data-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1rem;
+    color: var(--text-secondary);
+    text-align: center;
+  }
+  
+  .no-data-message p {
+    margin: 1rem 0;
+  }
+  
+  .reset-search {
+    background-color: var(--primary-light);
+    color: var(--primary);
+    border: none;
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 0.5rem;
+  }
+  
+  .reset-search:hover {
+    background-color: var(--primary-lighter);
+  }
+  
+  .table-footer {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    border-top: 1px solid var(--border);
+    margin-top: 0.5rem;
+  }
 </style>
