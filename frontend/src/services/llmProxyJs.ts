@@ -122,14 +122,20 @@ export class LLMProxyJs {
     });
   }
 
+  // Leer modelo desde variable de entorno
+  private getOpenAIModel(): string {
+    // @ts-ignore
+    return (import.meta.env.VITE_OPENAI_MODEL as string) || 'gpt-3.5-turbo';
+  }
+
   async callOpenAI(messages: any[]): Promise<string> {
     if (!this.apiKey) throw new Error('API key de OpenAI no configurada');
     
     try {
       const openai = this.getOpenAIClient();
-      
+      const model = this.getOpenAIModel();
       const response = await openai.chat.completions.create({
-        model: 'gpt-4o-mini',
+        model,
         messages,
         max_tokens: 2048,
         temperature: 0.1,
@@ -325,7 +331,7 @@ export class LLMProxyJs {
       }
       
       const response = await openai.chat.completions.create({
-        model: 'gpt-4o-mini',
+        model: this.getOpenAIModel(),
         messages,
         max_tokens: 2048,
         temperature: 0.1,
