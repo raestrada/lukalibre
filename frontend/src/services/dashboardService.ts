@@ -132,6 +132,87 @@ export async function generateFinancialBalance(): Promise<any> {
 }
 
 /**
+ * Genera recomendaciones financieras personalizadas basadas en los datos del usuario
+ */
+export async function generateFinancialRecommendations(): Promise<any> {
+  try {
+    log.info('Generando recomendaciones financieras');
+    
+    // 1. Exportar toda la base de datos a JSON
+    const dbData = await exportDatabaseToJson();
+    
+    // 2. Obtener el template de prompt para recomendaciones desde archivos Markdown
+    const templates = await llmService.getPromptTemplates();
+    if (!templates.default) {
+      throw new Error('El formato de los templates no es válido');
+    }
+    
+    // Usar el template específico para recomendaciones
+    const templateKey = 'recommendation_cl';
+    let templateContent = templates.default[templateKey];
+    
+    if (!templateContent) {
+      throw new Error(`No se encontró el template '${templateKey}' para recomendaciones. Verifica que exista el archivo correspondiente en la carpeta de prompts.`);
+    }
+    
+    // 3. Reemplazar el marcador user_json con los datos completos de la BD
+    const userJson = JSON.stringify(dbData, null, 2);
+    let prompt = templateContent;
+    prompt = prompt.replace('{{user_json}}', userJson);
+    
+    // 5. Añadir instrucciones específicas para formato JSON
+    prompt += '\n\nIMPORTANTE: Por favor estructura tu respuesta en formato JSON con el siguiente formato:\n\n' +
+             '{\n  "recomendaciones": [\n    {\n      "titulo": "string",\n      "descripcion": "string",\n      "prioridad": "alta | media | baja",\n      "impacto": "string",\n      "accionable": "boolean"\n    }\n  ],\n  "resumen": "string con evaluación general",\n  "puntaje_salud_financiera": número del 1 al 10\n}';
+    
+    prompt += '\n\nLa respuesta debe contener ÚNICAMENTE el objeto JSON, sin texto adicional, sin bloques de código markdown y sin explicaciones.'; 
+    
+    // 6. Preparar el FormData para enviar al LLM
+    const formData = new FormData();
+    formData.append('prompt', prompt);
+    formData.append('step', 'financial_recommendations');
+    
+    // 7. Llamar al LLM usando el servicio unificado
+    const response = await llmService.callLLMService(formData);
+    
+    // 8. Parsear el JSON de respuesta
+    if (!response.llm_output) {
+      throw new Error('No se recibió respuesta del LLM');
+    }
+    
+    try {
+      // Limpiar la respuesta de posibles bloques de código markdown
+      const cleanedResponse = response.llm_output.replace(/^```(?:json)?\s*([\s\S]*?)```$/m, '$1').trim();
+      
+      // Intentar parsear el JSON de respuesta limpia
+      const recommendationsData = JSON.parse(cleanedResponse);
+      log.info('Recomendaciones financieras generadas correctamente');
+      return recommendationsData;
+    } catch (error) {
+      // Si la respuesta limpia no es un JSON válido, intentar extraer el JSON de la respuesta
+      const jsonMatch = response.llm_output.match(/\{[\s\S]*\}/m);
+      if (jsonMatch) {
+        try {
+          const recommendationsData = JSON.parse(jsonMatch[0]);
+          log.info('Recomendaciones financieras generadas correctamente');
+          return recommendationsData;
+        } catch (innerError) {
+          log.error('Error al parsear la respuesta JSON extraída del LLM:', innerError);
+          log.error('Respuesta recibida:', response.llm_output);
+          throw new Error('La respuesta del LLM no contiene un JSON válido');
+        }
+      } else {
+        log.error('Error al parsear la respuesta JSON del LLM: No se encontró JSON');
+        log.error('Respuesta recibida:', response.llm_output);
+        throw new Error('La respuesta del LLM no contiene un JSON válido');
+      }
+    }
+  } catch (error) {
+    log.error('Error generando recomendaciones financieras:', error);
+    throw new Error(`Error generando recomendaciones: ${error}`);
+  }
+}
+
+/**
  * Genera datos para el reporte financiero usando el LLM y los datos de la base de datos
  */
 export async function generateDashboardReport(): Promise<any> {

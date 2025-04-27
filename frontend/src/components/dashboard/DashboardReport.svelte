@@ -7,19 +7,22 @@
   import Tabs from '../common/Tabs.svelte';
   import FinancialReport from './FinancialReport.svelte';
   import FinancialBalance from './FinancialBalance.svelte';
-  import { generateDashboardReport, generateFinancialBalance } from '../../services/dashboardService';
+  import FinancialRecommendations from './FinancialRecommendations.svelte';
+  import { generateDashboardReport, generateFinancialBalance, generateFinancialRecommendations } from '../../services/dashboardService';
   import { onMount } from 'svelte';
 
   const log = createLogger('DashboardReport');
 
-  // Estado del reporte y balance
+  // Estado del reporte, balance y recomendaciones
   let loading = false;
   let error: string | null = null;
   let success: string | null = null;
   let reportData: any = null;
   let balanceData: any = null;
+  let recommendationsData: any = null;
   let lastReportDate: string | null = null;
   let lastBalanceDate: string | null = null;
+  let lastRecommendationsDate: string | null = null;
 
   // Tabs disponibles
   type Tab = 'reporte' | 'balance' | 'recomendaciones' | 'alertas' | 'chat';
@@ -30,6 +33,8 @@
   const LS_REPORT_DATE_KEY = 'dashboard_last_report_date';
   const LS_BALANCE_KEY = 'dashboard_last_balance_data';
   const LS_BALANCE_DATE_KEY = 'dashboard_last_balance_date';
+  const LS_RECOMMENDATIONS_KEY = 'dashboard_last_recommendations_data';
+  const LS_RECOMMENDATIONS_DATE_KEY = 'dashboard_last_recommendations_date';
 
   // Configuración de las tabs
   const tabs: Array<{id: Tab, label: string, name: string}> = [
@@ -73,6 +78,20 @@
         localStorage.removeItem(LS_BALANCE_DATE_KEY);
       }
     }
+    
+    // Cargar datos de recomendaciones
+    const cachedRecommendations = localStorage.getItem(LS_RECOMMENDATIONS_KEY);
+    const cachedRecommendationsDate = localStorage.getItem(LS_RECOMMENDATIONS_DATE_KEY);
+    if (cachedRecommendations) {
+      try {
+        recommendationsData = JSON.parse(cachedRecommendations);
+        lastRecommendationsDate = cachedRecommendationsDate;
+      } catch (err) {
+        log.error('Error al parsear datos de recomendaciones almacenados:', err);
+        localStorage.removeItem(LS_RECOMMENDATIONS_KEY);
+        localStorage.removeItem(LS_RECOMMENDATIONS_DATE_KEY);
+      }
+    }
   });
 
   async function handleGenerateReport() {
@@ -106,10 +125,30 @@
       lastBalanceDate = now.toISOString();
       localStorage.setItem(LS_BALANCE_KEY, JSON.stringify(balanceData));
       localStorage.setItem(LS_BALANCE_DATE_KEY, lastBalanceDate);
-      success = 'Balance generado exitosamente';
+      success = 'Balance financiero generado exitosamente';
     } catch (err) {
-      log.error('Error al generar balance:', err);
-      error = `Error al generar balance: ${err}`;
+      log.error('Error al generar balance financiero:', err);
+      error = `Error al generar balance financiero: ${err}`;
+    } finally {
+      loading = false;
+    }
+  }
+
+  async function handleGenerateRecommendations() {
+    loading = true;
+    error = null;
+    success = null;
+    try {
+      recommendationsData = await generateFinancialRecommendations();
+      // Guardar la fecha en ISO string para asegurar compatibilidad
+      const now = new Date();
+      lastRecommendationsDate = now.toISOString();
+      localStorage.setItem(LS_RECOMMENDATIONS_KEY, JSON.stringify(recommendationsData));
+      localStorage.setItem(LS_RECOMMENDATIONS_DATE_KEY, lastRecommendationsDate);
+      success = 'Recomendaciones financieras generadas exitosamente';
+    } catch (err) {
+      log.error('Error al generar recomendaciones financieras:', err);
+      error = `Error al generar recomendaciones financieras: ${err}`;
     } finally {
       loading = false;
     }
@@ -129,6 +168,15 @@
     lastBalanceDate = null;
     localStorage.removeItem(LS_BALANCE_KEY);
     localStorage.removeItem(LS_BALANCE_DATE_KEY);
+    success = null;
+    error = null;
+  }
+  
+  function clearRecommendations() {
+    recommendationsData = null;
+    lastRecommendationsDate = null;
+    localStorage.removeItem(LS_RECOMMENDATIONS_KEY);
+    localStorage.removeItem(LS_RECOMMENDATIONS_DATE_KEY);
     success = null;
     error = null;
   }
@@ -222,15 +270,38 @@
       
       <!-- Tab de Recomendaciones -->
       {:else if activeTab === 'recomendaciones'}
-        <div class="card-content coming-soon">
-          <div class="coming-soon-content">
-            <Icon name="hourglass_empty" />
-            <h3>Recomendaciones - Próximamente</h3>
-            <p>Recibirás consejos personalizados para mejorar tus finanzas basados en tu historial y metas.</p>
+        <div class="card-content">
+          <p class="description">
+            Genera recomendaciones financieras personalizadas basadas en tus datos, con análisis
+            de patrones de gasto, oportunidades de ahorro y consejos específicos para Chile.
+          </p>
+          {#if error}
+            <StatusMessage type="error" message={error} />
+          {/if}
+          {#if success}
+            <StatusMessage type="success" message={success} />
+          {/if}
+          <div class="actions">
+            <Button
+              on:click={handleGenerateRecommendations}
+              disabled={loading}
+              {loading}
+              icon="tips_and_updates"
+              variant="primary"
+            >
+              {loading ? 'Generando...' : 'Generar Recomendaciones'}
+            </Button>
+            {#if recommendationsData}
+              <Button
+                on:click={clearRecommendations}
+                icon="clear"
+                variant="secondary"
+              >
+                Limpiar
+              </Button>
+            {/if}
           </div>
         </div>
-      
-      <!-- Tab de Alertas -->
       {:else if activeTab === 'alertas'}
         <div class="card-content coming-soon">
           <div class="coming-soon-content">
@@ -298,6 +369,29 @@
       </Card>
     </div>
   {/if}
+  
+  <!-- Contenido de recomendaciones (solo visible cuando hay recomendaciones generadas y estamos en la tab de recomendaciones) -->
+  {#if recommendationsData && activeTab === 'recomendaciones'}
+    <div class="report-container">
+      <Card>
+        <div class="card-title">
+          <Icon name="tips_and_updates" />
+          <span>Recomendaciones Financieras</span>
+          {#if lastRecommendationsDate}
+            <span class="last-report-badge">
+              <span class="material-icons" style="font-size:1em;vertical-align:middle;">event</span>
+              Últimas recomendaciones: {new Date(lastRecommendationsDate).toLocaleString('es-CL', {dateStyle: 'medium', timeStyle: 'short'})}
+            </span>
+          {/if}
+        </div>
+        <div class="card-content">
+          <div class="report-content">
+            <FinancialRecommendations recommendationsData={recommendationsData} />
+          </div>
+        </div>
+      </Card>
+    </div>
+  {/if}
 </div>
 
 <style>
@@ -316,6 +410,8 @@
     font-weight: 600;
     font-size: 1.15em;
   }
+  
+
   
   .description {
     margin-bottom: var(--space-md);
