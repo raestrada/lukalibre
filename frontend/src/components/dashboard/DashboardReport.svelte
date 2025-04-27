@@ -4,19 +4,40 @@
   import StatusMessage from '../common/StatusMessage.svelte';
   import Card from '../common/Card.svelte';
   import Icon from '../common/Icon.svelte';
+  import Tabs from '../common/Tabs.svelte';
   import { generateDashboardReport } from '../../services/dashboardService';
   import { onMount } from 'svelte';
   
   const log = createLogger('DashboardReport');
   
+  // Estado del reporte
   let loading = false;
   let error: string | null = null;
   let success: string | null = null;
   let reportHTML: string | null = null;
   let lastReportDate: string | null = null;
 
+  // Tabs disponibles
+  type Tab = 'reporte' | 'balance' | 'recomendaciones' | 'alertas' | 'chat';
+  let activeTab: Tab = 'reporte';
+  
+  // Info para localStorage
   const LS_REPORT_KEY = 'dashboard_last_report_html';
   const LS_REPORT_DATE_KEY = 'dashboard_last_report_date';
+  
+  // Configuración de las tabs
+  const tabs: Array<{id: Tab, label: string, name: string}> = [
+    { id: 'reporte', label: 'Reporte', name: 'assessment' },
+    { id: 'balance', label: 'Balance', name: 'account_balance' },
+    { id: 'recomendaciones', label: 'Recomendaciones', name: 'tips_and_updates' },
+    { id: 'alertas', label: 'Alertas', name: 'notifications' },
+    { id: 'chat', label: 'Chat', name: 'chat' }
+  ];
+  
+  // Cambiar de tab
+  function setActiveTab(tabId: string) {
+    activeTab = tabId as Tab;
+  }
 
   onMount(() => {
     const cached = localStorage.getItem(LS_REPORT_KEY);
@@ -60,55 +81,110 @@
 
 <div class="dashboard-report">
   <Card>
-  <div class="card-title">
-    <Icon icon="assessment" />
-    <span>Dashboard Financiero</span>
-    {#if lastReportDate}
-      <span class="last-report-badge">
-        <span class="material-icons" style="font-size:1em;vertical-align:middle;">event</span>
-        Último reporte: {new Date(lastReportDate).toLocaleString('es-CL')}
-      </span>
-    {/if}
-  </div>
-  <div class="card-content">
-    <p class="description">
-      Genera un reporte personalizado con análisis completo de tus finanzas, metas, 
-      recomendaciones automáticas y alertas específicas para Chile.
-    </p>
-    {#if error}
-      <StatusMessage type="error" message={error} />
-    {/if}
-    {#if success}
-      <StatusMessage type="success" message={success} />
-    {/if}
-    <div class="actions">
-      <Button
-        on:click={handleGenerateReport}
-        disabled={loading}
-        {loading}
-        icon="analytics"
-        variant="primary"
-      >
-        {loading ? 'Generando...' : 'Generar Reporte'}
-      </Button>
-      {#if reportHTML}
-        <Button
-          on:click={clearReport}
-          icon="clear"
-          variant="secondary"
-        >
-          Limpiar
-        </Button>
+    <div class="card-title">
+      <Icon name="dashboard" />
+      <span>Dashboard Financiero</span>
+      {#if lastReportDate && activeTab === 'reporte'}
+        <span class="last-report-badge">
+          <span class="material-icons" style="font-size:1em;vertical-align:middle;">event</span>
+          Último reporte: {new Date(lastReportDate).toLocaleString('es-CL')}
+        </span>
       {/if}
     </div>
-  </div>
-</Card>
+    
+    <!-- Barra de tabs usando el componente común -->
+    <Tabs 
+      {tabs} 
+      {activeTab} 
+      onTabChange={setActiveTab} 
+    />
+    
+    <!-- Contenido según la tab activa -->
+    <div class="tab-content">
+      <!-- Tab de Reporte -->
+      {#if activeTab === 'reporte'}
+        <div class="card-content">
+          <p class="description">
+            Genera un reporte personalizado con análisis completo de tus finanzas, metas, 
+            recomendaciones automáticas y alertas específicas para Chile.
+          </p>
+          {#if error}
+            <StatusMessage type="error" message={error} />
+          {/if}
+          {#if success}
+            <StatusMessage type="success" message={success} />
+          {/if}
+          <div class="actions">
+            <Button
+              on:click={handleGenerateReport}
+              disabled={loading}
+              {loading}
+              icon="analytics"
+              variant="primary"
+            >
+              {loading ? 'Generando...' : 'Generar Reporte'}
+            </Button>
+            {#if reportHTML}
+              <Button
+                on:click={clearReport}
+                icon="clear"
+                variant="secondary"
+              >
+                Limpiar
+              </Button>
+            {/if}
+          </div>
+        </div>
+      
+      <!-- Tab de Balance -->
+      {:else if activeTab === 'balance'}
+        <div class="card-content coming-soon">
+          <div class="coming-soon-content">
+            <Icon name="hourglass_empty" />
+            <h3>Balance - Próximamente</h3>
+            <p>Aquí podrás ver un resumen de tus activos, pasivos y patrimonio neto.</p>
+          </div>
+        </div>
+      
+      <!-- Tab de Recomendaciones -->
+      {:else if activeTab === 'recomendaciones'}
+        <div class="card-content coming-soon">
+          <div class="coming-soon-content">
+            <Icon name="hourglass_empty" />
+            <h3>Recomendaciones - Próximamente</h3>
+            <p>Recibirás consejos personalizados para mejorar tus finanzas basados en tu historial y metas.</p>
+          </div>
+        </div>
+      
+      <!-- Tab de Alertas -->
+      {:else if activeTab === 'alertas'}
+        <div class="card-content coming-soon">
+          <div class="coming-soon-content">
+            <Icon name="hourglass_empty" />
+            <h3>Alertas - Próximamente</h3>
+            <p>Te notificaremos sobre situaciones que requieran tu atención, como pagos próximos o gastos excesivos.</p>
+          </div>
+        </div>
+      
+      <!-- Tab de Chat -->
+      {:else if activeTab === 'chat'}
+        <div class="card-content coming-soon">
+          <div class="coming-soon-content">
+            <Icon name="hourglass_empty" />
+            <h3>Chat Financiero - Próximamente</h3>
+            <p>Consulta a nuestro asistente IA sobre cualquier duda financiera específica para el contexto chileno.</p>
+          </div>
+        </div>
+      {/if}
+    </div>
+  </Card>
   
-  {#if reportHTML}
+  <!-- Contenido del reporte (solo visible cuando hay un reporte generado y estamos en la tab de reporte) -->
+  {#if reportHTML && activeTab === 'reporte'}
     <div class="report-container">
       <Card>
         <div class="card-title">
-          <Icon icon="auto_awesome" />
+          <Icon name="auto_awesome" />
           <span>Reporte Financiero</span>
         </div>
         <div class="card-content">
@@ -128,16 +204,11 @@
     margin-bottom: var(--space-xl);
   }
   .dashboard-report, .dashboard-report * {
-    color: #222 !important;
+    color: var(--text-primary) !important;
   }
   .card-title, .card-content {
-    color: #222 !important;
+    color: var(--text-primary) !important;
     background: #fff !important;
-  }
-  .dashboard-report button {
-    color: #fff !important;
-    background: #007bff !important;
-    border: 1px solid #007bff !important;
   }
   .dashboard-report .card-title span, .dashboard-report .card-title {
     font-weight: 600;
@@ -228,4 +299,40 @@
   color: #1976d2;
 }
 
+/* Estos estilos fueron movidos al componente Tabs.svelte */
+
+/* Estilos para el contenido de próximamente */
+.coming-soon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  padding: 2rem;
+  text-align: center;
+  background-color: rgba(58, 99, 81, 0.03); /* Color de fondo sutil usando el primary */
+  border-radius: var(--radius-md);
+  margin-top: var(--space-md);
+}
+
+.coming-soon-content {
+  max-width: 400px;
+}
+
+.coming-soon-content h3 {
+  margin: 1rem 0;
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.coming-soon-content p {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.coming-soon-content :global(.material-icons) {
+  font-size: 2.5rem;
+  color: var(--primary-light);
+  opacity: 0.7;
+}
 </style>
