@@ -6,17 +6,20 @@
   import Icon from '../common/Icon.svelte';
   import Tabs from '../common/Tabs.svelte';
   import FinancialReport from './FinancialReport.svelte';
-  import { generateDashboardReport } from '../../services/dashboardService';
+  import FinancialBalance from './FinancialBalance.svelte';
+  import { generateDashboardReport, generateFinancialBalance } from '../../services/dashboardService';
   import { onMount } from 'svelte';
 
   const log = createLogger('DashboardReport');
 
-  // Estado del reporte
+  // Estado del reporte y balance
   let loading = false;
   let error: string | null = null;
   let success: string | null = null;
   let reportData: any = null;
+  let balanceData: any = null;
   let lastReportDate: string | null = null;
+  let lastBalanceDate: string | null = null;
 
   // Tabs disponibles
   type Tab = 'reporte' | 'balance' | 'recomendaciones' | 'alertas' | 'chat';
@@ -25,6 +28,8 @@
   // Info para localStorage
   const LS_REPORT_KEY = 'dashboard_last_report_data';
   const LS_REPORT_DATE_KEY = 'dashboard_last_report_date';
+  const LS_BALANCE_KEY = 'dashboard_last_balance_data';
+  const LS_BALANCE_DATE_KEY = 'dashboard_last_balance_date';
 
   // Configuración de las tabs
   const tabs: Array<{id: Tab, label: string, name: string}> = [
@@ -41,17 +46,31 @@
   }
 
   onMount(() => {
-    const cached = localStorage.getItem(LS_REPORT_KEY);
-    const cachedDate = localStorage.getItem(LS_REPORT_DATE_KEY);
-    if (cached) {
+    // Cargar datos del reporte
+    const cachedReport = localStorage.getItem(LS_REPORT_KEY);
+    const cachedReportDate = localStorage.getItem(LS_REPORT_DATE_KEY);
+    if (cachedReport) {
       try {
-        reportData = JSON.parse(cached);
-        lastReportDate = cachedDate;
+        reportData = JSON.parse(cachedReport);
+        lastReportDate = cachedReportDate;
       } catch (err) {
-        log.error('Error al parsear datos almacenados:', err);
-        // Si hay error de parseo, limpiamos el localStorage
+        log.error('Error al parsear datos del reporte almacenados:', err);
         localStorage.removeItem(LS_REPORT_KEY);
         localStorage.removeItem(LS_REPORT_DATE_KEY);
+      }
+    }
+    
+    // Cargar datos del balance
+    const cachedBalance = localStorage.getItem(LS_BALANCE_KEY);
+    const cachedBalanceDate = localStorage.getItem(LS_BALANCE_DATE_KEY);
+    if (cachedBalance) {
+      try {
+        balanceData = JSON.parse(cachedBalance);
+        lastBalanceDate = cachedBalanceDate;
+      } catch (err) {
+        log.error('Error al parsear datos del balance almacenados:', err);
+        localStorage.removeItem(LS_BALANCE_KEY);
+        localStorage.removeItem(LS_BALANCE_DATE_KEY);
       }
     }
   });
@@ -75,12 +94,41 @@
       loading = false;
     }
   }
+  
+  async function handleGenerateBalance() {
+    loading = true;
+    error = null;
+    success = null;
+    try {
+      balanceData = await generateFinancialBalance();
+      // Guardar la fecha en ISO string para asegurar compatibilidad
+      const now = new Date();
+      lastBalanceDate = now.toISOString();
+      localStorage.setItem(LS_BALANCE_KEY, JSON.stringify(balanceData));
+      localStorage.setItem(LS_BALANCE_DATE_KEY, lastBalanceDate);
+      success = 'Balance generado exitosamente';
+    } catch (err) {
+      log.error('Error al generar balance:', err);
+      error = `Error al generar balance: ${err}`;
+    } finally {
+      loading = false;
+    }
+  }
 
   function clearReport() {
     reportData = null;
     lastReportDate = null;
     localStorage.removeItem(LS_REPORT_KEY);
     localStorage.removeItem(LS_REPORT_DATE_KEY);
+    success = null;
+    error = null;
+  }
+  
+  function clearBalance() {
+    balanceData = null;
+    lastBalanceDate = null;
+    localStorage.removeItem(LS_BALANCE_KEY);
+    localStorage.removeItem(LS_BALANCE_DATE_KEY);
     success = null;
     error = null;
   }
@@ -91,12 +139,6 @@
     <div class="card-title">
       <Icon name="dashboard" />
       <span>Dashboard Financiero</span>
-      {#if lastReportDate && activeTab === 'reporte'}
-        <span class="last-report-badge">
-          <span class="material-icons" style="font-size:1em;vertical-align:middle;">event</span>
-          Último reporte: {new Date(lastReportDate).toLocaleString('es-CL', {dateStyle: 'medium', timeStyle: 'short'})}
-        </span>
-      {/if}
     </div>
     
     <!-- Barra de tabs usando el componente común -->
@@ -145,11 +187,36 @@
       
       <!-- Tab de Balance -->
       {:else if activeTab === 'balance'}
-        <div class="card-content coming-soon">
-          <div class="coming-soon-content">
-            <Icon name="hourglass_empty" />
-            <h3>Balance - Próximamente</h3>
-            <p>Aquí podrás ver un resumen de tus activos, pasivos y patrimonio neto.</p>
+        <div class="card-content">
+          <p class="description">
+            Genera un balance detallado con análisis de activos, pasivos y patrimonio neto, 
+            ratios financieros y recomendaciones específicas para Chile.
+          </p>
+          {#if error}
+            <StatusMessage type="error" message={error} />
+          {/if}
+          {#if success}
+            <StatusMessage type="success" message={success} />
+          {/if}
+          <div class="actions">
+            <Button
+              on:click={handleGenerateBalance}
+              disabled={loading}
+              {loading}
+              icon="account_balance"
+              variant="primary"
+            >
+              {loading ? 'Generando...' : 'Generar Balance'}
+            </Button>
+            {#if balanceData}
+              <Button
+                on:click={clearBalance}
+                icon="clear"
+                variant="secondary"
+              >
+                Limpiar
+              </Button>
+            {/if}
           </div>
         </div>
       
@@ -193,10 +260,39 @@
         <div class="card-title">
           <Icon name="auto_awesome" />
           <span>Reporte Financiero</span>
+          {#if lastReportDate}
+            <span class="last-report-badge">
+              <span class="material-icons" style="font-size:1em;vertical-align:middle;">event</span>
+              Último reporte: {new Date(lastReportDate).toLocaleString('es-CL', {dateStyle: 'medium', timeStyle: 'short'})}
+            </span>
+          {/if}
         </div>
         <div class="card-content">
           <div class="report-content">
             <FinancialReport reportData={reportData} />
+          </div>
+        </div>
+      </Card>
+    </div>
+  {/if}
+  
+  <!-- Contenido del balance (solo visible cuando hay un balance generado y estamos en la tab de balance) -->
+  {#if balanceData && activeTab === 'balance'}
+    <div class="report-container">
+      <Card>
+        <div class="card-title">
+          <Icon name="account_balance" />
+          <span>Balance Financiero</span>
+          {#if lastBalanceDate}
+            <span class="last-report-badge">
+              <span class="material-icons" style="font-size:1em;vertical-align:middle;">event</span>
+              Último balance: {new Date(lastBalanceDate).toLocaleString('es-CL', {dateStyle: 'medium', timeStyle: 'short'})}
+            </span>
+          {/if}
+        </div>
+        <div class="card-content">
+          <div class="report-content">
+            <FinancialBalance balanceData={balanceData} />
           </div>
         </div>
       </Card>

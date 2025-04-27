@@ -54,6 +54,94 @@ export async function exportDatabaseToJson(): Promise<any> {
 // Eliminada la verificación del frontend para dar prioridad a la inteligencia del LLM
 
 /**
+ * Genera un informe de balance financiero utilizando el LLM
+ */
+export async function generateFinancialBalance(): Promise<any> {
+  try {
+    log.info('Generando balance financiero');
+    
+    // 1. Exportar toda la base de datos a JSON
+    const dbData = await exportDatabaseToJson();
+    
+    // 2. Obtener el template de prompt para el balance
+    const templates = await llmService.getPromptTemplates();
+    if (!templates || typeof templates !== 'object') {
+      throw new Error('El formato de los templates no es válido');
+    }
+    
+    // Usar el template específico para el balance financiero
+    const templateKey = 'dashboard_balance_report_cl';
+    let templateContent: string;
+    
+    if ('default' in templates && typeof templates.default === 'object') {
+      const defaultTemplates = templates.default as Record<string, string>;
+      templateContent = defaultTemplates[templateKey];
+    } else {
+      templateContent = (templates as Record<string, string>)[templateKey];
+    }
+    
+    if (!templateContent) {
+      throw new Error(`No se encontró el template '${templateKey}' para el balance. Por favor ejecuta la migración Alembic para añadir el template '${templateKey}'.`);
+    }
+    
+    // Reemplazar el marcador {{user_json}} con los datos reales
+    const userJson = JSON.stringify(dbData, null, 2);
+    let prompt = templateContent;
+    prompt = prompt.replace('{{user_json}}', userJson);
+    
+    // Añadir instrucciones específicas de formato al final del prompt
+    prompt += '\n\nIMPORTANTE: Tu respuesta debe contener ÚNICAMENTE el objeto JSON, sin texto adicional, sin bloques de código markdown (```) y sin explicaciones.';
+    
+    // 4. Preparar el FormData para enviar al LLM
+    const formData = new FormData();
+    formData.append('prompt', prompt);
+    formData.append('step', 'financial_balance');
+    
+    // 5. Llamar al LLM para generar los datos JSON del balance
+    const apiKey = localStorage.getItem('openai_api_key') || '';
+    const LLMProxyJs = (await import('./llmProxyJs')).default;
+    const localProxy = new LLMProxyJs(apiKey);
+    const response = await localProxy.proxyWithFile(formData);
+    
+    // 6. Parsear el JSON de respuesta
+    if (!response.llm_output) {
+      throw new Error('No se recibió respuesta del LLM');
+    }
+    
+    try {
+      // Limpiar la respuesta de posibles bloques de código markdown
+      const cleanedResponse = response.llm_output.replace(/^```(?:json)?\s*([\s\S]*?)```$/m, '$1').trim();
+      
+      // Intentar parsear el JSON de respuesta limpia
+      const balanceData = JSON.parse(cleanedResponse);
+      log.info('Balance financiero generado correctamente');
+      return balanceData;
+    } catch (error) {
+      // Si la respuesta limpia no es un JSON válido, intentar extraer el JSON de la respuesta
+      const jsonMatch = response.llm_output.match(/\{[\s\S]*\}/m);
+      if (jsonMatch) {
+        try {
+          const balanceData = JSON.parse(jsonMatch[0]);
+          log.info('Balance financiero generado correctamente');
+          return balanceData;
+        } catch (innerError) {
+          log.error('Error al parsear la respuesta JSON extraída del LLM:', innerError);
+          log.error('Respuesta recibida:', response.llm_output);
+          throw new Error('La respuesta del LLM no contiene un JSON válido');
+        }
+      } else {
+        log.error('Error al parsear la respuesta JSON del LLM: No se encontró JSON');
+        log.error('Respuesta recibida:', response.llm_output);
+        throw new Error('La respuesta del LLM no contiene un JSON válido');
+      }
+    }
+  } catch (error) {
+    log.error('Error generando balance financiero:', error);
+    throw new Error(`Error generando balance: ${error}`);
+  }
+}
+
+/**
  * Genera datos para el reporte financiero usando el LLM y los datos de la base de datos
  */
 export async function generateDashboardReport(): Promise<any> {
@@ -118,14 +206,27 @@ export async function generateDashboardReport(): Promise<any> {
     }
     
     try {
-      // Intentar parsear la respuesta como JSON
-      const reportData = JSON.parse(response.llm_output.trim());
+      // Limpiar la respuesta de posibles bloques de código markdown
+      const cleanedResponse = response.llm_output.replace(/^```(?:json)?\s*([\s\S]*?)```$/m, '$1').trim();
+      
+      // Intentar parsear el JSON de respuesta limpia
+      const reportData = JSON.parse(cleanedResponse);
       log.info('Reporte de dashboard generado correctamente');
       return reportData;
-    } catch (jsonError) {
-      log.error('Error al parsear la respuesta JSON del LLM:', jsonError);
-      log.error('Respuesta recibida:', response.llm_output);
-      throw new Error('El formato de respuesta del LLM no es un JSON válido');
+    } catch (error) {
+      // Si la respuesta limpia no es un JSON válido, intentar extraer el JSON de la respuesta
+      const jsonMatch = response.llm_output.match(/\{[\s\S]*\}/m);
+      if (jsonMatch) {
+        try {
+          const reportData = JSON.parse(jsonMatch[0]);
+          log.info('Reporte de dashboard generado correctamente');
+          return reportData;
+        } catch (innerError) {
+          throw new Error('La respuesta del LLM no contiene un JSON válido');
+        }
+      } else {
+        throw new Error('La respuesta del LLM no contiene un JSON válido');
+      }
     }
   } catch (error) {
     log.error('Error generando reporte de dashboard:', error);
