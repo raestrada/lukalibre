@@ -45,7 +45,7 @@
   {/if}
   
   {#if icon && iconPosition === 'left'}
-    <span class="btn-icon btn-icon-left">{icon}</span>
+    <span class="material-icons btn-icon btn-icon-left">{icon}</span>
   {/if}
   
   <span class="btn-text">
@@ -53,7 +53,7 @@
   </span>
   
   {#if icon && iconPosition === 'right'}
-    <span class="btn-icon btn-icon-right">{icon}</span>
+    <span class="material-icons btn-icon btn-icon-right">{icon}</span>
   {/if}
 </button>
 
