@@ -97,11 +97,8 @@ export async function generateFinancialBalance(): Promise<any> {
     formData.append('prompt', prompt);
     formData.append('step', 'financial_balance');
     
-    // 5. Llamar al LLM para generar los datos JSON del balance
-    const apiKey = localStorage.getItem('openai_api_key') || '';
-    const LLMProxyJs = (await import('./llmProxyJs')).default;
-    const localProxy = new LLMProxyJs(apiKey);
-    const response = await localProxy.proxyWithFile(formData);
+    // 5. Llamar al LLM usando el servicio unificado (que determina automáticamente si usar el proxy local o el backend)
+    const response = await llmService.callLLMService(formData);
     
     // 6. Parsear el JSON de respuesta
     if (!response.llm_output) {
@@ -194,11 +191,8 @@ export async function generateDashboardReport(): Promise<any> {
     formData.append('prompt', prompt);
     formData.append('step', 'dashboard_report');
     
-    // 5. Llamar al LLM para generar los datos JSON del reporte
-    const apiKey = localStorage.getItem('openai_api_key') || '';
-    const LLMProxyJs = (await import('./llmProxyJs')).default;
-    const localProxy = new LLMProxyJs(apiKey);
-    const response = await localProxy.proxyWithFile(formData);
+    // 5. Llamar al LLM usando el servicio unificado (que determina automáticamente si usar el proxy local o el backend)
+    const response = await llmService.callLLMService(formData);
     
     // 6. Parsear el JSON de respuesta
     if (!response.llm_output) {

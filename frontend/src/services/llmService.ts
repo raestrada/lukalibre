@@ -32,7 +32,7 @@ function shouldUseLocalProxy(): boolean {
 }
 
 // Función unificada para llamar al servicio LLM (local o backend)
-async function callLLMService(formData: FormData): Promise<LLMResponse> {
+export async function callLLMService(formData: FormData): Promise<LLMResponse> {
   const useLocalProxy = shouldUseLocalProxy();
 
   // Agregar el step para que el proxy local sepa qué tipo de prompt es
