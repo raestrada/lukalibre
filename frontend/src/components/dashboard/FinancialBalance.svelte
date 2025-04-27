@@ -186,9 +186,7 @@
     gap: var(--space-md);
   }
 
-  .grid-span-2 {
-    grid-column: span 2;
-  }
+
 
   .patrimonio-container {
     display: flex;
@@ -237,10 +235,6 @@
   @media (max-width: 768px) {
     .balance-grid {
       grid-template-columns: 1fr;
-    }
-
-    .grid-span-2 {
-      grid-column: span 1;
     }
 
     .balances-principales {

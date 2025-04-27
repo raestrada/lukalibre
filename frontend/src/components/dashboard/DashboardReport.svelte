@@ -8,21 +8,24 @@
   import FinancialReport from './FinancialReport.svelte';
   import FinancialBalance from './FinancialBalance.svelte';
   import FinancialRecommendations from './FinancialRecommendations.svelte';
-  import { generateDashboardReport, generateFinancialBalance, generateFinancialRecommendations } from '../../services/dashboardService';
+  import FinancialAlerts from './FinancialAlerts.svelte';
+  import { generateDashboardReport, generateFinancialBalance, generateFinancialRecommendations, generateFinancialAlerts } from '../../services/dashboardService';
   import { onMount } from 'svelte';
 
   const log = createLogger('DashboardReport');
 
-  // Estado del reporte, balance y recomendaciones
+  // Estado del reporte, balance, recomendaciones y alertas
   let loading = false;
   let error: string | null = null;
   let success: string | null = null;
   let reportData: any = null;
   let balanceData: any = null;
   let recommendationsData: any = null;
+  let alertsData: any = null;
   let lastReportDate: string | null = null;
   let lastBalanceDate: string | null = null;
   let lastRecommendationsDate: string | null = null;
+  let lastAlertsDate: string | null = null;
 
   // Tabs disponibles
   type Tab = 'reporte' | 'balance' | 'recomendaciones' | 'alertas' | 'chat';
@@ -35,6 +38,8 @@
   const LS_BALANCE_DATE_KEY = 'dashboard_last_balance_date';
   const LS_RECOMMENDATIONS_KEY = 'dashboard_last_recommendations_data';
   const LS_RECOMMENDATIONS_DATE_KEY = 'dashboard_last_recommendations_date';
+  const LS_ALERTS_KEY = 'dashboard_last_alerts_data';
+  const LS_ALERTS_DATE_KEY = 'dashboard_last_alerts_date';
 
   // Configuración de las tabs
   const tabs: Array<{id: Tab, label: string, name: string}> = [
@@ -90,6 +95,20 @@
         log.error('Error al parsear datos de recomendaciones almacenados:', err);
         localStorage.removeItem(LS_RECOMMENDATIONS_KEY);
         localStorage.removeItem(LS_RECOMMENDATIONS_DATE_KEY);
+      }
+    }
+    
+    // Cargar datos de alertas
+    const cachedAlerts = localStorage.getItem(LS_ALERTS_KEY);
+    const cachedAlertsDate = localStorage.getItem(LS_ALERTS_DATE_KEY);
+    if (cachedAlerts) {
+      try {
+        alertsData = JSON.parse(cachedAlerts);
+        lastAlertsDate = cachedAlertsDate;
+      } catch (err) {
+        log.error('Error al parsear datos de alertas almacenados:', err);
+        localStorage.removeItem(LS_ALERTS_KEY);
+        localStorage.removeItem(LS_ALERTS_DATE_KEY);
       }
     }
   });
@@ -162,6 +181,26 @@
     }
   }
 
+  async function handleGenerateAlerts() {
+    loading = true;
+    error = null;
+    success = null;
+    try {
+      alertsData = await generateFinancialAlerts();
+      // Guardar la fecha en ISO string para asegurar compatibilidad
+      const now = new Date();
+      lastAlertsDate = now.toISOString();
+      localStorage.setItem(LS_ALERTS_KEY, JSON.stringify(alertsData));
+      localStorage.setItem(LS_ALERTS_DATE_KEY, lastAlertsDate);
+      success = 'Alertas financieras generadas exitosamente';
+    } catch (err) {
+      log.error('Error al generar alertas financieras:', err);
+      error = `Error al generar alertas financieras: ${err}`;
+    } finally {
+      loading = false;
+    }
+  }
+
   function clearReport() {
     reportData = null;
     lastReportDate = null;
@@ -185,6 +224,15 @@
     lastRecommendationsDate = null;
     localStorage.removeItem(LS_RECOMMENDATIONS_KEY);
     localStorage.removeItem(LS_RECOMMENDATIONS_DATE_KEY);
+    success = null;
+    error = null;
+  }
+  
+  function clearAlerts() {
+    alertsData = null;
+    lastAlertsDate = null;
+    localStorage.removeItem(LS_ALERTS_KEY);
+    localStorage.removeItem(LS_ALERTS_DATE_KEY);
     success = null;
     error = null;
   }
@@ -310,12 +358,39 @@
             {/if}
           </div>
         </div>
+      
+      <!-- Tab de Alertas -->
       {:else if activeTab === 'alertas'}
-        <div class="card-content coming-soon">
-          <div class="coming-soon-content">
-            <Icon name="hourglass_empty" />
-            <h3>Alertas - Próximamente</h3>
-            <p>Te notificaremos sobre situaciones que requieran tu atención, como pagos próximos o gastos excesivos.</p>
+        <div class="card-content">
+          <p class="description">
+            Genera alertas financieras personalizadas basadas en tus datos, con análisis
+            de patrones de gasto, oportunidades de ahorro y consejos específicos para Chile.
+          </p>
+          {#if error}
+            <StatusMessage type="error" message={error} onClose={clearErrorMessage} />
+          {/if}
+          {#if success}
+            <StatusMessage type="success" message={success} onClose={clearSuccessMessage} />
+          {/if}
+          <div class="actions">
+            <Button
+              on:click={handleGenerateAlerts}
+              disabled={loading}
+              {loading}
+              icon="notifications"
+              variant="primary"
+            >
+              {loading ? 'Generando...' : 'Generar Alertas'}
+            </Button>
+            {#if alertsData}
+              <Button
+                on:click={clearAlerts}
+                icon="clear"
+                variant="secondary"
+              >
+                Limpiar
+              </Button>
+            {/if}
           </div>
         </div>
       
@@ -395,6 +470,29 @@
         <div class="card-content">
           <div class="report-content">
             <FinancialRecommendations recommendationsData={recommendationsData} />
+          </div>
+        </div>
+      </Card>
+    </div>
+  {/if}
+  
+  <!-- Contenido de alertas (solo visible cuando hay alertas generadas y estamos en la tab de alertas) -->
+  {#if alertsData && activeTab === 'alertas'}
+    <div class="report-container">
+      <Card>
+        <div class="card-title">
+          <Icon name="notifications" />
+          <span>Alertas Financieras</span>
+          {#if lastAlertsDate}
+            <span class="last-report-badge">
+              <span class="material-icons" style="font-size:1em;vertical-align:middle;">event</span>
+              Últimas alertas: {new Date(lastAlertsDate).toLocaleString('es-CL', {dateStyle: 'medium', timeStyle: 'short'})}
+            </span>
+          {/if}
+        </div>
+        <div class="card-content">
+          <div class="report-content">
+            <FinancialAlerts alertsData={alertsData} />
           </div>
         </div>
       </Card>

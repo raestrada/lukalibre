@@ -80,6 +80,7 @@ import extractDataPrompt from '../prompts/extract_data.md?raw';
 import recommendationClPrompt from '../prompts/recommendation_cl.md?raw';
 import dashboardHtmlReportClPrompt from '../prompts/dashboard_html_report_cl.md?raw';
 import dashboardBalanceReportClPrompt from '../prompts/dashboard_balance_report_cl.md?raw';
+import alertClPrompt from '../prompts/alert_cl.md?raw';
 
 // Define interfaces para los posibles formatos de templates
 interface TemplatesResponse {
@@ -93,7 +94,8 @@ const promptTemplates: Record<string, string> = {
   'extract_data': extractDataPrompt,
   'recommendation_cl': recommendationClPrompt,
   'dashboard_html_report_cl': dashboardHtmlReportClPrompt,
-  'dashboard_balance_report_cl': dashboardBalanceReportClPrompt
+  'dashboard_balance_report_cl': dashboardBalanceReportClPrompt,
+  'alert_cl': alertClPrompt
 };
 
 export async function getPromptTemplates(): Promise<TemplatesResponse> {

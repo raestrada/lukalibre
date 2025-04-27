@@ -132,6 +132,81 @@ export async function generateFinancialBalance(): Promise<any> {
 }
 
 /**
+ * Genera alertas financieras basadas en los datos del usuario
+ */
+export async function generateFinancialAlerts(): Promise<any> {
+  try {
+    log.info('Generando alertas financieras');
+    
+    // 1. Exportar toda la base de datos a JSON
+    const dbData = await exportDatabaseToJson();
+    
+    // 2. Obtener el template de prompt para alertas desde archivos Markdown
+    const templates = await llmService.getPromptTemplates();
+    if (!templates.default) {
+      throw new Error('El formato de los templates no es válido');
+    }
+    
+    // Usar el template específico para alertas
+    const templateKey = 'alert_cl';
+    let templateContent = templates.default[templateKey];
+    
+    if (!templateContent) {
+      throw new Error(`No se encontró el template '${templateKey}' para alertas. Verifica que exista el archivo correspondiente en la carpeta de prompts.`);
+    }
+    
+    // 3. Reemplazar el marcador user_json con los datos completos de la BD
+    const userJson = JSON.stringify(dbData, null, 2);
+    let prompt = templateContent;
+    prompt = prompt.replace('{{user_json}}', userJson);
+    
+    // 4. Preparar el FormData para enviar al LLM
+    const formData = new FormData();
+    formData.append('prompt', prompt);
+    formData.append('step', 'financial_alerts');
+    
+    // 5. Llamar al LLM usando el servicio unificado
+    const response = await llmService.callLLMService(formData);
+    
+    // 6. Parsear el JSON de respuesta
+    if (!response.llm_output) {
+      throw new Error('No se recibió respuesta del LLM');
+    }
+    
+    try {
+      // Limpiar la respuesta de posibles bloques de código markdown
+      const cleanedResponse = response.llm_output.replace(/^```(?:json)?\s*([\s\S]*?)```$/m, '$1').trim();
+      
+      // Intentar parsear el JSON de respuesta limpia
+      const alertsData = JSON.parse(cleanedResponse);
+      log.info('Alertas financieras generadas correctamente');
+      return alertsData;
+    } catch (error) {
+      // Si la respuesta limpia no es un JSON válido, intentar extraer el JSON de la respuesta
+      const jsonMatch = response.llm_output.match(/\{[\s\S]*\}/m);
+      if (jsonMatch) {
+        try {
+          const alertsData = JSON.parse(jsonMatch[0]);
+          log.info('Alertas financieras generadas correctamente');
+          return alertsData;
+        } catch (innerError) {
+          log.error('Error al parsear la respuesta JSON extraída del LLM:', innerError);
+          log.error('Respuesta recibida:', response.llm_output);
+          throw new Error('La respuesta del LLM no contiene un JSON válido');
+        }
+      } else {
+        log.error('Error al parsear la respuesta JSON del LLM: No se encontró JSON');
+        log.error('Respuesta recibida:', response.llm_output);
+        throw new Error('La respuesta del LLM no contiene un JSON válido');
+      }
+    }
+  } catch (error) {
+    log.error('Error generando alertas financieras:', error);
+    throw new Error(`Error generando alertas: ${error}`);
+  }
+}
+
+/**
  * Genera recomendaciones financieras personalizadas basadas en los datos del usuario
  */
 export async function generateFinancialRecommendations(): Promise<any> {
