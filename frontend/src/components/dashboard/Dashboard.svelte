@@ -8,6 +8,7 @@
   import SyncSettings from '../SyncSettings.svelte';
   import StatusMessage from '../common/StatusMessage.svelte';
   import LlmBar from './LlmBar.svelte';
+  import DashboardReport from './DashboardReport.svelte';
 
   const log = createLogger('Dashboard');
   
@@ -177,7 +178,7 @@
         </div>
       {/if}
     </div>
-    
+    <DashboardReport />
     {#if llmSuccess}
       <StatusMessage
         type="success"

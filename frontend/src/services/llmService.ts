@@ -74,10 +74,16 @@ async function callLLMService(formData: FormData): Promise<LLMResponse> {
   }
 }
 
-export async function getPromptTemplates(): Promise<Record<string, string>> {
+// Define interfaces para los posibles formatos de templates
+interface TemplatesResponse {
+  default?: Record<string, string>;
+  [key: string]: any;
+}
+
+export async function getPromptTemplates(): Promise<TemplatesResponse> {
   // Siempre pide los templates frescos del backend, sin cache
   const resp = await httpService.get('/prompts/templates');
-  return resp.data as Record<string, string>;
+  return resp.data as TemplatesResponse;
 }
 
 export async function identifySchema(file: File, availableSchemas: string[]): Promise<string> {
