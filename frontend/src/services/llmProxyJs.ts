@@ -17,7 +17,7 @@ export interface LLMProxyResponse {
   schema_name?: string;
   sql_inserts?: string;
   json_data?: Record<string, any>;
-  llm_output?: string;
+  llm_output: string;
 }
 
 const DEFAULT_LIMITS = {
@@ -290,19 +290,64 @@ export class LLMProxyJs {
       
       console.log('Enviando mensaje a OpenAI (simplificado).');
       
-      // 5. Enviar la solicitud a OpenAI usando la biblioteca oficial
+      // Obtener la solicitud original para determinar el paso (step)
+      const step = formData.get('step') as string;
+      const schema_name = formData.get('schema_name') as string || undefined;
+      
+      // Construir la solicitud para poder usar buildMessages
+      const request: LLMProxyRequest = {
+        content: '',  // No usamos este campo porque ya tenemos messageContent
+        step,
+        schema_name
+      };
+
+      // 5. Enviar la solicitud a OpenAI usando la biblioteca oficial con los mensajes correctos
+      console.log(`Paso: ${step}, Esquema: ${schema_name}`);
+      
+      // Si es generate_sql_json, usamos el mensaje de sistema adecuado
+      let messages: {role: 'system' | 'user' | 'assistant', content: any}[];
+      if (step === 'generate_sql_json') {
+        messages = [
+          { role: 'system', content: `Genera SQL y JSON para el esquema: ${schema_name}` },
+          { role: 'user', content: messageContent }
+        ];
+        console.log('Usando mensaje de sistema para generate_sql_json');
+      } else if (step === 'identify_schema') {
+        messages = [
+          { role: 'system', content: 'Identifica el esquema correspondiente.' },
+          { role: 'user', content: messageContent }
+        ];
+        console.log('Usando mensaje de sistema para identify_schema');
+      } else {
+        // Mensaje predeterminado sin system prompt
+        messages = [{ role: 'user', content: messageContent }];
+        console.log('Usando mensaje sin system prompt');
+      }
+      
       const response = await openai.chat.completions.create({
         model: 'gpt-4o-mini',
-        messages: [{ role: 'user', content: messageContent }],
+        messages,
         max_tokens: 2048,
         temperature: 0.1,
       });
       
       const llm_output = response.choices[0]?.message?.content || '';
-      console.log('Respuesta de OpenAI (primeros 100 caracteres):', llm_output.substring(0, 100));
+      console.log('Respuesta de OpenAI (COMPLETA):', llm_output);
+      
+      // Verificar si hay SQL en la respuesta
+      if (llm_output.includes('INSERT INTO')) {
+        // Contar cuántos comandos SQL hay (separados por punto y coma)
+        const sqlCommands = llm_output.match(/INSERT\s+INTO[\s\S]*?;/gi) || [];
+        console.log(`Número de comandos SQL encontrados: ${sqlCommands.length}`);
+        
+        // Mostrar cada comando SQL
+        sqlCommands.forEach((sql, index) => {
+          console.log(`SQL #${index + 1}:`, sql);
+        });
+      }
       
       // 6. Devolver la respuesta exactamente igual que el backend
-      return { llm_output };
+      return { llm_output: llm_output || '' };
     } catch (error) {
       console.error('Error en proxyWithFile:', error);
       if (error instanceof Error) {

@@ -2,13 +2,17 @@ import httpService from './httpService';
 import databaseService from './databaseService';
 import LLMProxyJs from './llmProxyJs';
 
+// Interfaz para las respuestas de LLM genéricas
+interface LLMResponse {
+  llm_output: string;
+}
+
 // Función para verificar si el usuario tiene un plan activo o debe usar su propia API key
 function shouldUseLocalProxy(): boolean {
   // Si el usuario tiene una API key personal en localStorage
   const hasApiKey = !!localStorage.getItem('openai_api_key');
   
-  // Verificar si hay un plan activo (esto debería coincidir con la lógica de PlanStatus.svelte)
-  // Obtener datos del plan desde localStorage (si existen)
+  // Verificar si hay un plan activo desde localStorage
   const planData = localStorage.getItem('user_plan');
   let plan = null;
   try {
@@ -27,10 +31,47 @@ function shouldUseLocalProxy(): boolean {
   return hasApiKey && !hasPlan;
 }
 
-// Función para obtener una instancia del proxy local con la API key del usuario
-function getLocalProxy(): LLMProxyJs {
-  const apiKey = localStorage.getItem('openai_api_key') || '';
-  return new LLMProxyJs(apiKey);
+// Función unificada para llamar al servicio LLM (local o backend)
+async function callLLMService(formData: FormData): Promise<LLMResponse> {
+  const useLocalProxy = shouldUseLocalProxy();
+
+  // Agregar el step para que el proxy local sepa qué tipo de prompt es
+  if (!formData.has('step')) {
+    // Intentar detectar el step basado en el contenido
+    const prompt = formData.get('prompt') as string;
+    if (prompt && prompt.includes('schema_json')) {
+      formData.append('step', 'generate_sql_json');
+    } else {
+      formData.append('step', 'identify_schema');
+    }
+  }
+
+  console.log(`Usando proxy ${useLocalProxy ? 'local' : 'backend'} para operación`);
+  
+  if (useLocalProxy) {
+    try {
+      const apiKey = localStorage.getItem('openai_api_key') || '';
+      const localProxy = new LLMProxyJs(apiKey);
+      return await localProxy.proxyWithFile(formData);
+    } catch (err: any) {
+      console.error('Error en proxy local:', err);
+      throw new Error(`Error al usar tu API key: ${err.message}`);
+    }
+  } else {
+    try {
+      const resp = await httpService.post<LLMResponse>('/llm/proxy', formData, {
+        headers: { 'Authorization': `Bearer ${localStorage.getItem('jwt')}` }
+      });
+      
+      // Adaptar respuesta del backend al mismo formato
+      return { llm_output: resp.data.llm_output || '' };
+    } catch (err: any) {
+      if (err.response && err.response.status === 429) {
+        throw new Error('Quota excedida, intenta nuevamente en unos segundos.');
+      }
+      throw err;
+    }
+  }
 }
 
 export async function getPromptTemplates(): Promise<Record<string, string>> {
@@ -40,78 +81,32 @@ export async function getPromptTemplates(): Promise<Record<string, string>> {
 }
 
 export async function identifySchema(file: File, availableSchemas: string[]): Promise<string> {
-  // Verificar si debemos usar el proxy local o el backend
-  const useLocalProxy = shouldUseLocalProxy();
-  console.log('Usando proxy local para identifySchema:', useLocalProxy);
-  
-  if (useLocalProxy) {
-    // Usar el proxy local con la API key del usuario
-    try {
-      const localProxy = getLocalProxy();
-      
-      // Construir un FormData exactamente igual que cuando se usa el backend
-      const templates = await getPromptTemplates();
-      if (!templates['identify_schema']) {
-        throw new Error('No se encontró el prompt "identify_schema" en los templates del backend.');
-      }
-      let prompt = templates['identify_schema'];
-      // Sustituye {{schemas}} y {{content}} igual que en el flujo original
-      prompt = prompt
-        .replace(/\{\{schemas\}\}/g, availableSchemas.join(', '))
-        .replace(/\{\{content\}\}/g, 'en el archivo adjunto');
-      
-      // Construir FormData con el archivo completo, igual que con el backend
-      const formData = new FormData();
-      formData.append('prompt', prompt);
-      formData.append('files', file);
-      
-      // Enviar la solicitud al proxy local, pero con el archivo completo
-      // Ahora usando la biblioteca oficial de OpenAI
-      const response = await localProxy.proxyWithFile(formData);
-      
-      // Devolver el resultado (nombre del esquema)
-      return (response.llm_output || '').trim();
-    } catch (err: any) {
-      console.error('Error en proxy local:', err);
-      throw new Error(`Error al usar tu API key: ${err.message}`);
-    }
-  } else {
-    // Usar el backend como proxy (código original)
-    const templates = await getPromptTemplates();
-    if (!templates['identify_schema']) {
-      throw new Error('No se encontró el prompt "identify_schema" en los templates del backend.');
-    }
-    let prompt = templates['identify_schema'];
-    // Sustituye {{schemas}} y {{content}} si existen en el template
-    prompt = prompt
-      .replace(/\{\{schemas\}\}/g, availableSchemas.join(', '))
-      .replace(/\{\{content\}\}/g, 'en el archivo adjunto');
-    const formData = new FormData();
-    formData.append('prompt', prompt);
-    formData.append('files', file);
-    let resp;
-    try {
-      resp = await httpService.post('/llm/proxy', formData, {
-        headers: { 'Authorization': `Bearer ${localStorage.getItem('jwt')}` }
-      });
-    } catch (err: any) {
-      if (err.response && err.response.status === 429) {
-        throw new Error('Quota excedida, intenta nuevamente en unos segundos.');
-      }
-      throw err;
-    }
-    // LLM responde con el nombre del esquema (puede venir con saltos de línea, limpiar)
-    const responseData = resp.data as { llm_output?: string };
-    return (responseData.llm_output || '').trim();
+  // Construir prompt y formData igual para ambos flujos
+  const templates = await getPromptTemplates();
+  if (!templates['identify_schema']) {
+    throw new Error('No se encontró el prompt "identify_schema" en los templates del backend.');
   }
+  
+  let prompt = templates['identify_schema'];
+  prompt = prompt
+    .replace(/\{\{schemas\}\}/g, availableSchemas.join(', '))
+    .replace(/\{\{content\}\}/g, 'en el archivo adjunto');
+  
+  const formData = new FormData();
+  formData.append('prompt', prompt);
+  formData.append('files', file);
+  formData.append('step', 'identify_schema');
+  formData.append('schema_name', '');
+  
+  // Usar la función unificada para llamar al servicio correcto
+  const response = await callLLMService(formData);
+  
+  // Devolver el resultado limpio
+  return (response.llm_output || '').trim();
 }
 
 export async function extractAndInsertData(file: File, schemaName: string, schemaJson: any): Promise<void> {
-  // Verificar si debemos usar el proxy local o el backend
-  const useLocalProxy = shouldUseLocalProxy();
-  console.log('Usando proxy local para extractAndInsertData:', useLocalProxy);
-  
-  // Obtener todas las tablas y columnas (necesario para ambos flujos)
+  // Obtener tablas y columnas (común para ambos flujos)
   const tableNames = await databaseService.listTables();
   const tables: { name: string, columns: string[] }[] = [];
   for (const table of tableNames) {
@@ -119,70 +114,31 @@ export async function extractAndInsertData(file: File, schemaName: string, schem
     tables.push({ name: table, columns });
   }
   
-  // Variable para almacenar la respuesta del LLM
-  let llmResp: any;
-  
-  if (useLocalProxy) {
-    // Usar el proxy local con la API key del usuario
-    try {
-      const localProxy = getLocalProxy();
-      
-      // Construir un FormData exactamente igual que cuando se usa el backend
-      const templates = await getPromptTemplates();
-      if (!templates['extract_data']) {
-        throw new Error('No se encontró el prompt "extract_data" en los templates del backend.');
-      }
-      let prompt = templates['extract_data'];
-      // Reemplazar las variables en el prompt: tablas, content y schema_json
-      prompt = prompt.replace(/\{\{tables\}\}|\{tables\}/g, JSON.stringify(tables))
-                  .replace(/\{\{schema_json\}\}/g, JSON.stringify(schemaJson));
-      console.log('PROMPT TEMPLATE USADO:', prompt);
-      
-      // Construir FormData con el archivo completo, igual que con el backend
-      const formData = new FormData();
-      formData.append('prompt', prompt);
-      formData.append('files', file);
-      
-      // Enviar la solicitud al proxy local, pero con el archivo completo
-      // Ahora usando la biblioteca oficial de OpenAI
-      const response = await localProxy.proxyWithFile(formData);
-      
-      // Obtener la respuesta
-      llmResp = response.llm_output;
-    } catch (err: any) {
-      console.error('Error en proxy local:', err);
-      throw new Error(`Error al usar tu API key: ${err.message}`);
-    }
-  } else {
-    // Usar el backend como proxy (código original)
-    const templates = await getPromptTemplates();
-    if (!templates['extract_data']) {
-      throw new Error('No se encontró el prompt "extract_data" en los templates del backend.');
-    }
-    let prompt = templates['extract_data'];
-    // Reemplazar {tables} o {{tables}} en el prompt
-    prompt = prompt.replace(/\{\{tables\}\}|\{tables\}/g, JSON.stringify(tables));
-    console.log('PROMPT TEMPLATE USADO:', prompt);
-    const formData = new FormData();
-    formData.append('prompt', prompt);
-    formData.append('files', file);
-    let resp;
-    try {
-      resp = await httpService.post('/llm/proxy', formData, {
-        headers: { 'Authorization': `Bearer ${localStorage.getItem('jwt')}` }
-      });
-    } catch (err: any) {
-      if (err.response && err.response.status === 429) {
-        throw new Error('Quota excedida, intenta nuevamente en unos segundos.');
-      }
-      throw err;
-    }
-    // Obtener la respuesta
-    const responseData = resp.data as { llm_output?: string };
-    llmResp = responseData.llm_output;
+  // Construir prompt y formData igual para ambos flujos
+  const templates = await getPromptTemplates();
+  if (!templates['extract_data']) {
+    throw new Error('No se encontró el prompt "extract_data" en los templates del backend.');
   }
   
-  // A partir de aquí, el procesamiento es común para ambos flujos
+  let prompt = templates['extract_data'];
+  
+  // Solo reemplazar {{tables}} como lo hacía el backend original
+  // No usamos schema_json para ser consistentes con el funcionamiento original
+  prompt = prompt.replace(/\{\{tables\}\}|\{tables\}/g, JSON.stringify(tables));
+  
+  console.log('PROMPT TEMPLATE USADO:', prompt);
+  
+  const formData = new FormData();
+  formData.append('prompt', prompt);
+  formData.append('files', file);
+  formData.append('step', 'generate_sql_json');
+  formData.append('schema_name', schemaName);
+  
+  // Usar la función unificada para llamar al servicio
+  const response = await callLLMService(formData);
+  let llmResp = response.llm_output;
+  
+  // Procesar la respuesta
   if (!llmResp) throw new Error('Respuesta vacía del LLM');
   
   // Limpiar bloque de código ```json ... ``` y saltos de línea extra
@@ -211,14 +167,29 @@ export async function extractAndInsertData(file: File, schemaName: string, schem
     
     // Intentar crear un objeto con sql_inserts para continuar
     try {
-      // Buscar algo que parezca SQL
+      // Usar la lógica original del backend que funcionaba correctamente
       const sqlMatch = llmResp.match(/INSERT\s+INTO[\s\S]*?;/i);
       if (sqlMatch) {
         const sqlStatement = sqlMatch[0];
         parsed = { sql_inserts: sqlStatement };
         console.log('SQL extraído de la respuesta:', sqlStatement);
       } else {
-        throw new Error('No se encontraron comandos SQL en la respuesta');
+        // Si no encontramos con la expresión regular básica, intentamos el enfoque alternativo
+        const statements = llmResp.split(';').map(stmt => stmt.trim()).filter(stmt => !!stmt);
+        const sqlMatches = statements
+          .filter(stmt => stmt.toUpperCase().includes('INSERT INTO'))
+          .map(stmt => stmt + ';');
+        
+        if (sqlMatches.length > 0) {
+          // Unir todos los comandos SQL encontrados con punto y coma
+          const allSqlStatements = sqlMatches.join(' ');
+          parsed = { sql_inserts: allSqlStatements };
+          console.log(`Se encontraron ${sqlMatches.length} comandos SQL:`);
+          sqlMatches.forEach((sql: string, i: number) => console.log(`SQL #${i+1}:`, sql));
+          console.log('SQL combinados:', allSqlStatements);
+        } else {
+          throw new Error('No se encontraron comandos SQL en la respuesta');
+        }
       }
     } catch (innerErr) {
       throw new Error('No se pudo parsear la respuesta del LLM: ' + (err instanceof Error ? err.message : err) + '\nRespuesta cruda: ' + llmResp);

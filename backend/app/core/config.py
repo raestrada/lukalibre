@@ -8,7 +8,7 @@ from pydantic_settings import BaseSettings
 class Settings(BaseSettings):
     GROQ_API_KEY: str = ""  # Clave para Groq LLM
     OPENAI_API_KEY: str = ""  # Clave para OpenAI Vision
-    OPENAI_MODEL: str = "gpt-4o"  # Modelo por defecto para OpenAI Vision
+    OPENAI_MODEL: str = "gpt-4o-mini"  # Modelo por defecto para OpenAI Vision
     API_V1_STR: str = "/api/v1"
     SECRET_KEY: str = secrets.token_urlsafe(32)
     # 60 minutes * 24 hours * 8 days = 8 days
