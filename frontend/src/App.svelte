@@ -7,6 +7,8 @@
   import authService from './services/authService';
   import { get } from 'svelte/store';
   import { onMount } from 'svelte';
+  import { isMobileDevice } from './services/deviceDetection';
+  import type { ComponentType } from 'svelte';
   
   // Componentes para las rutas
   import Home from './components/Home.svelte';
@@ -20,7 +22,7 @@
   let isInitializing = true;
   
   // Simplificada: solo maneja JWT propio
-  function extractJwtFromHash() {
+  function extractJwtFromHash(): boolean {
     if (window.location.hash.includes('access_token=')) {
       const params = new URLSearchParams(window.location.hash.substring(1));
       const jwt = params.get('access_token');
@@ -40,17 +42,29 @@
       if (extractJwtFromHash()) {
         await authStore.init();
         isInitializing = false;
+        
+        // Si es móvil y está autenticado, redirigir a captura móvil
+        const authState = authStore.getState();
+        if (isMobileDevice() && authState.isAuthenticated) {
+          push('/mobile/capture');
+        }
         return;
       }
       // Inicialización normal
       await authStore.init();
+      
+      // Si es móvil y está autenticado, redirigir a captura móvil
+      const authState = authStore.getState();
+      if (isMobileDevice() && authState.isAuthenticated) {
+        push('/mobile/capture');
+      }
     } catch (error) {
       console.error("Error al inicializar:", error);
       
       // Recuperación de emergencia con datos Google
       const email = localStorage.getItem('google_email');
       if (email && localStorage.getItem('token_type') === 'google') {
-        authStore.forceAuthenticated({
+        authStore.setUser({
           id: 0,
           email: email,
           full_name: localStorage.getItem('google_name') || 'Usuario de Google',
@@ -86,34 +100,63 @@
   
   // Definición de rutas
   import DataViewer from './components/data/DataViewer.svelte';
+  import MobileCaptureView from './components/mobile/MobileCaptureView.svelte';
+  
+  // Función para redirigir a la captura móvil si corresponde
+  function redirectMobileToCapture() {
+    // Solo redirigir si es un móvil y el usuario está autenticado
+    if (isMobileDevice() && isAuthenticated()) {
+      // Solo redirigir si el usuario no está ya en /mobile/capture
+      if (window.location.hash !== '#/mobile/capture') {
+        push('/mobile/capture');
+        return false;
+      }
+    }
+    return true;
+  }
 
-const routes = {
-    '/': Home,
-    '/login': Login,
-    '/register': Register,
-    '/auth/callback': GoogleCallback,
+  // Asegurar que todos los componentes sean tratados como ComponentType
+  const HomeComponent = Home as unknown as ComponentType;
+  const LoginComponent = Login as unknown as ComponentType;
+  const RegisterComponent = Register as unknown as ComponentType;
+  const GoogleCallbackComponent = GoogleCallback as unknown as ComponentType;
+  const ProfileComponent = Profile as unknown as ComponentType;
+  const DashboardComponent = Dashboard as unknown as ComponentType;
+  const DataViewerComponent = DataViewer as unknown as ComponentType;
+  const GoalsComponent = Goals as unknown as ComponentType;
+  const MobileCaptureComponent = MobileCaptureView as unknown as ComponentType;
+
+  const routes = {
+    '/': HomeComponent,
+    '/login': LoginComponent,
+    '/register': RegisterComponent,
+    '/auth/callback': GoogleCallbackComponent,
     '/profile': wrap({
-      component: Profile,
+      component: ProfileComponent,
       conditions: [redirectIfNotAuthenticated]
     }),
     '/user/settings': wrap({
-      component: Profile,
+      component: ProfileComponent,
       conditions: [redirectIfNotAuthenticated]
     }),
     '/dashboard': wrap({
-      component: Dashboard,
-      conditions: [redirectIfNotAuthenticated]
+      component: DashboardComponent,
+      conditions: [redirectIfNotAuthenticated, redirectMobileToCapture]
     }),
     '/data': wrap({
-      component: DataViewer,
-      conditions: [redirectIfNotAuthenticated]
+      component: DataViewerComponent,
+      conditions: [redirectIfNotAuthenticated, redirectMobileToCapture]
     }),
     '/goals': wrap({
-      component: Goals,
+      component: GoalsComponent,
+      conditions: [redirectIfNotAuthenticated, redirectMobileToCapture]
+    }),
+    '/mobile/capture': wrap({
+      component: MobileCaptureComponent,
       conditions: [redirectIfNotAuthenticated]
     }),
     // Ruta por defecto (404)
-    '*': Home
+    '*': HomeComponent
   };
 </script>
 

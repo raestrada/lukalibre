@@ -2,7 +2,8 @@
   // Importamos los iconos de Feather que vamos a utilizar
   import { 
     CloudOff, CloudCheck, ArrowDown, ArrowUp, RefreshCw,
-    ChevronDown, ChevronUp, Download, Upload, Power
+    ChevronDown, ChevronUp, Download, Upload, Power,
+    Database, Maximize, AlertCircle
   } from 'feather-icons';
   
   // Nombre del icono que queremos mostrar
@@ -27,7 +28,10 @@
     "chevron-up": ChevronUp,
     "download": Download,
     "upload": Upload,
-    "power": Power
+    "power": Power,
+    "database": Database,
+    "maximize": Maximize,
+    "alert-circle": AlertCircle
   };
   
   // Convertir el objeto de icono a HTML
