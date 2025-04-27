@@ -1,10 +1,11 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { slide } from 'svelte/transition';
   import * as dashboardService from '../../services/dashboardService';
   import Card from '../common/Card.svelte';
   import Icon from '../common/Icon.svelte';
   import StatusMessage from '../common/StatusMessage.svelte';
+  import ExpandablePanel from '../common/ExpandablePanel.svelte';
+  import ColorCodedItem from '../common/ColorCodedItem.svelte';
   
   // Props y estado local
   export let alertsData: Record<string, any> | null = null;
@@ -98,13 +99,13 @@
     }
   }
   
-  function getTipoAlertaClass(tipo: string): string {
+  function getTipoAlertaType(tipo: string): 'default' | 'success' | 'warning' | 'info' | 'danger' {
     switch(tipo.toLowerCase()) {
-      case 'peligro': return 'alert-danger';
-      case 'advertencia': return 'alert-warning';
-      case 'informacion': return 'alert-info';
-      case 'exito': return 'alert-success';
-      default: return 'alert-default';
+      case 'peligro': return 'danger';
+      case 'advertencia': return 'warning';
+      case 'informacion': return 'info';
+      case 'exito': return 'success';
+      default: return 'default';
     }
   }
   
@@ -156,38 +157,31 @@
     {#if alerts.alertas && alerts.alertas.length > 0}
       <div class="alerts-list">
         {#each alerts.alertas as alerta, index}
-          <div class="alert-item {getTipoAlertaClass(alerta.tipo)}">
-            <Card variant="outline">
-              <div class="alert-header" on:click={() => toggleAlertExpanded(index)} on:keydown={(e) => e.key === 'Enter' && toggleAlertExpanded(index)} tabindex="0" role="button" aria-expanded={expanded[index]} aria-controls={`alert-details-${index}`}>
-                <div class="alert-title">
-                  <Icon name={getTipoAlertaIcon(alerta.tipo)} />
-                  <h4>{alerta.titulo}</h4>
-                </div>
-                <div class="alert-metadata">
-                  {#if alerta.categoria}
-                    <span class="alert-category">{alerta.categoria}</span>
-                  {/if}
-                  {#if alerta.vencimiento}
-                    <span class="alert-date">Vence: {formatDate(alerta.vencimiento)}</span>
-                  {/if}
-                  <Icon name={expanded[index] ? 'chevron-up' : 'chevron-down'} />
-                </div>
-              </div>
+          <ExpandablePanel
+            title={alerta.titulo}
+            subtitle={alerta.categoria || ''}
+            icon={getTipoAlertaIcon(alerta.tipo)}
+            type={getTipoAlertaType(alerta.tipo)}
+            borderPosition="left"
+            bind:expanded={expanded[index]}
+          >
+            <svelte:fragment slot="header-end">
+              {#if alerta.vencimiento}
+                <span class="alert-date">Vence: {formatDate(alerta.vencimiento)}</span>
+              {/if}
+            </svelte:fragment>
             
-            {#if expanded[index]}
-              <div id={`alert-details-${index}`} class="alert-details" transition:slide={{ duration: 300 }}>
-                <p class="alert-message">{alerta.mensaje}</p>
-                
-                {#if alerta.accion_recomendada}
-                  <div class="alert-action">
-                    <h5>Acción recomendada:</h5>
-                    <p>{alerta.accion_recomendada}</p>
-                  </div>
-                {/if}
-              </div>
-            {/if}
-          </Card>
-        </div>
+            <div class="alert-content">
+              <p class="alert-message">{alerta.mensaje}</p>
+              
+              {#if alerta.accion_recomendada}
+                <div class="alert-action">
+                  <h5>Acción recomendada:</h5>
+                  <p>{alerta.accion_recomendada}</p>
+                </div>
+              {/if}
+            </div>
+          </ExpandablePanel>
         {/each}
       </div>
     {:else}
@@ -222,7 +216,7 @@
     border-radius: var(--radius-md);
     padding: var(--space-md);
     background: var(--surface);
-    box-shadow: 0 1px 3px var(--shadow);
+    box-shadow: var(--shadow-sm);
   }
   
   @media (min-width: 768px) {
@@ -280,96 +274,31 @@
     margin-bottom: var(--space-md);
   }
   
-  .alert-item {
-    position: relative;
-    margin-bottom: var(--space-sm);
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  
-  .alert-item::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 4px;
-    border-radius: 4px 0 0 4px;
-  }
-  
-  .alert-item:hover {
-    transform: translateY(-2px);
-  }
-  
-  .alert-danger::before {
-    background-color: var(--danger);
-  }
-  
-  .alert-warning::before {
-    background-color: var(--warning);
-  }
-  
-  .alert-info::before {
-    background-color: var(--info);
-  }
-  
-  .alert-success::before {
-    background-color: var(--success);
-  }
-  
-  .alert-header {
+  .alerts-list {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: var(--space-sm) var(--space-md);
-    cursor: pointer;
-    width: 100%;
-  }
-  
-  .alert-title {
-    display: flex;
-    align-items: center;
+    flex-direction: column;
     gap: var(--space-sm);
-  }
-  
-  .alert-title h4 {
-    margin: 0;
-    font-size: 1rem;
-    font-weight: 600;
-  }
-  
-  .alert-metadata {
-    display: flex;
-    align-items: center;
-    gap: var(--space-sm);
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-  }
-  
-  .alert-category {
-    padding: 2px 8px;
-    border-radius: 12px;
-    background: var(--surface-secondary);
-    text-transform: capitalize;
+    margin-bottom: var(--space-md);
   }
   
   .alert-date {
     white-space: nowrap;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
   }
   
-  .alert-details {
-    padding: var(--space-md);
-    border-top: 1px solid var(--border);
-    background: var(--surface-secondary);
-    border-radius: 0 0 var(--radius-md) var(--radius-md);
+  .alert-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
   }
   
   .alert-message {
-    margin-top: 0;
+    margin: 0;
     line-height: 1.5;
   }
   
   .alert-action {
-    margin-top: var(--space-md);
     padding-top: var(--space-sm);
     border-top: 1px dashed var(--border);
   }
