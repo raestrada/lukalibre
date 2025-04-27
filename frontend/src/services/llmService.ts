@@ -74,26 +74,43 @@ export async function callLLMService(formData: FormData): Promise<LLMResponse> {
   }
 }
 
+// Importar los archivos de prompts
+import identifySchemaPrompt from '../prompts/identify_schema.md?raw';
+import extractDataPrompt from '../prompts/extract_data.md?raw';
+import recommendationClPrompt from '../prompts/recommendation_cl.md?raw';
+import dashboardHtmlReportClPrompt from '../prompts/dashboard_html_report_cl.md?raw';
+import dashboardBalanceReportClPrompt from '../prompts/dashboard_balance_report_cl.md?raw';
+
 // Define interfaces para los posibles formatos de templates
 interface TemplatesResponse {
   default?: Record<string, string>;
   [key: string]: any;
 }
 
+// Crear un mapa de todos los prompts disponibles
+const promptTemplates: Record<string, string> = {
+  'identify_schema': identifySchemaPrompt,
+  'extract_data': extractDataPrompt,
+  'recommendation_cl': recommendationClPrompt,
+  'dashboard_html_report_cl': dashboardHtmlReportClPrompt,
+  'dashboard_balance_report_cl': dashboardBalanceReportClPrompt
+};
+
 export async function getPromptTemplates(): Promise<TemplatesResponse> {
-  // Siempre pide los templates frescos del backend, sin cache
-  const resp = await httpService.get('/prompts/templates');
-  return resp.data as TemplatesResponse;
+  // En lugar de pedir al backend, devuelve directamente los prompts cargados desde archivos
+  return {
+    default: promptTemplates
+  };
 }
 
 export async function identifySchema(file: File, availableSchemas: string[]): Promise<string> {
   // Construir prompt y formData igual para ambos flujos
   const templates = await getPromptTemplates();
-  if (!templates['identify_schema']) {
-    throw new Error('No se encontró el prompt "identify_schema" en los templates del backend.');
+  if (!templates.default || !templates.default['identify_schema']) {
+    throw new Error('No se encontró el prompt "identify_schema" en los templates.');
   }
   
-  let prompt = templates['identify_schema'];
+  let prompt = templates.default['identify_schema'];
   prompt = prompt
     .replace(/\{\{schemas\}\}/g, availableSchemas.join(', '))
     .replace(/\{\{content\}\}/g, 'en el archivo adjunto');
@@ -122,11 +139,11 @@ export async function extractAndInsertData(file: File, schemaName: string, schem
   
   // Construir prompt y formData igual para ambos flujos
   const templates = await getPromptTemplates();
-  if (!templates['extract_data']) {
-    throw new Error('No se encontró el prompt "extract_data" en los templates del backend.');
+  if (!templates.default || !templates.default['extract_data']) {
+    throw new Error('No se encontró el prompt "extract_data" en los templates.');
   }
   
-  let prompt = templates['extract_data'];
+  let prompt = templates.default['extract_data'];
   
   // Solo reemplazar {{tables}} como lo hacía el backend original
   // No usamos schema_json para ser consistentes con el funcionamiento original

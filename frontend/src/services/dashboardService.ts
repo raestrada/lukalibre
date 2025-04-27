@@ -63,25 +63,18 @@ export async function generateFinancialBalance(): Promise<any> {
     // 1. Exportar toda la base de datos a JSON
     const dbData = await exportDatabaseToJson();
     
-    // 2. Obtener el template de prompt para el balance
+    // 2. Obtener el template de prompt para el balance desde archivos Markdown
     const templates = await llmService.getPromptTemplates();
-    if (!templates || typeof templates !== 'object') {
+    if (!templates.default) {
       throw new Error('El formato de los templates no es válido');
     }
     
     // Usar el template específico para el balance financiero
     const templateKey = 'dashboard_balance_report_cl';
-    let templateContent: string;
-    
-    if ('default' in templates && typeof templates.default === 'object') {
-      const defaultTemplates = templates.default as Record<string, string>;
-      templateContent = defaultTemplates[templateKey];
-    } else {
-      templateContent = (templates as Record<string, string>)[templateKey];
-    }
+    let templateContent = templates.default[templateKey];
     
     if (!templateContent) {
-      throw new Error(`No se encontró el template '${templateKey}' para el balance. Por favor ejecuta la migración Alembic para añadir el template '${templateKey}'.`);
+      throw new Error(`No se encontró el template '${templateKey}' para el balance. Verifica que exista el archivo correspondiente en la carpeta de prompts.`);
     }
     
     // Reemplazar el marcador {{user_json}} con los datos reales
@@ -148,29 +141,18 @@ export async function generateDashboardReport(): Promise<any> {
     // 1. Exportar toda la base de datos a JSON
     const dbData = await exportDatabaseToJson();
     
-    // 2. Obtener el template de prompt para el dashboard
+    // 2. Obtener el template de prompt para el dashboard desde archivos Markdown
     const templates = await llmService.getPromptTemplates();
-    // Verificar si los templates están en el formato esperado
-    if (!templates || typeof templates !== 'object') {
+    if (!templates.default) {
       throw new Error('El formato de los templates no es válido');
     }
     
-    // Manejar la estructura { default: { ... } } si es necesario
-    // Usar el template HTML existente temporalmente
-    const templateKey = 'dashboard_html_report_cl'; // Usar el template existente que ya funciona
-    let templateContent: string;
-    
-    if ('default' in templates && typeof templates.default === 'object') {
-      // Si viene en formato { default: { key1: value1, key2: value2 } }
-      const defaultTemplates = templates.default as Record<string, string>;
-      templateContent = defaultTemplates[templateKey];
-    } else {
-      // Si viene en formato { key1: value1, key2: value2 }
-      templateContent = (templates as Record<string, string>)[templateKey];
-    }
+    // Usar el template HTML para el reporte del dashboard
+    const templateKey = 'dashboard_html_report_cl';
+    let templateContent = templates.default[templateKey];
     
     if (!templateContent) {
-      throw new Error('No se encontró el template para el reporte de dashboard');
+      throw new Error(`No se encontró el template '${templateKey}' en templates. Verifica que exista el archivo correspondiente en la carpeta de prompts.`);
     }
     
     // Añadir instrucción para respuesta en JSON crudo en lugar de HTML
