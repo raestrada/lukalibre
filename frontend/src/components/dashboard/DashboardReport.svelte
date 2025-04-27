@@ -114,6 +114,14 @@
     }
   }
   
+  function clearErrorMessage() {
+    error = null;
+  }
+  
+  function clearSuccessMessage() {
+    success = null;
+  }
+  
   async function handleGenerateBalance() {
     loading = true;
     error = null;
@@ -206,10 +214,10 @@
             recomendaciones automáticas y alertas específicas para Chile.
           </p>
           {#if error}
-            <StatusMessage type="error" message={error} />
+            <StatusMessage type="error" message={error} onClose={clearErrorMessage} />
           {/if}
           {#if success}
-            <StatusMessage type="success" message={success} />
+            <StatusMessage type="success" message={success} onClose={clearSuccessMessage} />
           {/if}
           <div class="actions">
             <Button
@@ -241,10 +249,10 @@
             ratios financieros y recomendaciones específicas para Chile.
           </p>
           {#if error}
-            <StatusMessage type="error" message={error} />
+            <StatusMessage type="error" message={error} onClose={clearErrorMessage} />
           {/if}
           {#if success}
-            <StatusMessage type="success" message={success} />
+            <StatusMessage type="success" message={success} onClose={clearSuccessMessage} />
           {/if}
           <div class="actions">
             <Button
@@ -276,10 +284,10 @@
             de patrones de gasto, oportunidades de ahorro y consejos específicos para Chile.
           </p>
           {#if error}
-            <StatusMessage type="error" message={error} />
+            <StatusMessage type="error" message={error} onClose={clearErrorMessage} />
           {/if}
           {#if success}
-            <StatusMessage type="success" message={success} />
+            <StatusMessage type="success" message={success} onClose={clearSuccessMessage} />
           {/if}
           <div class="actions">
             <Button
