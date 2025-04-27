@@ -5,6 +5,7 @@
   import Card from '../common/Card.svelte';
   import Icon from '../common/Icon.svelte';
   import { generateDashboardReport } from '../../services/dashboardService';
+  import { onMount } from 'svelte';
   
   const log = createLogger('DashboardReport');
   
@@ -12,6 +13,19 @@
   let error: string | null = null;
   let success: string | null = null;
   let reportHTML: string | null = null;
+  let lastReportDate: string | null = null;
+
+  const LS_REPORT_KEY = 'dashboard_last_report_html';
+  const LS_REPORT_DATE_KEY = 'dashboard_last_report_date';
+
+  onMount(() => {
+    const cached = localStorage.getItem(LS_REPORT_KEY);
+    const cachedDate = localStorage.getItem(LS_REPORT_DATE_KEY);
+    if (cached) {
+      reportHTML = cached;
+      lastReportDate = cachedDate;
+    }
+  });
   
   async function handleGenerateReport() {
     loading = true;
@@ -21,6 +35,10 @@
     
     try {
       reportHTML = await generateDashboardReport();
+      const now = new Date();
+      lastReportDate = now.toISOString();
+      localStorage.setItem(LS_REPORT_KEY, reportHTML);
+      localStorage.setItem(LS_REPORT_DATE_KEY, lastReportDate);
       success = 'Reporte generado correctamente';
     } catch (err: any) {
       error = `Error al generar el reporte: ${err.message}`;
@@ -32,6 +50,9 @@
   
   function clearReport() {
     reportHTML = null;
+    lastReportDate = null;
+    localStorage.removeItem(LS_REPORT_KEY);
+    localStorage.removeItem(LS_REPORT_DATE_KEY);
     success = null;
     error = null;
   }
@@ -42,6 +63,12 @@
   <div class="card-title">
     <Icon icon="assessment" />
     <span>Dashboard Financiero</span>
+    {#if lastReportDate}
+      <span class="last-report-badge">
+        <span class="material-icons" style="font-size:1em;vertical-align:middle;">event</span>
+        Último reporte: {new Date(lastReportDate).toLocaleString('es-CL')}
+      </span>
+    {/if}
   </div>
   <div class="card-content">
     <p class="description">
@@ -184,4 +211,21 @@
     border-radius: var(--border-radius);
     margin-bottom: var(--space-md);
   }
+.last-report-badge {
+  display: inline-flex;
+  align-items: center;
+  background: #e3f0fc;
+  color: #1565c0;
+  border-radius: 8px;
+  font-size: 0.93em;
+  font-weight: 600;
+  padding: 0.18em 0.85em 0.18em 0.5em;
+  margin-left: 1em;
+  box-shadow: 0 1px 4px rgba(25,118,210,0.07);
+}
+.last-report-badge .material-icons {
+  margin-right: 0.35em;
+  color: #1976d2;
+}
+
 </style>
