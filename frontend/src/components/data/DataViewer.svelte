@@ -4,6 +4,7 @@
   import Card from '../common/Card.svelte';
   import Icon from '../common/Icon.svelte';
   import StatusMessage from '../common/StatusMessage.svelte';
+  import Table from '../common/Table.svelte';
 
   // Importar el servicio de base de datos
   import databaseService from '../../services/databaseService';
@@ -127,31 +128,25 @@
         {#if activeTab && tableData[activeTab]}
           {#if filteredData.length > 0}
             <div class="responsive-table-wrapper">
-              <table class="data-table">
-                <thead>
-                  <tr>
-                    {#each tableColumns[activeTab] || [] as col}
-                      <th>{col}</th>
-                    {/each}
-                  </tr>
-                </thead>
-                <tbody>
-                  {#each filteredData as row}
-                    <tr>
-                      {#each tableColumns[activeTab] || [] as col}
-                        <td>
-                          <div 
-                            class="cell-content {isEmptyValue(row[col]) ? 'empty-value' : ''}"
-                            title={formatCellValue(row[col])}
-                          >
-                            {formatCellValue(row[col])}
-                          </div>
-                        </td>
-                      {/each}
-                    </tr>
-                  {/each}
-                </tbody>
-              </table>
+              <Table
+                columns={tableColumns[activeTab] || []}
+                rows={filteredData}
+                {formatCellValue}
+                {isEmptyValue}
+              >
+                <div slot="empty">
+                  {#if searchTerm}
+                    <Icon name="search" size={24} />
+                    <p>No se encontraron resultados para "{searchTerm}"</p>
+                    <button class="reset-search" on:click={() => searchTerm = ''}>
+                      Mostrar todos los datos
+                    </button>
+                  {:else}
+                    <Icon name="database" size={24} />
+                    <p>No hay datos en esta tabla</p>
+                  {/if}
+                </div>
+              </Table>
             </div>
             <div class="table-footer">
               Mostrando {filteredData.length} de {tableData[activeTab].length} registros
