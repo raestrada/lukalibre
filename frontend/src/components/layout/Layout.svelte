@@ -4,6 +4,7 @@
   import { onMount } from 'svelte';
   import { authStore } from '../../stores/authStore';
   import authService from '../../services/authService';
+  import { location } from 'svelte-spa-router';
   // Iniciamos como inicializando y App.svelte se encargará de actualizar
   let isInitializing = true;
   function handleLogout() {
@@ -92,7 +93,7 @@
 <div class="app">
   <Header {isInitializing} />
   <div class="layout-main">
-    {#if !['/', '/login', '/register'].includes(window.location.pathname) && $authStore.isAuthenticated}
+    {#if !['/', '/login', '/register'].includes($location) && $authStore.isAuthenticated}
       <Sidebar onLogout={handleLogout} onSettings={handleSettings} />
     {/if}
     <main class="main">
