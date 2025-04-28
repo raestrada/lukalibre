@@ -10,21 +10,21 @@
   export let type: 'default' | 'success' | 'warning' | 'info' | 'danger' = 'default';
   export let borderPosition: 'left' | 'top' | 'none' = 'left';
   export let iconPosition: 'start' | 'end' = 'start';
-  
+
   // Classes basadas en el tipo
   const typeClasses = {
     default: '',
     success: 'panel-success',
     warning: 'panel-warning',
     info: 'panel-info',
-    danger: 'panel-danger'
+    danger: 'panel-danger',
   };
 
   // Clases para la posición del borde
   const borderClasses = {
     left: 'border-left',
     top: 'border-top',
-    none: ''
+    none: '',
   };
 
   function toggleExpanded() {
@@ -38,7 +38,7 @@
     on:click={toggleExpanded}
     on:keydown={(e) => e.key === 'Enter' && toggleExpanded()}
     tabindex="0"
-    role="button" 
+    role="button"
     aria-expanded={expanded}
     aria-controls="panel-content"
   >
@@ -91,7 +91,9 @@
     background-color: var(--surface);
     box-shadow: var(--shadow-sm);
     overflow: hidden;
-    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    transition:
+      transform var(--transition-fast),
+      box-shadow var(--transition-fast);
   }
 
   .expandable-panel:hover {

@@ -9,8 +9,10 @@ export function isMobileDevice(): boolean {
 
 // Detector de tablet
 export function isTabletDevice(): boolean {
-  return /iPad|Android(?!.*Mobile)/i.test(navigator.userAgent) || 
-         (isMobileDevice() && window.innerWidth >= 768);
+  return (
+    /iPad|Android(?!.*Mobile)/i.test(navigator.userAgent) ||
+    (isMobileDevice() && window.innerWidth >= 768)
+  );
 }
 
 // Detector de dispositivo de escritorio
@@ -28,14 +30,18 @@ export function getOrientation(): 'portrait' | 'landscape' {
 }
 
 // Escuchar cambios de orientación
-export function addOrientationChangeListener(callback: (orientation: 'portrait' | 'landscape') => void): void {
+export function addOrientationChangeListener(
+  callback: (orientation: 'portrait' | 'landscape') => void,
+): void {
   window.addEventListener('resize', () => {
     callback(getOrientation());
   });
 }
 
 // Remover listener de orientación
-export function removeOrientationChangeListener(callback: (orientation: 'portrait' | 'landscape') => void): void {
+export function removeOrientationChangeListener(
+  callback: (orientation: 'portrait' | 'landscape') => void,
+): void {
   window.removeEventListener('resize', () => {
     callback(getOrientation());
   });
@@ -46,10 +52,10 @@ export async function isCameraAvailable(): Promise<boolean> {
   if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) {
     return false;
   }
-  
+
   try {
     const devices = await navigator.mediaDevices.enumerateDevices();
-    return devices.some(device => device.kind === 'videoinput');
+    return devices.some((device) => device.kind === 'videoinput');
   } catch (e) {
     console.error('Error al verificar la disponibilidad de la cámara:', e);
     return false;
@@ -70,6 +76,6 @@ export function getDeviceInfo() {
     orientation: getOrientation(),
     browserInfo: navigator.userAgent,
     screenWidth: window.innerWidth,
-    screenHeight: window.innerHeight
+    screenHeight: window.innerHeight,
   };
 }

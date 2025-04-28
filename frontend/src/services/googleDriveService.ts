@@ -12,9 +12,7 @@ const DB_MIME_TYPE = 'application/octet-stream';
 const DEFAULT_SYNC_INTERVAL = 30 * 60 * 1000;
 
 // Alcances requeridos para Google Drive
-const SCOPES = [
-  'https://www.googleapis.com/auth/drive.file'
-];
+const SCOPES = ['https://www.googleapis.com/auth/drive.file'];
 
 // Definir los tipos necesarios para GAPI
 interface GoogleAuth {
@@ -43,7 +41,10 @@ interface GoogleDriveFile {
 declare global {
   interface Window {
     gapi: {
-      load: (libraries: string, options: { callback: () => void; onerror: (error: any) => void }) => void;
+      load: (
+        libraries: string,
+        options: { callback: () => void; onerror: (error: any) => void },
+      ) => void;
       client: {
         init: (options: any) => Promise<void>;
         drive: any;
@@ -58,9 +59,9 @@ declare global {
       accounts: {
         oauth2: {
           initTokenClient: (config: any) => {
-            requestAccessToken: (options?: any) => Promise<{access_token: string}>;
+            requestAccessToken: (options?: any) => Promise<{ access_token: string }>;
           };
-        }
+        };
       };
     };
   }
@@ -82,23 +83,23 @@ class GoogleDriveService {
 
     try {
       log.info('Inicializando Google Drive API');
-      
+
       // Verificar si estamos esperando un token de autenticación
       const isPending = localStorage.getItem('pendingGoogleAuth');
       if (isPending === 'true') {
         log.info('Detectada autorización pendiente, esperando resultado...');
-        
+
         // Si estamos aquí, significa que acabamos de ser redirigido desde la página de auth callback
         // Dar tiempo a que el callback procese el token antes de continuar
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+
         // Limpiamos el estado pendiente
         localStorage.removeItem('pendingGoogleAuth');
       }
-      
+
       // 1. Intentar extraer el token de acceso de la URL (después de la redirección de OAuth)
       this.extractTokenFromUrl();
-      
+
       // 2. Si no tenemos token en la URL, intentar obtenerlo de localStorage
       if (!this.accessToken) {
         const savedToken = localStorage.getItem('googleDriveToken');
@@ -107,12 +108,12 @@ class GoogleDriveService {
           this.accessToken = savedToken;
         }
       }
-      
+
       // 3. Si todavía no tenemos token, intentar otras formas
       if (!this.accessToken) {
         await this.getAccessToken();
       }
-      
+
       this.gapiInitialized = true;
       log.info('Google Drive API inicializada correctamente');
     } catch (error) {
@@ -131,11 +132,11 @@ class GoogleDriveService {
       // Convertir el fragmento de URL hash en un objeto
       const params = new URLSearchParams(hash.substring(1)); // Quitar el # inicial
       const accessToken = params.get('access_token');
-      
+
       if (accessToken) {
         log.info('Token de acceso extraído de la URL');
         this.accessToken = accessToken;
-        
+
         // Limpiar la URL para no mostrar el token
         window.history.replaceState({}, document.title, window.location.pathname);
       }
@@ -158,7 +159,7 @@ class GoogleDriveService {
         this.accessToken = savedToken;
         return this.accessToken;
       }
-      
+
       // 2. Comprobar si gapi está disponible y el cliente está inicializado
       if (window.gapi && window.gapi.client) {
         try {
@@ -167,17 +168,17 @@ class GoogleDriveService {
           if (tokenInfo && tokenInfo.access_token) {
             this.accessToken = tokenInfo.access_token;
             log.info('Token de acceso obtenido desde gapi.client');
-            
+
             // Guardar el token para futuras sesiones
             localStorage.setItem('googleDriveToken', this.accessToken);
-            
+
             return this.accessToken;
           }
         } catch (gapiError) {
           log.warn('No se pudo obtener token desde gapi.client:', gapiError);
         }
       }
-      
+
       // 3. Si no se pudo obtener el token por ninguno de los métodos, redireccionar para autorización
       log.info('Redireccionando para autorización OAuth...');
       this.redirectToGoogleAuth();
@@ -193,35 +194,34 @@ class GoogleDriveService {
    */
   private redirectToGoogleAuth(): void {
     const authUrl = 'https://accounts.google.com/o/oauth2/v2/auth';
-    
+
     // Usar exactamente el URI de redirección que está registrado en la consola de Google Cloud
     const redirectUri = `${API_URL}/auth/google/callback`;
 
-    
     // Guardar la URL actual para volver después de la autenticación
     const returnToUrl = window.location.href;
     localStorage.setItem('googleAuthReturnUrl', returnToUrl);
-    
+
     const params = new URLSearchParams({
       scope: SCOPES.join(' '),
       client_id: '925447738867-05dtp8ffuohbj9jhnfbd27grkn0m1bad.apps.googleusercontent.com',
       redirect_uri: redirectUri,
       // Usar code en lugar de token para evitar problemas de validación
       response_type: 'code',
-      // Indicar que es una aplicación en modo de desarrollo 
+      // Indicar que es una aplicación en modo de desarrollo
       include_granted_scopes: 'true',
       prompt: 'consent',
-      state: 'googleDriveAuth'
+      state: 'googleDriveAuth',
     });
 
     // Guardar en localStorage que estamos esperando una respuesta de Google
     localStorage.setItem('pendingGoogleAuth', 'true');
-    
+
     window.location.href = `${authUrl}?${params.toString()}`;
   }
 
   /**
-   * Verifica si el usuario está autenticado con Google 
+   * Verifica si el usuario está autenticado con Google
    * y tiene acceso a Drive
    * @param forceRedirect Si es true, redirige a la página de autenticación si no está autenticado
    */
@@ -232,7 +232,7 @@ class GoogleDriveService {
         log.info('Ya existe un token de acceso, usuario autenticado');
         return true;
       }
-      
+
       // Intentar obtener el token de localStorage
       const savedToken = localStorage.getItem('googleDriveToken');
       if (savedToken) {
@@ -240,7 +240,7 @@ class GoogleDriveService {
         this.accessToken = savedToken;
         return true;
       }
-      
+
       // Intentar obtener el token del navegador si está disponible
       if (window.gapi && window.gapi.client) {
         try {
@@ -255,7 +255,7 @@ class GoogleDriveService {
           log.warn('No se pudo obtener token de gapi.client:', error);
         }
       }
-      
+
       // Aquí es donde decidiríamos si redirigir o no
       if (forceRedirect) {
         // Solo redirigir si explícitamente se solicita
@@ -265,7 +265,7 @@ class GoogleDriveService {
       } else {
         log.info('Usuario no autenticado, pero no se fuerza redirección');
       }
-      
+
       return false;
     } catch (error) {
       log.error('Error verificando autenticación:', error);
@@ -280,10 +280,10 @@ class GoogleDriveService {
   async findDatabaseFile(): Promise<GoogleDriveFile | null> {
     try {
       log.info('Buscando archivo de base de datos en Google Drive');
-      
+
       // Asegurar que exista un token de acceso
       await this.initialize();
-      
+
       // Intentar obtener el token directamente del navegador si está disponible
       let token = this.accessToken;
       if (!token && window.gapi?.client?.getToken) {
@@ -293,38 +293,38 @@ class GoogleDriveService {
           log.info('Usando token existente del navegador para buscar archivo');
         }
       }
-      
+
       if (!token) {
         log.info('No se encontró token en el navegador, obteniendo mediante OAuth');
         token = await this.getAccessToken();
       }
-      
+
       // Construir la consulta para buscar en la carpeta principal (no en appDataFolder)
       const query = encodeURIComponent(`name='${DB_FILE_NAME}' and trashed=false`);
-      
+
       // Realizar solicitud REST directa para buscar el archivo
       const response = await fetch(
         `https://www.googleapis.com/drive/v3/files?q=${query}&spaces=drive&fields=files(id,name,modifiedTime,size)`,
         {
           headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        }
+            Authorization: `Bearer ${token}`,
+          },
+        },
       );
-      
+
       if (!response.ok) {
         const errorText = await response.text();
         log.error('Error al buscar archivo:', errorText);
         throw new Error(`Error al buscar archivo en Google Drive: ${response.status}`);
       }
-      
+
       const data = await response.json();
-      
+
       if (data.files && data.files.length > 0) {
         log.info('Archivo encontrado:', data.files[0].id);
         return data.files[0] as GoogleDriveFile;
       }
-      
+
       log.info('Archivo no encontrado');
       return null;
     } catch (error) {
@@ -341,9 +341,9 @@ class GoogleDriveService {
   async downloadDatabaseFile(fileId: string): Promise<Blob> {
     try {
       log.info('Descargando archivo de base de datos:', fileId);
-      
+
       await this.initialize();
-      
+
       // Intentar obtener el token directamente del navegador si está disponible
       let token = this.accessToken;
       if (!token && window.gapi?.client?.getToken) {
@@ -353,28 +353,28 @@ class GoogleDriveService {
           log.info('Usando token existente del navegador para descargar archivo');
         }
       }
-      
+
       if (!token) {
         log.info('No se encontró token en el navegador, obteniendo mediante OAuth');
         token = await this.getAccessToken();
       }
-      
+
       // Realizar solicitud REST directa para descargar el archivo
       const response = await fetch(
         `https://www.googleapis.com/drive/v3/files/${fileId}?alt=media`,
         {
           headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        }
+            Authorization: `Bearer ${token}`,
+          },
+        },
       );
-      
+
       if (!response.ok) {
         const errorText = await response.text();
         log.error('Error al descargar archivo:', errorText);
         throw new Error(`Error al descargar archivo desde Google Drive: ${response.status}`);
       }
-      
+
       const blob = await response.blob();
       log.info('Archivo descargado correctamente:', fileId, `(${blob.size} bytes)`);
       return blob;
@@ -392,9 +392,9 @@ class GoogleDriveService {
   async uploadDatabaseFile(fileData: Uint8Array | Blob): Promise<{ id: string; name: string }> {
     try {
       log.info('Subiendo archivo de base de datos a Google Drive');
-      
+
       await this.initialize();
-      
+
       // Intentar obtener el token directamente del navegador si está disponible
       let token = this.accessToken;
       if (!token && window.gapi?.client?.getToken) {
@@ -404,19 +404,19 @@ class GoogleDriveService {
           log.info('Usando token existente del navegador para subir archivo');
         }
       }
-      
+
       if (!token) {
         log.info('No se encontró token en el navegador, obteniendo mediante OAuth');
         token = await this.getAccessToken();
       }
-      
+
       // Buscar si ya existe un archivo de base de datos
       const existingFile = await this.findDatabaseFile();
-      
+
       // Preparar los datos del archivo como Blob si es necesario
       const blob = fileData instanceof Blob ? fileData : new Blob([fileData]);
       log.info(`Preparado archivo para subir: ${blob.size} bytes`);
-      
+
       // Crear el FormData para la carga
       const formData = new FormData();
       const metadata = {
@@ -424,54 +424,54 @@ class GoogleDriveService {
         // Guardar en la carpeta principal (root folder)
         parents: ['root'],
         mimeType: 'application/octet-stream',
-        description: 'LukaLibre Wallet Database File'
+        description: 'LukaLibre Wallet Database File',
       };
-      
+
       log.info('Metadata para la carga:', JSON.stringify(metadata));
-      
+
       formData.append(
         'metadata',
-        new Blob([JSON.stringify(metadata)], { type: 'application/json' })
+        new Blob([JSON.stringify(metadata)], { type: 'application/json' }),
       );
-      
+
       formData.append('file', blob);
-      
+
       // URL para crear o actualizar el archivo
       const url = existingFile
         ? `https://www.googleapis.com/upload/drive/v3/files/${existingFile.id}?uploadType=multipart`
         : 'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart';
-      
+
       // Método HTTP según sea crear o actualizar
       const method = existingFile ? 'PATCH' : 'POST';
-      
+
       log.info(`Enviando solicitud ${method} a ${url}`);
-      
+
       // Realizar la solicitud REST
       const response = await fetch(url, {
         method,
         headers: {
-          'Authorization': `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
-        body: formData
+        body: formData,
       });
-      
+
       if (!response.ok) {
         const errorText = await response.text();
         log.error(`Error al subir archivo (${response.status}):`, errorText);
         throw new Error(`Error al subir archivo a Google Drive: ${response.status} - ${errorText}`);
       }
-      
+
       const result = await response.json();
       log.info('Archivo subido correctamente. ID:', result.id, 'Nombre:', result.name);
-      
+
       // Mostrar link para verificar (solo en desarrollo)
       if (process.env.NODE_ENV !== 'production') {
         log.info(`Archivo disponible en: https://drive.google.com/file/d/${result.id}/view`);
       }
-      
+
       return {
         id: result.id,
-        name: result.name
+        name: result.name,
       };
     } catch (error) {
       log.error('Error subiendo archivo:', error);
@@ -484,13 +484,16 @@ class GoogleDriveService {
    * @param interval Intervalo en milisegundos entre sincronizaciones
    * @param callback Función de callback que provee los datos a sincronizar
    */
-  startAutoSync(interval: number = DEFAULT_SYNC_INTERVAL, callback: () => Promise<Uint8Array>): void {
+  startAutoSync(
+    interval: number = DEFAULT_SYNC_INTERVAL,
+    callback: () => Promise<Uint8Array>,
+  ): void {
     // Detener cualquier sincronización existente
     this.stopAutoSync();
-    
+
     this.syncInterval = interval;
     log.info(`Iniciando sincronización automática cada ${interval / 60000} minutos`);
-    
+
     // Crear la primera sincronización inmediata
     this.syncIntervalId = window.setTimeout(async () => {
       try {
@@ -498,7 +501,7 @@ class GoogleDriveService {
       } catch (error) {
         log.error('Error en sincronización inicial:', error);
       }
-      
+
       // Configurar el intervalo recurrente
       this.syncIntervalId = window.setInterval(async () => {
         try {
@@ -528,20 +531,20 @@ class GoogleDriveService {
   private async performSync(callback: () => Promise<Uint8Array>): Promise<void> {
     try {
       log.info('Ejecutando sincronización con Google Drive');
-      
+
       // Obtener los datos actualizados de la base de datos
       const data = await callback();
-      
+
       // Subir a Google Drive
       await this.uploadDatabaseFile(data);
-      
+
       log.info('Sincronización completada exitosamente');
     } catch (error) {
       log.error('Error durante la sincronización:', error);
       throw error;
     }
   }
-  
+
   /**
    * Cierra la sesión (limpia el token de acceso)
    */
@@ -550,7 +553,7 @@ class GoogleDriveService {
     // Eliminar el token de localStorage
     localStorage.removeItem('googleDriveToken');
     localStorage.removeItem('pendingGoogleAuth');
-    
+
     // Intentar cerrar sesión en gapi si está disponible
     if (window.gapi && window.gapi.auth2) {
       try {
@@ -562,7 +565,7 @@ class GoogleDriveService {
         log.warn('Error al cerrar sesión en gapi:', error);
       }
     }
-    
+
     log.info('Sesión cerrada, token de acceso eliminado');
   }
 
@@ -573,10 +576,10 @@ class GoogleDriveService {
   setAccessToken(token: string): void {
     this.accessToken = token;
     log.info('Token de acceso establecido manualmente');
-    
+
     // También guardar en localStorage para persistencia
     localStorage.setItem('googleDriveToken', token);
   }
 }
 
-export default new GoogleDriveService(); 
+export default new GoogleDriveService();

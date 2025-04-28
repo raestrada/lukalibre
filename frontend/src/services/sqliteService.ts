@@ -19,7 +19,7 @@ class SQLiteService {
     this.config = {
       name: 'lukalibre',
       version: '1.0.0',
-      description: 'LukaLibre SQLite Database'
+      description: 'LukaLibre SQLite Database',
     };
   }
 
@@ -35,7 +35,7 @@ class SQLiteService {
       log.info('Inicializando SQLite');
       // Cargar SQL.js
       this.SQL = await initSqlJs({
-        locateFile: (file: string) => `/sql.js/${file}`
+        locateFile: (file: string) => `/sql.js/${file}`,
       });
       // Intentar cargar base de datos desde localStorage
       const stored = this.loadFromStorage();
@@ -108,7 +108,7 @@ class SQLiteService {
    */
   private createTables(): void {
     log.info('Creando tablas en la base de datos');
-    
+
     // Tabla de categorías
     this.db.exec(`
       CREATE TABLE categorias (
@@ -207,7 +207,7 @@ class SQLiteService {
         valor TEXT
       );
     `);
-    
+
     // Insertar la información de la versión en la tabla de metadata
     this.db.exec(`
       INSERT INTO metadata (clave, valor) VALUES 
@@ -215,7 +215,7 @@ class SQLiteService {
       ('nombre', '${this.config.name}'),
       ('ultima_sincronizacion', '${new Date().toISOString()}');
     `);
-    
+
     log.info('Tablas creadas correctamente');
   }
 
@@ -226,7 +226,7 @@ class SQLiteService {
     if (!this.db) {
       throw new Error('La base de datos no está inicializada');
     }
-    
+
     try {
       log.info('Exportando base de datos');
       return this.db.export();
@@ -246,18 +246,18 @@ class SQLiteService {
     if (!this.db) {
       throw new Error('La base de datos no está inicializada');
     }
-    
+
     try {
       log.debug('Ejecutando consulta SQL:', sql);
       const stmt = this.db.prepare(sql);
       stmt.bind(params);
-      
+
       const results = [];
       while (stmt.step()) {
         results.push(stmt.getAsObject());
       }
       stmt.free();
-      
+
       return results;
     } catch (error) {
       log.error('Error ejecutando consulta SQL:', error);
@@ -294,18 +294,18 @@ class SQLiteService {
     if (!this.db) {
       throw new Error('La base de datos no está inicializada');
     }
-    
+
     try {
       log.info('Ejecutando múltiples sentencias SQL');
-      
+
       // Dividir las sentencias SQL por punto y coma
       const statements = sqlMultiple
         .split(';')
-        .map(stmt => stmt.trim())
-        .filter(stmt => stmt.length > 0); // Filtrar sentencias vacías
-      
+        .map((stmt) => stmt.trim())
+        .filter((stmt) => stmt.length > 0); // Filtrar sentencias vacías
+
       log.info(`Se encontraron ${statements.length} sentencias SQL para ejecutar`);
-      
+
       // Ejecutar cada sentencia individualmente
       statements.forEach((sql, index) => {
         try {
@@ -316,7 +316,7 @@ class SQLiteService {
           throw new Error(`Error en la sentencia SQL #${index + 1}: ${stmtError}`);
         }
       });
-      
+
       // Persistir la base de datos después de ejecutar todas las sentencias
       const data = this.db.export();
       this.saveToStorage(data);
@@ -334,15 +334,18 @@ class SQLiteService {
     if (!this.db) {
       throw new Error('La base de datos no está inicializada');
     }
-    
+
     try {
       const timestamp = new Date().toISOString();
-      this.exec(`
+      this.exec(
+        `
         UPDATE metadata 
         SET valor = ? 
         WHERE clave = 'ultima_sincronizacion'
-      `, [timestamp]);
-      
+      `,
+        [timestamp],
+      );
+
       log.info('Timestamp de sincronización actualizado:', timestamp);
     } catch (error) {
       log.error('Error actualizando timestamp:', error);
@@ -448,4 +451,4 @@ class SQLiteService {
   }
 }
 
-export default new SQLiteService(); 
+export default new SQLiteService();

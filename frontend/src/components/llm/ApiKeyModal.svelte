@@ -42,8 +42,9 @@
       </label>
       {#if showWarning}
         <div class="warning">
-          ⚠️ Tu clave se almacenará localmente en este navegador.<br>
-          <b>Advertencia:</b> Cualquier persona con acceso a este navegador podrá ver la clave en texto plano en el almacenamiento local.<br>
+          ⚠️ Tu clave se almacenará localmente en este navegador.<br />
+          <b>Advertencia:</b> Cualquier persona con acceso a este navegador podrá ver la clave en
+          texto plano en el almacenamiento local.<br />
           No marques esta opción en computadores compartidos o públicos.
         </div>
       {/if}
@@ -57,8 +58,11 @@
 <style>
   .modal-backdrop {
     position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.4);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -107,7 +111,7 @@
     display: flex;
     justify-content: flex-end;
   }
-  input[type="password"] {
+  input[type='password'] {
     width: 100%;
     padding: 0.5rem;
     font-size: 1rem;
@@ -127,7 +131,7 @@
     font-weight: 600;
     cursor: pointer;
     transition: background 0.2s;
-    box-shadow: 0 2px 8px var(--shadow, rgba(0,0,0,0.08));
+    box-shadow: 0 2px 8px var(--shadow, rgba(0, 0, 0, 0.08));
   }
   button:disabled {
     background: var(--border);

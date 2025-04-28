@@ -8,12 +8,13 @@
     "build": "vite build",
     "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.app.json && tsc -p tsconfig.node.json",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "format-all": "prettier --write \"src/**/*.{js,ts,svelte}\" && eslint --fix \"src/**/*.{js,ts,svelte}\" && stylelint --fix \"src/**/*.{css,scss,less,styl}\""
   },
   "lint-staged": {
     "src/**/*.{js,ts,svelte}": [
       "prettier --write",
-      "eslint --fix"
+      "eslint --fix --config eslint.config.js"
     ],
     "src/**/*.{css,scss,less,styl}": [
       "stylelint --fix"
@@ -32,6 +33,7 @@
     "husky": "^8.0.0",
     "lint-staged": "^15.5.1",
     "prettier": "^3.5.3",
+    "prettier-plugin-svelte": "^3.3.3",
     "stylelint": "^16.19.1",
     "stylelint-config-standard": "^38.0.0",
     "svelte": "^5.23.1",

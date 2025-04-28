@@ -15,20 +15,22 @@ const authGuard = async () => {
   // Verificar tanto el store como el token directamente
   const { isAuthenticated } = authStore.getState();
   const hayToken = authService.isLoggedIn();
-  
+
   // Si cualquiera de las dos comprobaciones es positiva, consideramos al usuario autenticado
   let autenticado = isAuthenticated || hayToken;
-  
+
   // Si aún no se considera autenticado pero hay un token, intentar verificar la sesión
   if (!autenticado && hayToken) {
-    console.log('Route Guard: Token encontrado pero no autenticado en store, verificando sesión...');
+    console.log(
+      'Route Guard: Token encontrado pero no autenticado en store, verificando sesión...',
+    );
     try {
       // Verificar sesión de forma síncrona
       const sesionActiva = await authService.checkSession();
       if (sesionActiva) {
         console.log('Route Guard: Sesión verificada correctamente');
         autenticado = true;
-        
+
         // Inicializar el store si es necesario
         if (!isAuthenticated) {
           await authStore.init();
@@ -43,14 +45,14 @@ const authGuard = async () => {
       autenticado = !!hayToken;
     }
   }
-  
+
   if (!autenticado) {
     console.log('Intento de acceso a ruta protegida sin autenticación, redirigiendo...');
     console.log('Estado de auth:', { storeAuth: isAuthenticated, tokenAuth: hayToken });
     push('/login');
     return false;
   }
-  
+
   console.log('Route Guard: Usuario autenticado, permitiendo acceso');
   return true;
 };
@@ -64,43 +66,39 @@ const routes = {
   '/login': Login,
   '/register': Register,
   '/auth/google/callback': GoogleAuthCallback,
-  
+
   // Special route for handling direct Google callbacks from frontend
   '/auth/callback': GoogleAuthCallback,
-  
+
   // Special route for handling direct Google Drive auth
   '/auth/google/drive/callback': GoogleAuthCallback,
-  
+
   '/dashboard': wrap({
     component: Dashboard,
-    conditions: [
-      authGuard
-    ],
+    conditions: [authGuard],
     // Indicar a svelte-spa-router que el guard es asíncrono
-    async: true
+    async: true,
   }),
-  
+
   '/data': wrap({
     component: DataViewer,
     conditions: [authGuard],
-    async: true
+    async: true,
   }),
 
   '/profile': wrap({
     component: Profile,
-    conditions: [
-      authGuard
-    ],
-    async: true
+    conditions: [authGuard],
+    async: true,
   }),
 
   '/goals': wrap({
     component: Goals,
     conditions: [authGuard],
-    async: true
+    async: true,
   }),
-  
-  '*': NotFound
+
+  '*': NotFound,
 };
 
-export default routes; 
+export default routes;

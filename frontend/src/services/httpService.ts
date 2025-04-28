@@ -9,16 +9,16 @@ export const API_URL = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VI
 
 class HttpService {
   private api: AxiosInstance;
-  
+
   constructor() {
     this.api = axios.create({
-      baseURL: API_URL
+      baseURL: API_URL,
     });
-    
+
     // Configurar interceptores
     this.setupInterceptors();
   }
-  
+
   private setupInterceptors() {
     // Interceptor de peticiones
     this.api.interceptors.request.use(
@@ -33,9 +33,9 @@ class HttpService {
       (error) => {
         log.error('Error en interceptor de petición:', error);
         return Promise.reject(error);
-      }
+      },
     );
-    
+
     // Interceptor de respuestas
     this.api.interceptors.response.use(
       (response) => response,
@@ -45,12 +45,12 @@ class HttpService {
           log.warn('Error de red detectado');
           // Se puede implementar lógica para modo offline aquí
         }
-        
+
         return Promise.reject(error);
-      }
+      },
     );
   }
-  
+
   // Métodos HTTP genéricos
   async get<T>(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
     try {
@@ -60,7 +60,7 @@ class HttpService {
       throw error;
     }
   }
-  
+
   async post<T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
     try {
       return await this.api.post<T>(url, data, config);
@@ -69,7 +69,7 @@ class HttpService {
       throw error;
     }
   }
-  
+
   async put<T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
     try {
       return await this.api.put<T>(url, data, config);
@@ -78,7 +78,7 @@ class HttpService {
       throw error;
     }
   }
-  
+
   async delete<T>(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
     try {
       return await this.api.delete<T>(url, config);
@@ -87,11 +87,11 @@ class HttpService {
       throw error;
     }
   }
-  
+
   // Método para obtener la instancia de axios si es necesario
   getAxiosInstance(): AxiosInstance {
     return this.api;
   }
 }
 
-export default new HttpService(); 
+export default new HttpService();

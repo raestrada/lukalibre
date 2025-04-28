@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { Chart, registerables } from 'chart.js';
-  
+
   // Registrar los componentes necesarios de Chart.js
   Chart.register(...registerables);
 
@@ -10,7 +10,7 @@
   // Datos del gráfico
   export let data = {
     labels: [],
-    datasets: []
+    datasets: [],
   };
   // Opciones del gráfico (opcionales)
   export let options = {};
@@ -40,11 +40,11 @@
             position: 'top',
           },
           tooltip: {
-            enabled: true
-          }
+            enabled: true,
+          },
         },
-        ...options
-      }
+        ...options,
+      },
     });
 
     return () => {

@@ -1,7 +1,7 @@
 <script lang="ts">
   import Icon from './Icon.svelte';
-  
-  export let tabs: Array<{id: string, label: string, name: string}> = [];
+
+  export let tabs: Array<{ id: string; label: string; name: string }> = [];
   export let activeTab: string;
   export let onTabChange: (tabId: string) => void = () => {};
 </script>
@@ -9,8 +9,8 @@
 <div class="tabs-container">
   <div class="tabs">
     {#each tabs as tab}
-      <button 
-        class="tab-button" 
+      <button
+        class="tab-button"
         class:active={activeTab === tab.id}
         on:click={() => onTabChange(tab.id)}
       >
@@ -60,7 +60,7 @@
     font-weight: 600;
     background-color: rgba(58, 99, 81, 0.05);
   }
-  
+
   /* Asegurar que los iconos usen el mismo color que el texto */
   .tab-button :global(.material-icons) {
     color: inherit;

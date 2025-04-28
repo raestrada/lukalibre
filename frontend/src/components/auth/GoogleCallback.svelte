@@ -6,44 +6,42 @@
   import authService from '../../services/authService';
   import { API_URL } from '../../services/httpService';
   import { createLogger } from '../../utils/logger';
-  
+
   // Logger para este componente
   const log = createLogger('GoogleCallback');
-  
+
   let loading = true;
   let error: string | null = null;
   let debugInfo: string | null = null;
-  
+
   onMount(async () => {
     try {
       // Verificar si el componente se cargó desde una URL sin hash (ya manejada por App.svelte)
       if (window.location.pathname === '/auth/callback') {
-        log.debug("URL sin hash detectada, saltando procesamiento (ya manejado por App)");
-        
+        log.debug('URL sin hash detectada, saltando procesamiento (ya manejado por App)');
+
         // Verificar si ya estamos autenticados
         if (authStore.getState().isAuthenticated) {
-          log.debug("Ya autenticado, redirigiendo al dashboard");
+          log.debug('Ya autenticado, redirigiendo al dashboard');
           push('/dashboard');
           return;
         }
-        
+
         loading = false;
         return;
       }
-      
 
-      
       // Obtener parámetros de la URL
       const urlParams = new URLSearchParams(window.location.search);
-      
+
       // Si hay un error, mostrarlo
       if (urlParams.has('error')) {
         error = urlParams.get('error');
-        log.error("Error recibido:", error);
+        log.error('Error recibido:', error);
         loading = false;
         return;
       }
-      
+
       // Si hay un token, procesarlo (este caso ocurre cuando el backend redirige de vuelta)
       if (urlParams.has('token')) {
         try {
@@ -54,39 +52,42 @@
           push('/dashboard');
           return;
         } catch (err) {
-          error = "Error al procesar el token de autenticación";
+          error = 'Error al procesar el token de autenticación';
           loading = false;
           return;
         }
       }
-      
+
       // Si hay un código de autorización
       if (urlParams.has('code')) {
         // Obtener el código
         const code = urlParams.get('code');
         const state = urlParams.get('state');
-        
+
         try {
-          log.debug("Procesando código de autorización");
+          log.debug('Procesando código de autorización');
           // Llamar a nuestro endpoint en el backend
-          const response = await axios.post(`${API_URL}/auth/google-callback`, { 
-            code, 
-            state 
+          const response = await axios.post(`${API_URL}/auth/google-callback`, {
+            code,
+            state,
           });
-          
+
           if (response.data && response.data.access_token) {
             // Guardar el token de acceso
             authService.setToken(response.data.access_token, 'jwt');
-            
+
             // Inicializar el store de autenticación con el token
             await authStore.init();
-            
+
             // Registrar para depuración
             const storeState = authStore.getState();
-            log.info("Token almacenado y authStore inicializado. Usuario:", storeState.user ? storeState.user.email : "No disponible");
-            
+            log.info(
+              'Token almacenado y authStore inicializado. Usuario:',
+              storeState.user ? storeState.user.email : 'No disponible',
+            );
+
             // Redirigir directamente al dashboard
-            log.debug("Redirigiendo al dashboard...");
+            log.debug('Redirigiendo al dashboard...');
             push('/dashboard');
             return;
           } else {
@@ -100,7 +101,7 @@
         }
         return;
       }
-      
+
       // Si no hay código ni token, hay un error
       log.warn('No se recibieron parámetros de autenticación');
       error = 'No se recibieron parámetros de autenticación';
@@ -114,7 +115,7 @@
   });
 
   function goToLogin() {
-    log.debug("Volviendo a login");
+    log.debug('Volviendo a login');
     push('/login');
   }
 </script>
@@ -152,7 +153,8 @@
     width: 100%;
   }
 
-  .loading, .error {
+  .loading,
+  .error {
     background: white;
     padding: 2rem;
     border-radius: 8px;
@@ -176,12 +178,12 @@
     color: #e74c3c;
     margin-bottom: 1rem;
   }
-  
+
   details {
     margin: 1rem 0;
     text-align: left;
   }
-  
+
   pre {
     background: #f0f0f0;
     padding: 0.5rem;
@@ -189,7 +191,7 @@
     overflow-x: auto;
     font-size: 0.8rem;
   }
-  
+
   summary {
     cursor: pointer;
     color: #666;
@@ -213,7 +215,11 @@
   }
 
   @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
-</style> 
+</style>

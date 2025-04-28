@@ -5,35 +5,35 @@
   import FinancialValue from '../common/FinancialValue.svelte';
   import ProgressBar from '../common/ProgressBar.svelte';
   import Alert from '../common/Alert.svelte';
-  
+
   // Datos que se reciben del LLM
   export let balanceData: any = {
     resumen: {
       activos: {
-        total: "$0",
-        items: []
+        total: '$0',
+        items: [],
       },
       pasivos: {
-        total: "$0",
-        items: []
+        total: '$0',
+        items: [],
       },
       patrimonio: {
-        total: "$0",
-        tendencia: 0
-      }
+        total: '$0',
+        tendencia: 0,
+      },
     },
     graficos: [],
     ratios: [],
     distribucion: {
       activos: [],
-      pasivos: []
+      pasivos: [],
     },
     tendencias: {
       patrimonio: [],
       activos: [],
-      pasivos: []
+      pasivos: [],
     },
-    recomendaciones: []
+    recomendaciones: [],
   };
 </script>
 
@@ -44,27 +44,27 @@
     <ReportCard title="Patrimonio Neto" icon="account_balance" variant="info">
       <div class="patrimonio-container">
         <div class="patrimonio-principal">
-          <FinancialValue 
-            label="Tu Patrimonio" 
-            value={balanceData.resumen.patrimonio.total} 
+          <FinancialValue
+            label="Tu Patrimonio"
+            value={balanceData.resumen.patrimonio.total}
             trend={balanceData.resumen.patrimonio.tendencia}
             size="lg"
           />
         </div>
-        
+
         <div class="balances-principales">
           <div class="activos-totales">
-            <FinancialValue 
-              label="Activos Totales" 
-              value={balanceData.resumen.activos.total} 
+            <FinancialValue
+              label="Activos Totales"
+              value={balanceData.resumen.activos.total}
               size="lg"
               trend="up"
             />
           </div>
           <div class="pasivos-totales">
-            <FinancialValue 
-              label="Pasivos Totales" 
-              value={balanceData.resumen.pasivos.total} 
+            <FinancialValue
+              label="Pasivos Totales"
+              value={balanceData.resumen.pasivos.total}
               size="lg"
               trend="down"
             />
@@ -77,24 +77,24 @@
     {#if balanceData.graficos && balanceData.graficos.length > 0 && balanceData.graficos[0]}
       <ReportCard title="Distribución de Activos y Pasivos" icon="pie_chart" variant="default">
         <div class="chart-container">
-          <Chart 
-            type={balanceData.graficos[0].tipo || 'pie'} 
-            data={balanceData.graficos[0].datos} 
+          <Chart
+            type={balanceData.graficos[0].tipo || 'pie'}
+            data={balanceData.graficos[0].datos}
             height="200px"
           />
         </div>
       </ReportCard>
     {/if}
-    
+
     <!-- Ratios financieros importantes -->
     <ReportCard title="Ratios Financieros" icon="trending_up" variant="default">
       <div class="ratios-grid">
         {#if balanceData.ratios && balanceData.ratios.length > 0}
           {#each balanceData.ratios as ratio}
             <div class="ratio-item">
-              <ProgressBar 
-                label={ratio.nombre} 
-                value={ratio.valor * 100} 
+              <ProgressBar
+                label={ratio.nombre}
+                value={ratio.valor * 100}
                 max={100}
                 showPercentage={true}
                 variant={ratio.tipo || 'default'}
@@ -115,12 +115,7 @@
       {#if balanceData.resumen.activos.items && balanceData.resumen.activos.items.length > 0}
         {#each balanceData.resumen.activos.items as activo}
           <div class="detalle-item">
-            <FinancialValue 
-              label={activo.nombre} 
-              value={activo.valor} 
-              size="md"
-              trend="up"
-            />
+            <FinancialValue label={activo.nombre} value={activo.valor} size="md" trend="up" />
             {#if activo.descripcion}
               <p class="detalle-descripcion">{activo.descripcion}</p>
             {/if}
@@ -138,12 +133,7 @@
       {#if balanceData.resumen.pasivos.items && balanceData.resumen.pasivos.items.length > 0}
         {#each balanceData.resumen.pasivos.items as pasivo}
           <div class="detalle-item">
-            <FinancialValue 
-              label={pasivo.nombre} 
-              value={pasivo.valor} 
-              size="md"
-              trend="down"
-            />
+            <FinancialValue label={pasivo.nombre} value={pasivo.valor} size="md" trend="down" />
             {#if pasivo.descripcion}
               <p class="detalle-descripcion">{pasivo.descripcion}</p>
             {/if}
@@ -160,9 +150,9 @@
     <ReportCard title="Recomendaciones para tu Balance" icon="lightbulb" variant="warning">
       <div class="recomendaciones-container">
         {#each balanceData.recomendaciones as recomendacion}
-          <Alert 
-            type={recomendacion.tipo || 'info'} 
-            title={recomendacion.titulo} 
+          <Alert
+            type={recomendacion.tipo || 'info'}
+            title={recomendacion.titulo}
             message={recomendacion.mensaje}
           />
         {/each}
@@ -185,8 +175,6 @@
     grid-template-columns: repeat(2, 1fr);
     gap: var(--space-md);
   }
-
-
 
   .patrimonio-container {
     display: flex;
@@ -213,13 +201,15 @@
     margin: var(--space-sm) 0;
   }
 
-  .ratios-grid, .detalles-grid {
+  .ratios-grid,
+  .detalles-grid {
     display: flex;
     flex-direction: column;
     gap: var(--space-md);
   }
 
-  .ratio-description, .detalle-descripcion {
+  .ratio-description,
+  .detalle-descripcion {
     font-size: 0.9rem;
     color: var(--text-secondary);
     margin-top: var(--space-xs);

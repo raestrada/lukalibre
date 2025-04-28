@@ -9,7 +9,12 @@
   import FinancialBalance from './FinancialBalance.svelte';
   import FinancialRecommendations from './FinancialRecommendations.svelte';
   import FinancialAlerts from './FinancialAlerts.svelte';
-  import { generateDashboardReport, generateFinancialBalance, generateFinancialRecommendations, generateFinancialAlerts } from '../../services/dashboardService';
+  import {
+    generateDashboardReport,
+    generateFinancialBalance,
+    generateFinancialRecommendations,
+    generateFinancialAlerts,
+  } from '../../services/dashboardService';
   import { onMount } from 'svelte';
 
   const log = createLogger('DashboardReport');
@@ -42,12 +47,12 @@
   const LS_ALERTS_DATE_KEY = 'dashboard_last_alerts_date';
 
   // Configuración de las tabs
-  const tabs: Array<{id: Tab, label: string, name: string}> = [
+  const tabs: Array<{ id: Tab; label: string; name: string }> = [
     { id: 'reporte', label: 'Reporte', name: 'assessment' },
     { id: 'balance', label: 'Balance', name: 'account_balance' },
     { id: 'recomendaciones', label: 'Recomendaciones', name: 'tips_and_updates' },
     { id: 'alertas', label: 'Alertas', name: 'notifications' },
-    { id: 'chat', label: 'Chat', name: 'chat' }
+    { id: 'chat', label: 'Chat', name: 'chat' },
   ];
 
   // Cambiar de tab
@@ -69,7 +74,7 @@
         localStorage.removeItem(LS_REPORT_DATE_KEY);
       }
     }
-    
+
     // Cargar datos del balance
     const cachedBalance = localStorage.getItem(LS_BALANCE_KEY);
     const cachedBalanceDate = localStorage.getItem(LS_BALANCE_DATE_KEY);
@@ -83,7 +88,7 @@
         localStorage.removeItem(LS_BALANCE_DATE_KEY);
       }
     }
-    
+
     // Cargar datos de recomendaciones
     const cachedRecommendations = localStorage.getItem(LS_RECOMMENDATIONS_KEY);
     const cachedRecommendationsDate = localStorage.getItem(LS_RECOMMENDATIONS_DATE_KEY);
@@ -97,7 +102,7 @@
         localStorage.removeItem(LS_RECOMMENDATIONS_DATE_KEY);
       }
     }
-    
+
     // Cargar datos de alertas
     const cachedAlerts = localStorage.getItem(LS_ALERTS_KEY);
     const cachedAlertsDate = localStorage.getItem(LS_ALERTS_DATE_KEY);
@@ -132,15 +137,15 @@
       loading = false;
     }
   }
-  
+
   function clearErrorMessage() {
     error = null;
   }
-  
+
   function clearSuccessMessage() {
     success = null;
   }
-  
+
   async function handleGenerateBalance() {
     loading = true;
     error = null;
@@ -209,7 +214,7 @@
     success = null;
     error = null;
   }
-  
+
   function clearBalance() {
     balanceData = null;
     lastBalanceDate = null;
@@ -218,7 +223,7 @@
     success = null;
     error = null;
   }
-  
+
   function clearRecommendations() {
     recommendationsData = null;
     lastRecommendationsDate = null;
@@ -227,7 +232,7 @@
     success = null;
     error = null;
   }
-  
+
   function clearAlerts() {
     alertsData = null;
     lastAlertsDate = null;
@@ -244,21 +249,17 @@
       <Icon name="dashboard" />
       <span>Dashboard Financiero</span>
     </div>
-    
+
     <!-- Barra de tabs usando el componente común -->
-    <Tabs 
-      {tabs} 
-      {activeTab} 
-      onTabChange={setActiveTab} 
-    />
-    
+    <Tabs {tabs} {activeTab} onTabChange={setActiveTab} />
+
     <!-- Contenido según la tab activa -->
     <div class="tab-content">
       <!-- Tab de Reporte -->
       {#if activeTab === 'reporte'}
         <div class="card-content">
           <p class="description">
-            Genera un reporte personalizado con análisis completo de tus finanzas, metas, 
+            Genera un reporte personalizado con análisis completo de tus finanzas, metas,
             recomendaciones automáticas y alertas específicas para Chile.
           </p>
           {#if error}
@@ -278,23 +279,17 @@
               {loading ? 'Generando...' : 'Generar Reporte'}
             </Button>
             {#if reportData}
-              <Button
-                on:click={clearReport}
-                icon="clear"
-                variant="secondary"
-              >
-                Limpiar
-              </Button>
+              <Button on:click={clearReport} icon="clear" variant="secondary">Limpiar</Button>
             {/if}
           </div>
         </div>
-      
-      <!-- Tab de Balance -->
+
+        <!-- Tab de Balance -->
       {:else if activeTab === 'balance'}
         <div class="card-content">
           <p class="description">
-            Genera un balance detallado con análisis de activos, pasivos y patrimonio neto, 
-            ratios financieros y recomendaciones específicas para Chile.
+            Genera un balance detallado con análisis de activos, pasivos y patrimonio neto, ratios
+            financieros y recomendaciones específicas para Chile.
           </p>
           {#if error}
             <StatusMessage type="error" message={error} onClose={clearErrorMessage} />
@@ -313,23 +308,17 @@
               {loading ? 'Generando...' : 'Generar Balance'}
             </Button>
             {#if balanceData}
-              <Button
-                on:click={clearBalance}
-                icon="clear"
-                variant="secondary"
-              >
-                Limpiar
-              </Button>
+              <Button on:click={clearBalance} icon="clear" variant="secondary">Limpiar</Button>
             {/if}
           </div>
         </div>
-      
-      <!-- Tab de Recomendaciones -->
+
+        <!-- Tab de Recomendaciones -->
       {:else if activeTab === 'recomendaciones'}
         <div class="card-content">
           <p class="description">
-            Genera recomendaciones financieras personalizadas basadas en tus datos, con análisis
-            de patrones de gasto, oportunidades de ahorro y consejos específicos para Chile.
+            Genera recomendaciones financieras personalizadas basadas en tus datos, con análisis de
+            patrones de gasto, oportunidades de ahorro y consejos específicos para Chile.
           </p>
           {#if error}
             <StatusMessage type="error" message={error} onClose={clearErrorMessage} />
@@ -348,23 +337,19 @@
               {loading ? 'Generando...' : 'Generar Recomendaciones'}
             </Button>
             {#if recommendationsData}
-              <Button
-                on:click={clearRecommendations}
-                icon="clear"
-                variant="secondary"
-              >
+              <Button on:click={clearRecommendations} icon="clear" variant="secondary">
                 Limpiar
               </Button>
             {/if}
           </div>
         </div>
-      
-      <!-- Tab de Alertas -->
+
+        <!-- Tab de Alertas -->
       {:else if activeTab === 'alertas'}
         <div class="card-content">
           <p class="description">
-            Genera alertas financieras personalizadas basadas en tus datos, con análisis
-            de patrones de gasto, oportunidades de ahorro y consejos específicos para Chile.
+            Genera alertas financieras personalizadas basadas en tus datos, con análisis de patrones
+            de gasto, oportunidades de ahorro y consejos específicos para Chile.
           </p>
           {#if error}
             <StatusMessage type="error" message={error} onClose={clearErrorMessage} />
@@ -383,30 +368,27 @@
               {loading ? 'Generando...' : 'Generar Alertas'}
             </Button>
             {#if alertsData}
-              <Button
-                on:click={clearAlerts}
-                icon="clear"
-                variant="secondary"
-              >
-                Limpiar
-              </Button>
+              <Button on:click={clearAlerts} icon="clear" variant="secondary">Limpiar</Button>
             {/if}
           </div>
         </div>
-      
-      <!-- Tab de Chat -->
+
+        <!-- Tab de Chat -->
       {:else if activeTab === 'chat'}
         <div class="card-content coming-soon">
           <div class="coming-soon-content">
             <Icon name="hourglass_empty" />
             <h3>Chat Financiero - Próximamente</h3>
-            <p>Consulta a nuestro asistente IA sobre cualquier duda financiera específica para el contexto chileno.</p>
+            <p>
+              Consulta a nuestro asistente IA sobre cualquier duda financiera específica para el
+              contexto chileno.
+            </p>
           </div>
         </div>
       {/if}
     </div>
   </Card>
-  
+
   <!-- Contenido del reporte (solo visible cuando hay un reporte generado y estamos en la tab de reporte) -->
   {#if reportData && activeTab === 'reporte'}
     <div class="report-container">
@@ -417,19 +399,22 @@
           {#if lastReportDate}
             <span class="last-report-badge">
               <span class="material-icons" style="font-size:1em;vertical-align:middle;">event</span>
-              Último reporte: {new Date(lastReportDate).toLocaleString('es-CL', {dateStyle: 'medium', timeStyle: 'short'})}
+              Último reporte: {new Date(lastReportDate).toLocaleString('es-CL', {
+                dateStyle: 'medium',
+                timeStyle: 'short',
+              })}
             </span>
           {/if}
         </div>
         <div class="card-content">
           <div class="report-content">
-            <FinancialReport reportData={reportData} />
+            <FinancialReport {reportData} />
           </div>
         </div>
       </Card>
     </div>
   {/if}
-  
+
   <!-- Contenido del balance (solo visible cuando hay un balance generado y estamos en la tab de balance) -->
   {#if balanceData && activeTab === 'balance'}
     <div class="report-container">
@@ -440,19 +425,22 @@
           {#if lastBalanceDate}
             <span class="last-report-badge">
               <span class="material-icons" style="font-size:1em;vertical-align:middle;">event</span>
-              Último balance: {new Date(lastBalanceDate).toLocaleString('es-CL', {dateStyle: 'medium', timeStyle: 'short'})}
+              Último balance: {new Date(lastBalanceDate).toLocaleString('es-CL', {
+                dateStyle: 'medium',
+                timeStyle: 'short',
+              })}
             </span>
           {/if}
         </div>
         <div class="card-content">
           <div class="report-content">
-            <FinancialBalance balanceData={balanceData} />
+            <FinancialBalance {balanceData} />
           </div>
         </div>
       </Card>
     </div>
   {/if}
-  
+
   <!-- Contenido de recomendaciones (solo visible cuando hay recomendaciones generadas y estamos en la tab de recomendaciones) -->
   {#if recommendationsData && activeTab === 'recomendaciones'}
     <div class="report-container">
@@ -463,19 +451,22 @@
           {#if lastRecommendationsDate}
             <span class="last-report-badge">
               <span class="material-icons" style="font-size:1em;vertical-align:middle;">event</span>
-              Últimas recomendaciones: {new Date(lastRecommendationsDate).toLocaleString('es-CL', {dateStyle: 'medium', timeStyle: 'short'})}
+              Últimas recomendaciones: {new Date(lastRecommendationsDate).toLocaleString('es-CL', {
+                dateStyle: 'medium',
+                timeStyle: 'short',
+              })}
             </span>
           {/if}
         </div>
         <div class="card-content">
           <div class="report-content">
-            <FinancialRecommendations recommendationsData={recommendationsData} />
+            <FinancialRecommendations {recommendationsData} />
           </div>
         </div>
       </Card>
     </div>
   {/if}
-  
+
   <!-- Contenido de alertas (solo visible cuando hay alertas generadas y estamos en la tab de alertas) -->
   {#if alertsData && activeTab === 'alertas'}
     <div class="report-container">
@@ -486,13 +477,16 @@
           {#if lastAlertsDate}
             <span class="last-report-badge">
               <span class="material-icons" style="font-size:1em;vertical-align:middle;">event</span>
-              Últimas alertas: {new Date(lastAlertsDate).toLocaleString('es-CL', {dateStyle: 'medium', timeStyle: 'short'})}
+              Últimas alertas: {new Date(lastAlertsDate).toLocaleString('es-CL', {
+                dateStyle: 'medium',
+                timeStyle: 'short',
+              })}
             </span>
           {/if}
         </div>
         <div class="card-content">
           <div class="report-content">
-            <FinancialAlerts alertsData={alertsData} />
+            <FinancialAlerts {alertsData} />
           </div>
         </div>
       </Card>
@@ -505,41 +499,42 @@
     width: 100%;
     margin-bottom: var(--space-xl);
   }
-  .dashboard-report, .dashboard-report * {
+  .dashboard-report,
+  .dashboard-report * {
     color: var(--text-primary) !important;
   }
-  .card-title, .card-content {
+  .card-title,
+  .card-content {
     color: var(--text-primary) !important;
     background: #fff !important;
   }
-  .dashboard-report .card-title span, .dashboard-report .card-title {
+  .dashboard-report .card-title span,
+  .dashboard-report .card-title {
     font-weight: 600;
     font-size: 1.15em;
   }
-  
 
-  
   .description {
     margin-bottom: var(--space-md);
     color: var(--color-text-secondary);
   }
-  
+
   .actions {
     display: flex;
     gap: var(--space-sm);
     margin-top: var(--space-md);
   }
-  
+
   .report-container {
     margin-top: var(--space-md);
   }
-  
+
   .report-content {
     padding: var(--space-md);
     overflow: auto;
     max-height: 80vh;
   }
-  
+
   /* Estilos básicos para los componentes generados por el LLM */
   :global(.dashboard-card) {
     border: 1px solid var(--color-border);
@@ -548,14 +543,14 @@
     margin-bottom: var(--space-md);
     background-color: var(--color-background-card);
   }
-  
+
   :global(.dashboard-title) {
     font-size: 1.2rem;
     font-weight: 600;
     margin-bottom: var(--space-md);
     color: var(--color-primary);
   }
-  
+
   :global(.dashboard-alert) {
     border-radius: var(--border-radius);
     padding: var(--space-sm);
@@ -564,79 +559,79 @@
     align-items: center;
     gap: var(--space-sm);
   }
-  
+
   :global(.alert-verde) {
     background-color: rgba(67, 160, 71, 0.1);
     border-left: 4px solid #43a047;
   }
-  
+
   :global(.alert-rojo) {
     background-color: rgba(229, 57, 53, 0.1);
     border-left: 4px solid #e53935;
   }
-  
+
   :global(.alert-azul) {
     background-color: rgba(25, 118, 210, 0.1);
     border-left: 4px solid #1976d2;
   }
-  
+
   :global(.chart) {
     height: 200px;
     background-color: var(--color-background-light);
     border-radius: var(--border-radius);
     margin-bottom: var(--space-md);
   }
-.last-report-badge {
-  display: inline-flex;
-  align-items: center;
-  background: #e3f0fc;
-  color: #1565c0;
-  border-radius: 8px;
-  font-size: 0.93em;
-  font-weight: 600;
-  padding: 0.18em 0.85em 0.18em 0.5em;
-  margin-left: 1em;
-  box-shadow: 0 1px 4px rgba(25,118,210,0.07);
-}
-.last-report-badge .material-icons {
-  margin-right: 0.35em;
-  color: #1976d2;
-}
+  .last-report-badge {
+    display: inline-flex;
+    align-items: center;
+    background: #e3f0fc;
+    color: #1565c0;
+    border-radius: 8px;
+    font-size: 0.93em;
+    font-weight: 600;
+    padding: 0.18em 0.85em 0.18em 0.5em;
+    margin-left: 1em;
+    box-shadow: 0 1px 4px rgba(25, 118, 210, 0.07);
+  }
+  .last-report-badge .material-icons {
+    margin-right: 0.35em;
+    color: #1976d2;
+  }
 
-/* Estos estilos fueron movidos al componente Tabs.svelte */
+  /* Estos estilos fueron movidos al componente Tabs.svelte */
 
-/* Estilos para el contenido de próximamente */
-.coming-soon {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 200px;
-  padding: 2rem;
-  text-align: center;
-  background-color: rgba(58, 99, 81, 0.03); /* Color de fondo sutil usando el primary */
-  border-radius: var(--radius-md);
-  margin-top: var(--space-md);
-}
+  /* Estilos para el contenido de próximamente */
+  .coming-soon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+    padding: 2rem;
+    text-align: center;
+    background-color: rgba(58, 99, 81, 0.03); /* Color de fondo sutil usando el primary */
+    border-radius: var(--radius-md);
+    margin-top: var(--space-md);
+  }
 
-.coming-soon-content {
-  max-width: 400px;
-}
+  .coming-soon-content {
+    max-width: 400px;
+  }
 
-.coming-soon-content h3 {
-  margin: 1rem 0;
-  color: var(--primary);
-  font-weight: 600;
-}
+  .coming-soon-content h3 {
+    margin: 1rem 0;
+    color: var(--primary);
+    font-weight: 600;
+  }
 
-.coming-soon-content p {
-  color: var(--text-secondary);
-  font-size: 0.95rem;
-  line-height: 1.5;
-}
+  .coming-soon-content p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
 
-.coming-soon-content :global(.material-icons) {
-  font-size: 2.5rem;
-  color: var(--primary-light);
-  opacity: 0.7;
-}
+  .coming-soon-content :global(.material-icons) {
+    font-size: 2.5rem;
+    color: var(--primary-light);
+    opacity: 0.7;
+  }
 </style>

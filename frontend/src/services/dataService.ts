@@ -23,15 +23,15 @@ class DataService {
    */
   async getSchemas(): Promise<any[]> {
     const resp = await httpService.get('/schemas', {
-      headers: { 'Authorization': `Bearer ${localStorage.getItem('jwt')}` }
+      headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
     });
     // Compatibilidad: si la API devuelve meta.schema, adaptamos
     return (resp.data || []).map((s: any) => ({
       name: s.name,
-      schema: s.meta?.schema || s.schema || s.meta || {}
+      schema: s.meta?.schema || s.schema || s.meta || {},
     }));
   }
-  
+
   /**
    * Inicializa los servicios de datos requeridos
    */
@@ -40,19 +40,19 @@ class DataService {
       log.debug('DataService ya inicializado');
       return true;
     }
-    
+
     try {
       log.info('Inicializando DataService');
       // Inicializar SQLite primero (es la base de persistencia local)
       await sqliteService.initialize();
-      
+
       // Comprobar y establecer fuente de datos preferida
       if (preferredSource === 'google_drive') {
         await this.initializeGoogleDrive();
       } else {
         await this.initializeLocalDatabase();
       }
-      
+
       this.initialized = true;
       log.info('DataService inicializado correctamente');
       return true;
@@ -65,12 +65,15 @@ class DataService {
         log.warn('DataService inicializado en modo offline');
         return true;
       } catch (fallbackError) {
-        log.error('Error crítico en inicialización, no hay persistencia disponible:', fallbackError);
+        log.error(
+          'Error crítico en inicialización, no hay persistencia disponible:',
+          fallbackError,
+        );
         return false;
       }
     }
   }
-  
+
   /**
    * Inicializa la base de datos local
    */
@@ -80,13 +83,13 @@ class DataService {
     this.syncSource = 'local';
     this.syncStatus = 'offline';
   }
-  
+
   /**
    * Inicializa y sincroniza con Google Drive
    */
   private async initializeGoogleDrive(): Promise<void> {
     log.debug('Inicializando sincronización con Google Drive');
-    
+
     try {
       // Verificar si hay token para Google Drive
       const token = localStorage.getItem('googleDriveToken');
@@ -94,14 +97,14 @@ class DataService {
         log.warn('No hay token de Google Drive disponible');
         throw new Error('Token de Google Drive no disponible');
       }
-      
+
       // Intentar establecer el token
       await googleDriveService.setAccessToken(token);
-      
+
       // Intentar sincronizar
       this.syncStatus = 'syncing';
       await databaseService.syncWithGoogleDrive();
-      
+
       this.syncSource = 'google_drive';
       this.syncStatus = 'synced';
       log.info('Sincronización con Google Drive completada');
@@ -112,7 +115,7 @@ class DataService {
       throw error;
     }
   }
-  
+
   /**
    * Ejecuta una consulta en la base de datos
    */
@@ -120,20 +123,20 @@ class DataService {
     this.ensureInitialized();
     return databaseService.query(sql, params);
   }
-  
+
   /**
    * Ejecuta una operación SQL sin retorno de datos
    */
   async execute(sql: string, params?: any): Promise<void> {
     this.ensureInitialized();
     await databaseService.execute(sql, params);
-    
+
     // Si estamos sincronizados con Google Drive, actualizar timestamp
     if (this.syncSource === 'google_drive' && this.syncStatus === 'synced') {
       databaseService.updateSyncTimestamp();
     }
   }
-  
+
   /**
    * Sincroniza la base de datos con Google Drive
    */
@@ -141,9 +144,9 @@ class DataService {
     try {
       this.ensureInitialized();
       this.syncStatus = 'syncing';
-      
+
       await databaseService.syncWithGoogleDrive();
-      
+
       this.syncSource = 'google_drive';
       this.syncStatus = 'synced';
       log.info('Sincronización con Google Drive completada');
@@ -154,17 +157,17 @@ class DataService {
       return false;
     }
   }
-  
+
   /**
    * Obtiene el estado actual de sincronización
    */
   getSyncStatus(): { source: SyncSource; status: SyncStatus } {
     return {
       source: this.syncSource,
-      status: this.syncStatus
+      status: this.syncStatus,
     };
   }
-  
+
   /**
    * Verifica que el servicio esté inicializado
    */
@@ -175,4 +178,4 @@ class DataService {
   }
 }
 
-export default new DataService(); 
+export default new DataService();

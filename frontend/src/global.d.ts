@@ -4,7 +4,7 @@
 declare module 'svelte-spa-router' {
   import type { SvelteComponentTyped } from 'svelte';
   import type { ComponentType } from 'svelte/internal';
-  
+
   export interface ConditionFail {
     redirect?: string;
     message?: string;
@@ -18,19 +18,13 @@ declare module 'svelte-spa-router' {
     userData?: Record<string, any>;
   }
 
-  export function wrap(
-    route: RouteDefinition
-  ): ComponentType<any>;
+  export function wrap(route: RouteDefinition): ComponentType<any>;
 
-  export function push(
-    location: string
-  ): void;
+  export function push(location: string): void;
 
   export function pop(): void;
 
-  export function replace(
-    location: string
-  ): void;
+  export function replace(location: string): void;
 
   export let location: string;
 }

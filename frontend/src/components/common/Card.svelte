@@ -7,7 +7,7 @@
   export let interactive: boolean = false;
   export let hoverable: boolean = false;
   export let className: string = '';
-  
+
   // Classes
   $: classes = [
     'card',
@@ -18,18 +18,15 @@
     hoverable ? 'card-hoverable' : '',
     `padding-${padding}`,
     `radius-${radius}`,
-    className // Incluir clases personalizadas
-  ].filter(Boolean).join(' ');
+    className, // Incluir clases personalizadas
+  ]
+    .filter(Boolean)
+    .join(' ');
 </script>
 
 <!-- Si el componente es interactivo, usamos un button para accesibilidad -->
 {#if interactive}
-  <button 
-    type="button"
-    class={classes} 
-    on:click
-    on:keydown
-  >
+  <button type="button" class={classes} on:click on:keydown>
     <slot></slot>
   </button>
 {:else}
@@ -43,74 +40,77 @@
   .card {
     position: relative;
     background-color: var(--card-bg, var(--background-primary));
-    transition: box-shadow 0.2s, transform 0.2s, background-color 0.2s;
+    transition:
+      box-shadow 0.2s,
+      transform 0.2s,
+      background-color 0.2s;
   }
-  
+
   /* Variants */
   .card-outline {
     border: 1px solid var(--border-color);
   }
-  
+
   .card-filled {
     background-color: var(--background-secondary);
   }
-  
+
   .card-elevated {
     box-shadow: var(--shadow-sm);
   }
-  
+
   /* Padding options */
   .padding-none {
     padding: 0;
   }
-  
+
   .padding-sm {
     padding: var(--space-sm);
   }
-  
+
   .padding-md {
     padding: var(--space-md);
   }
-  
+
   .padding-lg {
     padding: var(--space-lg);
   }
-  
+
   /* Border radius options */
   .radius-none {
     border-radius: 0;
   }
-  
+
   .radius-sm {
     border-radius: var(--radius-sm);
   }
-  
+
   .radius-md {
     border-radius: var(--radius-md);
   }
-  
+
   .radius-lg {
     border-radius: var(--radius-lg);
   }
-  
+
   /* Width */
   .card-full-width {
     width: 100%;
   }
-  
+
   /* Interactive card */
   .card-interactive {
     cursor: pointer;
   }
-  
+
   .card-interactive:focus {
     outline: none;
     box-shadow: 0 0 0 2px var(--focus-ring);
   }
-  
+
   /* Hoverable */
   .card-hoverable:hover {
     box-shadow: var(--shadow-md);
     transform: translateY(-2px);
   }
-</style> 
+</style>

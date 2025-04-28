@@ -24,7 +24,10 @@ export interface FormState {
 }
 
 export interface FormApi {
-  register: (name: string, config?: FieldConfig) => {
+  register: (
+    name: string,
+    config?: FieldConfig,
+  ) => {
     name: string;
     value: Writable<any>;
     error: Readable<string | null>;
@@ -49,35 +52,31 @@ export interface FormApi {
  */
 export function useForm(
   fields: Record<string, FieldConfig> = {},
-  options: FormOptions = {}
+  options: FormOptions = {},
 ): FormApi {
   // Opciones por defecto
-  const { 
-    onSubmit = () => {}, 
-    validateOnChange = true, 
-    validateOnBlur = true 
-  } = options;
-  
+  const { onSubmit = () => {}, validateOnChange = true, validateOnBlur = true } = options;
+
   // Estado del formulario
   const initialValues = Object.entries(fields).reduce(
     (acc, [name, config]) => ({ ...acc, [name]: config.initialValue ?? '' }),
-    {}
+    {},
   );
-  
+
   const formStore = writable<FormState>({
     values: { ...initialValues },
     errors: {},
     touched: {},
     isSubmitting: false,
     isValid: true,
-    isDirty: false
+    isDirty: false,
   });
-  
+
   // Método para validar un campo individual
   function validateField(name: string, value: any): string | null {
     const fieldConfig = fields[name];
     if (!fieldConfig || !fieldConfig.validators) return null;
-    
+
     for (const validator of fieldConfig.validators) {
       const state = get(formStore);
       const result = validator(value, state.values);
@@ -87,13 +86,13 @@ export function useForm(
     }
     return null;
   }
-  
+
   // Método para validar todos los campos
   function validateForm(): Record<string, string | null> {
     const state = get(formStore);
     const errors: Record<string, string | null> = {};
     let isValid = true;
-    
+
     Object.entries(fields).forEach(([name, config]) => {
       if (config.validators) {
         const error = validateField(name, state.values[name]);
@@ -101,103 +100,100 @@ export function useForm(
         if (error) isValid = false;
       }
     });
-    
-    formStore.update(state => ({
+
+    formStore.update((state) => ({
       ...state,
       errors,
-      isValid
+      isValid,
     }));
-    
+
     return errors;
   }
-  
+
   // Registrar un campo en el formulario
   function register(name: string, config: FieldConfig = {}) {
     const value = writable(get(formStore).values[name] ?? '');
-    
+
     // Sincronizar valor con el estado del formulario
-    value.subscribe(currentValue => {
-      formStore.update(state => {
+    value.subscribe((currentValue) => {
+      formStore.update((state) => {
         const newValues = { ...state.values, [name]: currentValue };
         const isDirty = JSON.stringify(newValues) !== JSON.stringify(initialValues);
-        
+
         // Validar si es necesario
         let errors = state.errors;
         if (validateOnChange && state.touched[name]) {
           const error = validateField(name, currentValue);
           errors = { ...errors, [name]: error };
         }
-        
+
         return {
           ...state,
           values: newValues,
           errors,
-          isDirty
+          isDirty,
         };
       });
     });
-    
+
     // Derivar error para este campo
-    const error = derived(formStore, $form => $form.errors[name] || null);
-    
+    const error = derived(formStore, ($form) => $form.errors[name] || null);
+
     // Manejadores de eventos
     const onChange = (e: Event) => {
       const target = e.target as HTMLInputElement;
       value.set(target.type === 'checkbox' ? target.checked : target.value);
     };
-    
+
     const onBlur = () => {
-      formStore.update(state => {
+      formStore.update((state) => {
         const touched = { ...state.touched, [name]: true };
-        
+
         // Validar en blur si es necesario
         let errors = state.errors;
         if (validateOnBlur) {
           const error = validateField(name, state.values[name]);
           errors = { ...errors, [name]: error };
         }
-        
+
         return { ...state, touched, errors };
       });
     };
-    
+
     return { name, value, error, onChange, onBlur };
   }
-  
+
   // Manejador de envío del formulario
   async function handleSubmit(e?: Event) {
     if (e) e.preventDefault();
-    
+
     // Marcar todos los campos como tocados
-    formStore.update(state => ({
+    formStore.update((state) => ({
       ...state,
-      touched: Object.keys(fields).reduce(
-        (acc, key) => ({ ...acc, [key]: true }),
-        {}
-      )
+      touched: Object.keys(fields).reduce((acc, key) => ({ ...acc, [key]: true }), {}),
     }));
-    
+
     // Validar el formulario completo
     const errors = validateForm();
-    const hasErrors = Object.values(errors).some(error => error !== null);
-    
+    const hasErrors = Object.values(errors).some((error) => error !== null);
+
     if (!hasErrors) {
-      formStore.update(state => ({
+      formStore.update((state) => ({
         ...state,
-        isSubmitting: true
+        isSubmitting: true,
       }));
-      
+
       try {
         await onSubmit(get(formStore).values);
       } finally {
-        formStore.update(state => ({
+        formStore.update((state) => ({
           ...state,
-          isSubmitting: false
+          isSubmitting: false,
         }));
       }
     }
   }
-  
+
   // Reiniciar el formulario
   function reset() {
     formStore.set({
@@ -206,59 +202,59 @@ export function useForm(
       touched: {},
       isSubmitting: false,
       isValid: true,
-      isDirty: false
+      isDirty: false,
     });
   }
-  
+
   // Establecer valores manualmente
   function setValues(values: Record<string, any>) {
-    formStore.update(state => {
+    formStore.update((state) => {
       const newValues = { ...state.values, ...values };
       const isDirty = JSON.stringify(newValues) !== JSON.stringify(initialValues);
-      
+
       return {
         ...state,
         values: newValues,
-        isDirty
+        isDirty,
       };
     });
   }
-  
+
   // Establecer un valor específico
   function setValue(name: string, value: any) {
-    formStore.update(state => {
+    formStore.update((state) => {
       const newValues = { ...state.values, [name]: value };
       const isDirty = JSON.stringify(newValues) !== JSON.stringify(initialValues);
-      
+
       return {
         ...state,
         values: newValues,
-        isDirty
+        isDirty,
       };
     });
   }
-  
+
   // Establecer un error específico
   function setError(name: string, error: string | null) {
-    formStore.update(state => ({
+    formStore.update((state) => ({
       ...state,
-      errors: { ...state.errors, [name]: error }
+      errors: { ...state.errors, [name]: error },
     }));
   }
-  
+
   // Limpiar todos los errores
   function clearErrors() {
-    formStore.update(state => ({
+    formStore.update((state) => ({
       ...state,
-      errors: {}
+      errors: {},
     }));
   }
-  
+
   // Devolver el estado actual
   function getState(): FormState {
     return get(formStore);
   }
-  
+
   return {
     register,
     handleSubmit,
@@ -268,6 +264,6 @@ export function useForm(
     setError,
     clearErrors,
     state: formStore,
-    getState
+    getState,
   };
-} 
+}

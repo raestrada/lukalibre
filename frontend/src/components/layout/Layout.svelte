@@ -15,31 +15,31 @@
   }
   onMount(async () => {
     try {
-      console.log("Layout: Montado");
-      
+      console.log('Layout: Montado');
+
       // Verificar si App.svelte ya inició el proceso de autenticación
       const state = authStore.getState();
-      
+
       // Si el estado ya está autenticado, no hacemos nada más
       if (state.isAuthenticated) {
-        console.log("Layout: Usuario ya autenticado");
+        console.log('Layout: Usuario ya autenticado');
         isInitializing = false;
         return;
       }
-      
+
       // Si el estado ya no está en carga pero no está autenticado, verificamos Google token
       if (!state.loading && !state.isAuthenticated) {
-        console.log("Layout: AuthStore inicializado pero no autenticado, verificando Google token");
-        
+        console.log('Layout: AuthStore inicializado pero no autenticado, verificando Google token');
+
         // Verificar si hay datos de Google guardados
         const tokenType = localStorage.getItem('token_type');
         const googleToken = localStorage.getItem('google_token');
         const email = localStorage.getItem('google_email');
-        
+
         // Si hay token de Google y datos, forzamos la autenticación
         if (tokenType === 'google' && googleToken && email) {
-          console.log("Layout: Recuperando sesión de Google");
-          
+          console.log('Layout: Recuperando sesión de Google');
+
           // Forzar autenticación con datos locales
           authStore.forceAuthenticated({
             id: 0,
@@ -47,44 +47,50 @@
             full_name: localStorage.getItem('google_name') || 'Usuario de Google',
             is_active: true,
             is_superuser: false,
-            google_avatar: (localStorage.getItem('google_picture') || localStorage.getItem('google_avatar') || undefined)
+            google_avatar:
+              localStorage.getItem('google_picture') ||
+              localStorage.getItem('google_avatar') ||
+              undefined,
           });
-          
-          console.log("Layout: Sesión de Google forzada con éxito");
+
+          console.log('Layout: Sesión de Google forzada con éxito');
         }
-        
+
         isInitializing = false;
         return;
       }
-      
+
       // De lo contrario, esperamos 300ms para dar tiempo a App.svelte a inicializar
       setTimeout(() => {
-        console.log("Layout: Actualizando estado de inicialización");
-        
+        console.log('Layout: Actualizando estado de inicialización');
+
         // Verificar una última vez por si cambió durante la espera
         const currentState = authStore.getState();
         if (!currentState.isAuthenticated && !currentState.loading) {
           // Verificar token de Google
           const tokenType = localStorage.getItem('token_type');
           const googleEmail = localStorage.getItem('google_email');
-          
+
           if (tokenType === 'google' && googleEmail) {
-            console.log("Layout: Último intento de recuperar sesión Google");
+            console.log('Layout: Último intento de recuperar sesión Google');
             authStore.forceAuthenticated({
               id: 0,
               email: googleEmail,
               full_name: localStorage.getItem('google_name') || 'Usuario de Google',
               is_active: true,
               is_superuser: false,
-              google_avatar: (localStorage.getItem('google_picture') || localStorage.getItem('google_avatar') || undefined)
+              google_avatar:
+                localStorage.getItem('google_picture') ||
+                localStorage.getItem('google_avatar') ||
+                undefined,
             });
           }
         }
-        
+
         isInitializing = false;
       }, 300);
     } catch (error) {
-      console.error("Layout: Error al verificar estado de autenticación:", error);
+      console.error('Layout: Error al verificar estado de autenticación:', error);
       isInitializing = false;
     }
   });
@@ -104,7 +110,9 @@
   </div>
   <footer class="footer">
     <div class="container">
-      <p>&copy; {new Date().getFullYear()} LukaLibre — Proyecto OSS que mantiene tus datos en tu dispositivo</p>
+      <p>
+        &copy; {new Date().getFullYear()} LukaLibre — Proyecto OSS que mantiene tus datos en tu dispositivo
+      </p>
       <p>Educación Financiera para Chile</p>
     </div>
   </footer>
@@ -127,7 +135,7 @@
     min-width: 0;
     min-height: 0;
   }
-  
+
   .footer {
     background-color: var(--verde-luka);
     color: white;
@@ -135,8 +143,8 @@
     text-align: center;
     margin-top: auto;
   }
-  
+
   .footer p {
     margin-bottom: var(--space-xs);
   }
-</style> 
+</style>

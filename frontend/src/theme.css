@@ -13,10 +13,10 @@
   --danger: #dc3545; /* Alias de error para consistencia */
 
   /* Fondos */
-  --background-primary: #ffffff;
+  --background-primary: #fff;
   --background-secondary: #f8f9fa;
   --background-tertiary: #e9ecef;
-  --surface: #ffffff;
+  --surface: #fff;
   --surface-secondary: #f8f9fa;
 
   /* Texto */
@@ -29,12 +29,12 @@
   --border: #dee2e6;
   --border-light: #e9ecef;
   --border-dark: #ced4da;
-  --shadow: rgba(0, 0, 0, 0.08);
+  --shadow: rgb(0 0 0 / 8%);
 
   /* Sombras predefinidas */
-  --shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-  --shadow-md: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  --shadow-sm: 0 0.125rem 0.25rem rgb(0 0 0 / 7.5%);
+  --shadow-md: 0 0.25rem 0.5rem rgb(0 0 0 / 10%);
+  --shadow-lg: 0 0.5rem 1rem rgb(0 0 0 / 15%);
 
   /* Espaciados */
   --space-xs: 0.25rem;

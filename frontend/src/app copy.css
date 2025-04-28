@@ -2,22 +2,22 @@
   /* Paleta LukaLibre */
   --verde-luka: #3A6351;
   --verde-nube: #D5E5D9;
-  --negro-callado: #222222;
+  --negro-callado: #222;
   --amarillo-caleta: #FFC857;
   --blanco-panraza: #F9F9F9;
 
   /* Colores funcionales */
   --text-primary: var(--negro-callado);
-  --text-secondary: #555555;
+  --text-secondary: #555;
   --background: var(--blanco-panraza);
   --primary: var(--verde-luka);
   --primary-hover: #2c4e3f;
   --secondary: var(--amarillo-caleta);
   --secondary-hover: #e6b44e;
   --accent: var(--verde-nube);
-  --error: #FF3333;
-  --border: #dddddd;
-  --shadow: rgba(0, 0, 0, 0.1);
+  --error: #F33;
+  --border: #ddd;
+  --shadow: rgb(0 0 0 / 10%);
 
   /* Espaciado */
   --space-xs: 0.25rem;
@@ -256,7 +256,7 @@ input:focus, textarea:focus, select:focus {
 }
 
 /* Responsive */
-@media (max-width: 768px) {
+@media (width <= 768px) {
   :root {
     --space-lg: 1.25rem;
     --space-xl: 1.5rem;

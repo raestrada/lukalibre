@@ -10,7 +10,7 @@ const patterns = {
   url: /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/,
   numbers: /^[0-9]+$/,
   alphanumeric: /^[a-zA-Z0-9]+$/,
-  rut: /^[0-9]{1,2}(?:\.[0-9]{3}){2}-[0-9kK]$/
+  rut: /^[0-9]{1,2}(?:\.[0-9]{3}){2}-[0-9kK]$/,
 };
 
 /**
@@ -138,29 +138,29 @@ export function matches(field: string, fieldName: string) {
  */
 export function validateRut(value: string): boolean | string {
   if (!value) return true;
-  
+
   // Primero verificar el formato
   if (!patterns.rut.test(value)) {
     return 'El formato del RUT no es válido. Debe ser 12.345.678-9';
   }
-  
+
   // Limpiar el RUT para validación (quitar puntos y guión)
   const rutClean = value.replace(/\./g, '').replace('-', '');
   const rutDigits = rutClean.slice(0, -1);
   const dv = rutClean.slice(-1).toUpperCase();
-  
+
   // Calcular dígito verificador
   let sum = 0;
   let multiplier = 2;
-  
+
   for (let i = rutDigits.length - 1; i >= 0; i--) {
     sum += parseInt(rutDigits[i]) * multiplier;
     multiplier = multiplier === 7 ? 2 : multiplier + 1;
   }
-  
+
   const expectedDV = 11 - (sum % 11);
   let calculatedDV: string;
-  
+
   if (expectedDV === 11) {
     calculatedDV = '0';
   } else if (expectedDV === 10) {
@@ -168,18 +168,20 @@ export function validateRut(value: string): boolean | string {
   } else {
     calculatedDV = expectedDV.toString();
   }
-  
+
   if (calculatedDV !== dv) {
     return 'El RUT no es válido';
   }
-  
+
   return true;
 }
 
 /**
  * Compone varios validadores en uno solo
  */
-export function composeValidators(...validators: Array<(value: any, allValues?: any) => boolean | string>) {
+export function composeValidators(
+  ...validators: Array<(value: any, allValues?: any) => boolean | string>
+) {
   return (value: any, allValues?: any): boolean | string => {
     for (const validator of validators) {
       const result = validator(value, allValues);
@@ -189,4 +191,4 @@ export function composeValidators(...validators: Array<(value: any, allValues?: 
     }
     return true;
   };
-} 
+}

@@ -29,7 +29,7 @@
           <tr>
             {#each columns as col}
               <td>
-                <div 
+                <div
                   class="cell-content {isEmptyValue(row[col]) ? 'empty-value' : ''}"
                   title={formatCellValue(row[col])}
                 >
@@ -63,7 +63,8 @@
     font-size: 0.97rem;
     table-layout: auto;
   }
-  .data-table th, .data-table td {
+  .data-table th,
+  .data-table td {
     padding: 0.6em 0.8em;
     border-bottom: 1px solid var(--border-color, #eee);
     text-align: left;

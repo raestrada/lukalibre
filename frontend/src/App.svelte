@@ -9,7 +9,7 @@
   import { onMount } from 'svelte';
   import { isMobileDevice } from './services/deviceDetection';
   import type { ComponentType } from 'svelte';
-  
+
   // Componentes para las rutas
   import Home from './components/Home.svelte';
   import Login from './components/auth/Login.svelte';
@@ -18,9 +18,9 @@
   import Profile from './components/user/Profile.svelte';
   import Dashboard from './components/dashboard/Dashboard.svelte';
   import Goals from './routes/goals.svelte';
-  
+
   let isInitializing = true;
-  
+
   // Simplificada: solo maneja JWT propio
   function extractJwtFromHash(): boolean {
     if (window.location.hash.includes('access_token=')) {
@@ -42,7 +42,7 @@
       if (extractJwtFromHash()) {
         await authStore.init();
         isInitializing = false;
-        
+
         // Si es móvil y está autenticado, redirigir a captura móvil
         const authState = authStore.getState();
         if (isMobileDevice() && authState.isAuthenticated) {
@@ -52,15 +52,15 @@
       }
       // Inicialización normal
       await authStore.init();
-      
+
       // Si es móvil y está autenticado, redirigir a captura móvil
       const authState = authStore.getState();
       if (isMobileDevice() && authState.isAuthenticated) {
         push('/mobile/capture');
       }
     } catch (error) {
-      console.error("Error al inicializar:", error);
-      
+      console.error('Error al inicializar:', error);
+
       // Recuperación de emergencia con datos Google
       const email = localStorage.getItem('google_email');
       if (email && localStorage.getItem('token_type') === 'google') {
@@ -70,25 +70,25 @@
           full_name: localStorage.getItem('google_name') || 'Usuario de Google',
           is_active: true,
           is_superuser: false,
-          google_avatar: localStorage.getItem('google_picture') || undefined
+          google_avatar: localStorage.getItem('google_picture') || undefined,
         });
       }
     } finally {
       isInitializing = false;
     }
   });
-  
+
   // Verificación simplificada
   function isAuthenticated() {
     if (isInitializing) return false;
-    
+
     const state = get(authStore);
     const authFromStore = state.isAuthenticated && !state.loading;
     const authFromToken = authService.isLoggedIn();
-    
+
     return authFromStore || authFromToken;
   }
-  
+
   // Redirige a login si no está autenticado
   function redirectIfNotAuthenticated() {
     if (!isAuthenticated()) {
@@ -97,11 +97,11 @@
     }
     return true;
   }
-  
+
   // Definición de rutas
   import DataViewer from './components/data/DataViewer.svelte';
   import MobileCaptureView from './components/mobile/MobileCaptureView.svelte';
-  
+
   // Función para redirigir a la captura móvil si corresponde
   function redirectMobileToCapture() {
     // Solo redirigir si es un móvil y el usuario está autenticado
@@ -133,30 +133,30 @@
     '/auth/callback': GoogleCallbackComponent,
     '/profile': wrap({
       component: ProfileComponent,
-      conditions: [redirectIfNotAuthenticated]
+      conditions: [redirectIfNotAuthenticated],
     }),
     '/user/settings': wrap({
       component: ProfileComponent,
-      conditions: [redirectIfNotAuthenticated]
+      conditions: [redirectIfNotAuthenticated],
     }),
     '/dashboard': wrap({
       component: DashboardComponent,
-      conditions: [redirectIfNotAuthenticated, redirectMobileToCapture]
+      conditions: [redirectIfNotAuthenticated, redirectMobileToCapture],
     }),
     '/data': wrap({
       component: DataViewerComponent,
-      conditions: [redirectIfNotAuthenticated, redirectMobileToCapture]
+      conditions: [redirectIfNotAuthenticated, redirectMobileToCapture],
     }),
     '/goals': wrap({
       component: GoalsComponent,
-      conditions: [redirectIfNotAuthenticated, redirectMobileToCapture]
+      conditions: [redirectIfNotAuthenticated, redirectMobileToCapture],
     }),
     '/mobile/capture': wrap({
       component: MobileCaptureComponent,
-      conditions: [redirectIfNotAuthenticated]
+      conditions: [redirectIfNotAuthenticated],
     }),
     // Ruta por defecto (404)
-    '*': HomeComponent
+    '*': HomeComponent,
   };
 </script>
 

@@ -5,7 +5,7 @@ export enum LogLevel {
   DEBUG = 0,
   INFO = 1,
   WARN = 2,
-  ERROR = 3
+  ERROR = 3,
 }
 
 /**
@@ -25,7 +25,7 @@ const globalConfig: LoggerConfig = {
   minLevel: import.meta.env.DEV ? LogLevel.DEBUG : LogLevel.INFO,
   enableConsole: true,
   prefix: '[LukaLibre]',
-  maxStringLength: 500
+  maxStringLength: 500,
 };
 
 /**
@@ -68,7 +68,7 @@ export function createLogger(module: string) {
    * @returns Argumentos formateados
    */
   function formatArgs(args: any[]): any[] {
-    return args.map(arg => {
+    return args.map((arg) => {
       if (typeof arg === 'object' && arg !== null) {
         try {
           // Para objetos, clonarlos para evitar referencia circular
@@ -107,7 +107,7 @@ export function createLogger(module: string) {
     },
 
     // Utilidad para acortar cadenas
-    trimLongString
+    trimLongString,
   };
 }
 
@@ -120,4 +120,4 @@ export function configureLogger(config: Partial<LoggerConfig>): void {
 }
 
 // Logger global
-export default createLogger('App'); 
+export default createLogger('App');

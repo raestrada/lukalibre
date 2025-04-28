@@ -16,7 +16,7 @@
 
   // Función para alternar entre expandido y colapsado
   function toggleSidebar() {
-    expandedStore.update(value => !value);
+    expandedStore.update((value) => !value);
     // Guardar preferencia en localStorage
     localStorage.setItem('sidebar_expanded', expanded ? 'false' : 'true');
   }
@@ -32,19 +32,23 @@
   $: user = $authStore.user;
   let defaultProfilePic = '/icons/user.svg';
   $: userAvatar = user?.google_avatar || defaultProfilePic;
-  $: userInitial = user?.full_name ? user.full_name[0].toUpperCase() : (user?.email ? user.email[0].toUpperCase() : 'U');
+  $: userInitial = user?.full_name
+    ? user.full_name[0].toUpperCase()
+    : user?.email
+      ? user.email[0].toUpperCase()
+      : 'U';
 </script>
 
 <aside class="sidebar {expanded ? 'expanded' : 'collapsed'}">
-  <button 
-    class="toggle-button" 
-    on:click={toggleSidebar} 
+  <button
+    class="toggle-button"
+    on:click={toggleSidebar}
     aria-label={expanded ? 'Colapsar menú' : 'Expandir menú'}
     title={expanded ? 'Colapsar menú' : 'Expandir menú'}
   >
-    <img 
-      src="/icons/{expanded ? 'chevron-left' : 'chevron-right'}.svg" 
-      alt={expanded ? 'Colapsar' : 'Expandir'} 
+    <img
+      src="/icons/{expanded ? 'chevron-left' : 'chevron-right'}.svg"
+      alt={expanded ? 'Colapsar' : 'Expandir'}
       class="icon toggle-icon"
     />
   </button>
@@ -84,15 +88,15 @@
     z-index: 90;
     transition: width 0.3s ease;
   }
-  
+
   .expanded {
     width: 220px;
   }
-  
+
   .collapsed {
     width: 64px;
   }
-  
+
   .toggle-button {
     position: absolute;
     top: 1rem;
@@ -111,17 +115,17 @@
     padding: 0;
     transition: background 0.2s;
   }
-  
+
   .toggle-button:hover {
     background: var(--primary-dark);
   }
-  
+
   .toggle-icon {
     width: 16px;
     height: 16px;
     filter: brightness(0) invert(1);
   }
-  
+
   .sidebar-menu {
     display: flex;
     flex-direction: column;
@@ -130,7 +134,7 @@
     padding: 0 var(--space-sm);
     overflow: hidden;
   }
-  
+
   .sidebar-link {
     display: flex;
     align-items: center;
@@ -144,31 +148,34 @@
     text-decoration: none;
     font-weight: 500;
     cursor: pointer;
-    transition: background 0.15s, color 0.15s;
+    transition:
+      background 0.15s,
+      color 0.15s;
     white-space: nowrap;
     justify-content: center;
   }
-  
+
   .expanded .sidebar-link {
     justify-content: flex-start;
   }
-  
-  .sidebar-link:hover, .sidebar-link:focus {
+
+  .sidebar-link:hover,
+  .sidebar-link:focus {
     background: var(--primary-light);
     color: var(--text-inverse);
   }
-  
+
   .icon {
     width: 22px;
     height: 22px;
     filter: brightness(0) invert(1);
   }
-  
+
   .link-text {
     transition: opacity 0.2s ease;
     opacity: 1;
   }
-  
+
   .collapsed .link-text {
     opacity: 0;
   }

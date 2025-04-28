@@ -23,7 +23,7 @@
     apiKey = e.detail.apiKey;
     showApiKeyModal = false;
     infoMessage = 'API Key configurada correctamente.';
-    setTimeout(() => infoMessage = '', 3000);
+    setTimeout(() => (infoMessage = ''), 3000);
   }
 
   function checkApiKey() {
@@ -39,7 +39,7 @@
     apiKey = '';
     hasApiKey = false;
     infoMessage = 'API Key eliminada correctamente.';
-    setTimeout(() => infoMessage = '', 3000);
+    setTimeout(() => (infoMessage = ''), 3000);
   }
 
   onMount(async () => {
@@ -58,10 +58,12 @@
 </script>
 
 <Card variant="outline" padding="md" radius="md" fullWidth={true}>
-  <div style="display: flex; align-items: center; justify-content: space-between; gap: 2rem; width: 100%; flex-wrap: wrap;">
+  <div
+    style="display: flex; align-items: center; justify-content: space-between; gap: 2rem; width: 100%; flex-wrap: wrap;"
+  >
     <div style="flex:1; min-width: 220px; margin-right: 0.5rem;">
       <div style="font-size: 0.95em; color: #555; margin-bottom: 0.3rem;">
-        Puedes usar créditos incluidos con un plan o tu propia API Key de OpenAI.<br>
+        Puedes usar créditos incluidos con un plan o tu propia API Key de OpenAI.<br />
         Si no tienes un plan activo, deberás ingresar tu clave.
       </div>
       {#if planLoading}
@@ -97,11 +99,9 @@
   </div>
   <ApiKeyModal visible={showApiKeyModal} on:setApiKey={handleApiKeySet} />
   {#if infoMessage}
-    <StatusMessage type="info" message={infoMessage} onClose={() => infoMessage = ''} />
+    <StatusMessage type="info" message={infoMessage} onClose={() => (infoMessage = '')} />
   {/if}
 </Card>
 
-
 <style>
-
 </style>

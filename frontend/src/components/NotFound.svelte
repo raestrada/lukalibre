@@ -10,24 +10,24 @@
 </div>
 
 <style>
-.not-found {
-  text-align: center;
-  padding: 4rem 1rem;
-}
-.not-found h1 {
-  font-size: 6rem;
-  color: var(--primary, #00897b);
-  margin-bottom: 0.5rem;
-}
-.not-found h2 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-}
-.not-found a {
-  display: inline-block;
-  margin-top: 2rem;
-  color: var(--primary, #00897b);
-  text-decoration: underline;
-  font-weight: bold;
-}
+  .not-found {
+    text-align: center;
+    padding: 4rem 1rem;
+  }
+  .not-found h1 {
+    font-size: 6rem;
+    color: var(--primary, #00897b);
+    margin-bottom: 0.5rem;
+  }
+  .not-found h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  .not-found a {
+    display: inline-block;
+    margin-top: 2rem;
+    color: var(--primary, #00897b);
+    text-decoration: underline;
+    font-weight: bold;
+  }
 </style>

@@ -3,35 +3,40 @@
   export let message: string = '';
   export let closable: boolean = true;
   export let onClose: () => void = () => {};
-  export let actions: {label: string, onClick: () => void, disabled?: boolean, loading?: boolean}[] = [];
+  export let actions: {
+    label: string;
+    onClick: () => void;
+    disabled?: boolean;
+    loading?: boolean;
+  }[] = [];
 </script>
 
 <div class="status-message {type}-message">
   <div class="message-content">
     <p>{message}</p>
-    
+
     {#if actions.length > 0}
       <div class="message-actions">
         {#each actions as action}
-          <button 
+          <button
             class="message-button {type}"
             on:click={action.onClick}
             disabled={action.disabled || false}
           >
             {#if action.loading}
-              <span class="loading-spinner"></span> 
+              <span class="loading-spinner"></span>
             {/if}
             {action.label}
           </button>
         {/each}
       </div>
     {/if}
-    
+
     {#if closable}
       <button class="close-button" on:click={onClose}>&times;</button>
     {/if}
   </div>
-  
+
   <!-- Permitimos incluir contenido personalizado si es necesario -->
   <slot></slot>
 </div>
@@ -150,6 +155,8 @@
   }
 
   @keyframes spin {
-    to { transform: rotate(360deg); }
+    to {
+      transform: rotate(360deg);
+    }
   }
 </style>
