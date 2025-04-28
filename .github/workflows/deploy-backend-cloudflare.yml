@@ -1,0 +1,69 @@
+name: Setup Cloudflare Tunnel
+
+on:
+  workflow_dispatch:
+    inputs:
+      tunnel_name:
+        description: 'Nombre del tunnel de Cloudflare'
+        required: true
+        default: 'lukalibre-api'
+      domain:
+        description: 'Dominio a conectar (ej: api.lukalibre.org)'
+        required: true
+        default: 'api.lukalibre.org'
+
+jobs:
+  setup-tunnel:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install cloudflared
+        run: |
+          curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb -o cloudflared.deb
+          sudo dpkg -i cloudflared.deb
+      
+      - name: Login to Cloudflare
+        run: |
+          echo "${{ secrets.CLOUDFLARE_CERT }}" > cert.pem
+          cloudflared tunnel login --credentials-file cert.pem
+      
+      - name: Create tunnel
+        id: create_tunnel
+        run: |
+          TUNNEL_ID=$(cloudflared tunnel create ${{ github.event.inputs.tunnel_name }} --credentials-file cert.pem)
+          echo "TUNNEL_ID=$TUNNEL_ID" >> $GITHUB_ENV
+          TUNNEL_ID=$(echo $TUNNEL_ID | grep -oP 'Created tunnel \K[a-z0-9-]+')
+          echo "tunnel_id=$TUNNEL_ID" >> $GITHUB_OUTPUT
+          
+          # Extraer el token de tunnel
+          TUNNEL_TOKEN=$(cloudflared tunnel token $TUNNEL_ID --credentials-file cert.pem)
+          echo "::add-mask::$TUNNEL_TOKEN"
+          echo "TUNNEL_TOKEN=$TUNNEL_TOKEN" >> $GITHUB_OUTPUT
+      
+      - name: Configure tunnel
+        run: |
+          cat > config.yml <<EOF
+          tunnel: ${{ steps.create_tunnel.outputs.tunnel_id }}
+          credentials-file: cert.pem
+          
+          ingress:
+            - hostname: ${{ github.event.inputs.domain }}
+              service: https://lukalibre-backend-URL.a.run.app
+              originRequest:
+                noTLSVerify: true
+            - service: http_status:404
+          EOF
+          
+          # Configurar DNS
+          cloudflared tunnel route dns ${{ steps.create_tunnel.outputs.tunnel_id }} ${{ github.event.inputs.domain }}
+      
+      - name: Output Instructions
+        run: |
+          echo "============================================"
+          echo "🚀 Tunnel creado con éxito!"
+          echo "📝 ID del Tunnel: ${{ steps.create_tunnel.outputs.tunnel_id }}"
+          echo ""
+          echo "⚠️ IMPORTANTE: Guarda este token en GitHub Secrets como CLOUDFLARE_TUNNEL_TOKEN:"
+          echo "${{ steps.create_tunnel.outputs.TUNNEL_TOKEN }}"
+          echo ""
+          echo "📋 Ahora ejecuta el workflow de deploy para desplegar el backend"
+          echo "============================================"

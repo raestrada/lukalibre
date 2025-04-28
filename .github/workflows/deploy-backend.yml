@@ -1,0 +1,177 @@
+name: Deploy Backend to Cloud Run
+
+on:
+  push:
+    tags:
+      - 'v*.*.*' # Solo tags semánticos
+    paths:
+      - 'backend/**'
+      - 'terraform/**'
+
+jobs:
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      backend_changed: ${{ steps.filter.outputs.backend }}
+      terraform_changed: ${{ steps.filter.outputs.terraform }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Check for backend and terraform changes
+        uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            backend:
+              - 'backend/**'
+            terraform:
+              - 'terraform/**'
+  
+  terraform:
+    name: Setup Database with Terraform
+    needs: detect-changes
+    if: needs.detect-changes.outputs.backend_changed == 'true' || needs.detect-changes.outputs.terraform_changed == 'true'
+    runs-on: ubuntu-latest
+    outputs:
+      db_connection_string: ${{ steps.terraform-output.outputs.db_connection_string }}
+      db_host: ${{ steps.terraform-output.outputs.db_host }}
+      db_name: ${{ steps.terraform-output.outputs.db_name }}
+      db_username: ${{ steps.terraform-output.outputs.db_username }}
+      db_password: ${{ steps.terraform-output.outputs.db_password }}
+      
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.7.0
+
+      - name: Create Terraform state bucket if not exists
+        run: |
+          BUCKET_NAME="${{ secrets.GCP_PROJECT_ID }}-terraform-state"
+          if ! gsutil ls gs://$BUCKET_NAME &>/dev/null; then
+            echo "Creating terraform state bucket: $BUCKET_NAME"
+            gsutil mb -l ${{ secrets.GCP_REGION }} gs://$BUCKET_NAME
+            gsutil versioning set on gs://$BUCKET_NAME
+          else
+            echo "Terraform state bucket already exists"
+          fi
+      
+      - name: Setup Terraform backend
+        run: |
+          cat > terraform/backend.tf <<EOF
+          terraform {
+            backend "gcs" {
+              bucket = "${{ secrets.GCP_PROJECT_ID }}-terraform-state"
+              prefix = "terraform/state"
+            }
+            
+            required_providers {
+              google = {
+                source  = "hashicorp/google"
+                version = "~> 5.0"
+              }
+              random = {
+                source  = "hashicorp/random"
+                version = "~> 3.5"
+              }
+            }
+          }
+          EOF
+      
+      - name: Terraform Init
+        working-directory: ./terraform
+        run: terraform init
+
+      - name: Terraform Plan
+        working-directory: ./terraform
+        run: terraform plan -var="project_id=${{ secrets.GCP_PROJECT_ID }}" -var="region=${{ secrets.GCP_REGION }}" -var="environment=${GITHUB_REF_NAME#v}" -var="db_password=${{ secrets.DB_PASSWORD }}" -out=tfplan
+
+      - name: Terraform Apply
+        working-directory: ./terraform
+        run: terraform apply -auto-approve tfplan
+
+      - name: Terraform Output
+        id: terraform-output
+        working-directory: ./terraform
+        run: |
+          echo "db_connection_string=$(terraform output -raw db_connection_string)" >> $GITHUB_OUTPUT
+          echo "db_host=$(terraform output -raw db_host)" >> $GITHUB_OUTPUT
+          echo "db_name=$(terraform output -raw db_name)" >> $GITHUB_OUTPUT
+          echo "db_username=$(terraform output -raw db_username)" >> $GITHUB_OUTPUT
+          echo "db_password=$(terraform output -raw db_password)" >> $GITHUB_OUTPUT
+  
+  deploy:
+    name: Build & Deploy Backend
+    needs: [detect-changes, terraform]
+    if: needs.detect-changes.outputs.backend_changed == 'true'
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./backend
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Extract tag version
+        id: get_version
+        run: echo "version=${GITHUB_REF_NAME#v}" >> $GITHUB_OUTPUT
+        shell: bash
+        working-directory: .
+
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Configure Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+
+      - name: Configure Docker for GCP
+        run: gcloud auth configure-docker gcr.io
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend
+          push: true
+          tags: |
+            gcr.io/${{ secrets.GCP_PROJECT_ID }}/lukalibre-backend:${{ github.ref_name }}
+            gcr.io/${{ secrets.GCP_PROJECT_ID }}/lukalibre-backend:latest
+
+      - name: Deploy to Cloud Run
+        id: deploy
+        uses: google-github-actions/deploy-cloudrun@v2
+        with:
+          service: lukalibre-backend
+          image: gcr.io/${{ secrets.GCP_PROJECT_ID }}/lukalibre-backend:${{ github.ref_name }}
+          region: ${{ secrets.GCP_REGION }}
+          flags: >
+            --no-allow-unauthenticated
+            --set-env-vars="DATABASE_URL=${{ needs.terraform.outputs.db_connection_string }},
+                          DB_HOST=${{ needs.terraform.outputs.db_host }},
+                          DB_NAME=${{ needs.terraform.outputs.db_name }},
+                          DB_USER=${{ needs.terraform.outputs.db_username }},
+                          DB_PASS=${{ needs.terraform.outputs.db_password }},
+                          CLOUDFLARE_TUNNEL_TOKEN=${{ secrets.CLOUDFLARE_TUNNEL_TOKEN }},
+                          API_DOMAIN=${{ secrets.API_DOMAIN }}"
+            --update-env-vars
+
+      - name: Show Service URL
+        run: |
+          echo "Service URL ${{ steps.deploy.outputs.url }}"
