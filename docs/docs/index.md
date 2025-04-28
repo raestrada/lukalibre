@@ -7,7 +7,7 @@ has_children: true
 
 # 📚 Centro de Conocimiento LukaLibre
 
-Bienvenido al centro de información financiera realista, en lenguaje chileno y sin chamullo.  
+Bienvenido al centro de información financiera realista, en lenguaje chileno y sin chamullo.
 Acá no te prometemos libertad financiera en 30 días, pero sí herramientas para entender, sobrevivir y mejorar tu relación con la plata.
 
 ---
@@ -29,7 +29,7 @@ Acá no te prometemos libertad financiera en 30 días, pero sí herramientas par
 
 ---
 
-¿Quieres contribuir?  
+¿Quieres contribuir?
 Revisa la [página de colaboración](../contribuir.html) o visita el [repositorio en GitHub](https://github.com/raestrada/lukalibre).
 
 ---

@@ -18,4 +18,4 @@ class TokenPayload(BaseModel):
 
 class GoogleAuthRequest(BaseModel):
     code: str
-    redirect_uri: str 
+    redirect_uri: str

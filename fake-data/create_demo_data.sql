@@ -121,7 +121,7 @@ INSERT INTO resumen_mensual (mes, total_gastos, total_ingresos, total_ahorro, ah
 ('2025-02', 1382000, 1920000, 650000, 538000, '{"gastos":{"vivienda":450000,"alimentacion":240000,"transporte":55000,"servicios":89000,"entretencion":48000,"deudas":150000,"educacion":350000},"ingresos":{"sueldo":1500000,"honorarios":320000,"otros":100000}}');
 
 -- Metadata del sistema
-INSERT INTO metadata (clave, valor) VALUES 
+INSERT INTO metadata (clave, valor) VALUES
 ('ultima_sincronizacion', '2025-04-25T13:30:00.000Z'),
 ('version_datos', '1.2.0'),
 ('ultimo_analisis', '2025-04-24T10:15:00.000Z');

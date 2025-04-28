@@ -96,4 +96,3 @@ Analiza los datos financieros proporcionados y **devuelve ÚNICAMENTE un objeto 
 ```json
 {user_json}
 ```
-

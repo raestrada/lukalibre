@@ -7,11 +7,11 @@ parent: Tus derechos
 
 # 🧹 Cómo revisar y limpiar tu historial financiero
 
-Pagaste una deuda, pero sigues apareciendo en DICOM.  
-Te están cobrando algo que no reconoces.  
+Pagaste una deuda, pero sigues apareciendo en DICOM.
+Te están cobrando algo que no reconoces.
 Te dicen que tienes un mal historial, pero no sabes por qué.
 
-📢 Tienes derecho a revisar y pedir corrección de tus datos.  
+📢 Tienes derecho a revisar y pedir corrección de tus datos.
 Y no necesitas abogado ni pagarle a ninguna empresa “milagrosa” para hacerlo.
 
 ---
@@ -82,8 +82,8 @@ Revisa si:
 
 ## 💬 LukaEjemplo
 
-> “Pagué mi deuda con una tienda hace 8 meses.  
-> Aún aparezco como moroso en Equifax.  
+> “Pagué mi deuda con una tienda hace 8 meses.
+> Aún aparezco como moroso en Equifax.
 > Envié el comprobante por correo, exigí la actualización y lo corrigieron en 10 días.”
 
 ---
@@ -92,5 +92,5 @@ Revisa si:
 
 > *“Tu historial financiero te acompaña, pero no tiene por qué perseguirte para siempre. Si ya pagaste o te equivocaron, exige que lo arreglen.”*
 
-📌 Este documento está en desarrollo.  
+📌 Este documento está en desarrollo.
 ¿Lograste limpiar tu historial o enfrentaste problemas con Equifax? Compártelo en [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

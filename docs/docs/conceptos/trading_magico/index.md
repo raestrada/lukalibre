@@ -8,8 +8,8 @@ has_children: true
 
 # 📉 Trading mágico: promesas de riqueza rápida que no resisten análisis
 
-“Solo tienes que trazar una línea de tendencia”  
-“Este patrón nunca falla”  
+“Solo tienes que trazar una línea de tendencia”
+“Este patrón nunca falla”
 “Aprende a leer el mercado como los bancos”
 
 El mundo del trading mágico está lleno de frases que suenan profesionales, pero que en realidad son **pseudociencia disfrazada de análisis técnico**.
@@ -51,7 +51,7 @@ En esta sección de LukaLibre te explicamos:
 
 ## 🧭 Enfoque LukaLibre
 
-No estamos en contra del análisis técnico real.  
+No estamos en contra del análisis técnico real.
 Estamos en contra de **vender milagros a gente vulnerable**, usando gráficos bonitos y cursos de $100.000 que no enseñan nada útil.
 
 ---

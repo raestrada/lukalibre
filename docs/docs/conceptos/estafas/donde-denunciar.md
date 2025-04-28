@@ -34,7 +34,7 @@ Denunciar **sirve para alertar a otros, presionar a las plataformas, y dejar reg
 - Sirve para estafas en línea, fraudes con tarjetas, suplantación de identidad, phishing o criptodelitos
 - Puedes hacerlo online o presencial
 
-👉 [https://denuncias.policia.cl](https://denuncias.policia.cl)  
+👉 [https://denuncias.policia.cl](https://denuncias.policia.cl)
 (Selecciona "Delitos Informáticos")
 
 También puedes ir directamente a una comisaría o brigada de investigación criminal.
@@ -56,7 +56,7 @@ También puedes ir directamente a una comisaría o brigada de investigación cri
 - Si te hicieron una transferencia fraudulenta
 - Si sospechas que clonaron tu tarjeta o accedieron a tu cuenta
 
-✅ Llama de inmediato al número de emergencia del banco  
+✅ Llama de inmediato al número de emergencia del banco
 ❌ No uses WhatsApp, redes sociales o correos comunes para alertar al banco
 
 ---
@@ -73,15 +73,15 @@ También puedes ir directamente a una comisaría o brigada de investigación cri
 
 ## 🔐 ¿Y si no me estafaron pero vi algo sospechoso?
 
-¡También puedes denunciar!  
+¡También puedes denunciar!
 Muchos esquemas se frenan porque **alguien reportó a tiempo**, aunque no haya caído.
 
 ---
 
 ## 💬 LukaEjemplo
 
-> "Me pidieron pagar $50.000 por un curso de cripto y luego desaparecieron.  
-> Lo denuncié en la PDI y también en SERNAC.  
+> "Me pidieron pagar $50.000 por un curso de cripto y luego desaparecieron.
+> Lo denuncié en la PDI y también en SERNAC.
 > A las semanas, el mismo nombre apareció en las noticias. Yo ayudé a que no siguieran estafando."
 
 ---
@@ -90,5 +90,5 @@ Muchos esquemas se frenan porque **alguien reportó a tiempo**, aunque no haya c
 
 > *"Denunciar es gratis, útil y no es perder el tiempo. No estás solo. Cada denuncia suma."*
 
-📌 Este documento está en desarrollo.  
+📌 Este documento está en desarrollo.
 ¿Pudiste denunciar una estafa y se resolvió? ¿O al menos te dio paz? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre) y cuéntanos tu historia.

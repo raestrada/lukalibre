@@ -6,8 +6,8 @@
 
 **LukaLibre** es una plataforma abierta que busca ayudar a las personas en Chile a **mejorar su situación financiera de forma realista y sin humo**.
 
-📌 No prometemos hacerte rico.  
-📌 No te vamos a vender cursos ni señales mágicas.  
+📌 No prometemos hacerte rico.
+📌 No te vamos a vender cursos ni señales mágicas.
 📌 No estamos asociados a bancos, AFPs, apps ni gurús.
 
 Solo compartimos herramientas, información clara y conocimiento real para que puedas **tomar decisiones con calma, entender tu plata y sobrevivir sin ansiedad**.
@@ -18,8 +18,8 @@ Solo compartimos herramientas, información clara y conocimiento real para que p
 
 <img src="https://lukalibre.org/assets/images/zk_badge.png" alt="Zero-Knowledge by design" style="width: 25%; height: 25%;">
 
-LukaLibre está construido con privacidad total desde el diseño.  
-Los datos se almacenan cifrados localmente en tu navegador y ni siquiera el servidor puede verlos.  
+LukaLibre está construido con privacidad total desde el diseño.
+Los datos se almacenan cifrados localmente en tu navegador y ni siquiera el servidor puede verlos.
 Este enfoque tipo Zero-Knowledge garantiza que tú seas el único que controla tu información financiera.
 
 ---
@@ -114,22 +114,22 @@ También puedes:
 
 ## ⚖️ Licencia
 
-Este proyecto está bajo licencia **MIT** para el código  
+Este proyecto está bajo licencia **MIT** para el código
 y **Creative Commons Attribution-NonCommercial 4.0** para los contenidos.
 
-Esto significa que puedes compartir, adaptar y remezclar...  
+Esto significa que puedes compartir, adaptar y remezclar...
 pero **no puedes revender, monetizar ni usar con fines comerciales** sin permiso.
 
 ---
 
 ## 💬 ¿Por qué "LukaLibre"?
 
-Porque en Chile una "luka" es una forma cotidiana de decir "mil pesos".  
+Porque en Chile una "luka" es una forma cotidiana de decir "mil pesos".
 Y porque creemos que **entender tu plata debería ser gratis, libre y sin humo**.
 
 ---
 
-📬 Si quieres colaborar, traducir, compartir tu historia o simplemente decir "hola":  
+📬 Si quieres colaborar, traducir, compartir tu historia o simplemente decir "hola":
 escríbenos en [https://github.com/raestrada/lukalibre](https://github.com/raestrada/lukalibre)
 
 ## Configuración del Entorno de Desarrollo
@@ -198,4 +198,3 @@ La documentación de la API estará en: http://localhost:8000/docs
 ## Licencia
 
 Este proyecto está bajo la licencia GNU Affero General Public License v3.0 (AGPL-3.0)
-

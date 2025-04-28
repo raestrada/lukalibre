@@ -7,8 +7,8 @@ parent: Deuda
 
 # 📚 Tipos de deuda (en chileno y sin letra chica)
 
-No toda deuda es igual. Algunas son planificadas, otras improvisadas.  
-Algunas tienen reglas claras, otras son trampas con comisiones escondidas.  
+No toda deuda es igual. Algunas son planificadas, otras improvisadas.
+Algunas tienen reglas claras, otras son trampas con comisiones escondidas.
 Y muchas veces terminamos mezclando todo, sin entender **cuál nos está ahogando de verdad**.
 
 Acá te explicamos los tipos de deuda más comunes en Chile, con ejemplos y advertencias.
@@ -78,5 +78,5 @@ Acá te explicamos los tipos de deuda más comunes en Chile, con ejemplos y adve
 
 > *"Saber qué tipo de deuda tienes es el primer paso para ordenarte. No es lo mismo deber una tele que deber una operación médica."*
 
-📌 Este documento está en desarrollo.  
+📌 Este documento está en desarrollo.
 ¿Tienes ejemplos o dudas sobre tu tipo de deuda? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

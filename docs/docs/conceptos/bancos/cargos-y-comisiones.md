@@ -7,10 +7,10 @@ parent: Bancos
 
 # 💸 Cargos y comisiones bancarias: lo que te cobran (y a veces no te dicen)
 
-Puede que nunca hayas pedido un crédito ni usado tu tarjeta…  
+Puede que nunca hayas pedido un crédito ni usado tu tarjeta…
 pero igual te están descontando plata del banco.
 
-¿Cómo?  
+¿Cómo?
 A través de **comisiones, cargos y costos de mantención** que muchas veces nadie te explica al abrir la cuenta.
 
 Este documento te muestra **los cobros más comunes**, cómo identificarlos y cómo evitarlos.
@@ -39,7 +39,7 @@ Este documento te muestra **los cobros más comunes**, cómo identificarlos y c�
 2. **Revisa la cartola detallada en la app o sitio web del banco**
 3. **Busca el tarifario oficial** del banco (obligan a publicarlo)
 
-👉 En Google:  
+👉 En Google:
 `tarifas banco [nombre del banco] site:[nombre del banco].cl`
 
 ---
@@ -80,7 +80,7 @@ Más info en el documento: [Cómo hacer un reclamo al SERNAC](../derechos/reclam
 
 ## 💬 LukaEjemplo
 
-> "Mi cuenta era gratis. Después del segundo mes me cobraron $3.000 de mantención.  
+> "Mi cuenta era gratis. Después del segundo mes me cobraron $3.000 de mantención.
 > No lo decía en ninguna parte clara. Hice un reclamo y me lo reembolsaron."
 
 ---
@@ -89,5 +89,5 @@ Más info en el documento: [Cómo hacer un reclamo al SERNAC](../derechos/reclam
 
 > *"El banco no es tu enemigo, pero tampoco es tu amigo. Revísalo como revisarías el vuelto en la feria."*
 
-📌 Este documento está en desarrollo.  
+📌 Este documento está en desarrollo.
 ¿Descubriste un cobro que no sabías que existía? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre) y comparte tu experiencia.

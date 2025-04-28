@@ -30,7 +30,7 @@ sqlite3 "$SCRIPT_DIR/$DB_FILE" < "$SCRIPT_DIR/$DATA_SQL"
 if [ -f "$SCRIPT_DIR/$DB_FILE" ]; then
   echo "Base de datos creada exitosamente en: $SCRIPT_DIR/$DB_FILE"
   echo "Estadísticas de la base de datos:"
-  
+
   # Mostrar el conteo de registros en cada tabla
   for TABLE in categorias gastos ingresos metas movimientos_ahorro recomendaciones resumen_mensual metadata; do
     COUNT=$(sqlite3 "$SCRIPT_DIR/$DB_FILE" "SELECT COUNT(*) FROM $TABLE;")

@@ -1,3 +1,3 @@
 from .user import User, UserCreate, UserInDB, UserUpdate
 from .token import Token, TokenPayload
-from . import auth 
+from . import auth

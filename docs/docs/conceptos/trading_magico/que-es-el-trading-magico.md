@@ -51,7 +51,7 @@ Porque mezcla:
 - Se enseña como "regla mágica" sin reconocer sus límites
 - Muchas veces **ni siquiera los "mentores" aplican lo que enseñan**
 
-📌 No es análisis técnico real.  
+📌 No es análisis técnico real.
 Es un show visual para convencerte de que el mercado es predecible si compras su curso, señal o app.
 
 ---
@@ -67,10 +67,10 @@ Es un show visual para convencerte de que el mercado es predecible si compras su
 
 ## �� LukaEjemplo
 
-> "Un tipo me mostró cómo con un par de líneas sabía cuándo comprar o vender.  
-> Entré a su grupo y compré su curso.  
-> Después de aplicar todo, perdí $200.000.  
-> Cuando pregunté, me dijo que 'no seguí bien la estrategia'.  
+> "Un tipo me mostró cómo con un par de líneas sabía cuándo comprar o vender.
+> Entré a su grupo y compré su curso.
+> Después de aplicar todo, perdí $200.000.
+> Cuando pregunté, me dijo que 'no seguí bien la estrategia'.
 > Ahí entendí que era todo humo."
 
 ---
@@ -79,5 +79,5 @@ Es un show visual para convencerte de que el mercado es predecible si compras su
 
 > *"Si alguien dice que puede predecir el mercado con figuras, lo más probable es que lo único que quiere es tu plata."*
 
-📌 Este documento está en desarrollo.  
+📌 Este documento está en desarrollo.
 ¿Te ofrecieron un curso, señal o comunidad de trading "milagrosa"? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre) y cuéntanos tu experiencia.

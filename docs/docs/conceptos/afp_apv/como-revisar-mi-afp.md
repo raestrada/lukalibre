@@ -7,9 +7,9 @@ parent: AFP y APV
 
 # 🔍 ¿Cómo revisar lo que tengo en mi AFP?
 
-¿No sabes cuánta plata tienes ahorrada para tu pensión?  
-¿No tienes idea en qué fondo estás o cuánto te han descontado?  
-No estás solo.  
+¿No sabes cuánta plata tienes ahorrada para tu pensión?
+¿No tienes idea en qué fondo estás o cuánto te han descontado?
+No estás solo.
 La mayoría de las personas **no revisa su AFP hasta que es tarde**.
 
 Acá te explicamos cómo hacerlo fácil, rápido y sin perderte entre números raros.
@@ -66,15 +66,15 @@ Una vez dentro, busca tu **Cartola Cuatrimestral** o resumen de afiliado.
 
 ## 📱 Tip adicional: activa notificaciones
 
-Muchas AFP permiten que te llegue un aviso por correo o app **cada vez que entra una cotización** o se hace un cambio.  
+Muchas AFP permiten que te llegue un aviso por correo o app **cada vez que entra una cotización** o se hace un cambio.
 ¡Úsalo! Es una buena forma de evitar fraudes o errores.
 
 ---
 
 ## 💬 LukaEjemplo
 
-> “Revisé mi cartola y vi que mi empleador no cotizaba hace 5 meses.  
-> Me habían despedido informalmente y no lo notificaron.  
+> “Revisé mi cartola y vi que mi empleador no cotizaba hace 5 meses.
+> Me habían despedido informalmente y no lo notificaron.
 > Reclamo al seguro de cesantía y a la DT, y logré regularizar la situación.”
 
 ---
@@ -83,5 +83,5 @@ Muchas AFP permiten que te llegue un aviso por correo o app **cada vez que entra
 
 > *“Tu AFP es tu plata. No es opcional saber cuánto tienes ni esperar a los 60 para mirar.”*
 
-📌 Este documento está en desarrollo.  
+📌 Este documento está en desarrollo.
 ¿Descubriste algo importante revisando tu AFP? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre) y ayúdanos a que nadie más se quede a ciegas.

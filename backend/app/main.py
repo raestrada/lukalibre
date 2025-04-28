@@ -12,8 +12,7 @@ setup_logging()
 logger = get_logger("app.main")
 
 app = FastAPI(
-    title=settings.PROJECT_NAME,
-    openapi_url=f"{settings.API_V1_STR}/openapi.json"
+    title=settings.PROJECT_NAME, openapi_url=f"{settings.API_V1_STR}/openapi.json"
 )
 
 # Add SessionMiddleware for OAuth authentication
@@ -33,28 +32,32 @@ if settings.BACKEND_CORS_ORIGINS:
         allow_methods=["*"],
         allow_headers=["*"],
     )
-    logger.info(f"CORS configurado para: {', '.join(str(origin) for origin in settings.BACKEND_CORS_ORIGINS)}")
+    logger.info(
+        f"CORS configurado para: {', '.join(str(origin) for origin in settings.BACKEND_CORS_ORIGINS)}"
+    )
+
 
 # Add a custom middleware to ensure CORS headers are added
 @app.middleware("http")
 async def add_cors_headers(request: Request, call_next):
     try:
         response = await call_next(request)
-        
+
         # Add CORS headers explicitly to ensure they're present
         response.headers["Access-Control-Allow-Origin"] = "http://localhost:5173"
         response.headers["Access-Control-Allow-Credentials"] = "true"
-        response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
-        response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization, X-Requested-With"
-        
+        response.headers[
+            "Access-Control-Allow-Methods"
+        ] = "GET, POST, PUT, DELETE, OPTIONS"
+        response.headers[
+            "Access-Control-Allow-Headers"
+        ] = "Content-Type, Authorization, X-Requested-With"
+
         # Handle preflight OPTIONS requests
         if request.method == "OPTIONS":
             if not response.status_code == 200:
-                return Response(
-                    status_code=200,
-                    headers=response.headers
-                )
-        
+                return Response(status_code=200, headers=response.headers)
+
         return response
     except Exception as e:
         logger.error(f"Error in CORS middleware: {e}")
@@ -66,9 +69,10 @@ async def add_cors_headers(request: Request, call_next):
                 "Access-Control-Allow-Origin": "http://localhost:5173",
                 "Access-Control-Allow-Credentials": "true",
                 "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-                "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Requested-With"
-            }
+                "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Requested-With",
+            },
         )
+
 
 app.include_router(api_router, prefix=settings.API_V1_STR)
 logger.info(f"API montada en ruta: {settings.API_V1_STR}")
@@ -77,7 +81,9 @@ logger.info(f"API montada en ruta: {settings.API_V1_STR}")
 @app.get("/")
 async def root():
     logger.info("Solicitud recibida en el endpoint raíz")
-    return {"message": "Welcome to the Luka Libre API - Educación Financiera para Chile"}
+    return {
+        "message": "Welcome to the Luka Libre API - Educación Financiera para Chile"
+    }
 
 
 @app.on_event("startup")
@@ -90,4 +96,4 @@ async def startup_event():
 
 @app.on_event("shutdown")
 async def shutdown_event():
-    logger.info("[bold red]Servidor detenido[/]") 
+    logger.info("[bold red]Servidor detenido[/]")

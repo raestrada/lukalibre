@@ -32,7 +32,7 @@
 |-------------|------------|
 | ✅ Dashboard personalizado | Visión clara de tu situación financiera |
 | ✅ Seguimiento de gastos e ingresos | Identificación inmediata de patrones de gasto |
-| ✅ Categorización automática | Ahorro de tiempo en gestión financiera | 
+| ✅ Categorización automática | Ahorro de tiempo en gestión financiera |
 | ✅ Visualización de tendencias | Previsión de gastos futuros y ahorro |
 
 **Impacto esperado:** 5,000 usuarios con 60% de retención mensual y 85% de satisfacción.
@@ -152,7 +152,7 @@ El 100% de los fondos recibidos se reinvierten en:
 
 ¿Quieres ser parte de la revolución financiera en Chile?
 
-📧 **Email:** contacto@lukalibre.org  
-🌐 **Web:** [lukalibre.org](https://lukalibre.org)  
-🐦 **Twitter:** [@lukalibre](https://twitter.com/lukalibre)  
-📱 **Instagram:** [@lukalibre.chile](https://instagram.com/lukalibre.chile) 
+📧 **Email:** contacto@lukalibre.org
+🌐 **Web:** [lukalibre.org](https://lukalibre.org)
+🐦 **Twitter:** [@lukalibre](https://twitter.com/lukalibre)
+📱 **Instagram:** [@lukalibre.chile](https://instagram.com/lukalibre.chile)

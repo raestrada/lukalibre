@@ -7,12 +7,12 @@ parent: FOMO
 
 # 🪙 Bitcoin no te hizo rico — y eso está bien
 
-“Si hubieras comprado Bitcoin en 2013…”  
-“Con solo $1.000 ahora serías millonario”  
+“Si hubieras comprado Bitcoin en 2013…”
+“Con solo $1.000 ahora serías millonario”
 “Los que creyeron al principio ahora están en la playa”
 
-Suena bonito, ¿cierto?  
-Pero esa historia se cuenta **una y otra vez para generarte FOMO**.  
+Suena bonito, ¿cierto?
+Pero esa historia se cuenta **una y otra vez para generarte FOMO**.
 Y casi nunca incluye lo más importante: **el contexto que hace que esa comparación no tenga sentido para ti.**
 
 ---
@@ -23,7 +23,7 @@ Y casi nunca incluye lo más importante: **el contexto que hace que esa comparac
 2. Que podías perder todo de un día para otro (y aún puede pasar)
 3. Que quienes aguantaron 10 años sin vender, **tenían plata de sobra para esperar**
 4. Que la mayoría **no invirtió o vendió antes de que subiera tanto**
-5. Que si hubieras tenido $1.000 para olvidar por 10 años…  
+5. Que si hubieras tenido $1.000 para olvidar por 10 años…
    **probablemente no estabas en situación económica vulnerable**
 
 ---
@@ -47,24 +47,24 @@ No vemos a quienes:
 
 ## 🔥 Cómo se usa Bitcoin para manipularte
 
-- Como gancho en cursos o mentorías:  
+- Como gancho en cursos o mentorías:
   *“Yo partí invirtiendo en BTC, tú también puedes”*
 
-- Como presión en redes:  
+- Como presión en redes:
   *“¿Y tú qué estás esperando?”*
 
-- Como falsa urgencia:  
+- Como falsa urgencia:
   *“Es ahora o nunca”*
 
-👉 Todo esto **apunta al mismo lugar**:  
+👉 Todo esto **apunta al mismo lugar**:
 **hacerte sentir atrasado, tonto o flojo por no haberlo hecho antes.**
 
 ---
 
 ## 🧘 Entonces… ¿está mal Bitcoin?
 
-No. Bitcoin es una tecnología real, con riesgos reales y posibles usos interesantes.  
-El problema no es la moneda:  
+No. Bitcoin es una tecnología real, con riesgos reales y posibles usos interesantes.
+El problema no es la moneda:
 **es cómo se usa la historia de éxito para venderte humo, presión o falsas promesas.**
 
 ---
@@ -103,17 +103,17 @@ Sí, pero…
 
 ## 💬 LukaEjemplo
 
-> “Me repetía a mí mismo que era tonto por no haber comprado antes.  
-> Me apuré y metí $150.000 cuando BTC estaba alto.  
-> Bajó, me asusté y lo vendí con pérdida.  
+> “Me repetía a mí mismo que era tonto por no haber comprado antes.
+> Me apuré y metí $150.000 cuando BTC estaba alto.
+> Bajó, me asusté y lo vendí con pérdida.
 > Hoy entiendo que no perdí por Bitcoin, perdí por **actuar con FOMO**.”
 
 ---
 
 ## 🧠 LukaTip
 
-> *“Si alguien te cuenta cuánto habría ganado con Bitcoin…  
+> *“Si alguien te cuenta cuánto habría ganado con Bitcoin…
 > pregúntale si realmente lo hizo. O si solo está repitiendo una historia para vender algo.”*
 
-📌 Este documento está en desarrollo.  
+📌 Este documento está en desarrollo.
 ¿Te sentiste presionado por historias de Bitcoin o cripto y aprendiste algo importante? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

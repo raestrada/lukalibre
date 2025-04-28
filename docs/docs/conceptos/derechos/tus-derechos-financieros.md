@@ -7,8 +7,8 @@ parent: Tus derechos
 
 # 🏦 Tus derechos frente a bancos, cajas, retail y financieras
 
-Aunque no lo creas, **tienes derechos incluso si debes plata**.  
-Los bancos, casas comerciales, cajas de compensación y financieras **no pueden hacer lo que quieran**.  
+Aunque no lo creas, **tienes derechos incluso si debes plata**.
+Los bancos, casas comerciales, cajas de compensación y financieras **no pueden hacer lo que quieran**.
 Y aunque muchas veces abusen del miedo o del desconocimiento, **hay leyes y organismos que te respaldan**.
 
 ---
@@ -81,8 +81,8 @@ Si puedes pagar tu deuda antes, **tienes derecho a hacerlo sin penalización**, 
 
 ### 💬 LukaEjemplo
 
-> Firmaste un crédito de $400.000 y te cobran $900.000 al final.  
-> Pediste el contrato, no entiendes nada, te cobran un seguro que no pediste.  
+> Firmaste un crédito de $400.000 y te cobran $900.000 al final.
+> Pediste el contrato, no entiendes nada, te cobran un seguro que no pediste.
 > Eso no es legal. Puedes reclamar y exigir anulación.
 
 ---
@@ -91,5 +91,5 @@ Si puedes pagar tu deuda antes, **tienes derecho a hacerlo sin penalización**, 
 
 > *"Firmar un contrato no te quita tus derechos. Y deber plata no te convierte en menos persona."*
 
-📌 Este documento está en desarrollo.  
+📌 Este documento está en desarrollo.
 ¿Tienes dudas o casos reales donde crees que te pasaron a llevar? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre) y ayudemos a que nadie más caiga por desinformación.

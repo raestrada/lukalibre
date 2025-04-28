@@ -7,18 +7,18 @@ parent: Trading Mágico
 
 # 👨‍🏫 Mentores de trading: gurús que venden humo envuelto en motivación
 
-“Yo salí de la pobreza con esta estrategia”  
-“No necesitas saber nada, solo seguir mi método”  
+“Yo salí de la pobreza con esta estrategia”
+“No necesitas saber nada, solo seguir mi método”
 “Mira cuánto gané esta semana… tú también puedes”
 
-Así suena un **mentor de trading mágico**, esos gurús que **venden cursos, señales y promesas**, más que educación real.  
+Así suena un **mentor de trading mágico**, esos gurús que **venden cursos, señales y promesas**, más que educación real.
 Su negocio no es invertir en el mercado: **es convencerte de que tú también puedes… si les pagas.**
 
 ---
 
 ## 🧠 ¿Qué es un mentor falso de trading?
 
-No es alguien que enseña mal.  
+No es alguien que enseña mal.
 Es alguien que:
 
 - Se presenta como experto sin mostrar evidencia real
@@ -45,10 +45,10 @@ Es alguien que:
 
 ## 📉 ¿Qué pasa cuando sigues a uno?
 
-- Compras el curso básico  
-- Luego te venden uno “avanzado”  
-- Después accedes a su grupo de señales  
-- Eventualmente pierdes plata  
+- Compras el curso básico
+- Luego te venden uno “avanzado”
+- Después accedes a su grupo de señales
+- Eventualmente pierdes plata
 - Te dicen que **"no seguiste bien el sistema"**
 
 Y el ciclo se repite… con nuevos clientes.
@@ -57,7 +57,7 @@ Y el ciclo se repite… con nuevos clientes.
 
 ## 🧾 ¿Muestran sus operaciones reales?
 
-Rara vez.  
+Rara vez.
 Lo común es ver:
 
 - Capturas de MetaTrader (fáciles de editar o simular)
@@ -80,9 +80,9 @@ Lo común es ver:
 
 ## 💬 LukaEjemplo
 
-> “Compré un curso a un mentor de Instagram que mostraba cómo ganaba $200.000 diarios.  
-> Al final, todo era repetir entradas y salidas sin contexto.  
-> Cuando perdí plata, me dijo que debía 'creer más en el sistema'.  
+> “Compré un curso a un mentor de Instagram que mostraba cómo ganaba $200.000 diarios.
+> Al final, todo era repetir entradas y salidas sin contexto.
+> Cuando perdí plata, me dijo que debía 'creer más en el sistema'.
 > Me di cuenta que el único que ganaba siempre… era él.”
 
 ---
@@ -91,5 +91,5 @@ Lo común es ver:
 
 > *"Un buen mentor te da herramientas para ser libre. Uno falso te da frases para que dependas de él."*
 
-📌 Este documento está en desarrollo.  
+📌 Este documento está en desarrollo.
 ¿Tuviste una mala experiencia con un supuesto mentor? ¿Pudiste salir de ahí? Súmate al [GitHub de LukaLibre](https://github.com/

@@ -7,8 +7,8 @@ parent: Ahorro
 
 # 📱 Apps para ahorrar: ¿cuáles sirven y cuáles son puro humo?
 
-Hay un montón de apps que prometen ayudarte a ahorrar.  
-Algunas funcionan. Otras son puro marketing.  
+Hay un montón de apps que prometen ayudarte a ahorrar.
+Algunas funcionan. Otras son puro marketing.
 Y unas cuantas terminan **cobrándote más de lo que te ayudan a guardar**.
 
 Acá te mostramos lo bueno, lo no tan bueno y lo que deberías evitar.
@@ -50,7 +50,7 @@ Acá te mostramos lo bueno, lo no tan bueno y lo que deberías evitar.
 - Invierte en fondos con riesgo ajustable
 - Buena visualización del progreso
 
-⚠️ No es una cuenta de ahorro. Hay riesgo.  
+⚠️ No es una cuenta de ahorro. Hay riesgo.
 No pongas tu fondo de emergencia si no entiendes cómo funciona.
 
 ---
@@ -87,10 +87,10 @@ No pongas tu fondo de emergencia si no entiendes cómo funciona.
 
 ## 🧠 ¿Qué debería tener una buena app de ahorro?
 
-✅ Claro, simple y sin letra chica  
-✅ Sin comisiones escondidas  
-✅ Permite separar tu plata (aunque sea mentalmente)  
-✅ Visualización del avance  
+✅ Claro, simple y sin letra chica
+✅ Sin comisiones escondidas
+✅ Permite separar tu plata (aunque sea mentalmente)
+✅ Visualización del avance
 ✅ Automatización simple
 
 ---
@@ -99,5 +99,5 @@ No pongas tu fondo de emergencia si no entiendes cómo funciona.
 
 > *"Una buena app no te hace millonario. Solo te ayuda a no gastar sin querer."*
 
-📌 Este documento está en desarrollo.  
+📌 Este documento está en desarrollo.
 ¿Tienes una app que te ha funcionado o alguna que te metió el dedo en la boca? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

@@ -7,10 +7,10 @@ parent: Bancos
 
 # 🧨 ¿Qué es el sobregiro y por qué puede ser una trampa?
 
-Un día vas al cajero, no tienes plata, y aún así te deja sacar $20.000.  
+Un día vas al cajero, no tienes plata, y aún así te deja sacar $20.000.
 O pagas con tu tarjeta y, aunque tenías $0, la compra pasa igual.
 
-🎉 Parece magia… pero no lo es.  
+🎉 Parece magia… pero no lo es.
 Acabas de usar el **sobregiro**: una deuda automática, rápida y silenciosa.
 
 ---
@@ -73,7 +73,7 @@ Sí. Puedes:
 Solo en emergencias reales y **si sabes exactamente cuánto te van a cobrar**.
 
 Ejemplo:
-> Se corta la luz y necesitas pagar $15.000 hoy sí o sí. Sabes que puedes devolverlo mañana.  
+> Se corta la luz y necesitas pagar $15.000 hoy sí o sí. Sabes que puedes devolverlo mañana.
 > Lo usas, pagas al día siguiente y solo te cobran $200 de interés.
 
 ⚠️ Pero si no lo devuelves rápido, el interés diario **te come el sueldo en semanas**.
@@ -82,7 +82,7 @@ Ejemplo:
 
 ## 💬 LukaEjemplo
 
-> "Usé sobregiro sin saberlo. Estuve 3 meses debiendo $70.000 y pensaba que era saldo normal.  
+> "Usé sobregiro sin saberlo. Estuve 3 meses debiendo $70.000 y pensaba que era saldo normal.
 > Me cobraron $9.000 en intereses y no entendía por qué. Ahora lo tengo desactivado."
 
 ---
@@ -91,5 +91,5 @@ Ejemplo:
 
 > *"El sobregiro no es un salvavidas. Es una cuerda que se aprieta si no sabes usarla."*
 
-📌 Este documento está en desarrollo.  
+📌 Este documento está en desarrollo.
 ¿Te pasó algo con el sobregiro y aprendiste a la mala? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

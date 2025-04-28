@@ -210,7 +210,7 @@ class SQLiteService {
 
     // Insertar la información de la versión en la tabla de metadata
     this.db.exec(`
-      INSERT INTO metadata (clave, valor) VALUES 
+      INSERT INTO metadata (clave, valor) VALUES
       ('version', '${this.config.version}'),
       ('nombre', '${this.config.name}'),
       ('ultima_sincronizacion', '${new Date().toISOString()}');
@@ -339,8 +339,8 @@ class SQLiteService {
       const timestamp = new Date().toISOString();
       this.exec(
         `
-        UPDATE metadata 
-        SET valor = ? 
+        UPDATE metadata
+        SET valor = ?
         WHERE clave = 'ultima_sincronizacion'
       `,
         [timestamp],

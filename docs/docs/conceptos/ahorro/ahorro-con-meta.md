@@ -7,7 +7,7 @@ parent: Ahorro
 
 # 🎯 Ahorro con meta vs ahorro sin nombre
 
-Ahorrar "porque hay que ahorrar" suena bien… pero no siempre resulta.  
+Ahorrar "porque hay que ahorrar" suena bien… pero no siempre resulta.
 Ahorrar con una meta clara, en cambio, **le da sentido a cada peso que guardas**.
 
 ---
@@ -34,16 +34,16 @@ Es cuando defines desde el principio **para qué estás ahorrando**, cuánto nec
 
 ## 📈 Cómo crear una meta de ahorro
 
-1. **Define el objetivo**  
+1. **Define el objetivo**
    Ej: "Fondo de salud", "Pasaje a la casa de mi abuela", "Pagar deuda"
 
-2. **Ponle monto**  
+2. **Ponle monto**
    Ej: $100.000
 
-3. **Ponle plazo realista**  
+3. **Ponle plazo realista**
    Ej: 5 meses → necesitas ahorrar $20.000 por mes
 
-4. **Sigue el avance**  
+4. **Sigue el avance**
    Puedes usar papel, app, sobre físico o cuenta con nombre
 
 5. **Celebra el logro, aunque sea chico** 🎉
@@ -66,5 +66,5 @@ Cuando ahorras "por si acaso", sin objetivo claro:
 
 > *"Dale nombre a tu ahorro, como si fuera una misión. Te va a costar menos cumplirla."*
 
-📌 Este documento está en desarrollo.  
+📌 Este documento está en desarrollo.
 ¿Tienes una meta que lograste cumplir (o estás intentando)? Súmala al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

@@ -7,11 +7,11 @@ parent: FOMO
 
 # 😰 ¿Qué es el FOMO financiero y cómo opera?
 
-FOMO significa **"Fear Of Missing Out"**, o en simple:  
+FOMO significa **"Fear Of Missing Out"**, o en simple:
 **miedo a quedarse afuera**.
 
-En finanzas, es el miedo a no aprovechar una "gran oportunidad".  
-Esa ansiedad que aparece cuando ves que "todos están ganando plata menos tú".  
+En finanzas, es el miedo a no aprovechar una "gran oportunidad".
+Esa ansiedad que aparece cuando ves que "todos están ganando plata menos tú".
 Cuando crees que si no actúas ya, **vas a perderte algo que no se repite.**
 
 ---
@@ -27,7 +27,7 @@ Cuando crees que si no actúas ya, **vas a perderte algo que no se repite.**
 
 ## 🚨 ¿Por qué es tan peligroso?
 
-Porque el FOMO te hace tomar decisiones **apresuradas, emocionales y sin información**.  
+Porque el FOMO te hace tomar decisiones **apresuradas, emocionales y sin información**.
 Y muchas veces:
 
 - Terminas invirtiendo mal
@@ -39,11 +39,11 @@ Y muchas veces:
 
 ## 📱 El FOMO se alimenta por redes sociales
 
-Instagram, TikTok, YouTube, WhatsApp…  
+Instagram, TikTok, YouTube, WhatsApp…
 Todo está lleno de "historias de éxito":
 
-> "Mira cómo gané $500.000 con mi celular"  
-> "Yo empecé desde cero, tú también puedes"  
+> "Mira cómo gané $500.000 con mi celular"
+> "Yo empecé desde cero, tú también puedes"
 > "La nueva forma de ganar plata sin jefes"
 
 📌 La mayoría **no te cuenta los riesgos, las pérdidas ni el contexto.**
@@ -64,9 +64,9 @@ Todo está lleno de "historias de éxito":
 ## ✅ ¿Qué hacer cuando sientes FOMO?
 
 - **Detente.** No decidas nada cuando estás ansioso o urgido.
-- Pregúntate:  
-  "¿Tengo la información completa?"  
-  "¿Puedo perder esta plata sin problemas?"  
+- Pregúntate:
+  "¿Tengo la información completa?"
+  "¿Puedo perder esta plata sin problemas?"
   "¿Estoy haciendo esto porque quiero o porque tengo miedo de quedar afuera?"
 
 - **Habla con alguien de confianza**, que no esté metido en la misma emoción
@@ -76,9 +76,9 @@ Todo está lleno de "historias de éxito":
 
 ## 💬 LukaEjemplo
 
-> "Vi un video donde alguien ganaba $100.000 diarios con una app.  
-> Me sentí estúpido por no estar haciendo lo mismo.  
-> Estuve a punto de pedir un avance en efectivo para meterme.  
+> "Vi un video donde alguien ganaba $100.000 diarios con una app.
+> Me sentí estúpido por no estar haciendo lo mismo.
+> Estuve a punto de pedir un avance en efectivo para meterme.
 > Por suerte, me dio por buscar opiniones… y era una estafa."
 
 ---
@@ -87,6 +87,6 @@ Todo está lleno de "historias de éxito":
 
 > *"El FOMO no es una señal de oportunidad. Es una alarma para respirar, no para correr."*
 
-📌 Este documento está en desarrollo.  
-¿Superaste una decisión apurada por FOMO o te arrepentiste de actuar por presión?  
+📌 Este documento está en desarrollo.
+¿Superaste una decisión apurada por FOMO o te arrepentiste de actuar por presión?
 Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre) y cuéntanos tu historia.

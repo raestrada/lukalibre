@@ -45,6 +45,7 @@ flake8 = "^6.0.0"
 httpx = "^0.24.1"
 faker = "^19.2.0"
 asgi-lifespan = "^2.1.0"
+pre-commit = "^4.2.0"
 
 [build-system]
 requires = ["poetry-core"]
@@ -67,3 +68,7 @@ disallow_incomplete_defs = true
 testpaths = ["tests"]
 python_files = "test_*.py"
 asyncio_mode = "auto"
+
+[tool.bandit]
+exclude_dirs = ["tests", ".venv", "venv"]
+skips = ["B101", "B104"]

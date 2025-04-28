@@ -7,11 +7,11 @@ parent: Tus derechos
 
 # 🧐 Tienes derecho a información clara (y sin letra chica)
 
-¿Firmaste un contrato que no entendiste?  
-¿Te ofrecieron "cuotas sin interés" y luego pagaste el doble?  
+¿Firmaste un contrato que no entendiste?
+¿Te ofrecieron "cuotas sin interés" y luego pagaste el doble?
 ¿Te hablaron de tasas, CAE, comisiones y no te explicaron nada?
 
-📢 Eso no debería pasar.  
+📢 Eso no debería pasar.
 **Tienes derecho legal a recibir información clara, oportuna y sin trampas**.
 
 ---
@@ -50,7 +50,7 @@ Tienes derecho a:
 - Revisar el contrato con tiempo
 - **No firmar si no entiendes** (y que no te presionen a hacerlo)
 
-⚠️ Si te presionan, **anótalo y guárdalo como evidencia**.  
+⚠️ Si te presionan, **anótalo y guárdalo como evidencia**.
 Puedes reclamar ante el **SERNAC o la CMF**.
 
 ---
@@ -79,8 +79,8 @@ Puedes reclamar ante el **SERNAC o la CMF**.
 
 ## 💬 LukaEjemplo
 
-> "Saqué un avance en efectivo. Me dijeron 'cuotas sin interés'.  
-> Pero luego vi que me cobraban un seguro obligatorio de $12.000 y una comisión del 6%.  
+> "Saqué un avance en efectivo. Me dijeron 'cuotas sin interés'.
+> Pero luego vi que me cobraban un seguro obligatorio de $12.000 y una comisión del 6%.
 > Al final, el avance me costó el doble. No me lo explicaron nunca."
 
 ---
@@ -89,5 +89,5 @@ Puedes reclamar ante el **SERNAC o la CMF**.
 
 > *"Si no te lo pueden explicar sin tecnicismos, probablemente no te conviene."*
 
-📌 Este documento está en desarrollo.  
+📌 Este documento está en desarrollo.
 ¿Firmaste algo sin entender o lograste exigir que te explicaran? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

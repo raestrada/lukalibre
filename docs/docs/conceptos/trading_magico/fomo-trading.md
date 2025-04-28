@@ -7,11 +7,11 @@ parent: Trading Mágico
 
 # ⚠️ FOMO y trading: cómo te apuran para que inviertas sin pensar
 
-“Todos están ganando menos tú”  
-“Si no inviertes hoy, pierdes la oportunidad”  
+“Todos están ganando menos tú”
+“Si no inviertes hoy, pierdes la oportunidad”
 “¿Hasta cuándo vas a mirar desde fuera?”
 
-Así suena el **FOMO aplicado al trading**:  
+Así suena el **FOMO aplicado al trading**:
 una mezcla de ansiedad, urgencia y presión que te hace pensar que si no actúas ahora, **te vas a quedar pobre para siempre**.
 
 Este documento te ayuda a entender cómo se usa el FOMO como **estrategia de manipulación emocional** en cursos, grupos y redes de trading mágico.
@@ -68,8 +68,8 @@ En el mundo del trading, se traduce en:
 
 ## 💬 LukaEjemplo
 
-> “Vi a varios ganando con una app de señales. Me urgí y metí $50.000.  
-> Después supe que muchos habían perdido, pero nadie lo decía.  
+> “Vi a varios ganando con una app de señales. Me urgí y metí $50.000.
+> Después supe que muchos habían perdido, pero nadie lo decía.
 > Me di cuenta de que entré solo por miedo a quedarme afuera, no porque entendiera lo que hacía.”
 
 ---
@@ -78,5 +78,5 @@ En el mundo del trading, se traduce en:
 
 > *“El FOMO es un grito emocional. Si alguien lo usa para venderte algo, no quiere ayudarte: quiere que pagues sin pensar.”*
 
-📌 Este documento está en desarrollo.  
+📌 Este documento está en desarrollo.
 ¿Tomaste decisiones en trading por FOMO y aprendiste algo importante? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre) y compártelo.

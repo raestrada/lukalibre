@@ -7,18 +7,18 @@ parent: Trading Mágico
 
 # 🎓 Cursos falsos de trading: el negocio no es que aprendas, es que sigas pagando
 
-“Con este curso vivirás del trading”  
-“Solo necesitas 3 horas para aprender a ganar plata desde tu casa”  
+“Con este curso vivirás del trading”
+“Solo necesitas 3 horas para aprender a ganar plata desde tu casa”
 “Garantizado, sin riesgo, paso a paso, como los bancos”
 
-Así se venden muchos cursos de trading mágico en redes sociales.  
+Así se venden muchos cursos de trading mágico en redes sociales.
 Pero en realidad, **no están diseñados para enseñarte**, sino para engancharte y dejarte con más dudas que respuestas.
 
 ---
 
 ## 🧠 ¿Qué es un curso falso de trading?
 
-No es solo malo o básico.  
+No es solo malo o básico.
 Es un curso que:
 
 - Usa lenguaje técnico para **parecer profesional**, pero no explica nada en profundidad
@@ -74,9 +74,9 @@ Porque:
 
 ## 💬 LukaEjemplo
 
-> “Pagué $60.000 por un curso que prometía enseñarme a hacer scalping.  
-> Al final era un PowerPoint con líneas dibujadas.  
-> Las clases eran en vivo y no se podían repetir.  
+> “Pagué $60.000 por un curso que prometía enseñarme a hacer scalping.
+> Al final era un PowerPoint con líneas dibujadas.
+> Las clases eran en vivo y no se podían repetir.
 > Me quedé con más preguntas que respuestas, y me ofrecieron un curso 'pro' por $90.000 más.”
 
 ---
@@ -85,5 +85,5 @@ Porque:
 
 > *“Si un curso de finanzas suena como una oferta de CyberDay, es probable que el único que gane sea el que lo vende.”*
 
-📌 Este documento está en desarrollo.  
+📌 Este documento está en desarrollo.
 ¿Pagaste un curso que no cumplió lo que prometía? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre) y cuéntalo.

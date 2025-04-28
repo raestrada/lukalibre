@@ -7,14 +7,14 @@ parent: Finanzas Básicas
 
 # 📈 ¿Qué es la inflación y cómo te afecta de verdad?
 
-La inflación no es solo una palabra que sale en la tele cuando sube el tomate.  
+La inflación no es solo una palabra que sale en la tele cuando sube el tomate.
 Es una **subida constante y generalizada de los precios**, y sí: **te afecta a ti, todos los días**.
 
 ---
 
 ## 💡 ¿Qué significa "inflación"?
 
-Que con el tiempo, la plata **pierde poder de compra**.  
+Que con el tiempo, la plata **pierde poder de compra**.
 O sea: con $10.000 hoy compras menos que con esos mismos $10.000 hace un año.
 
 Ejemplos reales:
@@ -64,5 +64,5 @@ Ejemplo:
 
 > *“La inflación es el impuesto silencioso. No te lo cobran... pero igual te lo quitan.”*
 
-📌 Documento en desarrollo.  
+📌 Documento en desarrollo.
 ¿Tienes ejemplos o formas creativas de sobrevivir a la inflación? ¡Súmalos al proyecto en [GitHub](https://github.com/raestrada/lukalibre)! 🙌

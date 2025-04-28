@@ -7,11 +7,11 @@ parent: Trading Mágico
 
 # 🌀 Ilusiones gráficas en el trading: líneas que no predicen nada
 
-“Este canal de precio es clarísimo”  
-“Cuando rompe la línea de soporte, se va al cielo”  
+“Este canal de precio es clarísimo”
+“Cuando rompe la línea de soporte, se va al cielo”
 “Dibuja este triángulo y espera la confirmación”
 
-El análisis gráfico puede ser una herramienta.  
+El análisis gráfico puede ser una herramienta.
 Pero en el mundo del trading mágico, **se usa como una ilusión visual para justificar cualquier cosa**.
 
 Este documento te muestra por qué muchas de estas líneas y figuras son solo **interpretaciones arbitrarias**, no predicciones reales.
@@ -61,7 +61,7 @@ Porque:
 - Los patrones gráficos **no tienen respaldo estadístico sólido**
 - El mercado **no responde a triángulos**, responde a millones de decisiones humanas, noticias, algoritmos, psicología y macroeconomía
 
-📌 El trading mágico te hace creer que basta con “ver el patrón”.  
+📌 El trading mágico te hace creer que basta con “ver el patrón”.
 Pero en realidad, estás **viendo lo que otros quieren que veas**.
 
 ---
@@ -78,9 +78,9 @@ Sí, pero:
 
 ## 💬 LukaEjemplo
 
-> “En un grupo me mostraban que si una vela tocaba cierta línea, había que comprar.  
-> Lo hice y perdí todo en 2 minutos.  
-> Después revisé el gráfico y el mismo mentor lo redibujó para mostrar que ‘la entrada fue antes’.  
+> “En un grupo me mostraban que si una vela tocaba cierta línea, había que comprar.
+> Lo hice y perdí todo en 2 minutos.
+> Después revisé el gráfico y el mismo mentor lo redibujó para mostrar que ‘la entrada fue antes’.
 > Ahí me di cuenta que las líneas se mueven según convenga.”
 
 ---
@@ -89,5 +89,5 @@ Sí, pero:
 
 > *“Si tienes que forzar una línea para que calce con el gráfico… no estás analizando: estás imaginando.”*
 
-📌 Este documento está en desarrollo.  
+📌 Este documento está en desarrollo.
 ¿Te enseñaron a dibujar figuras que “nunca fallaban”? ¿Viste cómo cambiaban las reglas después? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre) y cuéntanos tu historia.

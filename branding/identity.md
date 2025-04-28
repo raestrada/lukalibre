@@ -89,7 +89,7 @@ LukaLibre puede monetizar de forma transparente y alineada con su propósito:
 3. **Talleres o cursos pagados para empresas, municipios u ONG**
 4. **Versiones “white label” para fundaciones o proyectos sociales**
 5. **Funcionalidades premium opcionales**, sin afectar las funciones gratuitas esenciales
-6. **Marketplace de datos anónimos y voluntarios**: si una institución quiere acceder a información financiera (por ejemplo, para investigación, desarrollo de productos justos o políticas públicas), cada persona podrá recibir una **oferta personalizada**, con condiciones claras. Solo si el usuario lo autoriza explícitamente con su **clave secundaria**, se enviará la información de forma cifrada y anónima. 
+6. **Marketplace de datos anónimos y voluntarios**: si una institución quiere acceder a información financiera (por ejemplo, para investigación, desarrollo de productos justos o políticas públicas), cada persona podrá recibir una **oferta personalizada**, con condiciones claras. Solo si el usuario lo autoriza explícitamente con su **clave secundaria**, se enviará la información de forma cifrada y anónima.
 7. **Auditorías comunitarias de políticas públicas**: por ejemplo, permitiendo que los usuarios donen su información para evaluar el impacto de subsidios, educación financiera o programas sociales.
  y membresías solidarias**
 2. **Servicios financieros éticos asociados (por ejemplo, cooperativas o fondos de ahorro comunitarios)**

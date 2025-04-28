@@ -7,22 +7,22 @@ parent: AFP y APV
 
 # ⏸️ ¿Qué pasa si dejo de cotizar en mi AFP?
 
-En Chile, cotizar es obligatorio si estás empleado formalmente.  
-Pero si quedas cesante, trabajas por tu cuenta o entras a la informalidad…  
+En Chile, cotizar es obligatorio si estás empleado formalmente.
+Pero si quedas cesante, trabajas por tu cuenta o entras a la informalidad…
 muchas veces **simplemente dejas de cotizar**.
 
-¿Qué pasa con tu ahorro?  
+¿Qué pasa con tu ahorro?
 ¿Se pierde? ¿Se congela? ¿Te afecta al jubilar?
 
 ---
 
 ## 🧠 ¿Se pierde la plata si dejo de cotizar?
 
-❌ No.  
-**Tu plata no desaparece.**  
+❌ No.
+**Tu plata no desaparece.**
 Sigue invertida en el fondo que elegiste y puede seguir creciendo (o bajando, según el mercado).
 
-👉 Pero sí **dejas de aumentar** el monto.  
+👉 Pero sí **dejas de aumentar** el monto.
 Y con eso, tu pensión proyectada **se estanca o baja**.
 
 ---
@@ -46,7 +46,7 @@ Y con eso, tu pensión proyectada **se estanca o baja**.
 
 ## ⏳ ¿Hay un plazo máximo para volver a cotizar?
 
-No. Puedes estar años sin cotizar y luego volver.  
+No. Puedes estar años sin cotizar y luego volver.
 Pero entre más tiempo pases fuera, **más difícil será alcanzar una pensión digna**.
 
 ---
@@ -80,8 +80,8 @@ Pero entre más tiempo pases fuera, **más difícil será alcanzar una pensión 
 
 ## 💬 LukaEjemplo
 
-> “Estuve 4 años sin cotizar cuando trabajé a honorarios.  
-> Me di cuenta de que en la Operación Renta podía cotizar como independiente.  
+> “Estuve 4 años sin cotizar cuando trabajé a honorarios.
+> Me di cuenta de que en la Operación Renta podía cotizar como independiente.
 > Desde entonces, activo la opción voluntaria y ahorro al menos algo cada año.”
 
 ---
@@ -90,5 +90,5 @@ Pero entre más tiempo pases fuera, **más difícil será alcanzar una pensión 
 
 > *“Si no puedes cotizar hoy, que no sea excusa para no saber dónde estás parado. Revisa, planifica y vuelve cuando puedas.”*
 
-📌 Este documento está en desarrollo.  
+📌 Este documento está en desarrollo.
 ¿Viviste un periodo sin cotizar y lograste recuperarte o entender mejor tu situación? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

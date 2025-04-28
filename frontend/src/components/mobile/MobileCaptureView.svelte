@@ -123,11 +123,11 @@
           await sqliteService.query(
             `
             INSERT INTO receipts (
-              user_id, 
-              image_data, 
-              filename, 
-              capture_date, 
-              status, 
+              user_id,
+              image_data,
+              filename,
+              capture_date,
+              status,
               ocr_text
             ) VALUES (?, ?, ?, ?, ?, ?)
           `,
@@ -223,7 +223,7 @@
 
       // Verificar si la tabla existe
       const tableCheck = await sqliteService.query(`
-        SELECT name FROM sqlite_master 
+        SELECT name FROM sqlite_master
         WHERE type='table' AND name='receipts'
       `);
 

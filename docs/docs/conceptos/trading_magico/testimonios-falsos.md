@@ -7,11 +7,11 @@ parent: Trading Mágico
 
 # 🎭 Testimonios falsos en trading: el marketing emocional detrás del humo
 
-“Gracias a este curso, pagué mis deudas”  
-“Ahora vivo del trading y soy libre financieramente”  
+“Gracias a este curso, pagué mis deudas”
+“Ahora vivo del trading y soy libre financieramente”
 “Lo mejor que hice fue confiar en el mentor, cambió mi vida”
 
-Los testimonios son una herramienta emocional poderosa.  
+Los testimonios son una herramienta emocional poderosa.
 Pero en el mundo del trading mágico, **se usan como carnada**, no como prueba.
 
 Este documento te explica cómo operan los testimonios falsos o editados para hacerte creer que **si no entras ahora, estás perdiendo tu oportunidad.**
@@ -67,8 +67,8 @@ Porque atacan directo al corazón:
 
 ## 💬 LukaEjemplo
 
-> “Vi en TikTok un video con gente diciendo que el curso era increíble.  
-> Me metí por eso. Después, cuando pregunté en el grupo por qué había perdido plata, me silenciaron.  
+> “Vi en TikTok un video con gente diciendo que el curso era increíble.
+> Me metí por eso. Después, cuando pregunté en el grupo por qué había perdido plata, me silenciaron.
 > Me di cuenta de que los únicos que hablaban eran los que vendían más cursos.”
 
 ---
@@ -77,5 +77,5 @@ Porque atacan directo al corazón:
 
 > *“Un testimonio sin contexto no es una prueba: es una vitrina emocional diseñada para venderte algo.”*
 
-📌 Este documento está en desarrollo.  
+📌 Este documento está en desarrollo.
 ¿Viste testimonios sospechosos o descubriste que eran falsos? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre) y cuéntanos tu historia.

@@ -7,7 +7,7 @@ parent: Deuda
 
 # 🗂️ Cómo ordenar tus deudas paso a paso
 
-Si tienes varias deudas y no sabes por dónde partir, no estás solo.  
+Si tienes varias deudas y no sabes por dónde partir, no estás solo.
 A veces lo más difícil es **mirar la situación de frente sin entrar en pánico**.
 
 Este documento te guía para que puedas ordenar tus deudas, priorizarlas y tomar decisiones sin improvisar.
@@ -30,11 +30,11 @@ Crea una tabla (puede ser en papel, Excel o app) con esta info:
 
 ## ✅ Paso 2: Calcula cuánto puedes pagar (de verdad)
 
-Suma tus ingresos y **descarta lo que necesitas para vivir**:  
-- Arriendo o dividendo  
-- Alimentación básica  
-- Cuentas esenciales  
-- Transporte  
+Suma tus ingresos y **descarta lo que necesitas para vivir**:
+- Arriendo o dividendo
+- Alimentación básica
+- Cuentas esenciales
+- Transporte
 - Educación / salud
 
 👉 Lo que queda es tu **margen para pagar deudas sin reventarte**.
@@ -60,11 +60,11 @@ No todas las deudas tienen el mismo riesgo ni urgencia.
 Existen dos métodos que puedes usar según tu estilo:
 
 ### 🧠 Método "bola de nieve" (emocional)
-Paga primero la deuda más chica (aunque no tenga más interés).  
+Paga primero la deuda más chica (aunque no tenga más interés).
 Te motiva ver avances rápidos.
 
 ### 💰 Método "avalancha" (matemático)
-Paga primero la deuda con más interés.  
+Paga primero la deuda con más interés.
 Ahorras más a largo plazo.
 
 🔎 Puedes combinarlos según tu situación.
@@ -82,8 +82,8 @@ Ahorras más a largo plazo.
 
 ## ✅ Paso 6: Negocia o repacta si es necesario
 
-Si ya no puedes pagar ni el mínimo, hay opciones.  
-Pero **no aceptes la primera oferta**. Primero ordena todo y lee el próximo documento:  
+Si ya no puedes pagar ni el mínimo, hay opciones.
+Pero **no aceptes la primera oferta**. Primero ordena todo y lee el próximo documento:
 👉 [Renegociar, repactar o refinanciar: ¿cuál sirve?](renegociar-vs-repactar.md)
 
 ---
@@ -92,5 +92,5 @@ Pero **no aceptes la primera oferta**. Primero ordena todo y lee el próximo doc
 
 > *"No hay vergüenza en deber. Pero sí hay poder en saber a quién, cuánto y por qué."*
 
-�� Este documento está en desarrollo.  
+�� Este documento está en desarrollo.
 ¿Tienes un sistema que te ayudó a ordenar tus deudas o sobreviviste a una avalancha financiera? Compártelo en [GitHub](https://github.com/raestrada/lukalibre).

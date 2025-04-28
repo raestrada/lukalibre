@@ -71,8 +71,8 @@ Ideal si tienes sueldo fijo o ingreso estable.
 
 Nada impide mezclar:
 
-- Ahorro automático mensual fijo +  
-- Ahorro diario simbólico +  
+- Ahorro automático mensual fijo +
+- Ahorro diario simbólico +
 - Ahorro semanal de lo que no gastaste
 
 💬 Lo importante es que sea **sostenible para ti**.
@@ -94,5 +94,5 @@ Así, sin darse cuenta, junta más de $20.000 al mes.
 
 > *"No se trata de cuánto ni cuándo. Se trata de empezar, adaptarte y no rendirte si un mes no se puede."*
 
-📌 Este documento está en desarrollo.  
+📌 Este documento está en desarrollo.
 ¿Tienes una rutina que te ha funcionado? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

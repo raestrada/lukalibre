@@ -7,10 +7,10 @@ parent: Bancos
 
 # 💸 Avances en efectivo: el crédito disfrazado que te puede hundir
 
-Vas a la app del banco y aparece:  
+Vas a la app del banco y aparece:
 💰 "¡Tienes disponible un avance de $500.000 en 12 cuotas!"
 
-Suena fácil, rápido, sin trámites…  
+Suena fácil, rápido, sin trámites…
 Pero cuidado: **los avances en efectivo son uno de los productos más caros del sistema financiero.**
 
 ---
@@ -19,7 +19,7 @@ Pero cuidado: **los avances en efectivo son uno de los productos más caros del 
 
 Es cuando el banco o la tarjeta de crédito **te ofrece sacar plata "al tiro"**, que luego pagas en cuotas.
 
-👉 La plata sale del **cupo de tu tarjeta de crédito**, no de tu cuenta corriente.  
+👉 La plata sale del **cupo de tu tarjeta de crédito**, no de tu cuenta corriente.
 Es un crédito, aunque no lo llamen así.
 
 ---
@@ -49,8 +49,8 @@ Pero…
 
 ## 📉 Ejemplo real
 
-> Te ofrecen $300.000 en 12 cuotas de $32.000.  
-> Parece justo… pero terminas pagando **$384.000 en total.**  
+> Te ofrecen $300.000 en 12 cuotas de $32.000.
+> Parece justo… pero terminas pagando **$384.000 en total.**
 > Es como un mini crédito con 28% de interés + comisiones.
 
 ---
@@ -85,7 +85,7 @@ Solo si:
 
 ## 💬 LukaEjemplo
 
-> "Usé un avance en efectivo de $400.000 para pagar el arriendo.  
+> "Usé un avance en efectivo de $400.000 para pagar el arriendo.
 > Terminé pagando casi $600.000 en total. Pensé que era plata mía. Nunca más."
 
 ---
@@ -94,5 +94,5 @@ Solo si:
 
 > *"Si te ofrecen plata sin pedirte nada, probablemente es porque te la van a cobrar con creces."*
 
-📌 Este documento está en desarrollo.  
+📌 Este documento está en desarrollo.
 ¿Usaste un avance en efectivo y aprendiste a la mala? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

@@ -23,7 +23,9 @@ def init_db(db: Session) -> None:
     logger.info("Verificando si existe el superusuario inicial...")
     user = crud.user.get_by_email(db, email=settings.FIRST_SUPERUSER)
     if not user:
-        logger.info(f"Superusuario no encontrado. Creando usuario con email: {settings.FIRST_SUPERUSER}")
+        logger.info(
+            f"Superusuario no encontrado. Creando usuario con email: {settings.FIRST_SUPERUSER}"
+        )
         user_in = schemas.UserCreate(
             email=settings.FIRST_SUPERUSER,
             password=settings.FIRST_SUPERUSER_PASSWORD,
@@ -33,4 +35,4 @@ def init_db(db: Session) -> None:
         user = crud.user.create(db, obj_in=user_in)
         logger.info("[bold green]✓ Superusuario creado con éxito[/]")
     else:
-        logger.info("[yellow]El superusuario ya existe, omitiendo creación[/]") 
+        logger.info("[yellow]El superusuario ya existe, omitiendo creación[/]")

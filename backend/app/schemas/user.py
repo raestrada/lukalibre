@@ -54,4 +54,4 @@ class UserInDB(UserInDBBase):
     hashed_password: str
     google_access_token: Optional[str] = None
     google_refresh_token: Optional[str] = None
-    google_avatar: Optional[str] = None 
+    google_avatar: Optional[str] = None

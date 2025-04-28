@@ -7,7 +7,7 @@ parent: Ahorro
 
 # 💼 ¿Cuenta de ahorro o debajo del colchón? Formas reales de guardar plata
 
-No hay una única forma de ahorrar. Todo depende de tu realidad:  
+No hay una única forma de ahorrar. Todo depende de tu realidad:
 💸 ingresos, 💥 nivel de urgencia, 😓 confianza en los bancos y 🤹‍♀️ capacidad para manejarte.
 
 Acá te explicamos las formas más comunes de ahorrar, con sus pros y contras, sin venderte humo.
@@ -102,5 +102,5 @@ Puede ser:
 
 > *"No importa si ahorras en un banco, una alcancía o en una libreta con lápiz. Lo importante es que esa plata esté protegida de ti mismo... y de tus impulsos."*
 
-📌 Este documento está en desarrollo.  
+📌 Este documento está en desarrollo.
 ¿Tienes una forma creativa o realista de ahorrar? Súmala al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

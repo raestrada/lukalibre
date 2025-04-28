@@ -7,8 +7,8 @@ parent: FOMO
 
 # 🧨 Cómo el FOMO financiero afecta más a quienes tienen menos
 
-El FOMO —ese miedo a “quedarse afuera”— **no golpea igual a todos**.  
-No es lo mismo sentirlo cuando tienes ahorros, red de apoyo y estabilidad,  
+El FOMO —ese miedo a “quedarse afuera”— **no golpea igual a todos**.
+No es lo mismo sentirlo cuando tienes ahorros, red de apoyo y estabilidad,
 que cuando estás **sobreviviendo con lo justo o con deudas encima**.
 
 En este documento te explicamos **por qué el FOMO financiero golpea más fuerte a la gente con menos recursos**, y cómo reconocerlo para que no te atrapen con falsas promesas.
@@ -30,8 +30,8 @@ En este documento te explicamos **por qué el FOMO financiero golpea más fuerte
 
 Cuando tienes poca plata o deudas, los mensajes tipo:
 
-> “Independízate económicamente”  
-> “Deja de trabajar para otros”  
+> “Independízate económicamente”
+> “Deja de trabajar para otros”
 > “No seas pobre, invierte en ti”
 
 …no motivan: **te presionan, te humillan y te hacen sentir culpable.**
@@ -42,10 +42,10 @@ Cuando tienes poca plata o deudas, los mensajes tipo:
 
 ## 📱 El algoritmo castiga más a quienes buscan soluciones
 
-Si buscas en YouTube o TikTok “cómo ganar dinero rápido”,  
+Si buscas en YouTube o TikTok “cómo ganar dinero rápido”,
 el algoritmo **te empieza a bombardear con inversiones mágicas, cripto, trading y cursos de mentores dudosos.**
 
-No es casualidad.  
+No es casualidad.
 Las redes **explotan tu ansiedad** para mostrarte “soluciones” que muchas veces son trampas.
 
 ---
@@ -72,8 +72,8 @@ Pero **sí hay tiempo. Y sí puedes construir algo real, aunque sea lento.**
 
 ## 💬 LukaEjemplo
 
-> “Me ofrecieron invertir $100.000 en una cripto nueva.  
-> Estaba sin pega, me sentía un fracasado. Pensé que era mi única salida.  
+> “Me ofrecieron invertir $100.000 en una cripto nueva.
+> Estaba sin pega, me sentía un fracasado. Pensé que era mi única salida.
 > Me apuré, perdí la plata y quedé peor. Después supe que el mismo ‘mentor’ había estafado a varias personas.”
 
 ---
@@ -82,5 +82,5 @@ Pero **sí hay tiempo. Y sí puedes construir algo real, aunque sea lento.**
 
 > *“El sistema te dice que corras para escapar de la pobreza. LukaLibre te dice que pares, mires, y decidas con calma. No te estás quedando atrás: te están apurando a propósito.”*
 
-📌 Este documento está en desarrollo.  
+📌 Este documento está en desarrollo.
 ¿Viviste una presión parecida o escapaste del FOMO a tiempo? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

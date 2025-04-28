@@ -7,7 +7,7 @@ parent: Finanzas Básicas
 
 # 📊 ¿Qué es el interés y cómo te lo cobran?
 
-El interés es **el costo de usar plata que no es tuya** o **la recompensa por prestar o guardar tu plata**.  
+El interés es **el costo de usar plata que no es tuya** o **la recompensa por prestar o guardar tu plata**.
 Es como una especie de "alquiler del dinero".
 
 ---
@@ -25,7 +25,7 @@ Cuando tú prestas (o ahorras), el interés es lo que **te pagan por dejar tu pl
 **Ejemplo simple:**
 
 - Pides $100.000 con un interés de 5% mensual.
-- Al mes siguiente debes pagar:  
+- Al mes siguiente debes pagar:
   $100.000 + $5.000 = **$105.000**
 
 Y si no pagas, ese interés **se sigue acumulando**.
@@ -64,7 +64,7 @@ Y si no pagas, ese interés **se sigue acumulando**.
 
 ## 💬 LukaEjemplo
 
-> Compras una tele en 12 cuotas de $29.990. Total: $359.880  
+> Compras una tele en 12 cuotas de $29.990. Total: $359.880
 > ¿Sabías que esa misma tele costaba $299.990 al contado?
 
 👉 Ahí el "interés" está escondido en el precio.
@@ -75,5 +75,5 @@ Y si no pagas, ese interés **se sigue acumulando**.
 
 > *"El interés puede ser tu amigo si inviertes, o tu enemigo si no entiendes cómo te lo cobran."*
 
-📌 Este documento está en desarrollo.  
+📌 Este documento está en desarrollo.
 ¿Tienes ejemplos de cobros abusivos de interés o buenas prácticas que quieras compartir? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

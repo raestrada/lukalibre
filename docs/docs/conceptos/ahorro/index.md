@@ -8,7 +8,7 @@ has_children: true
 
 # 💰 Ahorro en el mundo real
 
-Ahorrar no es fácil. No es simplemente "gasta menos" o "hazte el loco con tus lucas".  
+Ahorrar no es fácil. No es simplemente "gasta menos" o "hazte el loco con tus lucas".
 Acá entendemos que ahorrar en Chile **es un acto de resistencia**, y esta sección está pensada para ayudarte a hacerlo posible, aunque sea de a poco.
 
 ---

@@ -7,9 +7,9 @@ parent: Estafas financieras
 
 # 📉 Estafas de trading mágico y criptogurús: la nueva trampa para tu plata
 
-"Este patrón nunca falla",  
-"Con solo 15 minutos al día puedes generar ingresos pasivos",  
-"Te enseño a leer el mercado como los bancos"...  
+"Este patrón nunca falla",
+"Con solo 15 minutos al día puedes generar ingresos pasivos",
+"Te enseño a leer el mercado como los bancos"...
 Detrás de esas frases puede haber una **estafa moderna**, disfrazada de curso, mentoría o comunidad financiera.
 
 ---
@@ -22,7 +22,7 @@ Es la promesa de que, con un par de líneas en un gráfico (y cero experiencia),
 - Vivir del trading en semanas
 - Predecir el mercado con geometría, astrología o "análisis técnico avanzado"
 
-Suena profesional. Usa palabras reales.  
+Suena profesional. Usa palabras reales.
 Pero en el fondo es **una fantasía vendida como método infalible**.
 
 ---
@@ -53,7 +53,7 @@ Muchos cursos no enseñan nada real:
 
 ## 💱 ¿Y qué pasa con cripto?
 
-Cripto NO es estafa.  
+Cripto NO es estafa.
 Pero muchos usan las criptomonedas para **armar estafas piramidales, plataformas falsas o cursos fantasmas**.
 
 - "Invierte 100 USDT y recibe 200 en 48 horas"
@@ -76,8 +76,8 @@ Pero muchos usan las criptomonedas para **armar estafas piramidales, plataformas
 
 ## 💬 LukaEjemplo
 
-> "Vi un TikTok que mostraba cómo hacer $50.000 al día con trading.  
-> Entré a un grupo de WhatsApp y me hicieron depositar $100 en una plataforma rara.  
+> "Vi un TikTok que mostraba cómo hacer $50.000 al día con trading.
+> Entré a un grupo de WhatsApp y me hicieron depositar $100 en una plataforma rara.
 > Gané el primer día. El segundo, perdí todo. Nunca más me respondieron."
 
 ---
@@ -95,6 +95,6 @@ Pero muchos usan las criptomonedas para **armar estafas piramidales, plataformas
 
 > *"El trading no es magia. Y si te lo venden como magia, es porque quieren que pongas la plata y no preguntes más."*
 
-📌 Este documento está en desarrollo.  
-¿Caíste en una estafa de cripto o trading? ¿Te intentaron reclutar con promesas falsas?  
+📌 Este documento está en desarrollo.
+¿Caíste en una estafa de cripto o trading? ¿Te intentaron reclutar con promesas falsas?
 Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre) y ayuda a que nadie más caiga.

@@ -10,18 +10,18 @@
 
 ### Backend Architecture
 - **Framework**: FastAPI with async endpoints and dependency injection
-- **Database**: 
+- **Database**:
   - PostgreSQL (main) for user auth, configuration, and non-sensitive data
   - Client-side SQLite SEE for encrypted personal financial data
 - **ORM**: SQLAlchemy 2.0 with async support
   - Type-safe query building
   - Alembic migrations with versioning
-- **Authentication**: 
+- **Authentication**:
   - OAuth2 with Google (required for Drive integration)
   - JWT for stateless session management
   - Strong password policies for local secrets
 - **API Documentation**: OpenAPI/Swagger with security schemas
-- **Testing**: 
+- **Testing**:
   - pytest + pytest-asyncio for async testing
   - Factories for test data
   - Mocking for external dependencies
@@ -38,27 +38,27 @@
   - Component-based architecture
   - Reactive state management
   - Progressive Web App capabilities
-- **State Management**: 
+- **State Management**:
   - Svelte stores with derived states
   - Local storage integration
   - Persistent state management
-- **UI Components**: 
+- **UI Components**:
   - Custom components with TailwindCSS
   - Accessibility-first design
   - Responsive mobile-first approach
-- **Client-side Database**: 
+- **Client-side Database**:
   - SQLite SEE via wa-sqlite WebAssembly
   - Encrypted with user-provided key
   - Structured migrations
-- **Encryption**: 
+- **Encryption**:
   - Web Crypto API for key derivation
   - End-to-end encryption
   - Zero-knowledge design
-- **Backup**: 
+- **Backup**:
   - Google Drive API for cloud backups
   - Local export/import functionality
   - Versioned backups
-- **Build**: 
+- **Build**:
   - Vite with optimized bundling
   - PWA support for offline capabilities
   - Code splitting and lazy loading
@@ -145,7 +145,7 @@ from app.db.base import Base
 
 class User(Base):
     __tablename__ = "users"
-    
+
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
     email = Column(String, unique=True, index=True, nullable=False)
     google_id = Column(String, unique=True, nullable=True)
@@ -326,7 +326,7 @@ async def get_current_user(
         detail="Could not validate credentials",
         headers={"WWW-Authenticate": "Bearer"},
     )
-    
+
     try:
         payload = verify_token(token)
         user_id: str = payload.get("sub")
@@ -334,11 +334,11 @@ async def get_current_user(
             raise credentials_exception
     except JWTError:
         raise credentials_exception
-        
+
     user = await user_service.get(UUID(user_id))
     if user is None:
         raise credentials_exception
-        
+
     return user
 
 # app/api/v1/users.py
@@ -361,7 +361,7 @@ async def get_users(
     user_service: UserService = Depends(get_user_service)
 ):
     """
-    Retrieve all users. 
+    Retrieve all users.
     Only accessible by superusers.
     """
     if not current_user.is_superuser:
@@ -386,7 +386,7 @@ async def get_user(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Not enough permissions"
         )
-    
+
     user = await user_service.get(user_id)
     if user is None:
         raise HTTPException(
@@ -445,16 +445,16 @@ oauth.register(
 # JWT functionality
 def create_access_token(data: Dict[str, Any], expires_delta: Optional[timedelta] = None) -> str:
     to_encode = data.copy()
-    
+
     expire = datetime.utcnow() + (expires_delta or timedelta(minutes=15))
     to_encode.update({"exp": expire})
-    
+
     encoded_jwt = jwt.encode(
         claims=to_encode,
         key=settings.SECRET_KEY,
         algorithm=settings.JWT_ALGORITHM
     )
-    
+
     return encoded_jwt
 
 def verify_token(token: str) -> Dict[str, Any]:
@@ -506,24 +506,24 @@ async def login_access_token(
             detail="Incorrect email or password",
             headers={"WWW-Authenticate": "Bearer"},
         )
-    
+
     # Update last login time
     await user_service.update(user.id, {"last_login": datetime.utcnow()})
-    
+
     # Create access token
     access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
-        data={"sub": str(user.id), "email": user.email}, 
+        data={"sub": str(user.id), "email": user.email},
         expires_delta=access_token_expires
     )
-    
+
     # Create refresh token
     refresh_token_expires = timedelta(days=settings.REFRESH_TOKEN_EXPIRE_DAYS)
     refresh_token = create_access_token(
-        data={"sub": str(user.id), "type": "refresh"}, 
+        data={"sub": str(user.id), "type": "refresh"},
         expires_delta=refresh_token_expires
     )
-    
+
     # Set refresh token as HTTP only cookie
     response.set_cookie(
         key="refresh_token",
@@ -533,7 +533,7 @@ async def login_access_token(
         samesite="strict",
         max_age=settings.REFRESH_TOKEN_EXPIRE_DAYS * 24 * 60 * 60,
     )
-    
+
     return {
         "access_token": access_token,
         "token_type": "bearer",
@@ -554,16 +554,16 @@ async def google_callback(
 ):
     token = await oauth.google.authorize_access_token(request)
     user_info = token.get('userinfo')
-    
+
     if not user_info:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Could not fetch user info from Google",
         )
-    
+
     # Check if user exists
     user = await user_service.get_by_email(email=user_info['email'])
-    
+
     # Create user if not exists
     if not user:
         user_data = UserCreate(
@@ -577,27 +577,27 @@ async def google_callback(
         # Update Google ID if missing
         if not user.google_id:
             await user_service.update(
-                user.id, 
+                user.id,
                 UserUpdate(google_id=user_info['sub'])
             )
-    
+
     # Update last login time
     await user_service.update(user.id, {"last_login": datetime.utcnow()})
-    
+
     # Create access token
     access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
-        data={"sub": str(user.id), "email": user.email}, 
+        data={"sub": str(user.id), "email": user.email},
         expires_delta=access_token_expires
     )
-    
+
     # Create refresh token
     refresh_token_expires = timedelta(days=settings.REFRESH_TOKEN_EXPIRE_DAYS)
     refresh_token = create_access_token(
-        data={"sub": str(user.id), "type": "refresh"}, 
+        data={"sub": str(user.id), "type": "refresh"},
         expires_delta=refresh_token_expires
     )
-    
+
     # Set refresh token as HTTP only cookie
     response.set_cookie(
         key="refresh_token",
@@ -607,13 +607,13 @@ async def google_callback(
         samesite="strict",
         max_age=settings.REFRESH_TOKEN_EXPIRE_DAYS * 24 * 60 * 60,
     )
-    
+
     # Store Google tokens for Drive API access
     await user_service.update(user.id, {
         "google_access_token": token.get('access_token'),
         "google_refresh_token": token.get('refresh_token', None)
     })
-    
+
     return {
         "access_token": access_token,
         "token_type": "bearer",
@@ -637,7 +637,7 @@ async def refresh_token(
             detail="Refresh token missing",
             headers={"WWW-Authenticate": "Bearer"},
         )
-    
+
     try:
         payload = verify_token(refresh_token)
         if payload.get("type") != "refresh":
@@ -646,31 +646,31 @@ async def refresh_token(
                 detail="Invalid token type",
                 headers={"WWW-Authenticate": "Bearer"},
             )
-        
+
         user_id = payload.get("sub")
         user = await user_service.get(UUID(user_id))
-        
+
         if not user or not user.is_active:
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Inactive user or invalid token",
                 headers={"WWW-Authenticate": "Bearer"},
             )
-        
+
         # Create new access token
         access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
         access_token = create_access_token(
-            data={"sub": str(user.id), "email": user.email}, 
+            data={"sub": str(user.id), "email": user.email},
             expires_delta=access_token_expires
         )
-        
+
         # Create new refresh token (token rotation)
         refresh_token_expires = timedelta(days=settings.REFRESH_TOKEN_EXPIRE_DAYS)
         new_refresh_token = create_access_token(
-            data={"sub": str(user.id), "type": "refresh"}, 
+            data={"sub": str(user.id), "type": "refresh"},
             expires_delta=refresh_token_expires
         )
-        
+
         # Set new refresh token as HTTP only cookie
         response.set_cookie(
             key="refresh_token",
@@ -680,14 +680,14 @@ async def refresh_token(
             samesite="strict",
             max_age=settings.REFRESH_TOKEN_EXPIRE_DAYS * 24 * 60 * 60,
         )
-        
+
         return {
             "access_token": access_token,
             "token_type": "bearer",
             "user_id": str(user.id),
             "email": user.email
         }
-    
+
     except JWTError:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -717,7 +717,7 @@ class CategoryType(str, enum.Enum):
 
 class Category(Base):
     __tablename__ = "categories"
-    
+
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
     name = Column(String(100), nullable=False)
     description = Column(Text, nullable=True)
@@ -725,11 +725,11 @@ class Category(Base):
     user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
-    
+
     # Relationships
     user = relationship("User", back_populates="categories")
     transactions = relationship("Transaction", back_populates="category")
-    
+
     __table_args__ = (
         # Composite unique constraint for user + category name
         UniqueConstraint('user_id', 'name', name='uq_user_category_name'),
@@ -737,7 +737,7 @@ class Category(Base):
 
 class Transaction(Base):
     __tablename__ = "transactions"
-    
+
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
     amount = Column(Numeric(15, 2), nullable=False)
     description = Column(String(500), nullable=True)
@@ -748,14 +748,14 @@ class Transaction(Base):
     source = Column(String(100), nullable=True)  # Source of transaction (manual, import, etc)
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
-    
+
     # Relationships
     user = relationship("User", back_populates="transactions")
     category = relationship("Category", back_populates="transactions")
 
 class SavingGoal(Base):
     __tablename__ = "saving_goals"
-    
+
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
     name = Column(String(100), nullable=False)
     description = Column(Text, nullable=True)
@@ -767,14 +767,14 @@ class SavingGoal(Base):
     priority = Column(Integer, default=0, nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
-    
+
     # Relationships
     user = relationship("User", back_populates="saving_goals")
     contributions = relationship("SavingContribution", back_populates="goal")
 
 class SavingContribution(Base):
     __tablename__ = "saving_contributions"
-    
+
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
     amount = Column(Numeric(15, 2), nullable=False)
     date = Column(DateTime, nullable=False)
@@ -782,7 +782,7 @@ class SavingContribution(Base):
     goal_id = Column(UUID(as_uuid=True), ForeignKey("saving_goals.id"), nullable=False)
     user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
-    
+
     # Relationships
     user = relationship("User", back_populates="contributions")
     goal = relationship("SavingGoal", back_populates="contributions")
@@ -790,7 +790,7 @@ class SavingContribution(Base):
 # Update User model with relationships
 class User(Base):
     # existing fields...
-    
+
     # Relationships
     categories = relationship("Category", back_populates="user")
     transactions = relationship("Transaction", back_populates="user")
@@ -810,7 +810,7 @@ from decimal import Decimal
 
 from app.models.financial import Category, Transaction, SavingGoal, SavingContribution, CategoryType
 from app.schemas.financial import (
-    CategoryCreate, CategoryUpdate, 
+    CategoryCreate, CategoryUpdate,
     TransactionCreate, TransactionUpdate,
     SavingGoalCreate, SavingGoalUpdate
 )
@@ -822,7 +822,7 @@ class CategoryRepository(BaseRepository[Category, CategoryCreate, CategoryUpdate
             select(Category).where(Category.user_id == user_id)
         )
         return result.scalars().all()
-    
+
     async def get_by_type(self, user_id: UUID, type: CategoryType) -> List[Category]:
         result = await self.session.execute(
             select(Category).where(
@@ -833,7 +833,7 @@ class CategoryRepository(BaseRepository[Category, CategoryCreate, CategoryUpdate
             )
         )
         return result.scalars().all()
-    
+
     async def get_by_name(self, user_id: UUID, name: str) -> Optional[Category]:
         result = await self.session.execute(
             select(Category).where(
@@ -855,7 +855,7 @@ class TransactionRepository(BaseRepository[Transaction, TransactionCreate, Trans
             .limit(limit)
         )
         return result.scalars().all()
-    
+
     async def get_by_category(self, user_id: UUID, category_id: UUID) -> List[Transaction]:
         result = await self.session.execute(
             select(Transaction).where(
@@ -866,12 +866,12 @@ class TransactionRepository(BaseRepository[Transaction, TransactionCreate, Trans
             )
         )
         return result.scalars().all()
-    
+
     async def get_total_by_category(self, user_id: UUID, start_date: date, end_date: date) -> List[dict]:
         result = await self.session.execute(
             select(
-                Category.id, 
-                Category.name, 
+                Category.id,
+                Category.name,
                 Category.type,
                 func.sum(Transaction.amount).label("total")
             )
@@ -894,7 +894,7 @@ class TransactionRepository(BaseRepository[Transaction, TransactionCreate, Trans
             }
             for row in result.all()
         ]
-    
+
     async def get_monthly_summary(self, user_id: UUID, year: int) -> List[dict]:
         # Get monthly totals for income and expenses
         result = await self.session.execute(
@@ -913,13 +913,13 @@ class TransactionRepository(BaseRepository[Transaction, TransactionCreate, Trans
             .group_by(extract('month', Transaction.date), Category.type)
             .order_by(extract('month', Transaction.date))
         )
-        
+
         # Process into monthly summary
         monthly_data = {}
         for row in result.all():
             month, category_type, total = row
             month = int(month)
-            
+
             if month not in monthly_data:
                 monthly_data[month] = {
                     "income": Decimal("0"),
@@ -927,15 +927,15 @@ class TransactionRepository(BaseRepository[Transaction, TransactionCreate, Trans
                     "saving": Decimal("0"),
                     "net": Decimal("0")
                 }
-            
+
             monthly_data[month][category_type] = total
-            
+
             # Calculate net (income - expense)
             if category_type in ["income", "expense"]:
                 monthly_data[month]["net"] = (
                     monthly_data[month]["income"] - monthly_data[month]["expense"]
                 )
-        
+
         # Convert to list format
         return [
             {
@@ -956,7 +956,7 @@ class SavingGoalRepository(BaseRepository[SavingGoal, SavingGoalCreate, SavingGo
             .order_by(SavingGoal.priority.desc())
         )
         return result.scalars().all()
-    
+
     async def get_active(self, user_id: UUID) -> List[SavingGoal]:
         result = await self.session.execute(
             select(SavingGoal)
@@ -983,7 +983,7 @@ from decimal import Decimal
 from app.repositories.financial import CategoryRepository, TransactionRepository, SavingGoalRepository
 from app.models.financial import Category, Transaction, SavingGoal, CategoryType
 from app.schemas.financial import (
-    CategoryCreate, CategoryUpdate, CategoryResponse, 
+    CategoryCreate, CategoryUpdate, CategoryResponse,
     TransactionCreate, TransactionUpdate, TransactionResponse,
     SavingGoalCreate, SavingGoalUpdate, SavingGoalResponse,
     MonthlySummary, CategoryTotals
@@ -993,14 +993,14 @@ from app.services.base import BaseService
 class CategoryService(BaseService[Category, CategoryCreate, CategoryUpdate, CategoryRepository]):
     async def get_by_user(self, user_id: UUID) -> List[Category]:
         return await self.repository.get_by_user(user_id)
-    
+
     async def get_by_type(self, user_id: UUID, type: CategoryType) -> List[Category]:
         return await self.repository.get_by_type(user_id, type)
-    
+
     async def get_or_create(self, user_id: UUID, name: str, type: CategoryType) -> Category:
         # Try to find existing category
         category = await self.repository.get_by_name(user_id, name)
-        
+
         # Create if not exists
         if not category:
             category_data = CategoryCreate(
@@ -1009,35 +1009,35 @@ class CategoryService(BaseService[Category, CategoryCreate, CategoryUpdate, Cate
                 user_id=user_id
             )
             category = await self.repository.create(category_data)
-        
+
         return category
 
 class TransactionService(BaseService[Transaction, TransactionCreate, TransactionUpdate, TransactionRepository]):
     def __init__(
-        self, 
+        self,
         repository: TransactionRepository,
         category_service: CategoryService
     ):
         super().__init__(repository)
         self.category_service = category_service
-    
+
     async def get_by_user(self, user_id: UUID, skip: int = 0, limit: int = 100) -> List[Transaction]:
         return await self.repository.get_by_user(user_id, skip, limit)
-    
+
     async def get_by_category(self, user_id: UUID, category_id: UUID) -> List[Transaction]:
         return await self.repository.get_by_category(user_id, category_id)
-    
+
     async def get_monthly_summary(self, user_id: UUID, year: int = None) -> List[MonthlySummary]:
         # Default to current year if not specified
         if year is None:
             year = datetime.now().year
-        
+
         return await self.repository.get_monthly_summary(user_id, year)
-    
+
     async def get_category_totals(
-        self, 
-        user_id: UUID, 
-        start_date: date = None, 
+        self,
+        user_id: UUID,
+        start_date: date = None,
         end_date: date = None
     ) -> List[CategoryTotals]:
         # Default to current month if dates not specified
@@ -1046,12 +1046,12 @@ class TransactionService(BaseService[Transaction, TransactionCreate, Transaction
             start_date = date(today.year, today.month, 1)
             last_day = calendar.monthrange(today.year, today.month)[1]
             end_date = date(today.year, today.month, last_day)
-        
+
         return await self.repository.get_total_by_category(user_id, start_date, end_date)
-    
+
     async def create_with_category(
-        self, 
-        user_id: UUID, 
+        self,
+        user_id: UUID,
         data: TransactionCreate,
         category_name: str = None
     ) -> Transaction:
@@ -1064,38 +1064,38 @@ class TransactionService(BaseService[Transaction, TransactionCreate, Transaction
                 type=CategoryType.income if data.amount >= 0 else CategoryType.expense
             )
             data.category_id = category.id
-        
+
         # Ensure user_id is set
         data.user_id = user_id
-        
+
         return await self.repository.create(data)
 
 class SavingGoalService(BaseService[SavingGoal, SavingGoalCreate, SavingGoalUpdate, SavingGoalRepository]):
     async def get_by_user(self, user_id: UUID) -> List[SavingGoal]:
         return await self.repository.get_by_user(user_id)
-    
+
     async def get_active(self, user_id: UUID) -> List[SavingGoal]:
         return await self.repository.get_active(user_id)
-    
+
     async def add_contribution(
-        self, 
-        goal_id: UUID, 
-        user_id: UUID, 
+        self,
+        goal_id: UUID,
+        user_id: UUID,
         amount: Decimal,
         description: str = None
     ) -> SavingGoal:
         # Get the saving goal
         goal = await self.repository.get(goal_id)
-        
+
         if not goal or goal.user_id != user_id:
             raise ValueError("Saving goal not found or not owned by user")
-        
+
         if not goal.is_active:
             raise ValueError("Cannot contribute to inactive goal")
-        
+
         # Update current amount
         goal.current_amount += amount
-        
+
         # Create contribution record
         contribution = SavingContribution(
             amount=amount,
@@ -1104,12 +1104,12 @@ class SavingGoalService(BaseService[SavingGoal, SavingGoalCreate, SavingGoalUpda
             goal_id=goal_id,
             user_id=user_id
         )
-        
+
         # Save both records
         self.repository.session.add(contribution)
         await self.repository.session.commit()
         await self.repository.session.refresh(goal)
-        
+
         return goal
 ```
 
@@ -1283,11 +1283,11 @@ export class ApiClient {
   import pytest
   from uuid import uuid4
   from sqlalchemy.ext.asyncio import AsyncSession
-  
+
   from app.models.user import User
   from app.repositories.user import UserRepository
   from app.schemas.user import UserCreate
-  
+
   @pytest.mark.asyncio
   async def test_create_user(db_session: AsyncSession):
       # Arrange
@@ -1297,15 +1297,15 @@ export class ApiClient {
           password="securepassword",
           is_active=True
       )
-      
+
       # Act
       user = await repo.create(user_data)
-      
+
       # Assert
       assert user.id is not None
       assert user.email == "test@example.com"
       assert user.is_active is True
-  
+
   @pytest.mark.asyncio
   async def test_get_by_email(db_session: AsyncSession):
       # Arrange
@@ -1316,10 +1316,10 @@ export class ApiClient {
           is_active=True
       )
       await repo.create(user_data)
-      
+
       # Act
       user = await repo.get_by_email("find@example.com")
-      
+
       # Assert
       assert user is not None
       assert user.email == "find@example.com"
@@ -1331,13 +1331,13 @@ export class ApiClient {
   import pytest
   from fastapi.testclient import TestClient
   from httpx import AsyncClient
-  
+
   from app.main import app
-  
+
   @pytest.mark.asyncio
   async def test_login_success(async_client: AsyncClient, test_user):
       # Arrange - test_user fixture creates a user in DB
-      
+
       # Act
       response = await async_client.post(
           "/api/v1/auth/login",
@@ -1346,7 +1346,7 @@ export class ApiClient {
               "password": test_user["password"]
           }
       )
-      
+
       # Assert
       assert response.status_code == 200
       assert "access_token" in response.json()
@@ -1359,7 +1359,7 @@ export class ApiClient {
   import pytest
   from httpx import AsyncClient
   from datetime import datetime
-  
+
   @pytest.mark.asyncio
   async def test_create_transaction(async_client: AsyncClient, auth_headers, test_category):
       # Arrange
@@ -1369,14 +1369,14 @@ export class ApiClient {
           "date": datetime.now().isoformat(),
           "category_id": str(test_category.id)
       }
-      
+
       # Act
       response = await async_client.post(
           "/api/v1/transactions/",
           json=transaction_data,
           headers=auth_headers
       )
-      
+
       # Assert
       assert response.status_code == 201
       data = response.json()
@@ -1390,32 +1390,32 @@ export class ApiClient {
   // src/components/TransactionForm.spec.js
   import { render, fireEvent, screen } from '@testing-library/svelte';
   import TransactionForm from './TransactionForm.svelte';
-  
+
   describe('TransactionForm', () => {
     it('should render the form', () => {
       render(TransactionForm);
-      
+
       expect(screen.getByText('Add Transaction')).toBeInTheDocument();
       expect(screen.getByLabelText('Amount')).toBeInTheDocument();
       expect(screen.getByLabelText('Description')).toBeInTheDocument();
       expect(screen.getByLabelText('Date')).toBeInTheDocument();
       expect(screen.getByLabelText('Category')).toBeInTheDocument();
     });
-    
+
     it('should emit submit event when form is submitted', async () => {
       const { component } = render(TransactionForm);
-      
+
       // Setup a mock event handler
       const submitHandler = jest.fn();
       component.$on('submit', submitHandler);
-      
+
       // Fill the form
       await fireEvent.input(screen.getByLabelText('Amount'), { target: { value: '100.50' } });
       await fireEvent.input(screen.getByLabelText('Description'), { target: { value: 'Test expense' } });
-      
+
       // Submit the form
       await fireEvent.click(screen.getByText('Save'));
-      
+
       // Verify event was emitted
       expect(submitHandler).toHaveBeenCalled();
       const formData = submitHandler.mock.calls[0][0].detail;
@@ -1432,7 +1432,7 @@ export class ApiClient {
   import Dashboard from './Dashboard.svelte';
   import { authStore } from '../lib/stores/auth';
   import { apiClient } from '../lib/api/client';
-  
+
   // Mock API client
   jest.mock('../lib/api/client', () => ({
     apiClient: {
@@ -1448,27 +1448,27 @@ export class ApiClient {
       })
     }
   }));
-  
+
   describe('Dashboard', () => {
     beforeEach(() => {
       // Setup auth state
-      authStore.set({ 
-        isAuthenticated: true, 
-        user: { id: 'user1', email: 'test@example.com' } 
+      authStore.set({
+        isAuthenticated: true,
+        user: { id: 'user1', email: 'test@example.com' }
       });
     });
-    
+
     it('should load and display transaction data', async () => {
       render(Dashboard);
-      
+
       // Verify loading state
       expect(screen.getByText('Loading...')).toBeInTheDocument();
-      
+
       // Wait for data to load
       await waitFor(() => {
         expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
       });
-      
+
       // Verify data display
       expect(screen.getByText('Test')).toBeInTheDocument();
       expect(screen.getByText('$100.00')).toBeInTheDocument();
@@ -1481,24 +1481,24 @@ export class ApiClient {
   ```javascript
   // e2e/transaction.spec.js
   import { test, expect } from '@playwright/test';
-  
+
   test('user can add a new transaction', async ({ page }) => {
     // Login first
     await page.goto('/login');
     await page.fill('[data-testid="email"]', 'test@example.com');
     await page.fill('[data-testid="password"]', 'password123');
     await page.click('[data-testid="login-button"]');
-    
+
     // Navigate to transactions
     await page.goto('/transactions');
-    
+
     // Add new transaction
     await page.click('[data-testid="add-transaction"]');
     await page.fill('[data-testid="amount"]', '50.75');
     await page.fill('[data-testid="description"]', 'Grocery shopping');
     await page.selectOption('[data-testid="category"]', 'Food');
     await page.click('[data-testid="save-transaction"]');
-    
+
     // Verify transaction was added
     await expect(page.locator('[data-testid="transaction-list"]')).toContainText('Grocery shopping');
     await expect(page.locator('[data-testid="transaction-list"]')).toContainText('$50.75');
@@ -1534,7 +1534,7 @@ export class ApiClient {
       const encoder = new TextEncoder();
       const passwordBuffer = encoder.encode(password);
       const saltBuffer = encoder.encode(salt);
-      
+
       // Import key material
       const keyMaterial = await window.crypto.subtle.importKey(
           "raw",
@@ -1543,7 +1543,7 @@ export class ApiClient {
           false,
           ["deriveBits", "deriveKey"]
       );
-      
+
       // Derive actual key using PBKDF2
       return window.crypto.subtle.deriveKey(
           {
@@ -1588,7 +1588,7 @@ export class ApiClient {
   # app/core/config.py
   JWT_ACCESS_TOKEN_EXPIRE_MINUTES = 15
   JWT_REFRESH_TOKEN_EXPIRE_DAYS = 7
-  
+
   # Token settings in cookie
   response.set_cookie(
       key="refresh_token",
@@ -1619,7 +1619,7 @@ export class ApiClient {
       description: constr(max_length=500)  # Length constraint
       date: datetime
       category_id: UUID
-      
+
       class Config:
           extra = "forbid"  # Prevent additional fields
   ```
@@ -1634,9 +1634,9 @@ export class ApiClient {
   from fastapi import Depends, HTTPException, Request
   from slowapi import Limiter
   from slowapi.util import get_remote_address
-  
+
   limiter = Limiter(key_func=get_remote_address)
-  
+
   @router.post("/transactions/")
   @limiter.limit("20/minute")  # 20 requests per minute
   async def create_transaction(
@@ -1655,7 +1655,7 @@ export class ApiClient {
   ```python
   # app/main.py
   from fastapi.middleware.cors import CORSMiddleware
-  
+
   app.add_middleware(
       CORSMiddleware,
       allow_origins=[settings.FRONTEND_URL],
@@ -1676,7 +1676,7 @@ export class ApiClient {
   @app.middleware("http")
   async def add_security_headers(request: Request, call_next):
       response = await call_next(request)
-      
+
       # CSP to prevent XSS
       response.headers["Content-Security-Policy"] = "default-src 'self'; script-src 'self'; object-src 'none';"
       # Prevent MIME type sniffing
@@ -1685,7 +1685,7 @@ export class ApiClient {
       response.headers["X-Frame-Options"] = "DENY"
       # Control referrer information
       response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
-      
+
       return response
   ```
 
@@ -1704,11 +1704,11 @@ export class ApiClient {
   ```javascript
   // Bad practice - avoided
   localStorage.setItem('token', accessToken);
-  
+
   // Good practice - used instead
   // Access token in memory only during session
   let accessToken = null;
-  
+
   // Refresh token in HttpOnly cookie (not accessible via JS)
   // All sensitive data in encrypted SQLite
   ```
@@ -1731,7 +1731,7 @@ export class ApiClient {
       Index('ix_transactions_category', Transaction.category_id),
   )
   ```
-  
+
   - Query optimization with SQLAlchemy
   ```python
   # Efficient query with joins and specific column selection
@@ -1748,7 +1748,7 @@ export class ApiClient {
       .limit(limit)
   )
   ```
-  
+
   - Connection pooling
   ```python
   # app/db/session.py
@@ -1760,7 +1760,7 @@ export class ApiClient {
       pool_recycle=3600,
   )
   ```
-  
+
   - Read/write query separation
 
 - **API Response Optimization**
@@ -1768,29 +1768,29 @@ export class ApiClient {
   ```python
   # app/main.py
   from fastapi.middleware.gzip import GZipMiddleware
-  
+
   app.add_middleware(GZipMiddleware, minimum_size=1000)
   ```
-  
+
   - JSON serialization optimization
   ```python
   # app/core/utils.py
   import orjson
-  
+
   def orjson_dumps(v, *, default):
       # orjson.dumps returns bytes, need to decode
       return orjson.dumps(v, default=default).decode()
-  
+
   class ORJSONResponse(JSONResponse):
       media_type = "application/json"
-      
+
       def render(self, content: Any) -> bytes:
           return orjson.dumps(content)
-  
+
   # Use in FastAPI app
   app = FastAPI(default_response_class=ORJSONResponse)
   ```
-  
+
   - Response pagination
   ```python
   # app/api/v1/transactions.py
@@ -1808,7 +1808,7 @@ export class ApiClient {
           pagination
       )
   ```
-  
+
   - Field filtering
   ```python
   # app/api/v1/transactions.py
@@ -1823,11 +1823,11 @@ export class ApiClient {
       Get transaction by ID with field filtering.
       """
       transaction = await transaction_service.get(transaction_id)
-      
+
       # Apply field filtering if requested
       if fields:
           return {k: v for k, v in transaction.dict().items() if k in fields}
-      
+
       return transaction
   ```
 
@@ -1836,15 +1836,15 @@ export class ApiClient {
   ```python
   # app/core/cache.py
   from redis import asyncio as aioredis
-  
+
   redis = aioredis.from_url(settings.REDIS_URL, encoding="utf8", decode_responses=True)
-  
+
   async def get_cache(key: str) -> Optional[str]:
       return await redis.get(key)
-      
+
   async def set_cache(key: str, value: str, expire: int = 3600) -> bool:
       return await redis.set(key, value, ex=expire)
-  
+
   # Usage in API
   @router.get("/summary/{year}")
   async def get_yearly_summary(
@@ -1853,21 +1853,21 @@ export class ApiClient {
       transaction_service: TransactionService = Depends(get_transaction_service)
   ):
       cache_key = f"summary:{current_user.id}:{year}"
-      
+
       # Try to get from cache
       cached = await get_cache(cache_key)
       if cached:
           return json.loads(cached)
-      
+
       # If not in cache, compute
       summary = await transaction_service.get_yearly_summary(current_user.id, year)
-      
+
       # Store in cache
       await set_cache(cache_key, json.dumps(summary))
-      
+
       return summary
   ```
-  
+
   - ETags for HTTP caching
   ```python
   # app/api/v1/categories.py
@@ -1879,27 +1879,27 @@ export class ApiClient {
       category_service: CategoryService = Depends(get_category_service)
   ):
       categories = await category_service.get_by_user(current_user.id)
-      
+
       # Generate ETag based on data
       categories_json = json.dumps([c.dict() for c in categories])
       etag = hashlib.md5(categories_json.encode()).hexdigest()
-      
+
       # Check If-None-Match header
       if request.headers.get("if-none-match") == etag:
           return Response(status_code=304)  # Not Modified
-      
+
       # Set ETag in response
       response.headers["ETag"] = etag
-      
+
       return categories
   ```
-  
+
   - Pre-aggregated data
   ```python
   # app/models/financial.py
   class MonthlySummary(Base):
       __tablename__ = "monthly_summaries"
-      
+
       id = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
       user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False)
       year = Column(Integer, nullable=False)
@@ -1907,7 +1907,7 @@ export class ApiClient {
       income = Column(Numeric(15, 2), default=0, nullable=False)
       expense = Column(Numeric(15, 2), default=0, nullable=False)
       saving = Column(Numeric(15, 2), default=0, nullable=False)
-      
+
       __table_args__ = (
           UniqueConstraint('user_id', 'year', 'month', name='uq_user_year_month'),
       )
@@ -1918,16 +1918,16 @@ export class ApiClient {
   ```python
   # app/worker.py
   from celery import Celery
-  
+
   celery = Celery(__name__)
   celery.conf.broker_url = settings.CELERY_BROKER_URL
   celery.conf.result_backend = settings.CELERY_RESULT_BACKEND
-  
+
   @celery.task
   def generate_monthly_report(user_id: str, year: int, month: int):
       # Long-running task to generate PDF report
       pass
-  
+
   # Usage in API
   @router.post("/reports/monthly/{year}/{month}")
   async def request_monthly_report(
@@ -1937,15 +1937,15 @@ export class ApiClient {
   ):
       # Queue the task
       task = generate_monthly_report.delay(str(current_user.id), year, month)
-      
+
       return {"task_id": task.id, "status": "processing"}
   ```
-  
+
   - Background tasks with FastAPI
   ```python
   # app/api/v1/transactions.py
   from fastapi import BackgroundTasks
-  
+
   @router.post("/import")
   async def import_transactions(
       file: UploadFile,
@@ -1956,14 +1956,14 @@ export class ApiClient {
       file_path = f"/tmp/{uuid4()}.csv"
       with open(file_path, "wb") as f:
           f.write(await file.read())
-      
+
       # Process in background
       background_tasks.add_task(
           process_transaction_import,
           file_path,
           current_user.id
       )
-      
+
       return {"status": "processing"}
   ```
 
@@ -1987,7 +1987,7 @@ export class ApiClient {
     }
   });
   ```
-  
+
   - Dynamic imports
   ```javascript
   // src/routes.js
@@ -2012,34 +2012,34 @@ export class ApiClient {
   ```javascript
   // src/lib/utils/lazyLoad.js
   import { readable } from 'svelte/store';
-  
+
   export function lazyLoad(importFn) {
     const loading = readable({ component: null, loading: true }, set => {
       importFn().then(module => {
         set({ component: module.default, loading: false });
       });
-      
+
       return () => {};
     });
-    
+
     return loading;
   }
-  
+
   // Usage in component
   <script>
     import { lazyLoad } from '../lib/utils/lazyLoad';
     import LoadingSpinner from './LoadingSpinner.svelte';
-    
+
     const chartComponent = lazyLoad(() => import('./Chart.svelte'));
   </script>
-  
+
   {#if $chartComponent.loading}
     <LoadingSpinner />
   {:else}
     <svelte:component this={$chartComponent.component} />
   {/if}
   ```
-  
+
   - Deferred loading of non-critical resources
   ```html
   <!-- index.html -->
@@ -2054,7 +2054,7 @@ export class ApiClient {
   // vite.config.js
   import { defineConfig } from 'vite';
   import { imagetools } from 'vite-imagetools';
-  
+
   export default defineConfig({
     plugins: [
       imagetools({
@@ -2064,15 +2064,15 @@ export class ApiClient {
       })
     ]
   });
-  
+
   // Usage in component
   <script>
     import optimizedImage from '../assets/hero.jpg?w=800;h=600;format=webp';
   </script>
-  
+
   <img src={optimizedImage} alt="Hero" />
   ```
-  
+
   - CSS optimization with PurgeCSS
   ```javascript
   // postcss.config.js
@@ -2089,7 +2089,7 @@ export class ApiClient {
     ]
   };
   ```
-  
+
   - Font optimization
   ```html
   <!-- index.html -->
@@ -2104,7 +2104,7 @@ export class ApiClient {
   ```javascript
   // vite.config.js
   import { VitePWA } from 'vite-plugin-pwa';
-  
+
   export default defineConfig({
     plugins: [
       VitePWA({
@@ -2138,14 +2138,14 @@ export class ApiClient {
     ]
   });
   ```
-  
+
   - Background sync
   ```javascript
   // src/lib/sync/backgroundSync.js
   export async function registerSyncEvent() {
     if ('serviceWorker' in navigator && 'SyncManager' in window) {
       const registration = await navigator.serviceWorker.ready;
-      
+
       // Register for background sync
       try {
         await registration.sync.register('sync-transactions');
@@ -2155,18 +2155,18 @@ export class ApiClient {
       }
     }
   }
-  
+
   // Listen for sync event in service worker
   self.addEventListener('sync', (event) => {
     if (event.tag === 'sync-transactions') {
       event.waitUntil(syncTransactions());
     }
   });
-  
+
   async function syncTransactions() {
     const db = await openDatabase();
     const pendingTransactions = await db.getPendingTransactions();
-    
+
     for (const transaction of pendingTransactions) {
       try {
         await fetch('/api/v1/transactions', {
@@ -2174,7 +2174,7 @@ export class ApiClient {
           body: JSON.stringify(transaction),
           headers: { 'Content-Type': 'application/json' }
         });
-        
+
         // Mark as synced in local DB
         await db.markTransactionSynced(transaction.id);
       } catch (err) {
@@ -2182,4 +2182,3 @@ export class ApiClient {
       }
     }
   }
-  

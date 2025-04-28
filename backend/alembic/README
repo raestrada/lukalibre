@@ -51,4 +51,4 @@ alembic history --verbose
 
 - `versions/` - Contiene los scripts de migración generados
 - `env.py` - Configuración del entorno de Alembic
-- `script.py.mako` - Plantilla para generar nuevas migraciones 
+- `script.py.mako` - Plantilla para generar nuevas migraciones

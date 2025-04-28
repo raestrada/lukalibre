@@ -7,8 +7,8 @@ parent: Tus derechos
 
 # ⏳ ¿Las deudas prescriben? ¿Qué significa eso?
 
-Sí: **las deudas prescriben**.  
-Eso significa que, pasado un cierto tiempo, **ya no pueden exigirte legalmente el pago**…  
+Sí: **las deudas prescriben**.
+Eso significa que, pasado un cierto tiempo, **ya no pueden exigirte legalmente el pago**…
 a menos que hayan hecho una demanda o tú hayas reconocido la deuda nuevamente.
 
 El problema es que **pocas personas saben esto**, y muchos cobradores **te asustan igual para que pagues algo que ya no es exigible legalmente**.
@@ -17,7 +17,7 @@ El problema es que **pocas personas saben esto**, y muchos cobradores **te asust
 
 ## 🧠 ¿Qué es la prescripción de una deuda?
 
-Es cuando, después de cierto tiempo sin acciones legales, **el derecho del acreedor a cobrar judicialmente se extingue**.  
+Es cuando, después de cierto tiempo sin acciones legales, **el derecho del acreedor a cobrar judicialmente se extingue**.
 En simple: **ya no pueden obligarte por la vía legal a pagar**.
 
 Pero **¡ojo!**: la deuda no desaparece mágicamente, solo **pierde fuerza legal**.
@@ -56,9 +56,9 @@ La prescripción **se "reinicia" si haces alguna de estas cosas**:
 
 ## 🛠️ ¿Qué hacer si crees que tu deuda ya prescribió?
 
-1. **No pagues ni reconozcas nada sin revisar**  
-2. Revisa la fecha del último pago o último movimiento judicial  
-3. Junta evidencia (correos, boletas, estado de cuenta)  
+1. **No pagues ni reconozcas nada sin revisar**
+2. Revisa la fecha del último pago o último movimiento judicial
+3. Junta evidencia (correos, boletas, estado de cuenta)
 4. Si te demandan, puedes **presentar la prescripción como defensa legal**
 
 📌 Puedes pedir ayuda gratuita en la **Corporación de Asistencia Judicial** o consultar con un abogado/a.
@@ -74,8 +74,8 @@ La prescripción **se "reinicia" si haces alguna de estas cosas**:
 
 ## 💬 LukaEjemplo
 
-> "Tenía una deuda del 2015 con una tienda. No me demandaron nunca.  
-> En 2023 me llamaron para pagarla. Me asusté… pero ya estaba prescrita.  
+> "Tenía una deuda del 2015 con una tienda. No me demandaron nunca.
+> En 2023 me llamaron para pagarla. Me asusté… pero ya estaba prescrita.
 > No pagué, no hablé más, y exigí que la eliminaran del registro."
 
 ---
@@ -84,5 +84,5 @@ La prescripción **se "reinicia" si haces alguna de estas cosas**:
 
 > *"Si una deuda es vieja, no la toques antes de consultar. Pagarla puede revivirla."*
 
-📌 Este documento está en desarrollo.  
+📌 Este documento está en desarrollo.
 ¿Tuviste una experiencia con deuda prescrita o cobros abusivos pasados de fecha? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

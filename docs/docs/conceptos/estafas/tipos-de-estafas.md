@@ -7,8 +7,8 @@ parent: Estafas financieras
 
 # 🚨 Tipos de estafas financieras más comunes en Chile
 
-No todas las estafas se ven como tal.  
-Muchas llegan por WhatsApp, Instagram, un amigo, o incluso por TV.  
+No todas las estafas se ven como tal.
+Muchas llegan por WhatsApp, Instagram, un amigo, o incluso por TV.
 Algunas parecen oportunidades. Otras parecen trámites normales.
 
 En esta guía te mostramos **las estafas más comunes en Chile**, cómo operan, y por qué tanta gente cae sin darse cuenta.
@@ -101,7 +101,7 @@ En esta guía te mostramos **las estafas más comunes en Chile**, cómo operan, 
 
 ## 📌 ¿Y si ya caíste?
 
-No estás solo.  
+No estás solo.
 Revisa el documento [¿Qué hacer si caí en una estafa?](que-hacer-si-caigo.md)
 
 Y si quieres ayudar a que otras personas no caigan, **súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre)** y comparte tu historia.

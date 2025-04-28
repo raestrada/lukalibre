@@ -26,7 +26,7 @@ Este documento es una comparación directa entre el mundo real y el mundo "mági
 
 ## 🧠 ¿Y cómo es el trading real?
 
-Es técnico, estadístico, lento y lleno de regulaciones.  
+Es técnico, estadístico, lento y lleno de regulaciones.
 Lo hacen personas que trabajan en:
 
 - Administradoras de fondos (AFP, AGF, fondos mutuos)
@@ -51,7 +51,7 @@ Lo hacen personas que trabajan en:
 
 ## 🧘 ¿Por qué esto es importante?
 
-Porque **la gente que confía en trading mágico está sola**.  
+Porque **la gente que confía en trading mágico está sola**.
 Nadie los regula, nadie los protege, y si pierden, la culpa siempre "es del usuario".
 
 En cambio, **el trading real está lleno de controles**, validaciones y responsabilidad fiduciaria.
@@ -60,8 +60,8 @@ En cambio, **el trading real está lleno de controles**, validaciones y responsa
 
 ## 💬 LukaEjemplo
 
-> "Me ofrecieron un curso de 'análisis técnico pro' y después de perder plata, me metí a estudiar cómo invierten los fondos mutuos.  
-> Ahí caché que nadie serio se basa en figuras ni frases tipo 'esto nunca falla'.  
+> "Me ofrecieron un curso de 'análisis técnico pro' y después de perder plata, me metí a estudiar cómo invierten los fondos mutuos.
+> Ahí caché que nadie serio se basa en figuras ni frases tipo 'esto nunca falla'.
 > Aprendí más con un informe de la CMF que en todo el curso."
 
 ---
@@ -70,5 +70,5 @@ En cambio, **el trading real está lleno de controles**, validaciones y responsa
 
 > *"Si alguien en redes sociales te promete resultados rápidos y usa palabras como 'libertad' o 'garantizado', no está haciendo trading: está haciendo marketing."*
 
-📌 Este documento está en desarrollo.  
+📌 Este documento está en desarrollo.
 ¿Trabajas en finanzas o viste cómo funciona el mundo real desde dentro? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre) y comparte tu experiencia.

@@ -8,16 +8,16 @@ has_children: true
 
 # ⚠️ Estafas financieras: cómo identificarlas y protegerte
 
-En momentos difíciles, es cuando más aparecen las promesas mágicas:  
-"duplica tu plata en 30 días",  
-"retiro de tu AFP sin letra chica",  
-"oportunidad única de inversión",  
+En momentos difíciles, es cuando más aparecen las promesas mágicas:
+"duplica tu plata en 30 días",
+"retiro de tu AFP sin letra chica",
+"oportunidad única de inversión",
 "ganancias automáticas desde el celular"...
 
-Todas suenan tentadoras. Algunas incluso parecen reales.  
+Todas suenan tentadoras. Algunas incluso parecen reales.
 Pero muchas son **estafas diseñadas para quitarte lo poco que tienes**.
 
-Esta sección te enseña a **reconocer, evitar y denunciar** estafas financieras en Chile.  
+Esta sección te enseña a **reconocer, evitar y denunciar** estafas financieras en Chile.
 Sin miedo, sin tecnicismos, y con ejemplos reales.
 
 ---
@@ -43,5 +43,5 @@ Sin miedo, sin tecnicismos, y con ejemplos reales.
 
 ---
 
-📌 ¿Tuviste una experiencia con una estafa y quieres ayudar a otros a no caer?  
+📌 ¿Tuviste una experiencia con una estafa y quieres ayudar a otros a no caer?
 Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre) y contribuye con tu historia.

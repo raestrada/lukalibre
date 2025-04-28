@@ -7,11 +7,11 @@ parent: AFP y APV
 
 # 📊 ¿Cuánto necesito ahorrar para tener una pensión digna?
 
-¿Quieres saber cuánta plata necesitas ahorrar para jubilarte tranquilo?  
+¿Quieres saber cuánta plata necesitas ahorrar para jubilarte tranquilo?
 ¿Te abruma pensar que nunca te va a alcanzar?
 
-Tranquilo. No estás solo.  
-Acá no te vamos a mentir con promesas falsas ni fórmulas mágicas.  
+Tranquilo. No estás solo.
+Acá no te vamos a mentir con promesas falsas ni fórmulas mágicas.
 Pero sí te vamos a ayudar a entender el panorama y **calcular de forma realista qué necesitarías**.
 
 ---
@@ -54,15 +54,15 @@ Una regla simple (pero cruda):
 | Menos rentabilidad | Aprox. $20M menos por inversión |
 | Resultado        | Necesitas ahorrar unos $100M       |
 
-😱 Sí, es fuerte.  
+😱 Sí, es fuerte.
 Pero por eso **es clave entenderlo y empezar lo antes posible, aunque sea con poco.**
 
 ---
 
 ## 💡 ¿Qué puedes hacer?
 
-- **Revisar cuánto llevas acumulado** en tu AFP  
-- Estimar tu pensión proyectada en:  
+- **Revisar cuánto llevas acumulado** en tu AFP
+- Estimar tu pensión proyectada en:
   [https://www.spensiones.cl](https://www.spensiones.cl) → Simulador de pensión
 
 - Ver si calificas para:
@@ -85,7 +85,7 @@ Pero por eso **es clave entenderlo y empezar lo antes posible, aunque sea con po
 
 ## 💬 LukaEjemplo
 
-> “Tenía 35 años y nunca había cotizado. Me metí al simulador y me salía una pensión de $80.000.  
+> “Tenía 35 años y nunca había cotizado. Me metí al simulador y me salía una pensión de $80.000.
 > Ahora aporto $10.000 al mes extra como APV y reviso mi cartola dos veces al año.”
 
 ---
@@ -94,5 +94,5 @@ Pero por eso **es clave entenderlo y empezar lo antes posible, aunque sea con po
 
 > *“No necesitas ser millonario para tener una pensión mejor. Pero sí necesitas empezar ahora, aunque sea con $5.000.”*
 
-📌 Este documento está en desarrollo.  
+📌 Este documento está en desarrollo.
 ¿Usaste el simulador de pensiones o descubriste cuánto necesitarías ahorrar? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

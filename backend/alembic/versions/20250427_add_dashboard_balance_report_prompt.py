@@ -5,14 +5,16 @@ Revises: dashboard_html_report
 Create Date: 2025-04-27
 
 """
+
 from alembic import op
 import sqlalchemy as sa
 
 # revision identifiers, used by Alembic.
-revision = 'dashboard_balance_report'
-down_revision = 'dashboard_html_report'
+revision = "dashboard_balance_report"
+down_revision = "dashboard_html_report"
 branch_labels = None
 depends_on = None
+
 
 def upgrade():
     op.execute(
@@ -87,5 +89,8 @@ Datos de entrada: {{user_json}}'
         """
     )
 
+
 def downgrade():
-    op.execute("DELETE FROM prompt_templates WHERE name = 'dashboard_balance_report_cl';")
+    op.execute(
+        "DELETE FROM prompt_templates WHERE name = 'dashboard_balance_report_cl';"
+    )

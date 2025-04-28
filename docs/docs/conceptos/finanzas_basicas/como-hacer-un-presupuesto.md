@@ -7,7 +7,7 @@ parent: Finanzas Básicas
 
 # 🧾 Cómo hacer un presupuesto básico (y no morir en el intento)
 
-Hacer un presupuesto no es una solución mágica, pero es **la linterna cuando estás en la oscuridad financiera**.  
+Hacer un presupuesto no es una solución mágica, pero es **la linterna cuando estás en la oscuridad financiera**.
 No se trata de dejar de tomar café o eliminar "gustitos", sino de **ver con claridad en qué se va tu plata y decidir con intención**.
 
 ---
@@ -20,7 +20,7 @@ No importa si trabajas con boleta, sueldos informales o ayudas: **anota todo lo 
 Ejemplo:
 - Sueldo: $480.000
 - Pegas extra: $70.000
-- Bono familiar: $20.000  
+- Bono familiar: $20.000
 📌 Total ingresos: **$570.000**
 
 ---
@@ -40,7 +40,7 @@ Agrupa por categorías:
 ---
 
 ### 3. Suma y resta
-¿Gastas más de lo que ganas?  
+¿Gastas más de lo que ganas?
 ¿Te queda algo? ¿Te falta?
 
 👉 Ese número es tu **superávit (si sobra)** o tu **déficit (si falta)**.
@@ -48,7 +48,7 @@ Agrupa por categorías:
 ---
 
 ### 4. Ajusta, no sufras
-Un presupuesto no es para castigar, es para tomar decisiones.  
+Un presupuesto no es para castigar, es para tomar decisiones.
 Si estás en negativo, busca reducir **solo lo que puedas sin reventarte**.
 
 🎯 Pequeños ajustes: delivery 1 vez menos, apps de streaming compartidas, pagos de deuda renegociados.
@@ -56,7 +56,7 @@ Si estás en negativo, busca reducir **solo lo que puedas sin reventarte**.
 ---
 
 ### 5. Revisa mes a mes
-El presupuesto es **vivo**. Va cambiando.  
+El presupuesto es **vivo**. Va cambiando.
 Lo importante es usarlo como brújula, **no como una cárcel**.
 
 ---
@@ -81,5 +81,5 @@ Lo importante es usarlo como brújula, **no como una cárcel**.
 
 > *"No necesitas una app. Con papel, lápiz y conciencia ya partes ganando."*
 
-📌 Este documento está en desarrollo.  
+📌 Este documento está en desarrollo.
 Si tienes un ejemplo de presupuesto real que te gustaría compartir (anónimo o adaptado), contribuye en GitHub.

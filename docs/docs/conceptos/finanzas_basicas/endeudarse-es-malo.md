@@ -7,7 +7,7 @@ parent: Finanzas Básicas
 
 # 🤔 ¿Endeudarse es malo? No siempre.
 
-“Si estás endeudado, es porque hiciste algo mal”.  
+“Si estás endeudado, es porque hiciste algo mal”.
 Esa frase es cruel, falsa y clasista. La realidad es que **endeudarse no siempre es una mala decisión**, y muchas veces es la única forma de sobrevivir o avanzar.
 
 ---
@@ -67,12 +67,12 @@ Ejemplo:
 
 ## 💬 LukaEjemplo
 
-> Dos personas tienen $600.000 de deuda.  
-> Una lo debe por una emergencia familiar.  
-> Otra lo debe por una PlayStation en 24 cuotas + intereses.  
+> Dos personas tienen $600.000 de deuda.
+> Una lo debe por una emergencia familiar.
+> Otra lo debe por una PlayStation en 24 cuotas + intereses.
 > 👉 La deuda es la misma en monto, pero muy distinta en impacto y contexto.
 
 ---
 
-📌 Este documento está en desarrollo.  
+📌 Este documento está en desarrollo.
 ¿Has tenido que endeudarte para salir adelante? ¿Te arrepientes de una deuda impulsiva? Tu historia puede ayudar a otros. Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

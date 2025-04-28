@@ -7,7 +7,7 @@ parent: AFP y APV
 
 # 💰 ¿Puedo retirar mi plata de la AFP antes de jubilar? (Excepciones y retiros)
 
-La regla general es clara: **NO puedes sacar tu plata de la AFP cuando quieras**.  
+La regla general es clara: **NO puedes sacar tu plata de la AFP cuando quieras**.
 Pero hay **excepciones legales** que te permiten acceder a parte o todo tu ahorro previsional en situaciones extremas o definidas por ley.
 
 Acá te explicamos **cuándo sí se puede**, **cómo funciona cada caso**, y **en qué debes tener cuidado**.
@@ -16,8 +16,8 @@ Acá te explicamos **cuándo sí se puede**, **cómo funciona cada caso**, y **e
 
 ## ⚠️ ¿Puedo hacer un "retiro del 10%" como antes?
 
-No.  
-Los **retiros del 10% por pandemia** fueron leyes excepcionales, que **ya no están vigentes**.  
+No.
+Los **retiros del 10% por pandemia** fueron leyes excepcionales, que **ya no están vigentes**.
 Cualquier nuevo retiro requiere **una nueva ley aprobada por el Congreso y promulgada por el Presidente**.
 
 👉 Hasta hoy, **no hay retiros activos ni en trámite**.
@@ -87,5 +87,5 @@ Aplica a personas que:
 
 > *"No es justo que no puedas usar tu propia plata cuando más la necesitas. Pero hoy, eso es lo que permite la ley."*
 
-�� Este documento está en desarrollo.  
+�� Este documento está en desarrollo.
 ¿Pudiste acceder a un retiro bajo alguna excepción o fuiste mal informado por tu AFP? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

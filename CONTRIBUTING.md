@@ -1,6 +1,6 @@
 # 🤝 Cómo contribuir a LukaLibre
 
-Gracias por tu interés en aportar a LukaLibre.  
+Gracias por tu interés en aportar a LukaLibre.
 Este es un proyecto abierto y comunitario, pensado para personas reales que quieren entender y mejorar sus finanzas sin humo ni promesas falsas.
 
 Tu ayuda puede marcar la diferencia, ya sea mejorando el contenido, corrigiendo errores o desarrollando funcionalidades nuevas.

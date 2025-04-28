@@ -2,10 +2,11 @@
 
 from alembic import op
 
-revision = 'upd_prompt_tpls_rm_codeblock'
-down_revision = 'prompt_templates_seed'
+revision = "upd_prompt_tpls_rm_codeblock"
+down_revision = "prompt_templates_seed"
 branch_labels = None
 depends_on = None
+
 
 def upgrade():
     op.execute(
@@ -15,6 +16,7 @@ def upgrade():
         WHERE name = 'generate_sql_json';
         """
     )
+
 
 def downgrade():
     op.execute(

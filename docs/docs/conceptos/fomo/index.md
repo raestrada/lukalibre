@@ -8,11 +8,11 @@ has_children: true
 
 # 😰 FOMO financiero: cómo dejar de correr detrás del humo
 
-“Si no inviertes ahora, pierdes”  
-“Todos están ganando con esto menos tú”  
+“Si no inviertes ahora, pierdes”
+“Todos están ganando con esto menos tú”
 “Si hubieras comprado Bitcoin en 2012…”
 
-Todo eso tiene un nombre: **FOMO**  
+Todo eso tiene un nombre: **FOMO**
 *Fear Of Missing Out* — miedo a quedarse afuera.
 
 Y es uno de los **peores consejeros financieros**.
@@ -55,5 +55,5 @@ Porque la urgencia que te imponen... **no es tuya.**
 
 ---
 
-📌 ¿Superaste una decisión por presión social o aprendiste a desconfiar del hype?  
+📌 ¿Superaste una decisión por presión social o aprendiste a desconfiar del hype?
 Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre) y compártelo con otros.

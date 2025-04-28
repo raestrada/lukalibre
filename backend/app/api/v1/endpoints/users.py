@@ -38,7 +38,7 @@ def create_user(
     Create new user.
     """
     logger.debug("Solicitud de creación de usuario recibida")
-    
+
     user = crud.user.get_by_email(db, email=user_in.email)
     if user:
         logger.warning(f"Intento de crear usuario duplicado: {user_in.email}")
@@ -46,7 +46,7 @@ def create_user(
             status_code=400,
             detail="The user with this username already exists in the system.",
         )
-    
+
     user = crud.user.create(db, obj_in=user_in)
     logger.debug("Usuario creado exitosamente")
     return user
@@ -66,13 +66,15 @@ def read_user_me(
 @router.get("/plan")
 def get_user_plan(
     db: Session = Depends(deps.get_db),
-    current_user: models.User = Depends(deps.get_current_user)
+    current_user: models.User = Depends(deps.get_current_user),
 ):
     """
     Devuelve el plan activo y créditos del usuario autenticado.
     Si es desarrollador y tiene el plan activo, devuelve plan especial ilimitado.
     """
-    if getattr(current_user, "is_developer", False) and getattr(current_user, "dev_plan_active", False):
+    if getattr(current_user, "is_developer", False) and getattr(
+        current_user, "dev_plan_active", False
+    ):
         return {
             "id": None,
             "user_id": current_user.id,
@@ -83,9 +85,10 @@ def get_user_plan(
             "updated_at": None,
             "developer": True,
             "is_developer": True,
-            "dev_plan_active": True
+            "dev_plan_active": True,
         }
     from app.crud import crud_user_plan
+
     plan = crud_user_plan.get_active_plan(db, current_user.id)
     if not plan:
         return {
@@ -98,7 +101,7 @@ def get_user_plan(
             "updated_at": None,
             "developer": getattr(current_user, "is_developer", False),
             "is_developer": getattr(current_user, "is_developer", False),
-            "dev_plan_active": getattr(current_user, "dev_plan_active", False)
+            "dev_plan_active": getattr(current_user, "dev_plan_active", False),
         }
     return {
         "id": plan.id,
@@ -110,5 +113,5 @@ def get_user_plan(
         "updated_at": plan.updated_at,
         "developer": getattr(current_user, "is_developer", False),
         "is_developer": getattr(current_user, "is_developer", False),
-        "dev_plan_active": getattr(current_user, "dev_plan_active", False)
+        "dev_plan_active": getattr(current_user, "dev_plan_active", False),
     }

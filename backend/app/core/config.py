@@ -22,7 +22,7 @@ class Settings(BaseSettings):
         "http://localhost:3000",
         "http://localhost:8000",
         "http://localhost",
-        "http://localhost:5173"
+        "http://localhost:5173",
     ]
 
     @field_validator("BACKEND_CORS_ORIGINS", mode="before")
@@ -34,7 +34,7 @@ class Settings(BaseSettings):
         raise ValueError(v)
 
     PROJECT_NAME: str = "Luka Libre"
-    
+
     # Database
     POSTGRES_SERVER: str = "localhost"  # Docker service name
     POSTGRES_USER: str = "postgres"
@@ -46,27 +46,27 @@ class Settings(BaseSettings):
     def assemble_db_connection(cls, v: Optional[str], info) -> Any:
         if isinstance(v, str):
             return v
-        
+
         # Obtener valores del modelo a través del contexto de validación
         values = info.data
-        
+
         # Construir manualmente la URL de PostgreSQL
         return f"postgresql://{values.get('POSTGRES_USER')}:{values.get('POSTGRES_PASSWORD')}@{values.get('POSTGRES_SERVER')}/{values.get('POSTGRES_DB')}"
-    
+
     # First Superuser
     FIRST_SUPERUSER: EmailStr = "admin@lukalibre.org"
     FIRST_SUPERUSER_PASSWORD: str = "admin123"
-    
+
     # Logs
     LOG_LEVEL: str = "INFO"  # DEBUG, INFO, WARNING, ERROR, CRITICAL
-    
+
     # Debug mode
     DEBUG: bool = False
-    
+
     # JWT Configuration
     JWT_ALGORITHM: str = "HS256"
     REFRESH_TOKEN_EXPIRE_DAYS: int = 30
-    
+
     # Google OAuth
     GOOGLE_CLIENT_ID: str = ""
     GOOGLE_CLIENT_SECRET: str = ""
@@ -75,10 +75,7 @@ class Settings(BaseSettings):
     # Frontend URL
     CLIENT_FRONTEND_URL: str = "http://localhost:5173"
 
-    model_config = {
-        "case_sensitive": True,
-        "env_file": ".env"
-    }
+    model_config = {"case_sensitive": True, "env_file": ".env"}
 
 
 settings = Settings()

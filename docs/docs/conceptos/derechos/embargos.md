@@ -7,15 +7,15 @@ parent: Tus derechos
 
 # 🏚️ ¿Pueden embargarme? ¿Cómo funciona un embargo en Chile?
 
-La palabra "embargo" da miedo.  
-Y algunos cobradores la usan para **asustarte sin tener derecho legal a hacerlo**.  
+La palabra "embargo" da miedo.
+Y algunos cobradores la usan para **asustarte sin tener derecho legal a hacerlo**.
 Pero no todo lo que te dicen es verdad. Acá te explicamos **cómo funciona realmente un embargo**, qué pueden hacer… y qué no.
 
 ---
 
 ## 📌 ¿Qué es un embargo?
 
-Es una orden judicial que autoriza **retener o rematar tus bienes** para saldar una deuda.  
+Es una orden judicial que autoriza **retener o rematar tus bienes** para saldar una deuda.
 Solo puede ser dictada por un juez en un **juicio legal**, con notificación formal.
 
 👉 Si no hay juicio, **no hay embargo**.
@@ -70,15 +70,15 @@ Solo puede ser dictada por un juez en un **juicio legal**, con notificación for
 
 Si no ha llegado una orden judicial, y solo recibes llamadas o correos:
 
-✅ Junta evidencia  
-✅ Denuncia al **SERNAC** por cobranza abusiva  
+✅ Junta evidencia
+✅ Denuncia al **SERNAC** por cobranza abusiva
 ✅ Informa al cobrador que sabes que **no puede embargarte sin juicio**
 
 ---
 
 ## 💬 LukaEjemplo
 
-> "Me dijeron que estaban camino a mi casa a embargar. Me angustié horrible.  
+> "Me dijeron que estaban camino a mi casa a embargar. Me angustié horrible.
 > Pero no había juicio, ni papel, ni nada. Solo presión. Hice un reclamo en el SERNAC y dejaron de llamar."
 
 ---
@@ -87,5 +87,5 @@ Si no ha llegado una orden judicial, y solo recibes llamadas o correos:
 
 > *"Si no hay juez, no hay embargo. Si hay amenazas sin juicio, hay abuso."*
 
-📌 Este documento está en desarrollo.  
+📌 Este documento está en desarrollo.
 ¿Has recibido amenazas de embargo o pasaste por un proceso real? Compártelo en [GitHub](https://github.com/raestrada/lukalibre) para que otros sepan qué es verdad y qué no.

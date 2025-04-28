@@ -7,7 +7,7 @@ parent: Deuda
 
 # 🔄 ¿Renegociar, repactar o refinanciar? ¿Cuál me sirve?
 
-Cuando no puedes pagar una deuda, muchas veces te ofrecen opciones como "repactar" o "refinanciar".  
+Cuando no puedes pagar una deuda, muchas veces te ofrecen opciones como "repactar" o "refinanciar".
 Suena bien, pero si no sabes lo que estás aceptando, **podrías terminar pagando más, por más tiempo, y con más estrés**.
 
 Acá te explicamos qué significa cada una y en qué casos podría servirte.
@@ -72,8 +72,8 @@ Es cuando **pides un nuevo crédito para pagar el anterior** (a veces en otra in
 
 ## 💬 LukaEjemplo
 
-> Me ofrecieron repactar mi deuda de $400.000 en 24 cuotas de $30.000.  
-> Sonaba fácil… pero eso es **$720.000 en total**.  
+> Me ofrecieron repactar mi deuda de $400.000 en 24 cuotas de $30.000.
+> Sonaba fácil… pero eso es **$720.000 en total**.
 > Pregunté, rechacé, y logré renegociar con el mismo banco: 12 cuotas de $42.000 → mucho más justo.
 
 ---
@@ -82,5 +82,5 @@ Es cuando **pides un nuevo crédito para pagar el anterior** (a veces en otra in
 
 > *"Si no entiendes lo que estás firmando, probablemente no te conviene."*
 
-📌 Este documento está en desarrollo.  
+📌 Este documento está en desarrollo.
 ¿Has vivido una experiencia buena o mala con una repactación? Súmala al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

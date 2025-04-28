@@ -7,10 +7,10 @@ parent: AFP y APV
 
 # 🏦 ¿Qué es una AFP y cómo funciona?
 
-Una AFP (Administradora de Fondos de Pensiones) es una empresa privada que **administra tu ahorro previsional obligatorio**.  
+Una AFP (Administradora de Fondos de Pensiones) es una empresa privada que **administra tu ahorro previsional obligatorio**.
 Sí, esa plata que te descuentan todos los meses del sueldo y que no ves hasta que te jubilas.
 
-Muchos odian a las AFP. Otros las defienden.  
+Muchos odian a las AFP. Otros las defienden.
 Pero antes de tomar partido, lo importante es **entender cómo funcionan y qué hacen con tu plata**.
 
 ---
@@ -73,7 +73,7 @@ Se invierte en los llamados **Fondos A, B, C, D o E**, dependiendo del riesgo:
 
 ## 💬 LukaEjemplo
 
-> "Trabajo con boleta y nunca me preocupé de cotizar. Cuando empecé a revisar, tenía solo $400.000 acumulados después de 6 años.  
+> "Trabajo con boleta y nunca me preocupé de cotizar. Cuando empecé a revisar, tenía solo $400.000 acumulados después de 6 años.
 > Me cambié a una AFP con menos comisión y empecé a revisar mi fondo cada 6 meses."
 
 ---
@@ -82,5 +82,5 @@ Se invierte en los llamados **Fondos A, B, C, D o E**, dependiendo del riesgo:
 
 > *"No es tu culpa no entender las AFP. Pero si es tu futuro, vale la pena conocer cómo funciona el juego."*
 
-📌 Este documento está en desarrollo.  
+📌 Este documento está en desarrollo.
 ¿Tuviste un problema con tu AFP o lograste tomar mejores decisiones con tu fondo? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

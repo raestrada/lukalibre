@@ -7,11 +7,11 @@ parent: Estafas financieras
 
 # 🔺 Estafas piramidales y sistemas multinivel disfrazados
 
-"Solo necesitas invitar a 3 personas"  
-"Es una comunidad, no una empresa"  
-"Puedes ganar sin vender, solo por compartir la oportunidad"  
+"Solo necesitas invitar a 3 personas"
+"Es una comunidad, no una empresa"
+"Puedes ganar sin vender, solo por compartir la oportunidad"
 
-Si has escuchado eso… cuidado.  
+Si has escuchado eso… cuidado.
 Probablemente estás frente a una **pirámide financiera**, **una estafa en cadena**, o **un sistema multinivel disfrazado de negocio legal**.
 
 ---
@@ -24,14 +24,14 @@ Una pirámide es un sistema donde:
 2. Ganas solo si haces que **más personas entren después que tú**
 3. El dinero que recibes viene directamente de nuevos participantes
 
-No hay producto real ni inversión. Solo **flujo de plata entre personas**.  
+No hay producto real ni inversión. Solo **flujo de plata entre personas**.
 Y cuando dejan de entrar nuevos, **todo colapsa**.
 
 ---
 
 ## ⚠️ ¿Y qué es un sistema multinivel?
 
-Un esquema multinivel **legal** vende productos (ej: suplementos, cremas, tecnología).  
+Un esquema multinivel **legal** vende productos (ej: suplementos, cremas, tecnología).
 Pero si:
 
 - El foco está más en **reclutar gente** que en vender
@@ -70,15 +70,15 @@ Entonces puede ser una **pirámide disfrazada**.
 - Te hacen sentir parte de algo exclusivo
 - Pero cuando se corta la cadena, **los de abajo pierden todo**
 
-👉 En Chile, **estas estafas no están reguladas por la CMF ni por la Bolsa**.  
+👉 En Chile, **estas estafas no están reguladas por la CMF ni por la Bolsa**.
 Son ilegales si no hay producto o inversión real.
 
 ---
 
 ## 💬 LukaEjemplo
 
-> "Una amiga me invitó a una 'célula' donde ponías $100.000 y al llegar a la cima te daban $800.000.  
-> Todos juraban que funcionaba. A las 3 semanas, se cortó la cadena.  
+> "Una amiga me invitó a una 'célula' donde ponías $100.000 y al llegar a la cima te daban $800.000.
+> Todos juraban que funcionaba. A las 3 semanas, se cortó la cadena.
 > Nadie más entró. Yo perdí mi plata, y mi amiga también."
 
 ---
@@ -87,5 +87,5 @@ Son ilegales si no hay producto o inversión real.
 
 > *"Si ganas solo por meter más gente, y no por lo que vendes o haces… no es un negocio. Es una trampa en forma de pirámide."*
 
-📌 Este documento está en desarrollo.  
+📌 Este documento está en desarrollo.
 ¿Fuiste parte de un sistema así o lograste evitarlo a tiempo? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre) y comparte tu experiencia.

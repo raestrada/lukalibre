@@ -7,10 +7,10 @@ parent: Bancos
 
 # 🏦 ¿Conviene tener más de un banco?
 
-¿Te pagan el sueldo en un banco, pero usas otro para tus gastos?  
+¿Te pagan el sueldo en un banco, pero usas otro para tus gastos?
 ¿Te ofrecieron abrir una nueva cuenta "gratis" y no sabes si aceptarla?
 
-Tener más de un banco puede ser una estrategia útil…  
+Tener más de un banco puede ser una estrategia útil…
 o una complicación innecesaria si no sabes para qué lo haces.
 
 ---
@@ -67,8 +67,8 @@ o una complicación innecesaria si no sabes para qué lo haces.
 
 ## 💬 LukaEjemplo
 
-> "Antes tenía 4 cuentas y no sabía bien para qué.  
-> Cerré dos y ahora uso solo una para sueldo y otra para gastos.  
+> "Antes tenía 4 cuentas y no sabía bien para qué.
+> Cerré dos y ahora uso solo una para sueldo y otra para gastos.
 > Me ayudó a ordenarme y dejar de pagar comisiones tontas."
 
 ---
@@ -77,5 +77,5 @@ o una complicación innecesaria si no sabes para qué lo haces.
 
 > *"Más cuentas no significa más control. Solo funciona si cada cuenta tiene un propósito claro."*
 
-📌 Este documento está en desarrollo.  
+📌 Este documento está en desarrollo.
 ¿Tienes una estrategia con múltiples bancos o una historia de desorden que pudiste resolver? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

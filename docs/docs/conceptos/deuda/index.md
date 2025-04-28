@@ -8,8 +8,8 @@ has_children: true
 
 # 💣 Deuda: lo que nadie te explica hasta que ya estás metido
 
-Estar endeudado **no te hace flojo ni irresponsable**.  
-La deuda es parte del sistema, y a veces **la única forma de sobrevivir**. El problema no es deber plata.  
+Estar endeudado **no te hace flojo ni irresponsable**.
+La deuda es parte del sistema, y a veces **la única forma de sobrevivir**. El problema no es deber plata.
 El problema es **no entender cómo funciona**, a quién le debes, cuánto pagarás realmente… y qué hacer si no puedes más.
 
 Esta sección está pensada para ayudarte a **entender, ordenar y enfrentar tus deudas sin humo ni juicio**.

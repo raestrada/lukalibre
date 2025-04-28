@@ -97,6 +97,6 @@ Acá te explicamos cada una en chileno simple, con sus pros, contras y para qué
 
 > *"No todas las cuentas son malas ni buenas. Lo importante es que sepas para qué la necesitas y cuánto te cuesta usarla."*
 
-📌 Este documento está en desarrollo.  
-¿Te sirvió una cuenta digital para ordenar tus gastos? ¿Caíste en una trampa con una cuenta corriente?  
+📌 Este documento está en desarrollo.
+¿Te sirvió una cuenta digital para ordenar tus gastos? ¿Caíste en una trampa con una cuenta corriente?
 Cuéntanos en el [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

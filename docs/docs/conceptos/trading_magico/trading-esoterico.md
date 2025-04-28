@@ -7,8 +7,8 @@ parent: Trading Mágico
 
 # 🔮 Trading esotérico: cuando el horóscopo reemplaza al análisis financiero
 
-“Mercurio retrógrado afecta las velas japonesas”  
-“El oro sube cuando la Luna entra en Aries”  
+“Mercurio retrógrado afecta las velas japonesas”
+“El oro sube cuando la Luna entra en Aries”
 “Conecta con tu intuición: la energía del mercado te guía”
 
 Así suena el **trading esotérico**, una mezcla entre astrología, vibraciones cuánticas y mercados financieros, que busca **convencerte de que puedes predecir la bolsa leyendo los astros o alineando tu energía**.
@@ -35,7 +35,7 @@ Porque:
 - Te hace creer que **tus emociones o "vibras" determinan el resultado**
 - Reemplaza el análisis con intuición mal guiada
 - Promueve una **autoayuda disfrazada de inversión**
-- Te hace responsable espiritual de tus pérdidas:  
+- Te hace responsable espiritual de tus pérdidas:
   "no te alineaste bien con el mercado"
 
 ---
@@ -70,15 +70,15 @@ Porque:
 - Grupos VIP con predicciones planetarias
 - "Activaciones" para desbloquear tu abundancia
 
-Todo a precios de entre $30.000 y $150.000…  
+Todo a precios de entre $30.000 y $150.000…
 por promesas cósmicas sin evidencia ni responsabilidad.
 
 ---
 
 ## 💬 LukaEjemplo
 
-> "Vi una mentora que decía que la Luna en Escorpio anunciaba un alza en BTC.  
-> Compré y bajó. Después dijo que la energía estaba bloqueada por Neptuno.  
+> "Vi una mentora que decía que la Luna en Escorpio anunciaba un alza en BTC.
+> Compré y bajó. Después dijo que la energía estaba bloqueada por Neptuno.
 > Me di cuenta que cada vez que fallaba, cambiaba la explicación. Era como un horóscopo con gráficos."
 
 ---
@@ -87,5 +87,5 @@ por promesas cósmicas sin evidencia ni responsabilidad.
 
 > *"Si alguien mezcla mercado financiero con chakras o eclipses, no quiere ayudarte a invertir: quiere venderte fe con forma de curso."*
 
-📌 Este documento está en desarrollo.  
+📌 Este documento está en desarrollo.
 ¿Te ofrecieron señales astrológicas o te hablaron de "trading cuántico"? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre) y cuéntalo.

@@ -7,19 +7,19 @@ parent: Tus derechos
 
 # 📢 Cómo hacer un reclamo en el SERNAC (y por qué deberías)
 
-¿Te cobraron de más?  
-¿Te ofrecieron "cuotas sin interés" que sí tenían interés?  
-¿Te acosaron por una deuda?  
+¿Te cobraron de más?
+¿Te ofrecieron "cuotas sin interés" que sí tenían interés?
+¿Te acosaron por una deuda?
 ¿Te aplicaron una comisión que no entendiste?
 
-📣 Puedes hacer un reclamo formal.  
+📣 Puedes hacer un reclamo formal.
 Y no necesitas abogado, ni plata, ni moverte de tu casa.
 
 ---
 
 ## 🏛️ ¿Qué es el SERNAC?
 
-El **Servicio Nacional del Consumidor** es una institución pública que defiende tus derechos como cliente o consumidor.  
+El **Servicio Nacional del Consumidor** es una institución pública que defiende tus derechos como cliente o consumidor.
 Puedes reclamar contra bancos, retail, cajas, aseguradoras, servicios básicos y más.
 
 ---
@@ -72,7 +72,7 @@ Puedes adjuntar documentos o imágenes como respaldo.
 
 SERNAC **envía tu reclamo a la empresa**, que tiene un plazo legal para responder.
 
-Tú decides si aceptas la respuesta o no.  
+Tú decides si aceptas la respuesta o no.
 Si no quedas conforme, puedes **llevar el caso a mediación, arbitraje o incluso tribunales** (SERNAC te orienta).
 
 ---
@@ -87,8 +87,8 @@ Si no quedas conforme, puedes **llevar el caso a mediación, arbitraje o incluso
 
 ## 💬 LukaEjemplo
 
-> "Me cobraron una cuota extra en una repactación que no autoricé.  
-> Reclamo por SERNAC, adjunté el contrato original.  
+> "Me cobraron una cuota extra en una repactación que no autoricé.
+> Reclamo por SERNAC, adjunté el contrato original.
 > En 15 días la empresa respondió y **me devolvieron la plata."
 
 ---
@@ -97,5 +97,5 @@ Si no quedas conforme, puedes **llevar el caso a mediación, arbitraje o incluso
 
 > *"El SERNAC no es una bala mágica. Pero es una herramienta gratuita, legal y útil. Úsala."*
 
-📌 Este documento está en desarrollo.  
+📌 Este documento está en desarrollo.
 ¿Tienes una experiencia buena o mala reclamando por SERNAC? Súmala al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

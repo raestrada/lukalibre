@@ -8,7 +8,7 @@ has_children: true
 
 # 🧓 AFP, APV y ahorro previsional: lo que deberías saber (sin letra chica)
 
-En Chile, el sistema de pensiones es **complejo, impopular y lleno de dudas**.  
+En Chile, el sistema de pensiones es **complejo, impopular y lleno de dudas**.
 Si alguna vez te has preguntado:
 
 - “¿Qué es una AFP y qué hacen con mi plata?”
@@ -18,7 +18,7 @@ Si alguna vez te has preguntado:
 
 … entonces esta sección es para ti.
 
-No venimos a defender ni atacar el sistema.  
+No venimos a defender ni atacar el sistema.
 Venimos a explicártelo **para que puedas tomar decisiones con los ojos abiertos**.
 
 ---
@@ -42,7 +42,7 @@ Venimos a explicártelo **para que puedas tomar decisiones con los ojos abiertos
 - Sin promesas de hacerse rico
 - Sin lenguaje técnico enredado
 
-Solo respuestas claras a las preguntas que todos nos hacemos alguna vez.  
+Solo respuestas claras a las preguntas que todos nos hacemos alguna vez.
 Especialmente si ganas poco, cotizas irregularmente o estás pensando en tu futuro con miedo (y con razón).
 
 ---

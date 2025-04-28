@@ -7,7 +7,7 @@ parent: Finanzas Básicas
 
 # 🏦 ¿Crédito, deuda o préstamo? ¿Es lo mismo?
 
-No es lo mismo, aunque muchas veces se usan como si fueran sinónimos.  
+No es lo mismo, aunque muchas veces se usan como si fueran sinónimos.
 Entender la diferencia te ayuda a **tomar mejores decisiones y no firmar a ciegas**.
 
 ---
@@ -40,7 +40,7 @@ Ejemplos:
 
 ## 💣 Deuda
 
-La **deuda** es el resultado de haber usado un crédito o un préstamo.  
+La **deuda** es el resultado de haber usado un crédito o un préstamo.
 Es lo que debes, lo que estás obligado a pagar.
 
 Puedes tener deuda:
@@ -66,5 +66,5 @@ Una deuda **no siempre es mala**, pero **no tener claridad sobre tus deudas sí 
 
 > *"Tener deuda no te hace irresponsable. No entenderla, sí puede hacerte vulnerable."*
 
-📌 Este documento está en desarrollo.  
+📌 Este documento está en desarrollo.
 ¿Te gustaría compartir tu experiencia usando crédito o enfrentando una deuda? Contribuye en [GitHub](https://github.com/raestrada/lukalibre).

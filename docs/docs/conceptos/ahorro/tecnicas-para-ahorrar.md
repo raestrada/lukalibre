@@ -7,7 +7,7 @@ parent: Ahorro
 
 # 🛠️ Técnicas para ahorrar aunque ganes poco
 
-Ahorrar no es fácil. Y ahorrar con un sueldo bajo o ingresos variables puede parecer imposible.  
+Ahorrar no es fácil. Y ahorrar con un sueldo bajo o ingresos variables puede parecer imposible.
 Pero no se trata de guardar millones. Se trata de **crear el hábito, aunque sea con luca a luca**.
 
 Acá te dejamos técnicas probadas por personas reales, pensadas para sobrevivir y avanzar sin ansiedad financiera.
@@ -37,7 +37,7 @@ Funciona porque **ves la plata**. Cada categoría tiene su propio sobre:
 
 ## 3. ⏳ Método de las 24 horas
 
-Antes de comprar algo no esencial, espera 24 horas.  
+Antes de comprar algo no esencial, espera 24 horas.
 Si después de ese tiempo **aún lo necesitas y te alcanza**, cómpralo.
 
 🧠 Si no, guarda ese monto como ahorro.
@@ -46,7 +46,7 @@ Si después de ese tiempo **aún lo necesitas y te alcanza**, cómpralo.
 
 ## 4. 🔁 Ahorrar lo mismo que gastas en cosas repetitivas
 
-Cada vez que compres un café, transfieres lo mismo a tu cuenta de ahorro.  
+Cada vez que compres un café, transfieres lo mismo a tu cuenta de ahorro.
 ¿Gastaste $2.000 en algo chico? $2.000 para ti.
 
 📌 Funciona más como técnica de conciencia que de acumulación, pero **cambia el chip**.
@@ -71,7 +71,7 @@ Lo primero que haces cuando llega el sueldo: una transferencia programada a tu c
 
 ## 7. 📆 Ahorro diario simbólico
 
-Ahorrar $500 diarios puede parecer poco, pero en 30 días son $15.000.  
+Ahorrar $500 diarios puede parecer poco, pero en 30 días son $15.000.
 En un año, casi $180.000.
 
 💡 Puedes usar alcancía física, piggy bank digital o app (mientras sea gratis).
@@ -82,5 +82,5 @@ En un año, casi $180.000.
 
 > *“El mejor ahorro es el que no ves. El segundo mejor es el que haces aunque sea con $500.”*
 
-📌 Este documento está en desarrollo.  
+📌 Este documento está en desarrollo.
 ¿Tienes alguna técnica que te ha servido? Súmala al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

@@ -7,20 +7,20 @@ parent: Estafas financieras
 
 # 🆘 ¿Qué hacer si caí en una estafa? (Guía paso a paso)
 
-¿Diste tus datos?  
-¿Transferiste plata y después te bloquearon?  
+¿Diste tus datos?
+¿Transferiste plata y después te bloquearon?
 ¿Entraste a un link raro y ahora tienes miedo?
 
-Respira.  
-No estás solo/a.  
+Respira.
+No estás solo/a.
 Acá te explicamos **qué puedes hacer ahora mismo para protegerte, denunciar y tratar de recuperar lo que se pueda.**
 
 ---
 
 ## 🧠 Paso 1: No te culpes (de verdad)
 
-Las estafas están diseñadas para parecer confiables.  
-Apelan a tus emociones, urgencia, confianza o necesidad.  
+Las estafas están diseñadas para parecer confiables.
+Apelan a tus emociones, urgencia, confianza o necesidad.
 Le puede pasar a cualquiera, **incluso a personas con estudios o experiencia**.
 
 Lo importante ahora es **actuar rápido y sin vergüenza.**
@@ -67,15 +67,15 @@ Aunque no recuperes la plata, **es importante dejar constancia**:
 - **No sigas hablando con los estafadores**: no caigas en nuevas trampas
 - **No reenvíes la "oportunidad" a otros**: puedes involucrarte sin querer
 
-💬 Comparte la experiencia con personas de confianza.  
+💬 Comparte la experiencia con personas de confianza.
 Ayudarás a evitar que otros caigan.
 
 ---
 
 ## 💬 LukaEjemplo
 
-> "Caí en una estafa por Instagram. Mandé $80.000 a una cuenta para un supuesto curso.  
-> Me bloquearon. Llamé al banco, bloqueé mis tarjetas y denuncié en la PDI.  
+> "Caí en una estafa por Instagram. Mandé $80.000 a una cuenta para un supuesto curso.
+> Me bloquearon. Llamé al banco, bloqueé mis tarjetas y denuncié en la PDI.
 > No recuperé la plata, pero me ayudó a proteger mis datos y evitar algo peor."
 
 ---
@@ -84,5 +84,5 @@ Ayudarás a evitar que otros caigan.
 
 > *"Caer no te hace tonto. Callar sí ayuda a que sigan estafando."*
 
-📌 Este documento está en desarrollo.  
+📌 Este documento está en desarrollo.
 ¿Te pasó algo similar y aprendiste algo que podría ayudar a otros? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

@@ -63,6 +63,6 @@ Creemos que la educación financiera real debe estar al alcance de todos, sin po
 
 ---
 
-Para más información o para colaborar en el proyecto:  
-📅 Sitio web: [https://lukalibre.org](https://lukalibre.org)  
+Para más información o para colaborar en el proyecto:
+📅 Sitio web: [https://lukalibre.org](https://lukalibre.org)
 💼 Repositorio: [https://github.com/raestrada/lukalibre](https://github.com/raestrada/lukalibre)

@@ -7,11 +7,11 @@ parent: Estafas financieras
 
 # 🎣 Estafas con falsos retiros del 10% o bonos del Estado
 
-“Consulta si tienes un bono pendiente”  
-“Retira tu 10% hoy sin clave única”  
+“Consulta si tienes un bono pendiente”
+“Retira tu 10% hoy sin clave única”
 “Haz clic aquí para acceder a tu IFE laboral”
 
-Muchos han caído.  
+Muchos han caído.
 Estas estafas **se hacen pasar por el gobierno, las AFP o bancos**, usando sitios falsos, mensajes urgentes y trampas psicológicas.
 
 ---
@@ -66,8 +66,8 @@ Estas estafas **se hacen pasar por el gobierno, las AFP o bancos**, usando sitio
 
 ## 💬 LukaEjemplo
 
-> “Me llegó un SMS para retirar un bono del IFE.  
-> Entré al sitio y me pidió mi clave del banco. Como no era cliente, me pareció raro.  
+> “Me llegó un SMS para retirar un bono del IFE.
+> Entré al sitio y me pidió mi clave del banco. Como no era cliente, me pareció raro.
 > Después supe que a otros les robaron toda la plata. Me salvé por sospechar a tiempo.”
 
 ---
@@ -76,5 +76,5 @@ Estas estafas **se hacen pasar por el gobierno, las AFP o bancos**, usando sitio
 
 > *“El Estado nunca te va a pedir tu clave por WhatsApp. Y ningún bono se pierde por no hacer clic rápido.”*
 
-📌 Este documento está en desarrollo.  
+📌 Este documento está en desarrollo.
 ¿Te intentaron estafar con un bono o retiro falso? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre) para ayudar a otros a no caer.

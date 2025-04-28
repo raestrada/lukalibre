@@ -7,8 +7,8 @@ parent: Finanzas Básicas
 
 # 🧠 ¿Qué son las finanzas personales?
 
-Las finanzas personales son la forma en que administras tu plata en el día a día.  
-No se trata de ser inversionista, ni de comprar criptomonedas, ni de hacer trading.  
+Las finanzas personales son la forma en que administras tu plata en el día a día.
+No se trata de ser inversionista, ni de comprar criptomonedas, ni de hacer trading.
 Se trata de algo mucho más real: **poder llegar a fin de mes sin explotar**.
 
 ---
@@ -27,7 +27,7 @@ Las finanzas personales incluyen:
 
 ## 🧩 ¿Por qué importa?
 
-Porque si no te haces cargo tú, **el sistema lo hace por ti**:  
+Porque si no te haces cargo tú, **el sistema lo hace por ti**:
 Los bancos, el retail, los intereses, los contratos, las letras chicas.
 
 Entender tus finanzas personales te ayuda a:

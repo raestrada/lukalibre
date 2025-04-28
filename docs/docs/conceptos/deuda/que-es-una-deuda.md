@@ -60,5 +60,5 @@ Depende del tipo de deuda, pero podrías:
 
 > *"Deber plata no te hace menos persona. Pero no entender tu deuda te deja en desventaja."*
 
-📌 Este documento está en desarrollo.  
+📌 Este documento está en desarrollo.
 ¿Quieres compartir tu experiencia enfrentando una deuda? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

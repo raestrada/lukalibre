@@ -7,13 +7,13 @@ parent: Deuda
 
 # 🚫 No puedo pagar mis deudas: ¿qué hago?
 
-Estás al día hasta el cuello.  
-No te alcanza para cubrir lo básico.  
-Las deudas te persiguen, te llaman, te estresan.  
+Estás al día hasta el cuello.
+No te alcanza para cubrir lo básico.
+Las deudas te persiguen, te llaman, te estresan.
 Y lo único que sientes es culpa, miedo o vergüenza.
 
-📢 Paréntesis importante: **NO estás solo/a.**  
-En Chile, miles de personas viven exactamente esto.  
+📢 Paréntesis importante: **NO estás solo/a.**
+En Chile, miles de personas viven exactamente esto.
 Este documento está hecho para ti.
 
 ---
@@ -28,14 +28,14 @@ Si no puedes pagar todo, **prioriza lo que te permite vivir**:
 4. Transporte para trabajar
 5. Cuidados esenciales (niños, adultos mayores, etc.)
 
-👉 El resto (deudas, tarjetas, créditos) **puede esperar o renegociarse**.  
+👉 El resto (deudas, tarjetas, créditos) **puede esperar o renegociarse**.
 **No te mates por cumplirle al banco si no puedes darte una ducha caliente.**
 
 ---
 
 ## 🧠 Paso 1: Respira y deja de esconderte
 
-No contestar el teléfono, ignorar correos o tapar la realidad **solo empeora las cosas**.  
+No contestar el teléfono, ignorar correos o tapar la realidad **solo empeora las cosas**.
 No te estamos diciendo que pagues altiro. Te estamos diciendo: **tómale la medida al problema**.
 
 Haz una lista:
@@ -72,7 +72,7 @@ Lee antes este documento: [Renegociar, repactar o refinanciar](renegociar-vs-rep
 
 ## 🧠 Paso 4: Usa tu red si puedes (sin culpa)
 
-Si alguien de confianza puede ayudarte con lo básico mientras te ordenas (un almuerzo, techo, conversación), **pide ayuda con dignidad**.  
+Si alguien de confianza puede ayudarte con lo básico mientras te ordenas (un almuerzo, techo, conversación), **pide ayuda con dignidad**.
 Endeudarse por orgullo solo te atrapa más.
 
 ---
@@ -90,8 +90,8 @@ Endeudarse por orgullo solo te atrapa más.
 
 ## 💬 LukaEjemplo
 
-> "Pasé 3 meses sin poder pagar mi tarjeta. Me llamaban todo el día.  
-> Cuando llamé yo, negocié una cuota menor y logré congelar el interés por 6 meses.  
+> "Pasé 3 meses sin poder pagar mi tarjeta. Me llamaban todo el día.
+> Cuando llamé yo, negocié una cuota menor y logré congelar el interés por 6 meses.
 > Pero fue después de llorar una noche entera."
 
 ---
@@ -100,5 +100,5 @@ Endeudarse por orgullo solo te atrapa más.
 
 > *"Antes de salvar tu puntaje, sálvate a ti mismo."*
 
-📌 Este documento está en desarrollo.  
+📌 Este documento está en desarrollo.
 ¿Sobreviviste una etapa donde no podías pagar? Tu historia puede ser faro para otros. Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

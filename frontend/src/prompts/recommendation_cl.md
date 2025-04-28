@@ -21,7 +21,7 @@ Analiza los datos proporcionados y devuelve **ÚNICAMENTE un objeto JSON** con r
   "puntaje_salud_financiera": número entre 1 y 10,
   "categorias_analisis": [
     {
-      "nombre": "string - nombre de la categoría (ej: gastos, ahorros, deudas)", 
+      "nombre": "string - nombre de la categoría (ej: gastos, ahorros, deudas)",
       "evaluacion": "string - análisis sobre esta categoría",
       "sugerencias": "string - recomendaciones específicas"
     }
@@ -62,4 +62,3 @@ A continuación tienes un dump completo de la base de datos SQLite con todas las
 ```
 
 La estructura incluye todas las tablas (transactions, accounts, categories, goals, etc.) con sus registros completos.
-

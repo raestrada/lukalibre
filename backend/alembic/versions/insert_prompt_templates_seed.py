@@ -5,14 +5,16 @@ Revises: 227441b19fd3
 Create Date: 2025-04-24
 
 """
+
 from alembic import op
 import sqlalchemy as sa
 
 # revision identifiers, used by Alembic.
-revision = 'prompt_templates_seed'
-down_revision = '227441b19fd3'
+revision = "prompt_templates_seed"
+down_revision = "227441b19fd3"
 branch_labels = None
 depends_on = None
+
 
 def upgrade():
     op.execute(
@@ -38,5 +40,8 @@ def upgrade():
         """
     )
 
+
 def downgrade():
-    op.execute("DELETE FROM prompt_templates WHERE name IN ('identify_schema', 'generate_sql_json', 'recommendation_cl');")
+    op.execute(
+        "DELETE FROM prompt_templates WHERE name IN ('identify_schema', 'generate_sql_json', 'recommendation_cl');"
+    )

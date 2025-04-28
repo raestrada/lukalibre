@@ -7,11 +7,11 @@ parent: FOMO
 
 # 📱 Redes sociales y ansiedad financiera: el algoritmo quiere que te sientas mal
 
-Ves a alguien mostrando su nuevo auto.  
-Otro presume que duplicó su inversión en cripto.  
+Ves a alguien mostrando su nuevo auto.
+Otro presume que duplicó su inversión en cripto.
 Alguien más viaja mientras tú no puedes pagar el arriendo.
 
-Y aunque sepas que no todo es real, **igual te da ansiedad**.  
+Y aunque sepas que no todo es real, **igual te da ansiedad**.
 Eso tiene una explicación: **el algoritmo te está entrenando para sentir FOMO.**
 
 ---
@@ -24,7 +24,7 @@ Porque el contenido que más se comparte es:
 - Lo extremo: "gané $1.000.000 con mi celular"
 - Lo escaso: "solo 24 horas para entrar"
 
-Eso genera emoción, reacción, envidia, interés…  
+Eso genera emoción, reacción, envidia, interés…
 Y eso es **lo que las redes promueven para que te quedes más tiempo ahí**.
 
 ---
@@ -36,7 +36,7 @@ Y eso es **lo que las redes promueven para que te quedes más tiempo ahí**.
 - Vergüenza por no tener plata o vivir "igual de bien"
 - Sentirte fracasado aunque estés haciendo lo mejor que puedes
 
-👉 La mayoría no muestra sus deudas, frustraciones ni errores.  
+👉 La mayoría no muestra sus deudas, frustraciones ni errores.
 Solo el highlight de sus finanzas… o lo que quieren que creas.
 
 ---
@@ -63,9 +63,9 @@ Solo el highlight de sus finanzas… o lo que quieren que creas.
 
 ## 💬 LukaEjemplo
 
-> "Empecé a seguir a varios gurús financieros en Instagram.  
-> Al principio me motivaban, pero después me sentía mal por no estar haciendo nada.  
-> Terminaba viendo reels sobre cripto en vez de pagar mis cuentas.  
+> "Empecé a seguir a varios gurús financieros en Instagram.
+> Al principio me motivaban, pero después me sentía mal por no estar haciendo nada.
+> Terminaba viendo reels sobre cripto en vez de pagar mis cuentas.
 > Silencié esas cuentas y empecé a enfocarme en ordenar lo básico primero."
 
 ---
@@ -74,5 +74,5 @@ Solo el highlight de sus finanzas… o lo que quieren que creas.
 
 > *"Si una cuenta te genera ansiedad, no es educación financiera. Es presión disfrazada de éxito."*
 
-📌 Este documento está en desarrollo.  
+📌 Este documento está en desarrollo.
 ¿Tuviste que tomar distancia de redes para pensar con claridad sobre tu plata? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

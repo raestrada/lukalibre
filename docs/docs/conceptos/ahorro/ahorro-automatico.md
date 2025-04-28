@@ -7,7 +7,7 @@ parent: Ahorro
 
 # ⚙️ Ahorro automático: cómo hacerlo sin pensarlo (y sin sufrir)
 
-El ahorro automático es como poner tu plata en modo avión:  
+El ahorro automático es como poner tu plata en modo avión:
 **La mandas a otro lado antes de tentarte**, sin tener que pensarlo todos los meses.
 
 Y no es solo para gente con sueldos altos. Aunque sea con $2.000, **puede ayudarte a construir un hábito real**.
@@ -30,7 +30,7 @@ Es una forma de programar que una parte de tu plata **se transfiera sola a una c
 - Puedes hacerlo desde la app o sitio web
 - Idealmente el mismo día que te pagan
 
-💬 Ejemplo:  
+💬 Ejemplo:
 > "El 1 de cada mes, transfiere $5.000 desde mi cuenta corriente a mi cuenta de ahorro".
 
 ---
@@ -57,7 +57,7 @@ Algunas apps como Mach, Tenpo, Fintual, etc. permiten crear bolsillos con reglas
 
 ## 🧠 ¿Por qué funciona?
 
-Porque **te saca de la ecuación emocional**:  
+Porque **te saca de la ecuación emocional**:
 No tienes que pelear contigo mismo para decidir si ahorrar o no. Ya está decidido.
 
 Además:
@@ -69,7 +69,7 @@ Además:
 
 ## 💬 LukaEjemplo
 
-> Si ganas $450.000, podrías programar un ahorro automático de $3.000 al mes.  
+> Si ganas $450.000, podrías programar un ahorro automático de $3.000 al mes.
 > No parece mucho, pero en un año son $36.000. Y lo hiciste sin pensarlo.
 
 ---
@@ -78,5 +78,5 @@ Además:
 
 > *"Si tienes que decidir cada mes si ahorras... probablemente no vas a ahorrar. Que lo decida el sistema por ti."*
 
-📌 Este documento está en desarrollo.  
+📌 Este documento está en desarrollo.
 ¿Tienes una estrategia automática que te ha funcionado? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

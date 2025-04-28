@@ -11,9 +11,10 @@ from app.schemas.user import UserCreate
 setup_logging()
 logger = get_logger("app.scripts.create_superuser")
 
+
 def create_superuser(email: str, password: str, full_name: str):
     logger.debug("Intentando crear superusuario")
-    
+
     db = SessionLocal()
     try:
         # Verificar si el usuario ya existe
@@ -21,7 +22,7 @@ def create_superuser(email: str, password: str, full_name: str):
         if user:
             logger.error(f"[bold red]✗ El usuario con email {email} ya existe[/]")
             sys.exit(1)
-        
+
         # Crear el usuario superadmin
         user_in = UserCreate(
             email=email,
@@ -37,17 +38,21 @@ def create_superuser(email: str, password: str, full_name: str):
     finally:
         db.close()
 
+
 def main():
     logger.info("[bold cyan]====== CREACIÓN DE SUPERUSUARIO ======[/]")
-    
+
     parser = argparse.ArgumentParser(description="Crear un superusuario")
     parser.add_argument("--email", required=True, help="Email del superusuario")
     parser.add_argument("--password", required=True, help="Contraseña del superusuario")
-    parser.add_argument("--fullname", required=True, help="Nombre completo del superusuario")
-    
+    parser.add_argument(
+        "--fullname", required=True, help="Nombre completo del superusuario"
+    )
+
     args = parser.parse_args()
-    
+
     create_superuser(args.email, args.password, args.fullname)
 
+
 if __name__ == "__main__":
-    main() 
+    main()

@@ -8,7 +8,7 @@ has_children: true
 
 # 🏦 Bancos en Chile: cómo entenderlos (y usarlos sin que te pasen a llevar)
 
-Tener una cuenta en un banco es casi obligatorio hoy:  
+Tener una cuenta en un banco es casi obligatorio hoy:
 para recibir tu sueldo, hacer transferencias, pagar cuentas o recibir ayudas del Estado.
 
 Pero muchas veces nadie te explica:
@@ -43,5 +43,5 @@ En esta sección te damos **información clara para que tú mandes, no el banco*
 
 ---
 
-📌 ¿Tienes una mala experiencia con un banco o aprendiste algo que te ayudó a no caer?  
+📌 ¿Tienes una mala experiencia con un banco o aprendiste algo que te ayudó a no caer?
 Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre) y ayúdanos a compartirlo.

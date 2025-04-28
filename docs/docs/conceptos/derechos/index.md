@@ -8,8 +8,8 @@ has_children: true
 
 # ⚖️ Tus derechos como persona endeudada o usuaria del sistema financiero
 
-No importa si tienes una deuda, un reclamo, una cuenta en el banco o solo una tarjeta prepago.  
-**Tienes derechos**.  
+No importa si tienes una deuda, un reclamo, una cuenta en el banco o solo una tarjeta prepago.
+**Tienes derechos**.
 Y el problema es que muchas veces **nadie te los explica**.
 
 Esta sección es para que sepas qué puedes exigir, qué abusos no debes permitir y cómo defenderte con herramientas reales.

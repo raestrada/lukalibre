@@ -7,11 +7,11 @@ parent: Estafas financieras
 
 # 🔍 Cómo reconocer una estafa (antes de caer)
 
-Las estafas ya no se ven como antes.  
-No llegan solo por correo extraño o con faltas de ortografía.  
+Las estafas ya no se ven como antes.
+No llegan solo por correo extraño o con faltas de ortografía.
 Hoy parecen negocios legales, ayudas del Estado, oportunidades mágicas o incluso consejos de gente "real".
 
-Pero todas tienen algo en común:  
+Pero todas tienen algo en común:
 **quieren que actúes rápido, sin pensar demasiado**.
 
 Acá te damos un método directo para **detectar si algo huele a estafa**, antes de que sea tarde.
@@ -74,7 +74,7 @@ Acá te damos un método directo para **detectar si algo huele a estafa**, antes
 - “Trae 3 personas y ganas el doble”
 - “Subes de nivel si sumas más gente”
 
-🔺 Suena a comunidad, pero puede ser pirámide.  
+🔺 Suena a comunidad, pero puede ser pirámide.
 Pregúntate: **¿de dónde sale la plata que me están prometiendo?**
 
 ---
@@ -100,7 +100,7 @@ Pregúntate: **¿de dónde sale la plata que me están prometiendo?**
 
 ## 💬 LukaEjemplo
 
-> “Me ofrecieron un trabajo remoto con sueldo en dólares, pero tenía que pagar $30.000 para activar una cuenta.  
+> “Me ofrecieron un trabajo remoto con sueldo en dólares, pero tenía que pagar $30.000 para activar una cuenta.
 > Me apuraban por WhatsApp. Cuando busqué el nombre de la empresa en Google, aparecían 10 denuncias.”
 
 ---
@@ -109,5 +109,5 @@ Pregúntate: **¿de dónde sale la plata que me están prometiendo?**
 
 > *“Si algo te genera ansiedad, urgencia o demasiada emoción… detente. Las decisiones financieras se toman con la cabeza, no con miedo.”*
 
-📌 Este documento está en desarrollo.  
+📌 Este documento está en desarrollo.
 ¿Detectaste una estafa a tiempo o te ayudaron a evitarla? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre) y comparte tu experiencia.

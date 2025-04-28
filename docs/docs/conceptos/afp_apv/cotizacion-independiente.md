@@ -20,7 +20,7 @@ Acá te lo explicamos sin vueltas.
 
 ## 🧠 ¿Qué significa cotizar como independiente?
 
-Significa que, aunque no tengas un empleador formal, puedes (o debes) aportar al sistema previsional por tu cuenta.  
+Significa que, aunque no tengas un empleador formal, puedes (o debes) aportar al sistema previsional por tu cuenta.
 Esto incluye:
 
 - AFP (pensión)
@@ -90,8 +90,8 @@ Si trabajas informalmente, igual puedes cotizar por tu cuenta con:
 
 ## 💬 LukaEjemplo
 
-> "Soy diseñadora freelance. Por años no cotizaba.  
-> Ahora, en la Operación Renta, marco la opción para cotizar parcialmente, y me retienen un porcentaje para AFP y Fonasa.  
+> "Soy diseñadora freelance. Por años no cotizaba.
+> Ahora, en la Operación Renta, marco la opción para cotizar parcialmente, y me retienen un porcentaje para AFP y Fonasa.
 > Al menos sé que algo estoy construyendo para más adelante."
 
 ---
@@ -100,5 +100,5 @@ Si trabajas informalmente, igual puedes cotizar por tu cuenta con:
 
 > *"Si no tienes jefe, tú eres tu propio empleador. Y eso incluye preocuparte por tu pensión también."*
 
-📌 Este documento está en desarrollo.  
+📌 Este documento está en desarrollo.
 ¿Trabajas por tu cuenta y encontraste una forma realista de cotizar? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

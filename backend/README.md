@@ -76,4 +76,4 @@ Una vez que el servidor esté en ejecución, puedes acceder a:
 
 - Swagger UI: http://localhost:8000/docs
 - ReDoc: http://localhost:8000/redoc
-- OpenAPI JSON: http://localhost:8000/api/v1/openapi.json 
+- OpenAPI JSON: http://localhost:8000/api/v1/openapi.json

@@ -5,23 +5,26 @@ Revises: insert_prompt_templates_seed
 Create Date: 2025-04-27
 
 """
+
 from alembic import op
 import sqlalchemy as sa
 from datetime import datetime
 
 # revision identifiers, used by Alembic.
-revision = 'dashboard_html_report'
-down_revision = 'prompt_templates_seed'
+revision = "dashboard_html_report"
+down_revision = "prompt_templates_seed"
 branch_labels = None
 depends_on = None
 
+
 def upgrade():
-    op.execute("""
+    op.execute(
+        """
     INSERT INTO prompt_templates (name, template, description, created_at)
     VALUES (
         'dashboard_html_report_cl',
         $$
-Eres un asistente experto en finanzas personales y diseño web. 
+Eres un asistente experto en finanzas personales y diseño web.
 Vas a generar un reporte/resumen financiero en formato HTML, listo para ser inyectado en un dashboard de una aplicación web moderna para usuarios en Chile.
 
 Contexto de diseño:
@@ -58,10 +61,11 @@ $$,
         'Prompt para generación de reporte HTML de dashboard financiero personalizado para usuarios en Chile.',
         '{}'
     )
-    """.format(datetime.utcnow().isoformat())
+    """.format(
+            datetime.utcnow().isoformat()
+        )
     )
 
+
 def downgrade():
-    op.execute(
-        "DELETE FROM prompt_template WHERE name = 'dashboard_html_report_cl';"
-    )
+    op.execute("DELETE FROM prompt_template WHERE name = 'dashboard_html_report_cl';")

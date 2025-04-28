@@ -7,11 +7,11 @@ parent: FOMO
 
 # 🌐 FOMO en criptomonedas: tecnología real, hype peligroso
 
-“¿Y tú todavía no inviertes en cripto?”  
-“Yo partí con $10.000 y ahora tengo $300.000”  
+“¿Y tú todavía no inviertes en cripto?”
+“Yo partí con $10.000 y ahora tengo $300.000”
 “Esta es la próxima Bitcoin, ¡no te la pierdas!”
 
-Las criptomonedas son reales.  
+Las criptomonedas son reales.
 Pero el uso que se les da para **crear FOMO, ansiedad y presión** también lo es.
 
 En este documento no te diremos que cripto es estafa — te mostraremos cómo **el FOMO en este mundo puede hacerte perder más de lo que ganas.**
@@ -22,13 +22,13 @@ En este documento no te diremos que cripto es estafa — te mostraremos cómo **
 
 Porque combina:
 
-- Tecnología nueva que pocos entienden  
-- Casos extremos de éxito (que se viralizan)  
-- Términos complejos que te hacen sentir ignorante  
-- Promesas de independencia y libertad financiera  
+- Tecnología nueva que pocos entienden
+- Casos extremos de éxito (que se viralizan)
+- Términos complejos que te hacen sentir ignorante
+- Promesas de independencia y libertad financiera
 - Influencers y marketing agresivo que **te hacen sentir atrasado**
 
-Todo eso junto te lleva a pensar:  
+Todo eso junto te lleva a pensar:
 **“si no me meto ahora, me voy a arrepentir”**
 
 ---
@@ -62,7 +62,7 @@ Todo eso junto te lleva a pensar:
 - Alguien te apura para invertir
 - Sientes culpa o ansiedad por “no hacer nada”
 
-📌 Cripto puede ser legítimo.  
+📌 Cripto puede ser legítimo.
 **Pero si tu decisión nace desde el apuro o la presión, ya partiste perdiendo.**
 
 ---
@@ -79,9 +79,9 @@ Todo eso junto te lleva a pensar:
 
 ## 💬 LukaEjemplo
 
-> “Vi a un tipo en TikTok diciendo que duplicó su plata con una cripto nueva.  
-> Entré a la app, metí $50.000 y al día siguiente no podía retirar.  
-> Cuando pregunté en el grupo, todos me ignoraron.  
+> “Vi a un tipo en TikTok diciendo que duplicó su plata con una cripto nueva.
+> Entré a la app, metí $50.000 y al día siguiente no podía retirar.
+> Cuando pregunté en el grupo, todos me ignoraron.
 > Aprendí que no saber algo no es excusa para regalar mi plata.”
 
 ---
@@ -90,6 +90,6 @@ Todo eso junto te lleva a pensar:
 
 > *“La tecnología puede ser nueva. El FOMO, no. Si te están apurando, probablemente no es para ayudarte a ti.”*
 
-📌 Este documento está en desarrollo.  
-¿Tuviste una experiencia con cripto y FOMO? ¿Lograste evitar una mala decisión?  
+📌 Este documento está en desarrollo.
+¿Tuviste una experiencia con cripto y FOMO? ¿Lograste evitar una mala decisión?
 Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre) y compártelo.

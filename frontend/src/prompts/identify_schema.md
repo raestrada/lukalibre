@@ -17,4 +17,3 @@ Dado el siguiente contenido y la lista de esquemas, responde únicamente con **u
 
 ### IMPORTANTE
 Devuelve únicamente el nombre exacto de uno de los esquemas tal como aparece en la lista, **sin explicación ni texto adicional**.
-

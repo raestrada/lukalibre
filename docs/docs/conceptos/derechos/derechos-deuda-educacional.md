@@ -7,10 +7,10 @@ parent: Tus derechos
 
 # 🎓 Tus derechos si tienes deuda educacional (CAE, crédito solidario y más)
 
-Estudiaste (o intentaste).  
-Firmaste papeles que no entendiste.  
-Ahora debes millones.  
-Y nadie te explica qué puedes hacer.  
+Estudiaste (o intentaste).
+Firmaste papeles que no entendiste.
+Ahora debes millones.
+Y nadie te explica qué puedes hacer.
 Este documento es para ti.
 
 ---
@@ -93,8 +93,8 @@ Este documento es para ti.
 
 ## 💬 LukaEjemplo
 
-> “No terminé la carrera, pero seguían cobrándome el CAE.  
-> Pedí el calendario, mostré que no egresé, y logré suspender los pagos.  
+> “No terminé la carrera, pero seguían cobrándome el CAE.
+> Pedí el calendario, mostré que no egresé, y logré suspender los pagos.
 > Nadie me lo explicó. Lo supe por otra persona en la misma situación.”
 
 ---
@@ -103,5 +103,5 @@ Este documento es para ti.
 
 > *“Estudiar no debería dejarte endeudado de por vida. Infórmate, revisa, reclama. No estás solo.”*
 
-📌 Este documento está en desarrollo.  
+📌 Este documento está en desarrollo.
 ¿Tienes CAE, deuda educativa, o viviste un caso injusto en tu proceso de estudio? Súmate al [GitHub de LukaLibre](https://github.com/raestrada/lukalibre).

@@ -7,7 +7,7 @@ parent: Deuda
 
 # 🧮 ¿Cómo saber si estoy sobreendeudado?
 
-A veces no te das cuenta que estás sobreendeudado hasta que ya estás ahogado.  
+A veces no te das cuenta que estás sobreendeudado hasta que ya estás ahogado.
 Lo normaliza la costumbre, el "pago mínimo", las cuotas infinitas o el silencio.
 
 Este documento te da señales claras para saber si estás sobreendeudado, **y qué puedes empezar a hacer si lo estás**.
@@ -18,7 +18,7 @@ Este documento te da señales claras para saber si estás sobreendeudado, **y qu
 
 Estar sobreendeudado es cuando **tus deudas superan tu capacidad real de pago**.
 
-No importa si ganas poco o harto:  
+No importa si ganas poco o harto:
 Si las cuotas y pagos que tienes **te impiden vivir con lo básico, dormir tranquilo o avanzar**, estás sobreendeudado.
 
 ---
@@ -58,7 +58,7 @@ No es el fin. Pero necesitas:
 3. Dejar de pagar lo menos urgente (ej: tarjetas de retail) para asegurar lo básico (comida, luz, arriendo)
 4. Negociar o repactar con información (ver documentos siguientes)
 
-👉 El sobreendeudamiento no es solo financiero. También es **mental y emocional**.  
+👉 El sobreendeudamiento no es solo financiero. También es **mental y emocional**.
 Por eso en LukaLibre no te vamos a juzgar: **vamos a ayudarte a tomar el control**.
 
 ---
@@ -67,5 +67,5 @@ Por eso en LukaLibre no te vamos a juzgar: **vamos a ayudarte a tomar el control
 
 > *"Sobreendeudarse no pasa de un día para otro. Pero salir tampoco. La clave es enfrentar, no esconder."*
 
-📌 Este documento está en desarrollo.  
+📌 Este documento está en desarrollo.
 ¿Pasaste por una etapa de sobreendeudamiento y lograste salir o sobrevivir? Comparte tu experiencia en [GitHub](https://github.com/raestrada/lukalibre).

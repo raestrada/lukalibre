@@ -201,6 +201,5 @@ CREATE TABLE metadata (
 
 ---
 
-## Repositorio: https://github.com/raestrada/lukalibre  
+## Repositorio: https://github.com/raestrada/lukalibre
 ## Sitio Web: https://lukalibre.org
-

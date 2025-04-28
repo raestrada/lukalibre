@@ -44,25 +44,27 @@ def get_current_user(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="No se pudieron validar las credenciales",
         )
-    
+
     logger.debug(f"Buscando usuario con ID: {token_data.sub}")
     user = crud.user.get(db, id=token_data.sub)
     if not user:
         logger.warning(f"Usuario con ID {token_data.sub} no encontrado")
         raise HTTPException(status_code=404, detail="Usuario no encontrado")
-    
+
     logger.debug(f"Usuario autenticado: {user.email}")
     return user
+
 
 from fastapi import Request
 
 from fastapi import Header, Request
 
+
 def get_current_user_bypass(
     x_debug_bypass: str = Header(None),
     db: Session = Depends(get_db),
     token: str = Depends(reusable_oauth2),
-    request: Request = None
+    request: Request = None,
 ) -> models.User:
     # Permitir bypass solo si:
     # - DEBUG está activo
@@ -72,14 +74,27 @@ def get_current_user_bypass(
         client_host = request.client.host
         backend_hosts = [
             getattr(settings, "SERVER_HOST", "http://localhost:8000"),
-            getattr(settings, "SERVER_NAME", "localhost")
+            getattr(settings, "SERVER_NAME", "localhost"),
         ]
         # Considerar solo el host sin protocolo ni puerto
-        backend_is_local = any(h.replace("http://", "").replace("https://", "").split(":")[0] in ("127.0.0.1", "localhost") for h in backend_hosts)
+        backend_is_local = any(
+            h.replace("http://", "").replace("https://", "").split(":")[0]
+            in ("127.0.0.1", "localhost")
+            for h in backend_hosts
+        )
         if client_host in ("127.0.0.1", "::1", "localhost") and backend_is_local:
             from app.models.user import User
-            return User(id=0, full_name="Debug User", email="debug@local", hashed_password="", is_active=True, is_superuser=True)
+
+            return User(
+                id=0,
+                full_name="Debug User",
+                email="debug@local",
+                hashed_password="",
+                is_active=True,
+                is_superuser=True,
+            )
     return get_current_user(db=db, token=token)
+
 
 def get_current_active_user(
     current_user: models.User = Depends(get_current_user),
@@ -95,9 +110,11 @@ def get_current_active_superuser(
     current_user: models.User = Depends(get_current_user),
 ) -> models.User:
     if not crud.user.is_superuser(current_user):
-        logger.warning(f"Usuario sin privilegios intentando acceso: {current_user.email}")
+        logger.warning(
+            f"Usuario sin privilegios intentando acceso: {current_user.email}"
+        )
         raise HTTPException(
             status_code=400, detail="The user doesn't have enough privileges"
         )
     logger.debug(f"Superusuario verificado: {current_user.email}")
-    return current_user 
+    return current_user

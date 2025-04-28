@@ -43,7 +43,7 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
             del update_data["password"]
             update_data["hashed_password"] = hashed_password
             logger.debug("Contraseña actualizada")
-        
+
         updated_user = super().update(db, db_obj=db_obj, obj_in=update_data)
         logger.debug(f"Usuario {updated_user.email} actualizado correctamente")
         return updated_user
@@ -67,4 +67,4 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
         return user.is_superuser
 
 
-user = CRUDUser(User) 
+user = CRUDUser(User)

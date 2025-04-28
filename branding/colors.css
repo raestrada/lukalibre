@@ -5,20 +5,19 @@
     --amarillo-caleta: #FFC857;
     --blanco-panraza: #F9F9F9;
   }
-  
+
   /* Ejemplo de uso */
   body {
     background-color: var(--blanco-panraza);
     color: var(--negro-callado);
   }
-  
+
   .button-primary {
     background-color: var(--verde-luka);
     color: var(--blanco-panraza);
   }
-  
+
   .button-cta {
     background-color: var(--amarillo-caleta);
     color: var(--negro-callado);
   }
-  
