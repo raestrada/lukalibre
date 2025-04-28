@@ -8,7 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.app.json && tsc -p tsconfig.node.json",
-    "prepare": "husky install",
+    "prepare": "if [ \"$CI\" != \"true\" ]; then husky install; fi",
     "format-all": "prettier --write \"src/**/*.{js,ts,svelte}\" && eslint --fix \"src/**/*.{js,ts,svelte}\" && stylelint --fix \"src/**/*.{css,scss,less,styl}\""
   },
   "lint-staged": {
