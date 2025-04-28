@@ -26,7 +26,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.12'
           cache: 'pip'
           
       - name: Install Poetry
@@ -39,18 +39,14 @@ jobs:
       - name: Install dependencies
         run: poetry install --no-interaction
         
-      - name: Run pre-commit checks
-        uses: pre-commit/action@v3.0.1
+      - name: Run Black
+        run: poetry run black --check .
+      
+      - name: Run Flake8
+        run: poetry run flake8 .
+
+      - name: Run Bandit
+        run: poetry run bandit -r app/ -c pyproject.toml
         
       - name: Run tests
         run: poetry run pytest tests/ --cov=app --cov-report=xml
-        
-      - name: Run Semgrep
-        uses: returntocorp/semgrep-action@v1
-        with:
-          config: >-
-            p/python
-            p/owasp-top-ten
-            p/security-audit
-          publishToken: ${{ secrets.SEMGREP_APP_TOKEN || '' }}
-          publishDeployment: ${{ secrets.SEMGREP_DEPLOYMENT_ID || '' }}

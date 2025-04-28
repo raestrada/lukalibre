@@ -2,6 +2,18 @@
   <img src="https://lukalibre.org/assets/images/lukalibre.png" alt="LukaLibre logo" width="160"/>
 </p>
 
+<p align="center">
+  <a href="https://github.com/raestrada/lukalibre/actions/workflows/frontend-ci.yml">
+    <img src="https://github.com/raestrada/lukalibre/actions/workflows/frontend-ci.yml/badge.svg" alt="Frontend CI">
+  </a>
+  <a href="https://github.com/raestrada/lukalibre/actions/workflows/backend-ci.yml">
+    <img src="https://github.com/raestrada/lukalibre/actions/workflows/backend-ci.yml/badge.svg" alt="Backend CI">
+  </a>
+  <a href="https://github.com/raestrada/lukalibre/actions/workflows/semgrep.yml">
+    <img src="https://github.com/raestrada/lukalibre/actions/workflows/semgrep.yml/badge.svg" alt="Semgrep Analysis">
+  </a>
+</p>
+
 # 💸 LukaLibre
 
 **LukaLibre** es una plataforma abierta que busca ayudar a las personas en Chile a **mejorar su situación financiera de forma realista y sin humo**.
