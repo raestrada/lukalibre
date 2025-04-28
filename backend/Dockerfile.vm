@@ -32,8 +32,11 @@ USER root
 RUN pip install poetry==1.7.1 && \
     poetry config virtualenvs.create false
 
-# Copiar archivos de dependencias
-COPY pyproject.toml poetry.lock ./
+# Copiar archivo de dependencias
+COPY pyproject.toml ./
+
+# Crear lock file si no existe
+RUN if [ ! -f poetry.lock ]; then poetry lock; fi
 
 # Instalar dependencias de Python
 RUN poetry install --no-interaction --no-ansi --no-dev
