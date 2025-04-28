@@ -1,8 +1,10 @@
 terraform {
-  backend "gcs" {
-    # Este bucket debe ser creado previamente
-    # bucket = "lukalibre-terraform-state"
-    # prefix = "terraform/state"
+  cloud {
+    organization = "lukalibre"
+
+    workspaces {
+      name = "backend"
+    }
   }
   
   required_providers {

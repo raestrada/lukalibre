@@ -1,0 +1,53 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Instalar dependencias del sistema y PostgreSQL
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    postgresql-15 \
+    postgresql-contrib-15 \
+    supervisor \
+    curl \
+    netcat-traditional \
+    gnupg \
+    lsb-release && \
+    rm -rf /var/lib/apt/lists/*
+    
+# Instalar cloudflared para el túnel de Cloudflare
+RUN curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb -o cloudflared.deb && \
+    dpkg -i cloudflared.deb && \
+    rm cloudflared.deb
+
+# Configurar PostgreSQL
+USER postgres
+RUN /etc/init.d/postgresql start && \
+    psql --command "CREATE USER lukalibre_app WITH SUPERUSER PASSWORD 'lukalibre_password';" && \
+    createdb -O lukalibre_app lukalibre && \
+    /etc/init.d/postgresql stop
+
+USER root
+
+# Instalar Poetry
+RUN pip install poetry==1.7.1 && \
+    poetry config virtualenvs.create false
+
+# Copiar archivos de dependencias
+COPY pyproject.toml poetry.lock ./
+
+# Instalar dependencias de Python
+RUN poetry install --no-interaction --no-ansi --no-dev
+
+# Copiar el resto de la aplicación
+COPY . .
+
+# Script de inicio para configurar la base de datos con variables de entorno
+COPY scripts/start-services.sh /start-services.sh
+RUN chmod +x /start-services.sh
+
+# Configuración del supervisor para manejar múltiples procesos
+COPY scripts/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+EXPOSE 8000 5432
+
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]

@@ -54,24 +54,24 @@ jobs:
         with:
           terraform_version: 1.7.0
 
-      - name: Create Terraform state bucket if not exists
+      - name: Setup Terraform Cloud Configuration
         run: |
-          BUCKET_NAME="${{ secrets.GCP_PROJECT_ID }}-terraform-state"
-          if ! gsutil ls gs://$BUCKET_NAME &>/dev/null; then
-            echo "Creating terraform state bucket: $BUCKET_NAME"
-            gsutil mb -l ${{ secrets.GCP_REGION }} gs://$BUCKET_NAME
-            gsutil versioning set on gs://$BUCKET_NAME
-          else
-            echo "Terraform state bucket already exists"
-          fi
-      
+          cat > ~/.terraformrc <<EOF
+          credentials "app.terraform.io" {
+            token = "${{ secrets.TERRAFORM_TOKEN }}"
+          }
+          EOF
+
       - name: Setup Terraform backend
         run: |
           cat > terraform/backend.tf <<EOF
           terraform {
-            backend "gcs" {
-              bucket = "${{ secrets.GCP_PROJECT_ID }}-terraform-state"
-              prefix = "terraform/state"
+            cloud {
+              organization = "lukalibre"
+              
+              workspaces {
+                name = "backend"
+              }
             }
             
             required_providers {

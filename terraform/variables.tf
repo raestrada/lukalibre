@@ -21,3 +21,22 @@ variable "db_password" {
   default     = ""
   sensitive   = true
 }
+
+variable "cloudflare_tunnel_token" {
+  description = "Token para el túnel de Cloudflare (opcional)"
+  type        = string
+  default     = ""
+  sensitive   = true
+}
+
+variable "tunnel_id" {
+  description = "ID del túnel de Cloudflare (opcional)"
+  type        = string
+  default     = ""
+}
+
+variable "api_domain" {
+  description = "Dominio para la API (ej: api.lukalibre.org)"
+  type        = string
+  default     = ""
+}

@@ -24,12 +24,22 @@ if [ ! -f .secrets ]; then
   echo -e "API_DOMAIN=api.lukalibre.org"
   echo -e "GCP_SA_KEY=<base64-encoded-service-account-key>"
   echo -e "DB_PASSWORD=tu-contraseña-db"
+  echo -e "TERRAFORM_TOKEN=<token-de-terraform-cloud>"
+  echo -e "TUNNEL_ID=tu-id-de-tunnel"
   exit 1
 fi
 
-# Carga el archivo .secrets como variables de entorno
-echo -e "${YELLOW}Cargando variables de entorno desde .secrets...${NC}"
-export $(grep -v '^#' .secrets | xargs)
+# Carga variables desde .secrets
+echo "Cargando variables de entorno desde .secrets..."
+source .secrets
+export GCP_PROJECT_ID
+export GCP_REGION
+export CLOUDFLARE_TUNNEL_TOKEN
+export API_DOMAIN
+export GCP_SA_KEY
+export DB_PASSWORD
+export TERRAFORM_TOKEN
+export TUNNEL_ID
 
 # Verificaciones básicas de herramientas
 echo -e "${YELLOW}Verificando herramientas instaladas...${NC}"
@@ -50,14 +60,14 @@ if [ ${#MISSING_TOOLS[@]} -ne 0 ]; then
   exit 1
 fi
 
-# Menú para seleccionar acción
-echo -e "${YELLOW}Selecciona qué parte del pipeline quieres ejecutar:${NC}"
-echo -e "1) Ejecutar todo el pipeline"
-echo -e "2) Solo Terraform (infraestructura)"
-echo -e "3) Solo Docker Build (backend)"
-echo -e "4) Solo Deployment (Cloud Run)"
-echo -e "5) Crear/configurar Cloudflare Tunnel"
-echo -e "q) Salir"
+# Menú de opciones
+echo "Selecciona qué parte del pipeline quieres ejecutar:"
+echo "1) Ejecutar todo el pipeline"
+echo "2) Solo Terraform (infraestructura)"
+echo "3) Solo Docker Build (backend)"
+echo "4) Construir imagen VM all-in-one (Docker + PostgreSQL + API)"
+echo "5) Crear/configurar Cloudflare Tunnel"
+echo "q) Salir"
 
 read -p "Opción: " option
 
@@ -95,22 +105,32 @@ run_terraform() {
   echo -e "${GREEN}Ejecutando Terraform para infraestructura...${NC}"
   echo -e "${BLUE}==============================================${NC}"
   
-  # Crear bucket de estado si no existe
-  BUCKET_NAME="${GCP_PROJECT_ID}-terraform-state"
-  if gcloud storage buckets describe gs://$BUCKET_NAME &>/dev/null; then
-    echo "El bucket de estado Terraform ya existe: $BUCKET_NAME"
-  else
-    echo "Creando bucket para estado de Terraform: $BUCKET_NAME"
-    gcloud storage buckets create gs://$BUCKET_NAME --location=$GCP_REGION
-    gsutil versioning set on gs://$BUCKET_NAME
+  # Verificar que tenemos el token de Terraform Cloud
+  if [ -z "$TERRAFORM_TOKEN" ]; then
+    echo -e "${RED}Error: No se encontró el token de Terraform Cloud en .secrets${NC}"
+    echo "Agrega la variable TERRAFORM_TOKEN en el archivo .secrets"
+    return 1
   fi
   
-  # Configura el backend
-  cat > terraform/backend.tf <<EOF
+  # Configurar Terraform CLI con el token
+  echo -e "${YELLOW}Configurando credenciales para Terraform Cloud...${NC}"
+  cat > ~/.terraformrc <<EOF
+credentials "app.terraform.io" {
+  token = "$TERRAFORM_TOKEN"
+}
+EOF
+  
+  # Verificar que el backend.tf ya está configurado para Terraform Cloud
+  if ! grep -q "cloud {" terraform/backend.tf; then
+    echo -e "${YELLOW}Configurando backend para Terraform Cloud...${NC}"
+    cat > terraform/backend.tf <<EOF
 terraform {
-  backend "gcs" {
-    bucket = "${GCP_PROJECT_ID}-terraform-state"
-    prefix = "terraform/state"
+  cloud {
+    organization = "lukalibre"
+
+    workspaces {
+      name = "backend"
+    }
   }
   
   required_providers {
@@ -125,6 +145,7 @@ terraform {
   }
 }
 EOF
+  fi
 
   cd terraform
   echo "Inicializando Terraform..."
@@ -132,10 +153,13 @@ EOF
   
   echo "Ejecutando Terraform plan..."
   terraform plan -var="project_id=$GCP_PROJECT_ID" \
-                -var="region=$GCP_REGION" \
-                -var="environment=$VERSION" \
-                -var="db_password=$DB_PASSWORD" \
-                -out=tfplan
+               -var="region=$GCP_REGION" \
+               -var="environment=$VERSION" \
+               -var="db_password=$DB_PASSWORD" \
+               -var="cloudflare_tunnel_token=$CLOUDFLARE_TUNNEL_TOKEN" \
+               -var="tunnel_id=$TUNNEL_ID" \
+               -var="api_domain=$API_DOMAIN" \
+               -out=tfplan
   
   read -p "¿Quieres aplicar estos cambios? (s/n): " confirm
   if [[ $confirm == "s" || $confirm == "S" ]]; then
@@ -178,42 +202,40 @@ build_docker() {
   fi
 }
 
-# Función para desplegar en Cloud Run
-deploy_cloud_run() {
+# Función para construir la imagen all-in-one
+build_vm_image() {
   echo -e "${BLUE}==============================================${NC}"
-  echo -e "${GREEN}Desplegando en Cloud Run...${NC}"
+  echo -e "${GREEN}Construyendo imagen VM all-in-one...${NC}"
   echo -e "${BLUE}==============================================${NC}"
   
-  # Verifica que tengamos todas las variables necesarias
-  if [ -z "$DB_CONNECTION_STRING" ] || [ -z "$DB_HOST" ] || [ -z "$DB_NAME" ] || [ -z "$DB_USERNAME" ] || [ -z "$DB_PASSWORD" ]; then
-    echo -e "${YELLOW}Advertencia: No se encontraron variables de base de datos.${NC}"
-    echo -e "${YELLOW}Si ejecutaste Terraform primero, esto no debería ocurrir.${NC}"
-    
-    # Si no tenemos las variables, preguntamos si quiere continuar
-    read -p "¿Quieres continuar de todas formas? (s/n): " confirm
-    if [[ $confirm != "s" && $confirm != "S" ]]; then
-      echo "Omitiendo despliegue en Cloud Run"
-      return
-    fi
+  # Verificar que exista el Dockerfile.vm
+  if [ ! -f ./backend/Dockerfile.vm ]; then
+    echo -e "${RED}Error: No se encontró el archivo Dockerfile.vm${NC}"
+    return 1
   fi
   
-  echo "Desplegando en Cloud Run..."
-  gcloud run deploy lukalibre-backend \
-    --image gcr.io/$GCP_PROJECT_ID/lukalibre-backend:$VERSION \
-    --platform managed \
-    --region $GCP_REGION \
-    --no-allow-unauthenticated \
-    --set-env-vars="DATABASE_URL=$DB_CONNECTION_STRING,\
-                  DB_HOST=$DB_HOST,\
-                  DB_NAME=$DB_NAME,\
-                  DB_USER=$DB_USERNAME,\
-                  DB_PASS=$DB_PASSWORD,\
-                  CLOUDFLARE_TUNNEL_TOKEN=$CLOUDFLARE_TUNNEL_TOKEN,\
-                  API_DOMAIN=$API_DOMAIN"
+  echo "Construyendo imagen Docker all-in-one..."
+  docker build -t lukalibre-all-in-one:$VERSION -f ./backend/Dockerfile.vm ./backend
   
-  echo -e "${GREEN}Servicio desplegado en Cloud Run${NC}"
-  SERVICE_URL=$(gcloud run services describe lukalibre-backend --region $GCP_REGION --format="value(status.url)")
-  echo -e "${GREEN}URL del servicio: $SERVICE_URL${NC}"
+  echo -e "${GREEN}Imagen construida correctamente: lukalibre-all-in-one:$VERSION${NC}"
+  echo -e "${YELLOW}Esta imagen contiene PostgreSQL, la API y cloudflared en un solo contenedor${NC}"
+  echo -e "${YELLOW}Usa la infraestructura de Terraform para desplegarla en una VM e2-micro${NC}"
+  
+  # Opcionalmente, podemos subir la imagen a GCR
+  read -p "¿Quieres subir la imagen a Container Registry? (s/n): " confirm
+  if [[ $confirm == "s" || $confirm == "S" ]]; then
+    echo "Configurando Docker para GCR..."
+    gcloud auth configure-docker gcr.io --quiet
+    
+    echo "Etiquetando imagen para GCR..."
+    docker tag lukalibre-all-in-one:$VERSION gcr.io/$GCP_PROJECT_ID/lukalibre-all-in-one:$VERSION
+    
+    echo "Subiendo imagen a GCR..."
+    docker push gcr.io/$GCP_PROJECT_ID/lukalibre-all-in-one:$VERSION
+    echo -e "${GREEN}Imagen subida correctamente: gcr.io/$GCP_PROJECT_ID/lukalibre-all-in-one:$VERSION${NC}"
+  else
+    echo "Omitiendo push de la imagen"
+  fi
 }
 
 # Función para configurar Cloudflare Tunnel
@@ -222,74 +244,136 @@ setup_cloudflare_tunnel() {
   echo -e "${GREEN}Configurando Cloudflare Tunnel...${NC}"
   echo -e "${BLUE}==============================================${NC}"
   
-  # Verifica si cloudflared está instalado
+  # Verificar si tenemos cloudflared instalado
   if ! command -v cloudflared &> /dev/null; then
-    echo -e "${RED}Error: cloudflared no está instalado${NC}"
-    echo "Instala cloudflared primero: https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/installation/"
-    return
+    echo -e "${YELLOW}Instalando cloudflared...${NC}"
+    curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb -o cloudflared.deb
+    sudo dpkg -i cloudflared.deb
+    rm cloudflared.deb
   fi
   
-  # Pregunta por el nombre del túnel
-  read -p "Nombre del túnel (default: lukalibre-api): " TUNNEL_NAME
-  TUNNEL_NAME=${TUNNEL_NAME:-lukalibre-api}
+  echo "Versión de cloudflared:"
+  cloudflared version
   
-  # Pregunta por el dominio
-  read -p "Dominio a conectar (default: api.lukalibre.org): " DOMAIN
-  DOMAIN=${DOMAIN:-api.lukalibre.org}
-  
-  # Pregunta por el archivo de certificado
-  read -p "Ruta al archivo de certificado Cloudflare (default: ./cert.pem): " CERT_FILE
-  CERT_FILE=${CERT_FILE:-./cert.pem}
-  
-  if [ ! -f "$CERT_FILE" ]; then
-    echo -e "${YELLOW}No se encontró el archivo de certificado. Ejecutando login...${NC}"
-    cloudflared tunnel login
-    CERT_FILE=~/.cloudflared/cert.pem
-  fi
-  
-  # Crea el túnel
-  echo "Creando túnel $TUNNEL_NAME..."
-  TUNNEL_ID=$(cloudflared tunnel create $TUNNEL_NAME --credentials-file $CERT_FILE)
-  TUNNEL_ID=$(echo $TUNNEL_ID | grep -oP 'Created tunnel \K[a-z0-9-]+')
-  
+  # Verificar si tenemos el ID del túnel en las variables de entorno
   if [ -z "$TUNNEL_ID" ]; then
-    echo -e "${RED}Error: No se pudo crear el túnel.${NC}"
-    return
+    echo -e "${YELLOW}No se encontró el ID del túnel en las variables de entorno.${NC}"
+    echo -e "${YELLOW}Agrega la variable TUNNEL_ID a tu archivo .secrets${NC}"
+    
+    # Preguntar si quiere crear un nuevo túnel
+    read -p "¿Quieres crear un nuevo túnel? (s/n): " create_tunnel
+    if [[ $create_tunnel != "s" && $create_tunnel != "S" ]]; then
+      echo "Cancelando configuración del túnel."
+      return
+    fi
+    
+    # Pregunta por el nombre del túnel
+    read -p "Nombre del túnel (default: lukalibre-api): " TUNNEL_NAME
+    TUNNEL_NAME=${TUNNEL_NAME:-lukalibre-api}
+    
+    # Pregunta por el archivo de certificado
+    read -p "Ruta al archivo de certificado Cloudflare (default: ./cert.pem): " CERT_FILE
+    CERT_FILE=${CERT_FILE:-./cert.pem}
+    
+    if [ ! -f "$CERT_FILE" ]; then
+      echo -e "${YELLOW}No se encontró el archivo de certificado. Ejecutando login...${NC}"
+      cloudflared tunnel login
+      CERT_FILE=~/.cloudflared/cert.pem
+    fi
+    
+    # Crea el túnel
+    echo "Creando túnel $TUNNEL_NAME..."
+    NEW_TUNNEL_ID=$(cloudflared tunnel create $TUNNEL_NAME --credentials-file $CERT_FILE)
+    NEW_TUNNEL_ID=$(echo $NEW_TUNNEL_ID | grep -oP 'Created tunnel \K[a-z0-9-]+')
+    
+    if [ -z "$NEW_TUNNEL_ID" ]; then
+      echo -e "${RED}Error: No se pudo crear el túnel.${NC}"
+      return
+    fi
+    
+    echo "ID del túnel: $NEW_TUNNEL_ID"
+    echo -e "${YELLOW}Importante: Agrega este ID a tu archivo .secrets como TUNNEL_ID=$NEW_TUNNEL_ID${NC}"
+    
+    # Usar el nuevo ID para esta sesión
+    TUNNEL_ID=$NEW_TUNNEL_ID
+  else
+    echo -e "${GREEN}Usando túnel existente con ID: $TUNNEL_ID${NC}"
   fi
   
-  echo "ID del túnel: $TUNNEL_ID"
+  # Pregunta por el dominio o usa el de las variables de entorno
+  if [ -z "$API_DOMAIN" ]; then
+    read -p "Dominio a conectar (default: api.lukalibre.org): " DOMAIN
+    DOMAIN=${DOMAIN:-api.lukalibre.org}
+  else
+    DOMAIN=$API_DOMAIN
+    echo "Usando dominio de las variables de entorno: $DOMAIN"
+  fi
   
-  # Obtén el token del túnel
-  TUNNEL_TOKEN=$(cloudflared tunnel token $TUNNEL_ID --credentials-file $CERT_FILE)
-  
-  # Configura el DNS
-  echo "Configurando DNS para $DOMAIN..."
+  # Configura la ruta DNS
+  echo "Configurando ruta DNS para $DOMAIN..."
   cloudflared tunnel route dns $TUNNEL_ID $DOMAIN
   
-  # Crea archivo de configuración
-  cat > config.yml <<EOF
+  # Crea el archivo de configuración
+  CONFIG_DIR="cloudflared"
+  mkdir -p $CONFIG_DIR
+  
+  cat > $CONFIG_DIR/config.yml << EOF
 tunnel: $TUNNEL_ID
-credentials-file: $CERT_FILE
-
+credentials-file: $CONFIG_DIR/credentials.json
 ingress:
   - hostname: $DOMAIN
-    service: https://lukalibre-backend-URL.a.run.app
-    originRequest:
-      noTLSVerify: true
+    service: http://localhost:8000
   - service: http_status:404
 EOF
   
-  echo -e "${GREEN}Túnel creado correctamente${NC}"
-  echo -e "${YELLOW}IMPORTANTE: Guarda este token como secreto CLOUDFLARE_TUNNEL_TOKEN:${NC}"
-  echo $TUNNEL_TOKEN
+  echo "Configuración guardada en $CONFIG_DIR/config.yml"
   
-  read -p "¿Quieres iniciar el túnel ahora? (s/n): " confirm
-  if [[ $confirm == "s" || $confirm == "S" ]]; then
-    echo "Iniciando túnel..."
-    cloudflared tunnel run --config config.yml $TUNNEL_ID
+  # Verificar si tenemos el token del túnel
+  if [ -z "$CLOUDFLARE_TUNNEL_TOKEN" ]; then
+    echo -e "${YELLOW}No se encontró el token del túnel en las variables de entorno.${NC}"
+    echo -e "${YELLOW}Se intentará obtener uno desde Cloudflare...${NC}"
+    
+    # Pregunta por el archivo de certificado para obtener el token
+    read -p "Ruta al archivo de certificado Cloudflare (default: ./cert.pem): " CERT_FILE
+    CERT_FILE=${CERT_FILE:-./cert.pem}
+    
+    if [ ! -f "$CERT_FILE" ]; then
+      echo -e "${YELLOW}No se encontró el archivo de certificado. Ejecutando login...${NC}"
+      cloudflared tunnel login
+      CERT_FILE=~/.cloudflared/cert.pem
+    fi
+    
+    # Obtén el token del túnel
+    TUNNEL_TOKEN=$(cloudflared tunnel token $TUNNEL_ID --credentials-file $CERT_FILE)
+    
+    if [ -z "$TUNNEL_TOKEN" ]; then
+      echo -e "${RED}Error: No se pudo obtener el token del túnel.${NC}"
+      return
+    fi
+    
+    # Actualiza el archivo .secrets con el token del túnel
+    echo -e "${YELLOW}¿Quieres añadir/actualizar el token en .secrets?${NC}"
+    read -p "Añadir/actualizar token (s/n): " update_token
+    if [[ $update_token == "s" || $update_token == "S" ]]; then
+      PREV_TOKEN=$(grep -o "CLOUDFLARE_TUNNEL_TOKEN=.*" .secrets 2>/dev/null || echo "")
+      if [ -z "$PREV_TOKEN" ]; then
+        echo "CLOUDFLARE_TUNNEL_TOKEN=$TUNNEL_TOKEN" >> .secrets
+        echo -e "${GREEN}Token del túnel añadido a .secrets${NC}"
+      else
+        sed -i "s|$PREV_TOKEN|CLOUDFLARE_TUNNEL_TOKEN=$TUNNEL_TOKEN|" .secrets
+        echo -e "${GREEN}Token actualizado en .secrets${NC}"
+      fi
+    fi
   else
-    echo "Puedes iniciar el túnel más tarde con: cloudflared tunnel run --config config.yml $TUNNEL_ID"
+    echo -e "${GREEN}Usando token existente del túnel${NC}"
   fi
+  
+  # Muestra información sobre cómo usar el túnel
+  echo -e "\n${GREEN}=== Configuración completada ===${NC}"
+  echo -e "ID del túnel: $TUNNEL_ID"
+  echo -e "Dominio: $DOMAIN"
+  echo -e "\n${YELLOW}Para iniciar el túnel manualmente:${NC}"
+  echo -e "cloudflared tunnel run --config $CONFIG_DIR/config.yml"
 }
 
 # Ejecuta la opción seleccionada
@@ -297,8 +381,7 @@ case $option in
   1)
     setup_gcp_auth
     run_terraform
-    build_docker
-    deploy_cloud_run
+    build_vm_image
     ;;
   2)
     setup_gcp_auth
@@ -310,17 +393,18 @@ case $option in
     ;;
   4)
     setup_gcp_auth
-    deploy_cloud_run
+    build_vm_image
     ;;
   5)
+    setup_gcp_auth
     setup_cloudflare_tunnel
     ;;
-  q)
+  q|Q)
     echo "Saliendo..."
     exit 0
     ;;
   *)
-    echo -e "${RED}Opción inválida${NC}"
+    echo -e "${RED}Opción no válida${NC}"
     exit 1
     ;;
 esac

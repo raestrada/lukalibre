@@ -37,3 +37,5 @@ pnpm-debug.log*
 Thumbs.db
 wallets
 .secrets
+sa.json
+.terraform
