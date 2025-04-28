@@ -26,13 +26,18 @@ Solo compartimos herramientas, información clara y conocimiento real para que p
 
 ---
 
-## 🔐 Zero-Knowledge by Design
+## 🔎 Zero-Knowledge by Design
 
 <img src="https://lukalibre.org/assets/images/zk_badge.png" alt="Zero-Knowledge by design" style="width: 25%; height: 25%;">
 
-LukaLibre está construido con privacidad total desde el diseño.
-Los datos se almacenan cifrados localmente en tu navegador y ni siquiera el servidor puede verlos.
-Este enfoque tipo Zero-Knowledge garantiza que tú seas el único que controla tu información financiera.
+LukaLibre está construido con privacidad total desde el diseño:
+
+- Los datos financieros se almacenan exclusivamente en una **base de datos SQLite en el navegador** usando SQL.js
+- Toda la información se guarda cifrada en localStorage y solo se procesa localmente
+- El backend actúa como proxy para servicios de IA, sin almacenar datos sensibles
+- La sincronización con Google Drive es opcional y mantiene los datos cifrados
+
+Este enfoque garantiza que tú seas el único dueño de tu información financiera, con total transparencia y control.
 
 ---
 
@@ -112,21 +117,23 @@ Todo el contenido está escrito en español chileno, con un lenguaje directo y c
 
 ## 🤝 ¿Cómo contribuir?
 
-1. Revisa los documentos en `/docs/conceptos/`
+1. Revisa los documentos en `/docs/conceptos/` o el código en `/frontend` y `/backend`
 2. Haz un fork del repo
-3. Escribe tus cambios en Markdown (`.md`)
-4. Abre un Pull Request explicando qué mejoras hiciste o qué contenido agregaste
+3. Realiza tus cambios siguiendo nuestros estándares de código
+4. Ejecuta las herramientas de calidad de código (pre-commit, CI)
+5. Abre un Pull Request con una descripción clara
 
 También puedes:
 
 - Reportar errores o sugerencias en [Issues](https://github.com/raestrada/lukalibre/issues)
 - Compartir tu historia en [https://lukalibre.org/contribuir](https://lukalibre.org/contribuir)
+- Contribuir a las discusiones técnicas en los issues existentes
 
 ---
 
 ## ⚖️ Licencia
 
-Este proyecto está bajo licencia **MIT** para el código
+Este proyecto está bajo licencia **MIT** para el código y **Creative Commons Attribution-NonCommercial 4.0** para los contenidos educativos.
 y **Creative Commons Attribution-NonCommercial 4.0** para los contenidos.
 
 Esto significa que puedes compartir, adaptar y remezclar...
@@ -144,69 +151,52 @@ Y porque creemos que **entender tu plata debería ser gratis, libre y sin humo**
 📬 Si quieres colaborar, traducir, compartir tu historia o simplemente decir "hola":
 escríbenos en [https://github.com/raestrada/lukalibre](https://github.com/raestrada/lukalibre)
 
-## Configuración del Entorno de Desarrollo
+## 💻 Arquitectura del Proyecto
 
-### Base de Datos PostgreSQL con Docker
+LukaLibre consta de dos componentes principales:
 
-El proyecto utiliza PostgreSQL como base de datos. Puedes levantarla fácilmente usando Docker Compose:
+### Frontend (Svelte + TypeScript + SQL.js)
 
-1. Asegúrate de tener [Docker](https://www.docker.com/get-started) instalado en tu sistema.
-
-2. Desde la raíz del proyecto, ejecuta:
+- **Tecnologías**: Svelte 5, TypeScript, Vite, SQL.js
+- **Características**: Base de datos SQLite en el navegador, persistencia en localStorage, Dashboard interactivo
+- **Calidad**: ESLint, Prettier, TypeScript, GitHub Actions CI/CD
 
 ```bash
+# Instalar y ejecutar el frontend
+cd frontend
+npm install
+npm run dev
+```
+
+### Backend (FastAPI + PostgreSQL)
+
+- **Tecnologías**: FastAPI, SQLAlchemy, PostgreSQL, Poetry
+- **Funciones**: API RESTful, autenticación, proxy para LLMs, OAuth
+- **Calidad**: Black, Flake8, Bandit, mypy, pre-commit hooks
+
+```bash
+# Configurar PostgreSQL con Docker
 docker-compose up -d
-```
 
-Esto iniciará un contenedor PostgreSQL con la configuración necesaria:
-- **Host**: localhost
-- **Puerto**: 5432
-- **Usuario**: postgres
-- **Contraseña**: postgres
-- **Base de datos**: lukalibre
-
-### Backend (FastAPI)
-
-1. Navega al directorio backend:
-
-```bash
+# Instalar y ejecutar el backend
 cd backend
-```
-
-2. Copia el archivo de variables de entorno:
-
-```bash
-cp .env.example .env
-```
-
-3. Instala las dependencias usando Poetry:
-
-```bash
 poetry install
-```
-
-4. Aplica las migraciones:
-
-```bash
+cp .env.example .env  # Editar según necesidad
 poetry run alembic upgrade head
-```
-
-5. Inicializa los datos (crea un superusuario inicial):
-
-```bash
 poetry run python -m app.initial_data
-```
-
-6. Inicia el servidor de desarrollo:
-
-```bash
 poetry run uvicorn app.main:app --reload
 ```
 
-El backend estará disponible en: http://localhost:8000
+### Integración y Seguridad
 
-La documentación de la API estará en: http://localhost:8000/docs
+- **CI/CD**: Pipelines automatizados para Frontend, Backend y análisis SAST con Semgrep
+- **Seguridad**: Análisis estático de código, pruebas de seguridad, escaneo de vulnerabilidades
+- **Zero-Knowledge**: Arquitectura que garantiza que los datos sensibles nunca salen del navegador del usuario
 
-## Licencia
+Para más detalles, consulta los README específicos en `/frontend` y `/backend`.
 
-Este proyecto está bajo la licencia GNU Affero General Public License v3.0 (AGPL-3.0)
+## ⚖️ Licencia
+
+Este proyecto está bajo licencia **MIT** para el código y **Creative Commons Attribution-NonCommercial 4.0** para los contenidos educativos.
+
+No se permite el uso comercial sin permiso específico.
