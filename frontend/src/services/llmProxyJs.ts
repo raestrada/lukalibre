@@ -1,22 +1,20 @@
-// LLMProxyJs: Proxy LLM en JS para uso directo desde el navegador
-// Usa la API key del usuario (en memoria o localStorage)
-// Implementa rate limit igual que el backend, usando la base SQLite del browser
+// LLMProxyJs: Simplified LangChain.js proxy for browser usage
+// Uses user's API key (in memory or localStorage)
+// Implements rate limiting using SQLite database in browser
 
 import databaseService from './databaseService';
-import OpenAI from 'openai';
+import { ChatOpenAI } from '@langchain/openai';
+import { HumanMessage, SystemMessage } from '@langchain/core/messages';
 
 export interface LLMProxyRequest {
   content: string;
   schemas?: string[];
-  step: string; // 'identify_schema' | 'generate_sql_json' | ...
+  step: string;
   schema_name?: string;
   extra?: Record<string, any>;
 }
 
 export interface LLMProxyResponse {
-  schema_name?: string;
-  sql_inserts?: string;
-  json_data?: Record<string, any>;
   llm_output: string;
 }
 
@@ -28,10 +26,6 @@ const DEFAULT_LIMITS = {
   per_month: 1000,
 };
 
-function nowUTC() {
-  return new Date(new Date().toISOString());
-}
-
 const TIME_WINDOWS = {
   per_minute: 60 * 1000,
   per_hour: 60 * 60 * 1000,
@@ -41,29 +35,38 @@ const TIME_WINDOWS = {
 };
 
 export class LLMProxyJs {
-  private apiKey: string | null = null;
+  private llm: ChatOpenAI | null = null;
   private userId: string = 'local';
   private limits = DEFAULT_LIMITS;
   private initialized = false;
 
   constructor(apiKey: string | null, userId: string = 'local') {
-    this.apiKey = apiKey;
     this.userId = userId;
+    if (apiKey) {
+      this.setApiKey(apiKey);
+    }
   }
 
-  // Método para inicializar la tabla de logs si no existe
+  setApiKey(apiKey: string) {
+    const model = (import.meta.env.VITE_OPENAI_MODEL as string) || 'gpt-3.5-turbo';
+    this.llm = new ChatOpenAI({
+      openAIApiKey: apiKey,
+      modelName: model,
+      temperature: 0.1,
+      maxTokens: 2048,
+    });
+  }
+
   private async ensureTableExists(): Promise<void> {
     if (this.initialized) return;
 
     try {
-      // Verificar si la tabla existe
       const checkTable = await databaseService.query(
         "SELECT name FROM sqlite_master WHERE type='table' AND name='llm_request_logs'",
       );
 
-      // Si la tabla no existe, crearla
       if (!checkTable || checkTable.length === 0) {
-        console.log('Creando tabla llm_request_logs...');
+        console.log('Creating llm_request_logs table...');
         await databaseService.execMultiple(`
           CREATE TABLE IF NOT EXISTS llm_request_logs (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -76,27 +79,23 @@ export class LLMProxyJs {
 
       this.initialized = true;
     } catch (error) {
-      console.error('Error al crear tabla llm_request_logs:', error);
-      throw new Error('No se pudo inicializar el sistema de logs para el proxy local');
+      console.error('Error creating llm_request_logs table:', error);
+      throw new Error('Failed to initialize logs system for local proxy');
     }
   }
 
-  setApiKey(key: string) {
-    this.apiKey = key;
-  }
-
-  // --- Rate limit ---
   async checkLimits(): Promise<{ key: string; limit: number } | null> {
-    // Asegurar que la tabla existe
     await this.ensureTableExists();
 
-    const now = nowUTC().getTime();
+    const now = new Date().getTime();
     const windows = Object.entries(TIME_WINDOWS);
+
     for (const [key, ms] of windows) {
       const since = new Date(now - (ms as number)).toISOString();
       const sql = `SELECT COUNT(*) as count FROM llm_request_logs WHERE user_id = ? AND created_at >= ?`;
       const res = await databaseService.query(sql, [this.userId, since]);
       const count = res[0]?.count || 0;
+
       if (count >= this.limits[key as keyof typeof DEFAULT_LIMITS]) {
         return { key, limit: this.limits[key as keyof typeof DEFAULT_LIMITS] };
       }
@@ -104,289 +103,119 @@ export class LLMProxyJs {
     return null;
   }
 
-  async logRequest() {
-    // Asegurar que la tabla existe
+  async logRequest(): Promise<void> {
     await this.ensureTableExists();
-
     const sql = `INSERT INTO llm_request_logs (user_id, created_at) VALUES (?, ?)`;
     await databaseService.query(sql, [this.userId, new Date().toISOString()]);
   }
 
-  // Método para obtener una instancia del cliente OpenAI
-  private getOpenAIClient(): OpenAI {
-    if (!this.apiKey) throw new Error('API key de OpenAI no configurada');
+  async processJsonRequest(request: LLMProxyRequest): Promise<string> {
+    if (!this.llm) {
+      throw new Error('OpenAI API key not configured');
+    }
 
-    return new OpenAI({
-      apiKey: this.apiKey,
-      dangerouslyAllowBrowser: true, // Necesario para usar en el navegador
-    });
+    let messages = [];
+
+    if (request.step === 'identify_schema') {
+      const schemasStr = request.schemas ? `\nOpciones: ${request.schemas.join(', ')}` : '';
+      const systemPrompt =
+        'Eres un asistente experto en clasificación de documentos. ' +
+        'Dado el siguiente contenido y la lista de esquemas, responde solo con el nombre del esquema más adecuado.' +
+        schemasStr;
+
+      messages = [new SystemMessage(systemPrompt), new HumanMessage(request.content)];
+    } else if (request.step === 'generate_sql_json') {
+      const systemPrompt =
+        'Eres un experto en extracción de datos. Dado el siguiente contenido, genera:\n' +
+        '- Los comandos SQL INSERT para poblar todas las tablas relevantes del esquema en SQLite.\n' +
+        '- El JSON correspondiente siguiendo el schema.\n' +
+        "Responde en formato JSON así: {'sql_inserts': '...', 'json_data': {...}}";
+
+      messages = [new SystemMessage(systemPrompt), new HumanMessage(request.content)];
+    } else {
+      messages = [new HumanMessage(request.content)];
+    }
+
+    const response = await this.llm.invoke(messages);
+    return response.content as string;
   }
 
-  // Leer modelo desde variable de entorno
-  private getOpenAIModel(): string {
-    // @ts-ignore
-    return (import.meta.env.VITE_OPENAI_MODEL as string) || 'gpt-3.5-turbo';
+  async processMultipartRequest(prompt: string, files: File[]): Promise<string> {
+    if (!this.llm) {
+      throw new Error('OpenAI API key not configured');
+    }
+
+    let finalPrompt = prompt;
+
+    // For files, append basic info to prompt (simplified handling)
+    if (files && files.length > 0) {
+      for (const file of files) {
+        if (file.type.startsWith('image/')) {
+          // For images, we'd need to handle them specially
+          // For now, just add file info to prompt
+          finalPrompt += `\n\n[Archivo de imagen adjunto: ${file.name}, tamaño: ${(file.size / 1024).toFixed(2)} KB]`;
+        } else {
+          finalPrompt += `\n\n[Archivo adjunto: ${file.name}, tipo: ${file.type}, tamaño: ${(file.size / 1024).toFixed(2)} KB]`;
+        }
+      }
+    }
+
+    const message = new HumanMessage(finalPrompt);
+    const response = await this.llm.invoke([message]);
+    return response.content as string;
   }
 
-  async callOpenAI(messages: any[]): Promise<string> {
-    if (!this.apiKey) throw new Error('API key de OpenAI no configurada');
-
+  async proxy(request: LLMProxyRequest): Promise<LLMProxyResponse> {
     try {
-      const openai = this.getOpenAIClient();
-      const model = this.getOpenAIModel();
-      const response = await openai.chat.completions.create({
-        model,
-        messages,
-        max_tokens: 2048,
-        temperature: 0.1,
-      });
-
-      return response.choices[0]?.message?.content || '';
-    } catch (error: any) {
-      console.error('Error en llamada a OpenAI:', error);
-      throw new Error(error?.message || 'Error en llamada a OpenAI');
-    }
-  }
-
-  // --- Métodos auxiliares para manejo de archivos ---
-  private arrayBufferToBase64(buffer: ArrayBuffer): string {
-    const bytes = new Uint8Array(buffer);
-    let binary = '';
-    for (let i = 0; i < bytes.byteLength; i++) {
-      binary += String.fromCharCode(bytes[i]);
-    }
-    return btoa(binary);
-  }
-
-  private async extractTextFromFile(file: File): Promise<string> {
-    // Para archivos de texto, simplemente leemos el contenido
-    if (file.type === 'text/plain' || file.name.endsWith('.txt')) {
-      return await file.text();
-    }
-
-    // Para PDFs y otros formatos, enviamos un mensaje descriptivo
-    return `[Contenido del archivo: ${file.name} (${file.type}, ${(file.size / 1024).toFixed(2)} KB)]`;
-  }
-
-  // --- Proxy principal para solicitudes de texto ---
-  async proxy(req: LLMProxyRequest): Promise<LLMProxyResponse> {
-    try {
-      // Asegurar que la tabla existe
       await this.ensureTableExists();
 
-      // 1. Rate limit
+      // Rate limit check
       const limit = await this.checkLimits();
       if (limit) {
-        throw new Error(`Límite de uso excedido (${limit.key}: ${limit.limit})`);
+        throw new Error(`Rate limit exceeded (${limit.key}: ${limit.limit})`);
       }
       await this.logRequest();
 
-      // 2. Construir mensajes para OpenAI
-      const messages = this.buildMessages(req);
-      const llm_output = await this.callOpenAI(messages);
-      // 3. Responder igual que el backend
-      return { ...req, llm_output };
+      // Process request
+      const llm_output = await this.processJsonRequest(request);
+      return { llm_output };
     } catch (error) {
-      // Capturar y reenviar el error con un mensaje más descriptivo
       if (error instanceof Error) {
-        if (error.message.includes('llm_request_logs')) {
-          throw new Error(`Error en la base de datos local: ${error.message}`);
-        }
         throw error;
       }
-      throw new Error(`Error desconocido en el proxy local: ${error}`);
+      throw new Error(`Unknown error in local proxy: ${error}`);
     }
   }
 
-  // --- Proxy para manejar archivos con FormData (usa la biblioteca oficial de OpenAI) ---
   async proxyWithFile(formData: FormData): Promise<LLMProxyResponse> {
     try {
-      // Asegurar que la tabla existe
       await this.ensureTableExists();
 
-      // 1. Rate limit
+      // Rate limit check
       const limit = await this.checkLimits();
       if (limit) {
-        throw new Error(`Límite de uso excedido (${limit.key}: ${limit.limit})`);
+        throw new Error(`Rate limit exceeded (${limit.key}: ${limit.limit})`);
       }
       await this.logRequest();
 
-      // 2. Extraer el prompt y el archivo del FormData
+      // Extract data from FormData
       const prompt = formData.get('prompt') as string;
-      const file = formData.get('files') as File;
+      const files = formData.getAll('files') as File[];
 
       if (!prompt) {
-        throw new Error('El prompt es requerido');
+        throw new Error('Prompt is required');
       }
 
-      if (!this.apiKey) {
-        throw new Error('API key de OpenAI no configurada');
-      }
-
-      // 3. Crear una instancia del cliente OpenAI
-      const openai = this.getOpenAIClient();
-
-      // 4. Preparar el contenido del mensaje
-      let messageContent: any[] = [];
-
-      // Agregar el texto del prompt
-      messageContent.push({
-        type: 'text',
-        text: prompt,
-      });
-
-      // Si hay un archivo, hacer lo mismo que en Python
-      if (file) {
-        try {
-          // Para imágenes, usar image_url directamente
-          if (file.type.startsWith('image/')) {
-            const arrayBuffer = await file.arrayBuffer();
-            const base64 = this.arrayBufferToBase64(arrayBuffer);
-            messageContent.push({
-              type: 'image_url',
-              image_url: { url: `data:${file.type};base64,${base64}` },
-            });
-          }
-          // Para audio, similar a imágenes (si aplica)
-          else if (file.type.startsWith('audio/')) {
-            const arrayBuffer = await file.arrayBuffer();
-            const base64 = this.arrayBufferToBase64(arrayBuffer);
-            messageContent.push({
-              type: 'audio', // Si la API lo soporta
-              audio: { url: `data:${file.type};base64,${base64}` },
-            });
-          }
-          // Para el resto de archivos: SUBIR A LA API DE ARCHIVOS DE OPENAI
-          else {
-            console.log('Subiendo archivo a OpenAI:', file.name, file.type);
-
-            // Convertir File a FormData para la solicitud
-            const formDataForUpload = new FormData();
-            formDataForUpload.append('file', file);
-            formDataForUpload.append('purpose', 'assistants');
-
-            // Subir archivo a OpenAI y obtener file_id (como en Python)
-            const uploadResponse = await fetch('https://api.openai.com/v1/files', {
-              method: 'POST',
-              headers: {
-                Authorization: `Bearer ${this.apiKey}`,
-              },
-              body: formDataForUpload,
-            });
-
-            if (!uploadResponse.ok) {
-              throw new Error(
-                `Error al subir archivo: ${uploadResponse.status} ${uploadResponse.statusText}`,
-              );
-            }
-
-            const uploadData = await uploadResponse.json();
-            const fileId = uploadData.id;
-            console.log('Archivo subido a OpenAI con éxito, ID:', fileId);
-
-            // Añadir el file_id al mensaje EXACTAMENTE igual que en Python
-            messageContent.push({
-              type: 'file',
-              file: { file_id: fileId },
-            });
-          }
-        } catch (error) {
-          console.error('Error procesando archivo para OpenAI:', error);
-          throw new Error(
-            `Error procesando archivo: ${error instanceof Error ? error.message : String(error)}`,
-          );
-        }
-      }
-
-      console.log('Enviando mensaje a OpenAI (simplificado).');
-
-      // Obtener la solicitud original para determinar el paso (step)
-      const step = formData.get('step') as string;
-      const schema_name = (formData.get('schema_name') as string) || undefined;
-
-      // Construir la solicitud para poder usar buildMessages
-      const request: LLMProxyRequest = {
-        content: '', // No usamos este campo porque ya tenemos messageContent
-        step,
-        schema_name,
-      };
-
-      // 5. Enviar la solicitud a OpenAI usando la biblioteca oficial con los mensajes correctos
-      console.log(`Paso: ${step}, Esquema: ${schema_name}`);
-
-      // Si es generate_sql_json, usamos el mensaje de sistema adecuado
-      let messages: { role: 'system' | 'user' | 'assistant'; content: any }[];
-      if (step === 'generate_sql_json') {
-        messages = [
-          { role: 'system', content: `Genera SQL y JSON para el esquema: ${schema_name}` },
-          { role: 'user', content: messageContent },
-        ];
-        console.log('Usando mensaje de sistema para generate_sql_json');
-      } else if (step === 'identify_schema') {
-        messages = [
-          {
-            role: 'system',
-            content:
-              'Identifica el esquema correspondiente de la base de datos, analizando el documento proporcionado.',
-          },
-          { role: 'user', content: messageContent },
-        ];
-        console.log('Usando mensaje de sistema para identify_schema');
-      } else {
-        // Mensaje predeterminado sin system prompt
-        messages = [{ role: 'user', content: messageContent }];
-        console.log('Usando mensaje sin system prompt');
-      }
-
-      const response = await openai.chat.completions.create({
-        model: this.getOpenAIModel(),
-        messages,
-        max_tokens: 2048,
-        temperature: 0.1,
-      });
-
-      const llm_output = response.choices[0]?.message?.content || '';
-      console.log('Respuesta de OpenAI (COMPLETA):', llm_output);
-
-      // Verificar si hay SQL en la respuesta
-      if (llm_output.includes('INSERT INTO')) {
-        // Contar cuántos comandos SQL hay (separados por punto y coma)
-        const sqlCommands = llm_output.match(/INSERT\s+INTO[\s\S]*?;/gi) || [];
-        console.log(`Número de comandos SQL encontrados: ${sqlCommands.length}`);
-
-        // Mostrar cada comando SQL
-        sqlCommands.forEach((sql, index) => {
-          console.log(`SQL #${index + 1}:`, sql);
-        });
-      }
-
-      // 6. Devolver la respuesta exactamente igual que el backend
-      return { llm_output: llm_output || '' };
+      // Process request
+      const llm_output = await this.processMultipartRequest(prompt, files);
+      return { llm_output };
     } catch (error) {
-      console.error('Error en proxyWithFile:', error);
+      console.error('Error in proxyWithFile:', error);
       if (error instanceof Error) {
         throw error;
       }
-      throw new Error(`Error desconocido al procesar archivo: ${error}`);
+      throw new Error(`Unknown error processing file: ${error}`);
     }
-  }
-
-  buildMessages(req: LLMProxyRequest): any[] {
-    // Usa el contenido tal cual viene del frontend
-    // El frontend ya obtiene los templates del backend y construye los prompts
-    if (req.step === 'identify_schema') {
-      return [
-        { role: 'system', content: 'Identifica el esquema correspondiente.' },
-        { role: 'user', content: req.content },
-      ];
-    } else if (req.step === 'generate_sql_json') {
-      return [
-        { role: 'system', content: `Genera SQL y JSON para el esquema: ${req.schema_name}` },
-        { role: 'user', content: req.content },
-      ];
-    }
-    // Default
-    return [{ role: 'user', content: req.content }];
   }
 }
 
