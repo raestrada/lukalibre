@@ -6,9 +6,25 @@ from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
-    GROQ_API_KEY: str = ""  # Clave para Groq LLM
-    OPENAI_API_KEY: str = ""  # Clave para OpenAI Vision
-    OPENAI_MODEL: str = "gpt-4o-mini"  # Modelo por defecto para OpenAI Vision
+    # LLM Configuration
+    OPENAI_API_KEY: str = ""  # OpenAI API Key
+    OPENROUTER_API_KEY: str = ""  # OpenRouter API Key for cost optimization
+    OPENROUTER_BASE_URL: str = "https://openrouter.ai/api/v1"  # OpenRouter base URL
+    
+    # LLM Provider Configuration
+    DEFAULT_LLM_PROVIDER: str = "openrouter"  # Options: openai, openrouter
+    FALLBACK_LLM_PROVIDER: str = "openai"  # Fallback when primary fails
+    
+    # Model Configuration - Separate models for cost optimization
+    TEXT_MODEL: str = "qwen/qwen3-coder:free"  # Model for text-only tasks (cheaper)
+    IMAGE_MODEL: str = "google/gemini-2.5-flash"  # Model for image processing (vision capable)
+    FALLBACK_TEXT_MODEL: str = "gpt-4o-mini"  # Fallback text model
+    FALLBACK_IMAGE_MODEL: str = "gpt-4o-mini"  # Fallback image model
+    
+    # Cost Optimization
+    ENABLE_COST_OPTIMIZATION: bool = True
+    MAX_MONTHLY_LLM_COST: float = 50.0  # USD limit per month
+    COST_ALERT_THRESHOLD: float = 0.8  # Alert when 80% of limit reached
     API_V1_STR: str = "/api/v1"
     SECRET_KEY: str = secrets.token_urlsafe(32)
     # 60 minutes * 24 hours * 8 days = 8 days

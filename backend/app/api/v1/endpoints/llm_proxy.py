@@ -31,15 +31,96 @@ class LLMProxyResponse(BaseModel):
 
 class LukaLibreLLMService:
     def __init__(self):
-        if not settings.OPENAI_API_KEY:
-            raise ValueError("OPENAI_API_KEY not configured")
+        self.primary_text_llm = None
+        self.primary_image_llm = None
+        self.fallback_text_llm = None
+        self.fallback_image_llm = None
         
-        self.llm = ChatOpenAI(
-            openai_api_key=settings.OPENAI_API_KEY,
-            model=settings.OPENAI_MODEL,
-            temperature=0.1,
-            max_tokens=2048,
-        )
+        # Initialize primary LLM providers
+        if settings.DEFAULT_LLM_PROVIDER == "openrouter" and settings.OPENROUTER_API_KEY:
+            self.primary_text_llm = ChatOpenAI(
+                openai_api_key=settings.OPENROUTER_API_KEY,
+                openai_api_base=settings.OPENROUTER_BASE_URL,
+                model=settings.TEXT_MODEL,
+                temperature=0.1,
+                max_tokens=2048,
+            )
+            self.primary_image_llm = ChatOpenAI(
+                openai_api_key=settings.OPENROUTER_API_KEY,
+                openai_api_base=settings.OPENROUTER_BASE_URL,
+                model=settings.IMAGE_MODEL,
+                temperature=0.1,
+                max_tokens=2048,
+            )
+        elif settings.DEFAULT_LLM_PROVIDER == "openai" and settings.OPENAI_API_KEY:
+            self.primary_text_llm = ChatOpenAI(
+                openai_api_key=settings.OPENAI_API_KEY,
+                model=settings.TEXT_MODEL,
+                temperature=0.1,
+                max_tokens=2048,
+            )
+            self.primary_image_llm = ChatOpenAI(
+                openai_api_key=settings.OPENAI_API_KEY,
+                model=settings.IMAGE_MODEL,
+                temperature=0.1,
+                max_tokens=2048,
+            )
+        
+        # Initialize fallback LLM providers
+        if settings.FALLBACK_LLM_PROVIDER == "openai" and settings.OPENAI_API_KEY:
+            self.fallback_text_llm = ChatOpenAI(
+                openai_api_key=settings.OPENAI_API_KEY,
+                model=settings.FALLBACK_TEXT_MODEL,
+                temperature=0.1,
+                max_tokens=2048,
+            )
+            self.fallback_image_llm = ChatOpenAI(
+                openai_api_key=settings.OPENAI_API_KEY,
+                model=settings.FALLBACK_IMAGE_MODEL,
+                temperature=0.1,
+                max_tokens=2048,
+            )
+        elif settings.FALLBACK_LLM_PROVIDER == "openrouter" and settings.OPENROUTER_API_KEY:
+            self.fallback_text_llm = ChatOpenAI(
+                openai_api_key=settings.OPENROUTER_API_KEY,
+                openai_api_base=settings.OPENROUTER_BASE_URL,
+                model=settings.FALLBACK_TEXT_MODEL,
+                temperature=0.1,
+                max_tokens=2048,
+            )
+            self.fallback_image_llm = ChatOpenAI(
+                openai_api_key=settings.OPENROUTER_API_KEY,
+                openai_api_base=settings.OPENROUTER_BASE_URL,
+                model=settings.FALLBACK_IMAGE_MODEL,
+                temperature=0.1,
+                max_tokens=2048,
+            )
+        
+        if not any([self.primary_text_llm, self.primary_image_llm, self.fallback_text_llm, self.fallback_image_llm]):
+            raise ValueError("No LLM provider configured. Set OPENAI_API_KEY or OPENROUTER_API_KEY")
+    
+    async def _call_llm_with_fallback(self, messages, has_images=False):
+        """Call LLM with automatic fallback on failure"""
+        primary_llm = self.primary_image_llm if has_images else self.primary_text_llm
+        fallback_llm = self.fallback_image_llm if has_images else self.fallback_text_llm
+        model_type = "image" if has_images else "text"
+        
+        try:
+            if primary_llm:
+                print(f"Using primary {model_type} LLM provider: {settings.DEFAULT_LLM_PROVIDER}")
+                return await primary_llm.ainvoke(messages)
+        except Exception as e:
+            print(f"Primary {model_type} LLM failed: {e}")
+            
+        if fallback_llm:
+            try:
+                print(f"Using fallback {model_type} LLM provider: {settings.FALLBACK_LLM_PROVIDER}")
+                return await fallback_llm.ainvoke(messages)
+            except Exception as e:
+                print(f"Fallback {model_type} LLM also failed: {e}")
+                raise e
+        
+        raise ValueError(f"All {model_type} LLM providers failed")
     
     async def process_json_request(self, request: LLMProxyRequest) -> str:
         """Process JSON request with step-based prompts"""
@@ -72,7 +153,7 @@ class LukaLibreLLMService:
         else:
             messages = [HumanMessage(content=request.content)]
         
-        response = await self.llm.ainvoke(messages)
+        response = await self._call_llm_with_fallback(messages, has_images=False)
         return response.content
     
     async def process_multipart_request(self, prompt: str, files: List[UploadFile]) -> str:
@@ -96,9 +177,12 @@ class LukaLibreLLMService:
                     # For non-image files, include basic info in text
                     content_parts[0]["text"] += f"\n\n[Archivo adjunto: {file.filename}, tipo: {mime_type}]"
         
+        # Detect if request has images
+        has_images = any(file.content_type and file.content_type.startswith("image/") for file in files) if files else False
+        
         # Create human message with content parts
         message = HumanMessage(content=content_parts if len(content_parts) > 1 else prompt)
-        response = await self.llm.ainvoke([message])
+        response = await self._call_llm_with_fallback([message], has_images=has_images)
         return response.content
 
 

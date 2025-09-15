@@ -35,7 +35,10 @@ const TIME_WINDOWS = {
 };
 
 export class LLMProxyJs {
-  private llm: ChatOpenAI | null = null;
+  private primaryTextLlm: ChatOpenAI | null = null;
+  private primaryImageLlm: ChatOpenAI | null = null;
+  private fallbackTextLlm: ChatOpenAI | null = null;
+  private fallbackImageLlm: ChatOpenAI | null = null;
   private userId: string = 'local';
   private limits = DEFAULT_LIMITS;
   private initialized = false;
@@ -48,13 +51,93 @@ export class LLMProxyJs {
   }
 
   setApiKey(apiKey: string) {
-    const model = (import.meta.env.VITE_OPENAI_MODEL as string) || 'gpt-3.5-turbo';
-    this.llm = new ChatOpenAI({
-      openAIApiKey: apiKey,
-      modelName: model,
-      temperature: 0.1,
-      maxTokens: 2048,
-    });
+    const textModel = (import.meta.env.VITE_TEXT_MODEL as string) || 'gpt-4o-mini';
+    const imageModel = (import.meta.env.VITE_IMAGE_MODEL as string) || 'gpt-4o-mini';
+    const fallbackTextModel = (import.meta.env.VITE_FALLBACK_TEXT_MODEL as string) || 'gpt-4o-mini';
+    const fallbackImageModel =
+      (import.meta.env.VITE_FALLBACK_IMAGE_MODEL as string) || 'gpt-4o-mini';
+    const provider = (import.meta.env.VITE_DEFAULT_LLM_PROVIDER as string) || 'openrouter';
+    const openRouterKey = (import.meta.env.VITE_OPENROUTER_API_KEY as string) || '';
+    const openRouterBaseUrl =
+      (import.meta.env.VITE_OPENROUTER_BASE_URL as string) || 'https://openrouter.ai/api/v1';
+
+    // Set up primary LLMs (prefer OpenRouter for cost optimization)
+    if (provider === 'openrouter' && openRouterKey) {
+      this.primaryTextLlm = new ChatOpenAI({
+        openAIApiKey: openRouterKey,
+        configuration: {
+          baseURL: openRouterBaseUrl,
+        },
+        modelName: textModel,
+        temperature: 0.1,
+        maxTokens: 2048,
+      });
+      this.primaryImageLlm = new ChatOpenAI({
+        openAIApiKey: openRouterKey,
+        configuration: {
+          baseURL: openRouterBaseUrl,
+        },
+        modelName: imageModel,
+        temperature: 0.1,
+        maxTokens: 2048,
+      });
+    } else if (apiKey) {
+      this.primaryTextLlm = new ChatOpenAI({
+        openAIApiKey: apiKey,
+        modelName: textModel,
+        temperature: 0.1,
+        maxTokens: 2048,
+      });
+      this.primaryImageLlm = new ChatOpenAI({
+        openAIApiKey: apiKey,
+        modelName: imageModel,
+        temperature: 0.1,
+        maxTokens: 2048,
+      });
+    }
+
+    // Set up fallback LLMs (user's OpenAI key as fallback)
+    if (apiKey && provider === 'openrouter') {
+      this.fallbackTextLlm = new ChatOpenAI({
+        openAIApiKey: apiKey,
+        modelName: fallbackTextModel,
+        temperature: 0.1,
+        maxTokens: 2048,
+      });
+      this.fallbackImageLlm = new ChatOpenAI({
+        openAIApiKey: apiKey,
+        modelName: fallbackImageModel,
+        temperature: 0.1,
+        maxTokens: 2048,
+      });
+    }
+  }
+
+  private async callLlmWithFallback(messages: any[], hasImages = false): Promise<any> {
+    const primaryLlm = hasImages ? this.primaryImageLlm : this.primaryTextLlm;
+    const fallbackLlm = hasImages ? this.fallbackImageLlm : this.fallbackTextLlm;
+    const modelType = hasImages ? 'image' : 'text';
+
+    try {
+      if (primaryLlm) {
+        console.log(`Using primary ${modelType} LLM provider (OpenRouter cost optimization)`);
+        return await primaryLlm.invoke(messages);
+      }
+    } catch (error) {
+      console.warn(`Primary ${modelType} LLM failed, trying fallback:`, error);
+    }
+
+    if (fallbackLlm) {
+      try {
+        console.log(`Using fallback ${modelType} LLM provider (Direct OpenAI)`);
+        return await fallbackLlm.invoke(messages);
+      } catch (error) {
+        console.error(`Fallback ${modelType} LLM also failed:`, error);
+        throw error;
+      }
+    }
+
+    throw new Error(`No ${modelType} LLM provider available`);
   }
 
   private async ensureTableExists(): Promise<void> {
@@ -110,8 +193,13 @@ export class LLMProxyJs {
   }
 
   async processJsonRequest(request: LLMProxyRequest): Promise<string> {
-    if (!this.llm) {
-      throw new Error('OpenAI API key not configured');
+    if (
+      !this.primaryTextLlm &&
+      !this.fallbackTextLlm &&
+      !this.primaryImageLlm &&
+      !this.fallbackImageLlm
+    ) {
+      throw new Error('No LLM provider configured');
     }
 
     let messages = [];
@@ -136,21 +224,28 @@ export class LLMProxyJs {
       messages = [new HumanMessage(request.content)];
     }
 
-    const response = await this.llm.invoke(messages);
+    const response = await this.callLlmWithFallback(messages, false);
     return response.content as string;
   }
 
   async processMultipartRequest(prompt: string, files: File[]): Promise<string> {
-    if (!this.llm) {
-      throw new Error('OpenAI API key not configured');
+    if (
+      !this.primaryTextLlm &&
+      !this.fallbackTextLlm &&
+      !this.primaryImageLlm &&
+      !this.fallbackImageLlm
+    ) {
+      throw new Error('No LLM provider configured');
     }
 
     let finalPrompt = prompt;
+    let hasImages = false;
 
     // For files, append basic info to prompt (simplified handling)
     if (files && files.length > 0) {
       for (const file of files) {
         if (file.type.startsWith('image/')) {
+          hasImages = true;
           // For images, we'd need to handle them specially
           // For now, just add file info to prompt
           finalPrompt += `\n\n[Archivo de imagen adjunto: ${file.name}, tamaño: ${(file.size / 1024).toFixed(2)} KB]`;
@@ -161,7 +256,7 @@ export class LLMProxyJs {
     }
 
     const message = new HumanMessage(finalPrompt);
-    const response = await this.llm.invoke([message]);
+    const response = await this.callLlmWithFallback([message], hasImages);
     return response.content as string;
   }
 

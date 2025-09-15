@@ -13,8 +13,9 @@ LukaLibre is a Chilean financial education platform built with a Zero-Knowledge 
 - **Location**: `/frontend/`
 
 ### Backend (FastAPI + Python)
-- **Technology**: FastAPI, SQLAlchemy, PostgreSQL, Poetry
-- **Purpose**: API endpoints, authentication, LLM proxy services
+- **Technology**: FastAPI, SQLAlchemy, PostgreSQL, Poetry, LangChain
+- **Purpose**: API endpoints, authentication, LLM proxy services with multi-provider support
+- **LLM Integration**: OpenAI + OpenRouter with automatic fallback and specialized models
 - **Location**: `/backend/`
 
 ### Documentation Site (Jekyll)
@@ -83,6 +84,20 @@ poetry run pytest
 poetry run pytest --cov=app --cov-report=html
 ```
 
+### Environment Configuration
+Copy `.secrets.example` to `.secrets` and configure:
+
+```bash
+# LLM Provider Configuration
+OPENAI_API_KEY=your-openai-api-key
+OPENROUTER_API_KEY=your-openrouter-api-key  # For cost optimization
+DEFAULT_LLM_PROVIDER=openrouter              # Options: openai, openrouter
+FALLBACK_LLM_PROVIDER=openai                 # Automatic failover
+LLM_MODEL=gpt-4o-mini                        # Model to use
+ENABLE_COST_OPTIMIZATION=true
+MAX_MONTHLY_LLM_COST=50
+```
+
 ### Database Setup
 PostgreSQL via Docker Compose:
 ```bash
@@ -103,17 +118,28 @@ docker-compose stop     # Stop database
 
 **Frontend Architecture:**
 - `src/services/sqliteService.ts` - Local database management
-- `src/services/llmService.ts` - AI model integration
+- `src/services/llmService.ts` - AI model integration with OpenRouter support
+- `src/services/llmProxyJs.ts` - LangChain.js proxy with cost optimization
 - `src/stores/` - Global state management
 - `src/components/` - Svelte components by feature
 - Local SQLite database with financial schemas
 
 **Backend Architecture:**
-- `app/api/v1/endpoints/` - REST API endpoints
+- `app/api/v1/endpoints/llm_proxy.py` - LangChain LLM service with OpenRouter integration
+- `app/core/config.py` - Configuration with multi-provider LLM support
 - `app/models/` - SQLAlchemy models
 - `app/schemas/` - Pydantic schemas
 - `app/crud/` - Database operations
 - `app/static_schemas/` - JSON schemas for financial data types
+
+**LLM Integration:**
+- **Primary Provider:** OpenRouter (cost-optimized access to GPT-4, Claude, Gemini)
+- **Fallback Provider:** Direct OpenAI (automatic failover)
+- **Model Specialization:** Separate models for text-only vs image processing tasks
+  - TEXT_MODEL: qwen/qwen3-coder:free (free, specialized for code and text)
+  - IMAGE_MODEL: google/gemini-2.5-flash (fast, vision-capable for image processing)
+- **Cost Features:** Monthly limits, usage tracking, smart provider selection
+- **Architecture:** LangChain abstractions for consistent API across providers
 
 ### Financial Data Models
 The backend defines JSON schemas for Chilean financial contexts:
@@ -161,6 +187,40 @@ Configured via `.husky/pre-commit`:
 - Backend: pytest with SQLAlchemy fixtures
 - CI/CD: Separate workflows for frontend and backend
 - Security: Automated SAST with Semgrep
+
+## Configuration
+
+### Environment Variables
+Copy `.secrets.example` to `.secrets` and configure:
+
+**Backend (.secrets):**
+```bash
+# LLM Provider Configuration
+DEFAULT_LLM_PROVIDER=openrouter  # Options: openai, openrouter
+FALLBACK_LLM_PROVIDER=openai     # Fallback when primary fails
+
+# API Keys
+OPENAI_API_KEY=your-openai-api-key
+OPENROUTER_API_KEY=your-openrouter-api-key
+OPENROUTER_BASE_URL=https://openrouter.ai/api/v1
+
+# Model Configuration - Separate models for cost optimization
+TEXT_MODEL=qwen/qwen3-coder:free          # Model for text-only tasks (free, specialized for code)
+IMAGE_MODEL=google/gemini-2.5-flash      # Model for image processing (vision capable, fast)
+FALLBACK_TEXT_MODEL=gpt-4o-mini          # Fallback text model
+FALLBACK_IMAGE_MODEL=gpt-4o-mini         # Fallback image model
+```
+
+**Frontend (frontend/.env):**
+```bash
+VITE_TEXT_MODEL=qwen/qwen3-coder:free
+VITE_IMAGE_MODEL=google/gemini-2.5-flash
+VITE_FALLBACK_TEXT_MODEL=gpt-4o-mini
+VITE_FALLBACK_IMAGE_MODEL=gpt-4o-mini
+VITE_DEFAULT_LLM_PROVIDER=openrouter
+VITE_OPENROUTER_API_KEY=your-openrouter-api-key
+VITE_OPENROUTER_BASE_URL=https://openrouter.ai/api/v1
+```
 
 ## API Documentation
 When backend is running:
