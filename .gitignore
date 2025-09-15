@@ -39,3 +39,6 @@ wallets
 .secrets
 sa.json
 .terraform
+venv
+.venv
+node_modules

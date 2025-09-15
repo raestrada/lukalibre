@@ -91,7 +91,7 @@ class Settings(BaseSettings):
     # Frontend URL
     CLIENT_FRONTEND_URL: str = "http://localhost:5173"
 
-    model_config = {"case_sensitive": True, "env_file": ".env"}
+    model_config = {"case_sensitive": True, "env_file": ".env", "extra": "ignore"}
 
 
 settings = Settings()

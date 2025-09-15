@@ -22,7 +22,25 @@ tasks:
     status:
       - '[ $(docker ps --filter "name=lukalibre-db" --filter "status=running" --format "{{.Names}}") ]'
     deps: []
-    env: {}
+    env:
+      OPENAI_API_KEY:
+        sh: grep "^OPENAI_API_KEY=" ../.secrets | cut -d'=' -f2 | tr -d '"'
+      OPENROUTER_API_KEY:
+        sh: grep "^OPENROUTER_API_KEY=" ../.secrets | cut -d'=' -f2 | tr -d '"'
+      OPENROUTER_BASE_URL:
+        sh: grep "^OPENROUTER_BASE_URL=" ../.secrets | cut -d'=' -f2 | tr -d '"'
+      DEFAULT_LLM_PROVIDER:
+        sh: grep "^DEFAULT_LLM_PROVIDER=" ../.secrets | cut -d'=' -f2 | tr -d '"'
+      FALLBACK_LLM_PROVIDER:
+        sh: grep "^FALLBACK_LLM_PROVIDER=" ../.secrets | cut -d'=' -f2 | tr -d '"'
+      TEXT_MODEL:
+        sh: grep "^TEXT_MODEL=" ../.secrets | cut -d'=' -f2 | tr -d '"'
+      IMAGE_MODEL:
+        sh: grep "^IMAGE_MODEL=" ../.secrets | cut -d'=' -f2 | tr -d '"'
+      FALLBACK_TEXT_MODEL:
+        sh: grep "^FALLBACK_TEXT_MODEL=" ../.secrets | cut -d'=' -f2 | tr -d '"'
+      FALLBACK_IMAGE_MODEL:
+        sh: grep "^FALLBACK_IMAGE_MODEL=" ../.secrets | cut -d'=' -f2 | tr -d '"'
     ignore_error: false
     interactive: true
     post:
@@ -34,6 +52,25 @@ tasks:
     cmds:
       - docker-compose up -d
       - poetry run pytest
+    env:
+      OPENAI_API_KEY:
+        sh: grep "^OPENAI_API_KEY=" ../.secrets | cut -d'=' -f2 | tr -d '"'
+      OPENROUTER_API_KEY:
+        sh: grep "^OPENROUTER_API_KEY=" ../.secrets | cut -d'=' -f2 | tr -d '"'
+      OPENROUTER_BASE_URL:
+        sh: grep "^OPENROUTER_BASE_URL=" ../.secrets | cut -d'=' -f2 | tr -d '"'
+      DEFAULT_LLM_PROVIDER:
+        sh: grep "^DEFAULT_LLM_PROVIDER=" ../.secrets | cut -d'=' -f2 | tr -d '"'
+      FALLBACK_LLM_PROVIDER:
+        sh: grep "^FALLBACK_LLM_PROVIDER=" ../.secrets | cut -d'=' -f2 | tr -d '"'
+      TEXT_MODEL:
+        sh: grep "^TEXT_MODEL=" ../.secrets | cut -d'=' -f2 | tr -d '"'
+      IMAGE_MODEL:
+        sh: grep "^IMAGE_MODEL=" ../.secrets | cut -d'=' -f2 | tr -d '"'
+      FALLBACK_TEXT_MODEL:
+        sh: grep "^FALLBACK_TEXT_MODEL=" ../.secrets | cut -d'=' -f2 | tr -d '"'
+      FALLBACK_IMAGE_MODEL:
+        sh: grep "^FALLBACK_IMAGE_MODEL=" ../.secrets | cut -d'=' -f2 | tr -d '"'
     post:
       - docker-compose stop
 
@@ -74,6 +111,57 @@ tasks:
     cmds:
       - task: run-backend &
       - task: run-frontend
+
+  # Backend testing with examples
+  start-api:
+    desc: Start backend API with docker-compose for testing
+    dir: backend
+    cmds:
+      - docker-compose up -d
+      - poetry run uvicorn main:app --reload &
+    env:
+      OPENAI_API_KEY:
+        sh: grep "^OPENAI_API_KEY=" ../.secrets | cut -d'=' -f2 | tr -d '"'
+      OPENROUTER_API_KEY:
+        sh: grep "^OPENROUTER_API_KEY=" ../.secrets | cut -d'=' -f2 | tr -d '"'
+      OPENROUTER_BASE_URL:
+        sh: grep "^OPENROUTER_BASE_URL=" ../.secrets | cut -d'=' -f2 | tr -d '"'
+      DEFAULT_LLM_PROVIDER:
+        sh: grep "^DEFAULT_LLM_PROVIDER=" ../.secrets | cut -d'=' -f2 | tr -d '"'
+      FALLBACK_LLM_PROVIDER:
+        sh: grep "^FALLBACK_LLM_PROVIDER=" ../.secrets | cut -d'=' -f2 | tr -d '"'
+      TEXT_MODEL:
+        sh: grep "^TEXT_MODEL=" ../.secrets | cut -d'=' -f2 | tr -d '"'
+      IMAGE_MODEL:
+        sh: grep "^IMAGE_MODEL=" ../.secrets | cut -d'=' -f2 | tr -d '"'
+      FALLBACK_TEXT_MODEL:
+        sh: grep "^FALLBACK_TEXT_MODEL=" ../.secrets | cut -d'=' -f2 | tr -d '"'
+      FALLBACK_IMAGE_MODEL:
+        sh: grep "^FALLBACK_IMAGE_MODEL=" ../.secrets | cut -d'=' -f2 | tr -d '"'
+
+  stop-api:
+    desc: Stop backend API and docker-compose
+    dir: backend
+    cmds:
+      - pkill -f "uvicorn main:app"
+      - docker-compose stop
+
+  test-api-examples:
+    desc: Run API example tests
+    dir: examples
+    cmds:
+      - python3 -m venv venv || true
+      - ./venv/bin/pip install -r requirements.txt
+      - ./venv/bin/python test_llm_proxy.py
+    deps: [start-api]
+
+  test-backend-full:
+    desc: Run complete backend testing (unit tests + API examples)
+    cmds:
+      - task: test-backend
+      - task: test-api-examples
+    post:
+      - task: stop-api
 
   test:
     desc: Run backend and frontend tests
