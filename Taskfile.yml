@@ -13,7 +13,7 @@ tasks:
     dir: backend
     cmds:
       - docker-compose up -d
-      - poetry run uvicorn main:app --reload
+      - poetry run uvicorn app.main:app --reload
     preconditions:
       - sh: "docker ps --filter 'name=lukalibre-db' --filter 'status=running' --format '{{.Names}}' | grep lukalibre-db"
         msg: "Database container 'lukalibre-db' is not running, starting with docker-compose up -d."
@@ -108,8 +108,8 @@ tasks:
 
   dev:
     desc: Run backend and frontend in development mode (parallel)
+    deps: [run-backend]
     cmds:
-      - task: run-backend &
       - task: run-frontend
 
   # Backend testing with examples
@@ -118,7 +118,7 @@ tasks:
     dir: backend
     cmds:
       - docker-compose up -d
-      - poetry run uvicorn main:app --reload &
+      - poetry run uvicorn app.main:app --reload &
     env:
       OPENAI_API_KEY:
         sh: grep "^OPENAI_API_KEY=" ../.secrets | cut -d'=' -f2 | tr -d '"'
@@ -143,7 +143,7 @@ tasks:
     desc: Stop backend API and docker-compose
     dir: backend
     cmds:
-      - pkill -f "uvicorn main:app"
+      - pkill -f "uvicorn app.main:app"
       - docker-compose stop
 
   test-api-examples:
@@ -168,3 +168,79 @@ tasks:
     cmds:
       - task: test-backend
       - task: test-frontend
+
+  # Environment synchronization
+  sync-env:
+    desc: Sync .env files from .secrets file
+    cmds:
+      - task: sync-backend-env
+      - task: sync-frontend-env
+
+  sync-backend-env:
+    desc: Update backend/.env with values from .secrets
+    dir: backend
+    cmds:
+      - |
+        # Update backend .env with LLM configuration from .secrets
+        grep "^OPENAI_API_KEY=" ../.secrets | sed 's/^/# LLM Configuration\n/' > temp_llm.env
+        grep "^OPENROUTER_API_KEY=" ../.secrets >> temp_llm.env
+        grep "^OPENROUTER_BASE_URL=" ../.secrets >> temp_llm.env
+        echo "" >> temp_llm.env
+        echo "# LLM Provider Configuration" >> temp_llm.env
+        grep "^DEFAULT_LLM_PROVIDER=" ../.secrets >> temp_llm.env
+        grep "^FALLBACK_LLM_PROVIDER=" ../.secrets >> temp_llm.env
+        echo "" >> temp_llm.env
+        echo "# Model Configuration - Separate models for cost optimization" >> temp_llm.env
+        grep "^TEXT_MODEL=" ../.secrets >> temp_llm.env
+        grep "^IMAGE_MODEL=" ../.secrets >> temp_llm.env
+        grep "^FALLBACK_TEXT_MODEL=" ../.secrets >> temp_llm.env
+        grep "^FALLBACK_IMAGE_MODEL=" ../.secrets >> temp_llm.env
+        echo "" >> temp_llm.env
+        echo "# Cost Optimization Settings" >> temp_llm.env
+        grep "^ENABLE_COST_OPTIMIZATION=" ../.secrets >> temp_llm.env
+        grep "^MAX_MONTHLY_LLM_COST=" ../.secrets >> temp_llm.env
+        grep "^COST_ALERT_THRESHOLD=" ../.secrets >> temp_llm.env
+        echo "" >> temp_llm.env
+        echo "# Database Configuration" >> temp_llm.env
+        grep "^DB_PASSWORD=" ../.secrets >> temp_llm.env
+        # Backup current .env and replace LLM section
+        cp .env .env.backup
+        sed '/# LLM Configuration/,$d' .env > .env.new
+        cat temp_llm.env >> .env.new
+        mv .env.new .env
+        rm temp_llm.env
+        echo "Backend .env updated with secrets"
+
+  sync-frontend-env:
+    desc: Update frontend/.env with values from .secrets
+    dir: frontend
+    cmds:
+      - |
+        # Update frontend .env with LLM configuration from .secrets
+        echo "" >> .env
+        echo "# LLM Configuration" >> .env
+        grep "^TEXT_MODEL=" ../.secrets | sed 's/^TEXT_MODEL=/VITE_TEXT_MODEL=/' >> .env
+        grep "^IMAGE_MODEL=" ../.secrets | sed 's/^IMAGE_MODEL=/VITE_IMAGE_MODEL=/' >> .env
+        grep "^FALLBACK_TEXT_MODEL=" ../.secrets | sed 's/^FALLBACK_TEXT_MODEL=/VITE_FALLBACK_TEXT_MODEL=/' >> .env
+        grep "^FALLBACK_IMAGE_MODEL=" ../.secrets | sed 's/^FALLBACK_IMAGE_MODEL=/VITE_FALLBACK_IMAGE_MODEL=/' >> .env
+        grep "^DEFAULT_LLM_PROVIDER=" ../.secrets | sed 's/^DEFAULT_LLM_PROVIDER=/VITE_DEFAULT_LLM_PROVIDER=/' >> .env
+        grep "^OPENROUTER_API_KEY=" ../.secrets | sed 's/^OPENROUTER_API_KEY=/VITE_OPENROUTER_API_KEY=/' >> .env
+        grep "^OPENROUTER_BASE_URL=" ../.secrets | sed 's/^OPENROUTER_BASE_URL=/VITE_OPENROUTER_BASE_URL=/' >> .env
+        echo "Frontend .env updated with secrets"
+
+  # Complete backend testing
+  test-backend-complete:
+    desc: Complete backend test with OAuth authentication and LLM integration
+    dir: examples
+    cmds:
+      - python3 -m venv venv || true
+      - ./venv/bin/pip install -q requests
+      - ./venv/bin/python complete_backend_test.py
+
+  demo-backend:
+    desc: Complete backend demo - starts backend and runs comprehensive tests
+    cmds:
+      - task: start-api
+      - task: test-backend-complete
+    post:
+      - task: stop-api
