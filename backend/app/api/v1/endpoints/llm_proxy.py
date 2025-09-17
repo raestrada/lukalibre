@@ -54,7 +54,7 @@ class LukaLibreLLMService:
         )
     
     async def _call_llm(self, messages, has_images=False):
-        """Call OpenRouter LLM - no fallback needed"""
+        """Call OpenRouter LLM with better error handling"""
         llm = self.image_llm if has_images else self.text_llm
         model_name = settings.IMAGE_MODEL if has_images else settings.TEXT_MODEL
 
@@ -63,8 +63,21 @@ class LukaLibreLLMService:
             response = await llm.ainvoke(messages)
             return response.content
         except Exception as error:
-            print(f"OpenRouter LLM failed: {error}")
-            raise Exception(f"OpenRouter LLM request failed: {error}")
+            error_str = str(error)
+            print(f"OpenRouter LLM failed: {error_str}")
+
+            # Provide specific error messages for common issues
+            if "429" in error_str:
+                if "rate-limited upstream" in error_str:
+                    raise Exception(f"Modelo {model_name} temporalmente rate-limited. Intenta con otro modelo o agrega créditos a OpenRouter.")
+                else:
+                    raise Exception(f"Rate limit excedido en OpenRouter. Agrega créditos o espera.")
+            elif "401" in error_str:
+                raise Exception("API key de OpenRouter inválida o sin créditos suficientes.")
+            elif "insufficient credits" in error_str.lower():
+                raise Exception("Créditos insuficientes en cuenta de OpenRouter.")
+            else:
+                raise Exception(f"Error en OpenRouter: {error_str}")
     
     async def process_json_request(self, request: LLMProxyRequest) -> str:
         """Process JSON request with step-based prompts"""
@@ -132,6 +145,7 @@ class LukaLibreLLMService:
 
 # Initialize service
 llm_service = LukaLibreLLMService()
+
 
 
 @router.post("/proxy")
