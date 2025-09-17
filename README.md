@@ -36,6 +36,7 @@ LukaLibre está construido con privacidad total desde el diseño:
 - Toda la información se guarda cifrada en localStorage y solo se procesa localmente
 - El backend actúa como proxy para servicios de IA via OpenRouter, sin almacenar datos sensibles
 - La sincronización con Google Drive es opcional y mantiene los datos cifrados
+- Opcionalmente puedes usar tu propia llave de OpenAI o OpenRouter directamente en el navegador sin pasar por el proxy
 
 Este enfoque garantiza que tú seas el único dueño de tu información financiera, con total transparencia y control.
 
