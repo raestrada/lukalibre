@@ -11,7 +11,7 @@ class Settings(BaseSettings):
     OPENROUTER_BASE_URL: str = "https://openrouter.ai/api/v1"  # OpenRouter base URL
 
     # Model Configuration - OpenRouter models
-    TEXT_MODEL: str = "meta-llama/llama-3.2-3b-instruct:free"  # Model for text-only tasks (free backup)
+    TEXT_MODEL: str = "qwen/qwen3-coder"  # Model for text-only tasks (code specialized)
     IMAGE_MODEL: str = "google/gemini-2.5-flash"  # Model for image processing (vision capable)
     
     # Cost Optimization
