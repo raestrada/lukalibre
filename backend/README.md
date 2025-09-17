@@ -2,13 +2,16 @@
 
 [![Backend CI](https://github.com/raestrada/lukalibre/actions/workflows/backend-ci.yml/badge.svg)](https://github.com/raestrada/lukalibre/actions/workflows/backend-ci.yml)
 
-Backend para la plataforma de educación financiera LukaLibre, construido con FastAPI, SQLAlchemy y PostgreSQL. Proporciona APIs RESTful para la autenticación de usuarios, gestión de datos y proxy para servicios de IA.
+Backend para la plataforma de educación financiera LukaLibre, construido con FastAPI, SQLAlchemy, PostgreSQL y OpenRouter. Proporciona APIs RESTful para la autenticación de usuarios, gestión de datos y proxy inteligente para servicios de IA.
 
 ## Características principales
 
 - **API RESTful**: Interfaces para autenticación y gestión de recursos
-- **Modelos avanzados**: Esquemas de datos para finanzas personales
-- **Proxy LLM**: Intermediación segura con APIs de IA como OpenAI
+- **Modelos avanzados**: Esquemas de datos para finanzas personales chilenas
+- **Proxy LLM**: Integración exclusiva con OpenRouter para acceso cost-optimizado a múltiples modelos IA
+- **Modelos Especializados**:
+  - `qwen/qwen3-coder` para análisis de texto y generación de código/SQL
+  - `google/gemini-2.5-flash` para procesamiento de imágenes con capacidades de visión
 - **Seguridad**: Autenticación JWT, protección CORS, rate limiting
 - **OAuth2**: Integración con proveedores como Google
 
@@ -31,6 +34,23 @@ poetry install
 2. Configurar variables de entorno:
 
 Copia el archivo `.env.example` a `.env` y modifica los valores según tu entorno.
+
+### Configuración de OpenRouter
+
+El backend requiere configuración de OpenRouter para las funcionalidades de IA:
+
+```bash
+# Variables requeridas en .env
+OPENROUTER_API_KEY=tu_api_key_de_openrouter
+OPENROUTER_BASE_URL=https://openrouter.ai/api/v1
+TEXT_MODEL=qwen/qwen3-coder
+IMAGE_MODEL=google/gemini-2.5-flash
+```
+
+**Obtener API Key:**
+1. Registrarse en [openrouter.ai](https://openrouter.ai/)
+2. Crear una nueva API key en la sección de configuración
+3. Agregar créditos a la cuenta para usar modelos premium
 
 ## Base de datos
 

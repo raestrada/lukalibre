@@ -34,7 +34,7 @@ LukaLibre está construido con privacidad total desde el diseño:
 
 - Los datos financieros se almacenan exclusivamente en una **base de datos SQLite en el navegador** usando SQL.js
 - Toda la información se guarda cifrada en localStorage y solo se procesa localmente
-- El backend actúa como proxy para servicios de IA, sin almacenar datos sensibles
+- El backend actúa como proxy para servicios de IA via OpenRouter, sin almacenar datos sensibles
 - La sincronización con Google Drive es opcional y mantiene los datos cifrados
 
 Este enfoque garantiza que tú seas el único dueño de tu información financiera, con total transparencia y control.
@@ -168,10 +168,14 @@ npm install
 npm run dev
 ```
 
-### Backend (FastAPI + PostgreSQL)
+### Backend (FastAPI + PostgreSQL + OpenRouter)
 
-- **Tecnologías**: FastAPI, SQLAlchemy, PostgreSQL, Poetry
-- **Funciones**: API RESTful, autenticación, proxy para LLMs, OAuth
+- **Tecnologías**: FastAPI, SQLAlchemy, PostgreSQL, Poetry, LangChain
+- **LLM Integration**: OpenRouter como proveedor exclusivo para acceso cost-optimizado a múltiples modelos IA
+- **Modelos Especializados**:
+  - `qwen/qwen3-coder` para análisis de texto y generación de código/SQL
+  - `google/gemini-2.5-flash` para procesamiento de imágenes con capacidades de visión
+- **Funciones**: API RESTful, autenticación OAuth, proxy inteligente para LLMs
 - **Calidad**: Black, Flake8, Bandit, mypy, pre-commit hooks
 
 ```bash
@@ -181,11 +185,25 @@ docker-compose up -d
 # Instalar y ejecutar el backend
 cd backend
 poetry install
-cp .env.example .env  # Editar según necesidad
+cp .env.example .env  # Configurar OPENROUTER_API_KEY
 poetry run alembic upgrade head
 poetry run python -m app.initial_data
 poetry run uvicorn app.main:app --reload
 ```
+
+#### Configuración de OpenRouter
+
+El backend requiere configuración de OpenRouter para funcionalidad de IA:
+
+```bash
+# Configurar en .env
+OPENROUTER_API_KEY=tu_api_key_de_openrouter
+OPENROUTER_BASE_URL=https://openrouter.ai/api/v1
+TEXT_MODEL=qwen/qwen3-coder
+IMAGE_MODEL=google/gemini-2.5-flash
+```
+
+Obtén tu API key en [openrouter.ai](https://openrouter.ai/)
 
 ### Integración y Seguridad
 
