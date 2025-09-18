@@ -11,7 +11,9 @@ interface LLMResponse {
 
 // Check if user should use local proxy vs backend
 function shouldUseLocalProxy(): boolean {
-  const hasApiKey = !!localStorage.getItem('openai_api_key');
+  const hasOpenAIKey = !!localStorage.getItem('openai_api_key');
+  const hasOpenRouterKey = !!localStorage.getItem('openrouter_api_key');
+  const hasApiKey = hasOpenAIKey || hasOpenRouterKey;
 
   const planData = localStorage.getItem('user_plan');
   let hasPlan = false;
@@ -45,7 +47,21 @@ export async function callLLMService(formData: FormData): Promise<LLMResponse> {
 
   if (useLocalProxy) {
     try {
-      const apiKey = localStorage.getItem('openai_api_key') || '';
+      const preferredProvider = localStorage.getItem('preferred_llm_provider') || 'openrouter';
+      const openaiKey = localStorage.getItem('openai_api_key') || '';
+      const openrouterKey = localStorage.getItem('openrouter_api_key') || '';
+
+      // Determine which API key to use based on preference and availability
+      let apiKey = '';
+      if (preferredProvider === 'openrouter' && openrouterKey) {
+        apiKey = openrouterKey;
+      } else if (preferredProvider === 'openai' && openaiKey) {
+        apiKey = openaiKey;
+      } else {
+        // Fallback: use any available key
+        apiKey = openrouterKey || openaiKey;
+      }
+
       const localProxy = new LLMProxyJs(apiKey);
       return await localProxy.proxyWithFile(formData);
     } catch (err: any) {

@@ -8,7 +8,7 @@
   import StatusMessage from '../common/StatusMessage.svelte';
   import Icon from '../common/Icon.svelte';
 
-  let apiKey = '';
+  let currentProvider = '';
   let hasApiKey = false;
   let showApiKeyModal = false;
   let plan: UserPlan | null = null;
@@ -20,25 +20,44 @@
   }
 
   function handleApiKeySet(e: CustomEvent) {
-    apiKey = e.detail.apiKey;
+    const { apiKey, provider } = e.detail;
     showApiKeyModal = false;
-    infoMessage = 'API Key configurada correctamente.';
+    checkApiKey(); // Refresh the API key status
+    infoMessage = `API Key de ${provider === 'openrouter' ? 'OpenRouter' : 'OpenAI'} configurada correctamente.`;
     setTimeout(() => (infoMessage = ''), 3000);
   }
 
   function checkApiKey() {
-    apiKey = localStorage.getItem('openai_api_key') || '';
-    hasApiKey = !!apiKey;
-    if (!apiKey) {
+    const openaiKey = localStorage.getItem('openai_api_key') || '';
+    const openrouterKey = localStorage.getItem('openrouter_api_key') || '';
+    const preferredProvider = localStorage.getItem('preferred_llm_provider') || '';
+
+    hasApiKey = !!(openaiKey || openrouterKey);
+
+    if (preferredProvider === 'openai' && openaiKey) {
+      currentProvider = 'OpenAI';
+    } else if (preferredProvider === 'openrouter' && openrouterKey) {
+      currentProvider = 'OpenRouter';
+    } else if (openrouterKey) {
+      currentProvider = 'OpenRouter';
+    } else if (openaiKey) {
+      currentProvider = 'OpenAI';
+    } else {
+      currentProvider = '';
+    }
+
+    if (!hasApiKey) {
       showApiKeyModal = false;
     }
   }
 
   function removeApiKey() {
     localStorage.removeItem('openai_api_key');
-    apiKey = '';
+    localStorage.removeItem('openrouter_api_key');
+    localStorage.removeItem('preferred_llm_provider');
     hasApiKey = false;
-    infoMessage = 'API Key eliminada correctamente.';
+    currentProvider = '';
+    infoMessage = 'API Keys eliminadas correctamente.';
     setTimeout(() => (infoMessage = ''), 3000);
   }
 
@@ -51,7 +70,7 @@
     console.log('Plan dev activo:', plan?.dev_plan_active);
     planLoading = false;
     // Mostrar modal si NO hay apiKey y NO hay plan activo con créditos
-    if (!apiKey && (!plan || !plan.is_active || (plan.credits ?? 0) <= 0)) {
+    if (!hasApiKey && (!plan || !plan.is_active || (plan.credits ?? 0) <= 0)) {
       showApiKeyModal = true;
     }
   });
@@ -63,8 +82,11 @@
   >
     <div style="flex:1; min-width: 220px; margin-right: 0.5rem;">
       <div style="font-size: 0.95em; color: #555; margin-bottom: 0.3rem;">
-        Puedes usar créditos incluidos con un plan o tu propia API Key de OpenAI.<br />
+        Puedes usar créditos incluidos con un plan o tu propia API Key (OpenAI/OpenRouter).<br />
         Si no tienes un plan activo, deberás ingresar tu clave.
+        {#if hasApiKey}
+          <br /><strong>Proveedor activo:</strong> {currentProvider}
+        {/if}
       </div>
       {#if planLoading}
         <span style="margin-left: 1rem;">Cargando plan...</span>
@@ -81,7 +103,7 @@
           style="min-width: 200px; background-color: #e74c3c; color: white; border: 1px solid #c0392b;"
         >
           <span style="display:inline-flex; align-items:center;">
-            <span style="margin-right:4px;">🔑</span> Eliminar clave API
+            <span style="margin-right:4px;">🔑</span> Eliminar claves API
           </span>
         </Button>
       {/if}

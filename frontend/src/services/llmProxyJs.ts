@@ -56,60 +56,90 @@ export class LLMProxyJs {
     const fallbackTextModel = (import.meta.env.VITE_FALLBACK_TEXT_MODEL as string) || 'gpt-4o-mini';
     const fallbackImageModel =
       (import.meta.env.VITE_FALLBACK_IMAGE_MODEL as string) || 'gpt-4o-mini';
-    const provider = (import.meta.env.VITE_DEFAULT_LLM_PROVIDER as string) || 'openrouter';
-    const openRouterKey = (import.meta.env.VITE_OPENROUTER_API_KEY as string) || '';
     const openRouterBaseUrl =
       (import.meta.env.VITE_OPENROUTER_BASE_URL as string) || 'https://openrouter.ai/api/v1';
 
-    // Set up primary LLMs (prefer OpenRouter for cost optimization)
-    if (provider === 'openrouter' && openRouterKey) {
-      this.primaryTextLlm = new ChatOpenAI({
-        openAIApiKey: openRouterKey,
-        configuration: {
-          baseURL: openRouterBaseUrl,
-        },
-        modelName: textModel,
-        temperature: 0.1,
-        maxTokens: 2048,
-      });
-      this.primaryImageLlm = new ChatOpenAI({
-        openAIApiKey: openRouterKey,
-        configuration: {
-          baseURL: openRouterBaseUrl,
-        },
-        modelName: imageModel,
-        temperature: 0.1,
-        maxTokens: 2048,
-      });
-    } else if (apiKey) {
-      this.primaryTextLlm = new ChatOpenAI({
-        openAIApiKey: apiKey,
-        modelName: textModel,
-        temperature: 0.1,
-        maxTokens: 2048,
-      });
-      this.primaryImageLlm = new ChatOpenAI({
-        openAIApiKey: apiKey,
-        modelName: imageModel,
-        temperature: 0.1,
-        maxTokens: 2048,
-      });
-    }
+    // Determine the provider based on the API key format
+    const isOpenRouterKey = apiKey.startsWith('sk-or-v1-');
+    const preferredProvider = localStorage.getItem('preferred_llm_provider') || 'openrouter';
 
-    // Set up fallback LLMs (user's OpenAI key as fallback)
-    if (apiKey && provider === 'openrouter') {
-      this.fallbackTextLlm = new ChatOpenAI({
+    // Get additional API keys from localStorage for fallback
+    const storedOpenAIKey = localStorage.getItem('openai_api_key') || '';
+    const storedOpenRouterKey = localStorage.getItem('openrouter_api_key') || '';
+
+    // Set up primary LLMs based on user's API key
+    if (isOpenRouterKey || (preferredProvider === 'openrouter' && apiKey === storedOpenRouterKey)) {
+      // User provided OpenRouter key - use it with OpenRouter models
+      this.primaryTextLlm = new ChatOpenAI({
         openAIApiKey: apiKey,
-        modelName: fallbackTextModel,
+        configuration: {
+          baseURL: openRouterBaseUrl,
+        },
+        modelName: textModel,
         temperature: 0.1,
         maxTokens: 2048,
       });
-      this.fallbackImageLlm = new ChatOpenAI({
+      this.primaryImageLlm = new ChatOpenAI({
+        openAIApiKey: apiKey,
+        configuration: {
+          baseURL: openRouterBaseUrl,
+        },
+        modelName: imageModel,
+        temperature: 0.1,
+        maxTokens: 2048,
+      });
+
+      // Set up fallback with OpenAI if available
+      if (storedOpenAIKey && storedOpenAIKey !== apiKey) {
+        this.fallbackTextLlm = new ChatOpenAI({
+          openAIApiKey: storedOpenAIKey,
+          modelName: fallbackTextModel,
+          temperature: 0.1,
+          maxTokens: 2048,
+        });
+        this.fallbackImageLlm = new ChatOpenAI({
+          openAIApiKey: storedOpenAIKey,
+          modelName: fallbackImageModel,
+          temperature: 0.1,
+          maxTokens: 2048,
+        });
+      }
+    } else {
+      // User provided OpenAI key - use it directly
+      this.primaryTextLlm = new ChatOpenAI({
+        openAIApiKey: apiKey,
+        modelName: fallbackTextModel, // Use simpler models for OpenAI direct
+        temperature: 0.1,
+        maxTokens: 2048,
+      });
+      this.primaryImageLlm = new ChatOpenAI({
         openAIApiKey: apiKey,
         modelName: fallbackImageModel,
         temperature: 0.1,
         maxTokens: 2048,
       });
+
+      // Set up fallback with OpenRouter if available
+      if (storedOpenRouterKey && storedOpenRouterKey !== apiKey) {
+        this.fallbackTextLlm = new ChatOpenAI({
+          openAIApiKey: storedOpenRouterKey,
+          configuration: {
+            baseURL: openRouterBaseUrl,
+          },
+          modelName: textModel,
+          temperature: 0.1,
+          maxTokens: 2048,
+        });
+        this.fallbackImageLlm = new ChatOpenAI({
+          openAIApiKey: storedOpenRouterKey,
+          configuration: {
+            baseURL: openRouterBaseUrl,
+          },
+          modelName: imageModel,
+          temperature: 0.1,
+          maxTokens: 2048,
+        });
+      }
     }
   }
 
