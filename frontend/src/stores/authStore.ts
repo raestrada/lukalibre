@@ -74,18 +74,24 @@ function createAuthStore() {
       }, 100);
     },
 
-    // Actualizar usuario actual
+    // Update current user
     setUser: (user: User) => {
-      console.log('AuthStore: Actualizando usuario:', user.email);
+      console.log('AuthStore: Updating user:', user.email);
       update((state) => ({ ...state, user, isAuthenticated: true }));
     },
 
-    // Limpiar error
+    // Force authenticated state for offline mode
+    forceAuthenticated: (user: User) => {
+      console.log('AuthStore: Forcing offline authentication with user:', user.email);
+      set({ user, isAuthenticated: true, loading: false, error: null });
+    },
+
+    // Clear error
     clearError: () => {
       update((state) => ({ ...state, error: null }));
     },
 
-    // Login con Google
+    // Login with Google
     loginWithGoogle: async (credential: string) => {
       update((state) => ({ ...state, loading: true, error: null }));
       try {
@@ -95,7 +101,7 @@ function createAuthStore() {
         navigate('/dashboard');
         return true;
       } catch (err: any) {
-        set({ ...initialState, loading: false, error: 'Error en autenticación con Google' });
+        set({ ...initialState, loading: false, error: 'Error in Google authentication' });
         return false;
       }
     },
