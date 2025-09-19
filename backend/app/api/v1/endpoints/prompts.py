@@ -9,7 +9,7 @@ from app.models.user import User
 router = APIRouter()
 
 # Path to prompts directory
-PROMPTS_DIR = Path(__file__).parent.parent.parent.parent / "app" / "prompts"
+PROMPTS_DIR = Path(__file__).parent.parent.parent.parent / "prompts"
 
 def load_prompt_template(template_name: str) -> str:
     """Load a prompt template from file"""
