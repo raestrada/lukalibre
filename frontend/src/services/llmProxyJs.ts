@@ -3,6 +3,7 @@
 // Implements rate limiting using SQLite database in browser
 
 import databaseService from './databaseService';
+import httpService from './httpService';
 import { ChatOpenAI } from '@langchain/openai';
 import { HumanMessage, SystemMessage } from '@langchain/core/messages';
 
@@ -42,6 +43,7 @@ export class LLMProxyJs {
   private userId: string = 'local';
   private limits = DEFAULT_LIMITS;
   private initialized = false;
+  private promptTemplatesCache: Record<string, string> | null = null;
 
   constructor(apiKey: string | null, userId: string = 'local') {
     this.userId = userId;
@@ -67,11 +69,11 @@ export class LLMProxyJs {
     const storedOpenAIKey = localStorage.getItem('openai_api_key') || '';
     const storedOpenRouterKey = localStorage.getItem('openrouter_api_key') || '';
 
-    // Set up primary LLMs based on user's API key
+    // Always set up primary LLMs - if it's an OpenRouter key or user chose OpenRouter
     if (isOpenRouterKey || (preferredProvider === 'openrouter' && apiKey === storedOpenRouterKey)) {
       // User provided OpenRouter key - use it with OpenRouter models
       this.primaryTextLlm = new ChatOpenAI({
-        openAIApiKey: apiKey,
+        apiKey: apiKey, // Use apiKey instead of openAIApiKey for OpenRouter
         configuration: {
           baseURL: openRouterBaseUrl,
         },
@@ -79,8 +81,9 @@ export class LLMProxyJs {
         temperature: 0.1,
         maxTokens: 2048,
       });
+
       this.primaryImageLlm = new ChatOpenAI({
-        openAIApiKey: apiKey,
+        apiKey: apiKey, // Use apiKey instead of openAIApiKey for OpenRouter
         configuration: {
           baseURL: openRouterBaseUrl,
         },
@@ -92,13 +95,13 @@ export class LLMProxyJs {
       // Set up fallback with OpenAI if available
       if (storedOpenAIKey && storedOpenAIKey !== apiKey) {
         this.fallbackTextLlm = new ChatOpenAI({
-          openAIApiKey: storedOpenAIKey,
+          apiKey: storedOpenAIKey, // Use apiKey for consistency
           modelName: fallbackTextModel,
           temperature: 0.1,
           maxTokens: 2048,
         });
         this.fallbackImageLlm = new ChatOpenAI({
-          openAIApiKey: storedOpenAIKey,
+          apiKey: storedOpenAIKey, // Use apiKey for consistency
           modelName: fallbackImageModel,
           temperature: 0.1,
           maxTokens: 2048,
@@ -107,13 +110,14 @@ export class LLMProxyJs {
     } else {
       // User provided OpenAI key - use it directly
       this.primaryTextLlm = new ChatOpenAI({
-        openAIApiKey: apiKey,
-        modelName: fallbackTextModel, // Use simpler models for OpenAI direct
+        apiKey: apiKey, // Use apiKey for consistency
+        modelName: fallbackTextModel, // Use OpenAI compatible models
         temperature: 0.1,
         maxTokens: 2048,
       });
+
       this.primaryImageLlm = new ChatOpenAI({
-        openAIApiKey: apiKey,
+        apiKey: apiKey, // Use apiKey for consistency
         modelName: fallbackImageModel,
         temperature: 0.1,
         maxTokens: 2048,
@@ -122,7 +126,7 @@ export class LLMProxyJs {
       // Set up fallback with OpenRouter if available
       if (storedOpenRouterKey && storedOpenRouterKey !== apiKey) {
         this.fallbackTextLlm = new ChatOpenAI({
-          openAIApiKey: storedOpenRouterKey,
+          apiKey: storedOpenRouterKey, // Use apiKey for consistency
           configuration: {
             baseURL: openRouterBaseUrl,
           },
@@ -131,7 +135,7 @@ export class LLMProxyJs {
           maxTokens: 2048,
         });
         this.fallbackImageLlm = new ChatOpenAI({
-          openAIApiKey: storedOpenRouterKey,
+          apiKey: storedOpenRouterKey, // Use apiKey for consistency
           configuration: {
             baseURL: openRouterBaseUrl,
           },
@@ -150,24 +154,26 @@ export class LLMProxyJs {
 
     try {
       if (primaryLlm) {
-        console.log(`Using primary ${modelType} LLM provider (OpenRouter cost optimization)`);
-        return await primaryLlm.invoke(messages);
+        const result = await primaryLlm.invoke(messages);
+        return result;
       }
     } catch (error) {
-      console.warn(`Primary ${modelType} LLM failed, trying fallback:`, error);
+      console.warn(`Primary ${modelType} LLM failed, trying fallback`);
     }
 
     if (fallbackLlm) {
       try {
-        console.log(`Using fallback ${modelType} LLM provider (Direct OpenAI)`);
-        return await fallbackLlm.invoke(messages);
+        const result = await fallbackLlm.invoke(messages);
+        return result;
       } catch (error) {
         console.error(`Fallback ${modelType} LLM also failed:`, error);
         throw error;
       }
     }
 
-    throw new Error(`No ${modelType} LLM provider available`);
+    const errorMsg = `No ${modelType} LLM provider available. Please check your API key configuration.`;
+    console.error(errorMsg);
+    throw new Error(errorMsg);
   }
 
   private async ensureTableExists(): Promise<void> {
@@ -222,6 +228,35 @@ export class LLMProxyJs {
     await databaseService.query(sql, [this.userId, new Date().toISOString()]);
   }
 
+  private async getPromptTemplates(): Promise<Record<string, string>> {
+    // Return cached templates if available
+    if (this.promptTemplatesCache) {
+      return this.promptTemplatesCache;
+    }
+
+    try {
+      // Fetch templates from backend endpoint
+      const response = await httpService.get('/prompts/templates', {
+        headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` },
+      });
+
+      // Cache the templates
+      const data = response.data as any;
+      this.promptTemplatesCache = data.default || {};
+      console.log(
+        'Loaded',
+        Object.keys(this.promptTemplatesCache || {}).length,
+        'prompt templates from backend',
+      );
+
+      return this.promptTemplatesCache;
+    } catch (error) {
+      console.error('Error fetching prompt templates from backend:', error);
+      // Return empty object as fallback
+      return {};
+    }
+  }
+
   async processJsonRequest(request: LLMProxyRequest): Promise<string> {
     if (
       !this.primaryTextLlm &&
@@ -229,27 +264,56 @@ export class LLMProxyJs {
       !this.primaryImageLlm &&
       !this.fallbackImageLlm
     ) {
-      throw new Error('No LLM provider configured');
+      throw new Error('No LLM provider configured - check your API key and configuration');
     }
 
+    // Get prompt templates from backend
+    const templates = await this.getPromptTemplates();
     let messages = [];
 
     if (request.step === 'identify_schema') {
-      const schemasStr = request.schemas ? `\nOpciones: ${request.schemas.join(', ')}` : '';
-      const systemPrompt =
-        'Eres un asistente experto en clasificación de documentos. ' +
-        'Dado el siguiente contenido y la lista de esquemas, responde solo con el nombre del esquema más adecuado.' +
-        schemasStr;
+      // Use the backend prompt template if available
+      if (templates['identify_schema']) {
+        let prompt = templates['identify_schema'];
 
-      messages = [new SystemMessage(systemPrompt), new HumanMessage(request.content)];
+        // Replace template variables
+        if (request.schemas) {
+          prompt = prompt.replace(/\{\{schemas\}\}/g, request.schemas.join(', '));
+        }
+        prompt = prompt.replace(/\{\{content\}\}/g, request.content);
+
+        messages = [new HumanMessage(prompt)];
+      } else {
+        // Fallback to simple prompt
+        const schemasStr = request.schemas ? `\nOpciones: ${request.schemas.join(', ')}` : '';
+        const systemPrompt =
+          'Eres un asistente experto en clasificación de documentos. ' +
+          'Dado el siguiente contenido y la lista de esquemas, responde solo con el nombre del esquema más adecuado.' +
+          schemasStr;
+
+        messages = [new SystemMessage(systemPrompt), new HumanMessage(request.content)];
+      }
     } else if (request.step === 'generate_sql_json') {
-      const systemPrompt =
-        'Eres un experto en extracción de datos. Dado el siguiente contenido, genera:\n' +
-        '- Los comandos SQL INSERT para poblar todas las tablas relevantes del esquema en SQLite.\n' +
-        '- El JSON correspondiente siguiendo el schema.\n' +
-        "Responde en formato JSON así: {'sql_inserts': '...', 'json_data': {...}}";
+      // Use the backend prompt template if available
+      if (templates['extract_data']) {
+        let prompt = templates['extract_data'];
 
-      messages = [new SystemMessage(systemPrompt), new HumanMessage(request.content)];
+        // Replace template variables
+        prompt = prompt.replace(/\{\{content\}\}/g, request.content);
+
+        // Note: schema_json and tables replacement should be handled by the caller
+        // For now, just use the content
+        messages = [new HumanMessage(prompt)];
+      } else {
+        // Fallback to simple prompt
+        const systemPrompt =
+          'Eres un experto en extracción de datos. Dado el siguiente contenido, genera:\n' +
+          '- Los comandos SQL INSERT para poblar todas las tablas relevantes del esquema en SQLite.\n' +
+          '- El JSON correspondiente siguiendo el schema.\n' +
+          "Responde en formato JSON así: {'sql_inserts': '...', 'json_data': {...}}";
+
+        messages = [new SystemMessage(systemPrompt), new HumanMessage(request.content)];
+      }
     } else {
       messages = [new HumanMessage(request.content)];
     }
@@ -265,23 +329,38 @@ export class LLMProxyJs {
       !this.primaryImageLlm &&
       !this.fallbackImageLlm
     ) {
-      throw new Error('No LLM provider configured');
+      throw new Error('No LLM provider configured - check your API key and configuration');
     }
 
+    // Get prompt templates from backend to use the same detailed prompts
+    const templates = await this.getPromptTemplates();
     let finalPrompt = prompt;
     let hasImages = false;
 
+    // Check if this is an extract_data request (contains tables info)
+    if (templates['extract_data'] && prompt.includes('{tables}')) {
+      finalPrompt = templates['extract_data'];
+    }
+
     // For files, append basic info to prompt (simplified handling)
     if (files && files.length > 0) {
+      let fileContent = '';
       for (const file of files) {
         if (file.type.startsWith('image/')) {
           hasImages = true;
           // For images, we'd need to handle them specially
           // For now, just add file info to prompt
-          finalPrompt += `\n\n[Archivo de imagen adjunto: ${file.name}, tamaño: ${(file.size / 1024).toFixed(2)} KB]`;
+          fileContent += `\n\n[Archivo de imagen adjunto: ${file.name}, tamaño: ${(file.size / 1024).toFixed(2)} KB]`;
         } else {
-          finalPrompt += `\n\n[Archivo adjunto: ${file.name}, tipo: ${file.type}, tamaño: ${(file.size / 1024).toFixed(2)} KB]`;
+          fileContent += `\n\n[Archivo adjunto: ${file.name}, tipo: ${file.type}, tamaño: ${(file.size / 1024).toFixed(2)} KB]`;
         }
+      }
+
+      // Replace {{content}} placeholder if it exists, otherwise append
+      if (finalPrompt.includes('{{content}}')) {
+        finalPrompt = finalPrompt.replace(/\{\{content\}\}/g, fileContent);
+      } else {
+        finalPrompt += fileContent;
       }
     }
 

@@ -71,7 +71,7 @@ export async function callLLMService(formData: FormData): Promise<LLMResponse> {
   } else {
     try {
       const response = await httpService.post<LLMResponse>('/llm/proxy', formData, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+        headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` },
       });
       return { llm_output: response.data.llm_output || '' };
     } catch (err: any) {
@@ -83,30 +83,36 @@ export async function callLLMService(formData: FormData): Promise<LLMResponse> {
   }
 }
 
-// Load prompt templates from local files
-import identifySchemaPrompt from '../prompts/identify_schema.md?raw';
-import extractDataPrompt from '../prompts/extract_data.md?raw';
-import recommendationClPrompt from '../prompts/recommendation_cl.md?raw';
-import dashboardHtmlReportClPrompt from '../prompts/dashboard_html_report_cl.md?raw';
-import dashboardBalanceReportClPrompt from '../prompts/dashboard_balance_report_cl.md?raw';
-import alertClPrompt from '../prompts/alert_cl.md?raw';
-
 interface TemplatesResponse {
   default?: Record<string, string>;
   [key: string]: any;
 }
 
-const promptTemplates: Record<string, string> = {
-  identify_schema: identifySchemaPrompt,
-  extract_data: extractDataPrompt,
-  recommendation_cl: recommendationClPrompt,
-  dashboard_html_report_cl: dashboardHtmlReportClPrompt,
-  dashboard_balance_report_cl: dashboardBalanceReportClPrompt,
-  alert_cl: alertClPrompt,
-};
+// Cache for prompt templates
+let promptTemplatesCache: Record<string, string> | null = null;
 
 export async function getPromptTemplates(): Promise<TemplatesResponse> {
-  return { default: promptTemplates };
+  // Return cached templates if available
+  if (promptTemplatesCache) {
+    return { default: promptTemplatesCache };
+  }
+
+  try {
+    // Fetch templates from backend endpoint
+    const response = await httpService.get<TemplatesResponse>('/prompts/templates', {
+      headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` },
+    });
+
+    // Cache the templates
+    promptTemplatesCache = response.data.default || {};
+
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching prompt templates from backend:', error);
+
+    // Fallback to empty templates
+    return { default: {} };
+  }
 }
 
 export async function identifySchema(file: File, availableSchemas: string[]): Promise<string> {

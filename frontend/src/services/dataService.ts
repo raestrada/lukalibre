@@ -23,7 +23,7 @@ class DataService {
    */
   async getSchemas(): Promise<any[]> {
     const resp = await httpService.get('/schemas', {
-      headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` },
+      headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` },
     });
     // Compatibilidad: si la API devuelve meta.schema, adaptamos
     return (resp.data || []).map((s: any) => ({
